@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1a0533">
+<title>משפחת קרן 🎮 Keren Family Games</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Nunito',sans-serif;min-height:100vh;overflow-x:hidden;user-select:none;-webkit-user-select:none;background:#0a0118;color:white}
+h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
+
+/* ===== BACKGROUND ===== */
+.bg-main{
+  background:linear-gradient(135deg,#1a0533 0%,#2d1b69 30%,#1a0533 50%,#0d1b3e 70%,#1a0533 100%);
+  position:relative;overflow:hidden;
+}
+.bg-main::before{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:radial-gradient(circle at 30% 50%,rgba(132,94,194,0.08) 0%,transparent 50%),
+             radial-gradient(circle at 70% 30%,rgba(255,107,107,0.06) 0%,transparent 50%),
+             radial-gradient(circle at 50% 80%,rgba(255,217,61,0.05) 0%,transparent 50%);
+  animation:bgRotate 30s linear infinite;pointer-events:none;
+}
+@keyframes bgRotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+
+/* ===== PARTICLES ===== */
+.particle{position:absolute;pointer-events:none;animation:particleFloat linear infinite;opacity:0.08}
+@keyframes particleFloat{
+  0%{transform:translateY(100vh) rotate(0deg);opacity:0}
+  10%{opacity:0.08}90%{opacity:0.08}
+  100%{transform:translateY(-10vh) rotate(360deg);opacity:0}
+}
+
+/* ===== GLASS ===== */
+.glass{background:rgba(255,255,255,0.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1)}
+.glass-strong{background:rgba(255,255,255,0.1);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.15)}
+
+/* ===== CATEGORY SECTION ===== */
+.category-section{margin-bottom:2.5rem}
+.category-header{display:flex;align-items:center;gap:12px;margin-bottom:1rem;padding:0 4px}
+.category-icon{font-size:2rem;width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:16px}
+.category-title{font-size:1.4rem;font-weight:800}
+.category-subtitle{font-size:0.8rem;color:rgba(255,255,255,0.4);font-weight:600}
+
+/* ===== GAME CARD ===== */
+.game-card{
+  display:flex;align-items:center;gap:16px;padding:18px 20px;
+  border-radius:24px;width:100%;text-align:right;cursor:pointer;
+  transition:all 0.3s cubic-bezier(0.175,0.885,0.32,1.275);
+  text-decoration:none;color:white;position:relative;overflow:hidden;
+}
+.game-card:hover{transform:translateY(-3px) scale(1.02)}
+.game-card:active{transform:scale(0.97)}
+.game-card::after{
+  content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.05),transparent);
+  animation:shimmer 4s ease-in-out infinite;
+}
+@keyframes shimmer{0%,100%{left:-100%}50%{left:150%}}
+
+.game-icon{
+  width:56px;height:56px;border-radius:18px;display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;flex-shrink:0;
+}
+.game-info{flex:1;min-width:0}
+.game-name{font-weight:800;font-size:1.05rem;line-height:1.3}
+.game-desc{font-size:0.78rem;color:rgba(255,255,255,0.4);font-weight:600;line-height:1.3}
+.game-arrow{
+  width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;font-weight:bold;flex-shrink:0;
+}
+.game-badge{
+  position:absolute;top:10px;left:10px;font-size:0.6rem;font-weight:800;
+  padding:2px 8px;border-radius:8px;text-transform:uppercase;letter-spacing:0.5px;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes bounceIn{
+  0%{transform:scale(0);opacity:0}
+  60%{transform:scale(1.15)}
+  80%{transform:scale(0.95)}
+  100%{transform:scale(1);opacity:1}
+}
+@keyframes slideUp{
+  0%{transform:translateY(30px);opacity:0}
+  100%{transform:translateY(0);opacity:1}
+}
+@keyframes emojiSpin{
+  0%{transform:rotate(0deg) scale(1)}25%{transform:rotate(10deg) scale(1.1)}
+  50%{transform:rotate(0deg) scale(1)}75%{transform:rotate(-10deg) scale(1.1)}
+  100%{transform:rotate(0deg) scale(1)}
+}
+@keyframes gentleBounce{
+  0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}
+}
+.animate-bounce-in{animation:bounceIn 0.6s cubic-bezier(0.175,0.885,0.32,1.275)}
+.animate-slide-up{animation:slideUp 0.5s ease-out both}
+.animate-emoji-spin{animation:emojiSpin 3s ease-in-out infinite}
+
+/* ===== GLOW TITLE ===== */
+.title-gradient{
+  background:linear-gradient(135deg,#fff 0%,#e0d0ff 40%,#ffd6e8 70%,#fff 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 2px 10px rgba(0,0,0,0.2));
+}
+.text-glow{text-shadow:0 0 20px rgba(255,255,255,0.3),0 2px 10px rgba(0,0,0,0.2)}
+
+/* ===== FOOTER ===== */
+.footer{text-align:center;padding:2rem 1rem;color:rgba(255,255,255,0.15);font-size:0.75rem;font-weight:600}
+
+/* ===== RESPONSIVE ===== */
+@media(min-width:640px){
+  .games-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+}
+</style>
+</head>
+<body>
+<div class="bg-main" style="min-height:100vh">
+
+  <!-- Floating particles -->
+  <div id="particles" style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden"></div>
+
+  <!-- Content -->
+  <div style="position:relative;z-index:1;max-width:600px;margin:0 auto;padding:24px 16px;padding-bottom:env(safe-area-inset-bottom)">
+
+    <!-- Header -->
+    <header style="text-align:center;padding:2rem 0 2.5rem">
+      <div class="animate-bounce-in" style="font-size:3.5rem;margin-bottom:8px">
+        <span class="animate-emoji-spin" style="display:inline-block">🏠</span>
+      </div>
+      <h1 class="title-gradient" style="font-size:2.8rem;line-height:1.1">משפחת קרן</h1>
+      <p style="color:rgba(255,255,255,0.35);font-size:1rem;margin-top:8px;font-weight:700">מרכז המשחקים המשפחתי</p>
+    </header>
+
+    <!-- Category 1: Learning Games -->
+    <div class="category-section animate-slide-up" style="animation-delay:0.1s">
+      <div class="category-header">
+        <div class="category-icon" style="background:linear-gradient(135deg,rgba(132,94,194,0.3),rgba(255,107,107,0.2))">📚</div>
+        <div>
+          <div class="category-title">משחקי למידה</div>
+          <div class="category-subtitle">חשבון, ספירה, כפל וחילוק</div>
+        </div>
+      </div>
+      <div class="games-grid" style="display:flex;flex-direction:column;gap:12px">
+        <a href="https://elirank1.github.io/kerens-games/" class="game-card glass-strong" style="animation:slideUp 0.5s ease-out 0.15s both">
+          <div class="game-icon" style="background:linear-gradient(135deg,#845EC2,#FF6B6B)">🎮</div>
+          <div class="game-info">
+            <div class="game-name">משחקי חשבון</div>
+            <div class="game-desc">15 משחקים לניב, לביא ויובל · 3 רמות קושי</div>
+          </div>
+          <div class="game-arrow" style="background:rgba(132,94,194,0.3);color:#c4b5fd">◂</div>
+          <div class="game-badge" style="background:rgba(255,217,61,0.2);color:#FFD93D">⭐ 15 משחקים</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Category 2: Trivia & Thinking -->
+    <div class="category-section animate-slide-up" style="animation-delay:0.25s">
+      <div class="category-header">
+        <div class="category-icon" style="background:linear-gradient(135deg,rgba(59,130,246,0.3),rgba(16,185,129,0.2))">🧩</div>
+        <div>
+          <div class="category-title">טריוויה ומשחקי חשיבה</div>
+          <div class="category-subtitle">מילים, ידע כללי, חשיבה יצירתית</div>
+        </div>
+      </div>
+      <div class="games-grid" style="display:flex;flex-direction:column;gap:12px">
+        <a href="https://elirank1.github.io/hangman-keren/" class="game-card glass-strong" style="animation:slideUp 0.5s ease-out 0.3s both">
+          <div class="game-icon" style="background:linear-gradient(135deg,#3B82F6,#10B981)">🪢</div>
+          <div class="game-info">
+            <div class="game-name">איש תלוי</div>
+            <div class="game-desc">משחק מילים קלאסי · נושאים מגוונים · מצבי משחק</div>
+          </div>
+          <div class="game-arrow" style="background:rgba(59,130,246,0.3);color:#93c5fd">◂</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Coming Soon -->
+    <div class="category-section animate-slide-up" style="animation-delay:0.4s">
+      <div class="category-header">
+        <div class="category-icon" style="background:linear-gradient(135deg,rgba(255,217,61,0.2),rgba(255,107,107,0.15))">🚀</div>
+        <div>
+          <div class="category-title">בקרוב...</div>
+          <div class="category-subtitle">משחקים חדשים בדרך!</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="game-card glass" style="opacity:0.4;cursor:default;animation:slideUp 0.5s ease-out 0.45s both">
+          <div class="game-icon" style="background:rgba(255,255,255,0.05)">🌍</div>
+          <div class="game-info">
+            <div class="game-name">טריוויה משפחתית</div>
+            <div class="game-desc">שאלות בנושאי גיאוגרפיה, מדע, היסטוריה</div>
+          </div>
+          <div class="game-arrow" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.2)">🔒</div>
+        </div>
+        <div class="game-card glass" style="opacity:0.4;cursor:default;animation:slideUp 0.5s ease-out 0.5s both">
+          <div class="game-icon" style="background:rgba(255,255,255,0.05)">🎨</div>
+          <div class="game-info">
+            <div class="game-name">זיכרון ויצירתיות</div>
+            <div class="game-desc">משחקי זיכרון, דפוסים, ופאזלים</div>
+          </div>
+          <div class="game-arrow" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.2)">🔒</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">משפחת קרן ❤️ 2026</div>
+  </div>
+</div>
+
+<script>
+// Floating particles
+const emojis = ['🎮','⭐','🧩','📚','🏆','✨','🎯','💫','🌟','🎲','🪄','🧠'];
+const container = document.getElementById('particles');
+for(let i = 0; i < 15; i++){
+  const el = document.createElement('div');
+  el.className = 'particle';
+  el.textContent = emojis[i % emojis.length];
+  el.style.left = Math.random()*100+'%';
+  el.style.fontSize = (16+Math.random()*20)+'px';
+  el.style.animationDuration = (14+Math.random()*16)+'s';
+  el.style.animationDelay = (-Math.random()*20)+'s';
+  el.style.opacity = 0.04+Math.random()*0.06;
+  container.appendChild(el);
+}
+</script>
+</body>
+</html>
