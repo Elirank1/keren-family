@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#2d1a0a">
+<title>מלך הפלאפל 🧆 Falafel King</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧆</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Nunito',sans-serif;min-height:100vh;min-height:100dvh;overflow:hidden;user-select:none;-webkit-user-select:none;background:#1a0d02;color:white}
+h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
+.bg-main{background:linear-gradient(135deg,#2d1a0a 0%,#3d2517 30%,#2d1a0a 50%,#1a2e0a 70%,#2d1a0a 100%);position:fixed;inset:0;overflow:hidden}
+.bg-main::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 50%,rgba(217,119,6,0.08) 0%,transparent 50%),radial-gradient(circle at 70% 30%,rgba(22,163,74,0.06) 0%,transparent 50%),radial-gradient(circle at 50% 80%,rgba(251,191,36,0.05) 0%,transparent 50%);animation:bgRotate 30s linear infinite;pointer-events:none}
+@keyframes bgRotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.glass{background:rgba(255,255,255,0.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1)}
+.glass-strong{background:rgba(255,255,255,0.1);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.15)}
+
+/* SCREENS */
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;transition:opacity 0.4s,transform 0.4s;padding:20px}
+.screen.hidden{opacity:0;pointer-events:none;transform:scale(0.95)}
+
+/* START SCREEN */
+.start-title{font-family:'Fredoka One',cursive;font-size:clamp(2.2rem,8vw,3.5rem);background:linear-gradient(135deg,#fbbf24,#f59e0b,#d97706);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;line-height:1.2;margin-bottom:8px}
+.start-subtitle{color:rgba(255,255,255,0.5);font-size:1rem;font-weight:700;text-align:center;margin-bottom:32px}
+.start-emoji{font-size:5rem;margin-bottom:16px;animation:emojiPulse 2s ease-in-out infinite}
+@keyframes emojiPulse{0%,100%{transform:scale(1) rotate(-5deg)}50%{transform:scale(1.15) rotate(5deg)}}
+.play-btn{font-family:'Fredoka One',cursive;font-size:1.6rem;padding:18px 56px;border:none;border-radius:60px;cursor:pointer;color:white;background:linear-gradient(135deg,#d97706,#b45309);box-shadow:0 8px 32px rgba(217,119,6,0.4),inset 0 2px 0 rgba(255,255,255,0.2);transition:all 0.2s;position:relative;overflow:hidden}
+.play-btn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(217,119,6,0.5)}
+.play-btn:active{transform:scale(0.95)}
+.high-score-display{margin-top:20px;font-size:0.9rem;color:rgba(255,255,255,0.4);font-weight:700}
+
+/* TOP BAR */
+.top-bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;gap:8px}
+.back-btn{width:40px;height:40px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;color:white;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:all 0.2s}
+.back-btn:hover{background:rgba(255,255,255,0.2)}
+.lives{display:flex;gap:4px;font-size:1.3rem}
+.score-display{font-family:'Fredoka One',cursive;font-size:1.1rem;color:#fbbf24}
+.level-display{font-size:0.75rem;color:rgba(255,255,255,0.5);font-weight:700}
+.streak-badge{font-size:0.7rem;font-weight:800;color:#f97316;background:rgba(249,115,22,0.2);padding:2px 8px;border-radius:10px;display:none}
+.streak-badge.active{display:inline-block;animation:streakPop 0.3s ease-out}
+@keyframes streakPop{0%{transform:scale(0)}60%{transform:scale(1.3)}100%{transform:scale(1)}}
+.lang-btn{width:36px;height:36px;border-radius:50%;border:none;font-size:0.7rem;font-weight:800;cursor:pointer;color:white;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:all 0.2s}
+
+/* GAME AREA */
+.game-area{position:fixed;inset:0;display:flex;flex-direction:column;z-index:10;padding-top:56px}
+.game-area.hidden{display:none}
+
+/* CUSTOMER AREA */
+.customer-zone{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;padding:8px 16px 4px;position:relative}
+.customer-face{font-size:3rem;position:relative;animation:customerBounce 0.5s ease-out}
+@keyframes customerBounce{0%{transform:translateY(-30px) scale(0);opacity:0}60%{transform:translateY(5px) scale(1.1)}100%{transform:translateY(0) scale(1);opacity:1}}
+.timer-ring{width:80px;height:80px;position:relative;display:flex;align-items:center;justify-content:center}
+.timer-ring svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.timer-ring circle{fill:none;stroke-width:4;stroke-linecap:round}
+.timer-bg{stroke:rgba(255,255,255,0.08)}
+.timer-fg{stroke:#4ade80;transition:stroke 0.3s}
+.timer-fg.warning{stroke:#f59e0b}
+.timer-fg.danger{stroke:#ef4444}
+.speech-bubble{background:rgba(255,255,255,0.12);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:10px 16px;margin-top:6px;position:relative;display:flex;gap:6px;flex-wrap:wrap;justify-content:center;align-items:center;max-width:340px}
+.speech-bubble::before{content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:8px solid rgba(255,255,255,0.12)}
+.order-item{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.1);transition:all 0.3s;position:relative}
+.order-item.completed{background:rgba(74,222,128,0.2);border-color:rgba(74,222,128,0.5);transform:scale(1.1)}
+.order-item.completed::after{content:'✓';position:absolute;top:-4px;right:-4px;width:16px;height:16px;border-radius:50%;background:#4ade80;font-size:0.55rem;display:flex;align-items:center;justify-content:center;color:#064e3b;font-weight:900}
+.order-item.current{border-color:#fbbf24;box-shadow:0 0 12px rgba(251,191,36,0.4);animation:currentPulse 1s ease-in-out infinite}
+@keyframes currentPulse{0%,100%{box-shadow:0 0 12px rgba(251,191,36,0.4)}50%{box-shadow:0 0 20px rgba(251,191,36,0.7)}}
+.special-tag{font-size:0.65rem;font-weight:800;padding:2px 8px;border-radius:8px;color:white;margin-top:4px;animation:tagPulse 1.5s ease-in-out infinite}
+@keyframes tagPulse{0%,100%{opacity:1}50%{opacity:0.7}}
+
+/* PITA BUILDING ZONE */
+.pita-zone{flex:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;min-height:0}
+.pita-wrap{position:relative;width:140px;height:180px;display:flex;align-items:flex-end;justify-content:center}
+.pita-base{font-size:5rem;filter:drop-shadow(0 4px 20px rgba(0,0,0,0.4))}
+.pita-ingredients{position:absolute;bottom:50px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column-reverse;align-items:center;gap:2px}
+.pita-ingredient{font-size:1.4rem;animation:ingredientDrop 0.4s cubic-bezier(0.175,0.885,0.32,1.275)}
+@keyframes ingredientDrop{0%{transform:translateY(-40px) scale(0);opacity:0}60%{transform:translateY(5px) scale(1.1)}100%{transform:translateY(0) scale(1);opacity:1}}
+
+/* INGREDIENTS GRID */
+.ingredients-zone{flex:0 0 auto;padding:6px 8px;padding-bottom:max(12px,env(safe-area-inset-bottom))}
+.ingredients-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-width:400px;margin:0 auto}
+.ingredient-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:8px 4px;border-radius:16px;border:2px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.06);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);cursor:pointer;transition:all 0.15s;-webkit-tap-highlight-color:transparent;min-height:60px;position:relative}
+.ingredient-btn:active{transform:scale(0.9)}
+.ingredient-btn .emoji{font-size:1.6rem;line-height:1}
+.ingredient-btn .label{font-size:0.55rem;font-weight:700;color:rgba(255,255,255,0.5);line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.ingredient-btn.correct-flash{animation:correctFlash 0.4s ease-out;background:rgba(74,222,128,0.3);border-color:rgba(74,222,128,0.5)}
+@keyframes correctFlash{0%{transform:scale(0.9)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
+.ingredient-btn.wrong-flash{animation:wrongShake 0.4s ease-out;background:rgba(239,68,68,0.3);border-color:rgba(239,68,68,0.5)}
+@keyframes wrongShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+
+/* PARTICLES */
+.particle-container{position:fixed;inset:0;pointer-events:none;z-index:100;overflow:hidden}
+.falafel-particle{position:absolute;font-size:1.5rem;animation:falafelFly 1.2s ease-out forwards;pointer-events:none}
+@keyframes falafelFly{0%{transform:translate(0,0) rotate(0deg) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) rotate(720deg) scale(0);opacity:0}}
+
+/* ORDER COMPLETE */
+.order-complete-flash{position:fixed;inset:0;background:rgba(74,222,128,0.08);pointer-events:none;z-index:90;animation:flashFade 0.6s ease-out forwards}
+@keyframes flashFade{0%{opacity:1}100%{opacity:0}}
+.bonus-text{position:fixed;top:35%;left:50%;transform:translate(-50%,-50%);font-family:'Fredoka One',cursive;font-size:2rem;color:#fbbf24;text-shadow:0 2px 20px rgba(251,191,36,0.6);z-index:95;animation:bonusFloat 1s ease-out forwards;pointer-events:none}
+@keyframes bonusFloat{0%{transform:translate(-50%,-50%) scale(0);opacity:0}30%{transform:translate(-50%,-50%) scale(1.3);opacity:1}100%{transform:translate(-50%,-80%) scale(1);opacity:0}}
+
+/* GAME OVER */
+.game-over-screen{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:24px;transition:opacity 0.5s}
+.game-over-screen.hidden{opacity:0;pointer-events:none}
+.game-over-title{font-family:'Fredoka One',cursive;font-size:2.5rem;color:#ef4444;margin-bottom:8px}
+.game-over-score{font-family:'Fredoka One',cursive;font-size:3.5rem;color:#fbbf24;margin:8px 0}
+.game-over-stats{text-align:center;margin:16px 0 24px;color:rgba(255,255,255,0.5);font-weight:700;font-size:0.9rem;line-height:1.8}
+.new-record{color:#4ade80;font-weight:800;font-size:1.1rem;animation:recordPulse 1s ease-in-out infinite}
+@keyframes recordPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.restart-btn{font-family:'Fredoka One',cursive;font-size:1.3rem;padding:16px 48px;border:none;border-radius:50px;cursor:pointer;color:white;background:linear-gradient(135deg,#d97706,#b45309);box-shadow:0 6px 24px rgba(217,119,6,0.4);transition:all 0.2s;margin-top:8px}
+.restart-btn:active{transform:scale(0.95)}
+.home-link{margin-top:16px;color:rgba(255,255,255,0.4);font-weight:700;font-size:0.85rem;text-decoration:none;padding:8px 16px}
+.home-link:hover{color:rgba(255,255,255,0.6)}
+
+/* LIFE LOST OVERLAY */
+.life-lost{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.life-lost-icon{font-size:4rem;animation:lifeLost 0.8s ease-out forwards}
+@keyframes lifeLost{0%{transform:scale(0);opacity:0}30%{transform:scale(1.5);opacity:1}60%{transform:scale(1);opacity:1}100%{transform:scale(1) translateY(-30px);opacity:0}}
+
+/* TIME PENALTY */
+.time-penalty{position:fixed;top:30%;left:50%;transform:translateX(-50%);font-family:'Fredoka One',cursive;font-size:1.2rem;color:#ef4444;z-index:95;animation:penaltyFloat 0.8s ease-out forwards;pointer-events:none}
+@keyframes penaltyFloat{0%{opacity:1;transform:translateX(-50%) translateY(0)}100%{opacity:0;transform:translateX(-50%) translateY(-30px)}}
+</style>
+</head>
+<body>
+<div class="bg-main"></div>
+<div class="particle-container" id="particleContainer"></div>
+
+<!-- START SCREEN -->
+<div class="screen" id="startScreen">
+  <div class="start-emoji">🧆</div>
+  <div class="start-title" data-he="מלך הפלאפל" data-en="Falafel King">מלך הפלאפל</div>
+  <div class="start-subtitle" data-he="הכינו את הפיתה המושלמת!" data-en="Build the perfect pita!">הכינו את הפיתה המושלמת!</div>
+  <button class="play-btn" id="playBtn" data-he="יאללה!" data-en="Let's Go!">יאללה!</button>
+  <div class="high-score-display" id="highScoreStart"></div>
+</div>
+
+<!-- TOP BAR -->
+<div class="top-bar" id="topBar" style="display:none">
+  <div style="display:flex;align-items:center;gap:8px">
+    <button class="back-btn" id="backBtn" title="Back">🏠</button>
+    <div class="lives" id="livesDisplay"></div>
+  </div>
+  <div style="text-align:center">
+    <div class="score-display" id="scoreDisplay">0</div>
+    <div class="level-display" id="levelDisplay" data-he="שלב 1" data-en="Level 1">שלב 1</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:6px">
+    <span class="streak-badge" id="streakBadge"></span>
+    <button class="lang-btn" id="langBtn" onclick="toggleLang()">EN</button>
+  </div>
+</div>
+
+<!-- GAME AREA -->
+<div class="game-area hidden" id="gameArea">
+  <!-- Customer -->
+  <div class="customer-zone" id="customerZone">
+    <div class="timer-ring">
+      <svg viewBox="0 0 80 80"><circle class="timer-bg" cx="40" cy="40" r="36"/><circle class="timer-fg" id="timerCircle" cx="40" cy="40" r="36"/></svg>
+      <div class="customer-face" id="customerFace">😊</div>
+    </div>
+    <div class="speech-bubble" id="speechBubble"></div>
+    <div class="special-tag" id="specialTag" style="display:none"></div>
+  </div>
+  <!-- Pita -->
+  <div class="pita-zone">
+    <div class="pita-wrap">
+      <div class="pita-ingredients" id="pitaIngredients"></div>
+      <div class="pita-base">🥙</div>
+    </div>
+  </div>
+  <!-- Ingredients -->
+  <div class="ingredients-zone">
+    <div class="ingredients-grid" id="ingredientsGrid"></div>
+  </div>
+</div>
+
+<!-- GAME OVER -->
+<div class="game-over-screen hidden" id="gameOverScreen">
+  <div style="font-size:4rem;margin-bottom:8px">😢</div>
+  <div class="game-over-title" data-he="נגמר המשחק!" data-en="Game Over!">נגמר המשחק!</div>
+  <div class="game-over-score" id="finalScore">0</div>
+  <div class="game-over-stats" id="gameOverStats"></div>
+  <div class="new-record hidden" id="newRecord" data-he="🏆 שיא חדש!" data-en="🏆 New Record!">🏆 שיא חדש!</div>
+  <button class="restart-btn" id="restartBtn" data-he="שחקו שוב" data-en="Play Again">שחקו שוב</button>
+  <a class="home-link" href="https://elirank1.github.io/keren-family/" data-he="← חזרה לדף הבית" data-en="← Back to Home">← חזרה לדף הבית</a>
+</div>
+
+<script>
+// ===================== GAME CONFIG =====================
+const INGREDIENTS = [
+  { id:'falafel',  emoji:'🧆', he:'פלאפל',    en:'Falafel' },
+  { id:'tahini',   emoji:'🫘', he:'טחינה',    en:'Tahini' },
+  { id:'hummus',   emoji:'🟡', he:'חומוס',    en:'Hummus' },
+  { id:'salad',    emoji:'🥗', he:'סלט',      en:'Salad' },
+  { id:'pickles',  emoji:'🥒', he:'חמוצים',   en:'Pickles' },
+  { id:'hot',      emoji:'🌶️', he:'חריף',     en:'Hot Sauce' },
+  { id:'fries',    emoji:'🍟', he:'צ\'יפס',   en:'Fries' },
+  { id:'cabbage',  emoji:'🥬', he:'כרוב',     en:'Cabbage' },
+  { id:'onion',    emoji:'🧅', he:'בצל',      en:'Onion' },
+  { id:'amba',     emoji:'🥭', he:'אמבה',     en:'Amba' }
+];
+
+const CUSTOMERS = ['😊','😄','🤩','😋','🤤','😎','🧔','👩','👨','👧','👦','👵','🧑‍🍳','😁','🥳','🤠','😺'];
+const SPECIALS = [
+  { id:'extra_hot',      he:'🌶️ אקסטרה חריף!',    en:'🌶️ Extra Hot!',    color:'#ef4444', bgColor:'rgba(239,68,68,0.2)' },
+  { id:'double_falafel', he:'🧆🧆 כפול פלאפל!',    en:'🧆🧆 Double Falafel!', color:'#f59e0b', bgColor:'rgba(245,158,11,0.2)' },
+  { id:'speed',          he:'⚡ מהיר מהיר!',        en:'⚡ Rush Order!',    color:'#8b5cf6', bgColor:'rgba(139,92,246,0.2)' },
+];
+
+// ===================== STATE =====================
+let lang = localStorage.getItem('fk-lang') || 'he';
+let highScore = parseInt(localStorage.getItem('fk-highscore')) || 0;
+let state = {
+  score: 0, lives: 3, level: 1, streak: 0, bestStreak: 0,
+  ordersCompleted: 0, currentOrder: [], currentIndex: 0,
+  special: null, timerTotal: 0, timerLeft: 0,
+  isPlaying: false, isPaused: false
+};
+let timerInterval = null;
+const TIMER_TICK = 50; // ms
+
+// ===================== DOM =====================
+const $ = id => document.getElementById(id);
+const startScreen = $('startScreen');
+const gameArea = $('gameArea');
+const topBar = $('topBar');
+const gameOverScreen = $('gameOverScreen');
+const speechBubble = $('speechBubble');
+const pitaIngredients = $('pitaIngredients');
+const ingredientsGrid = $('ingredientsGrid');
+const customerFace = $('customerFace');
+const timerCircle = $('timerCircle');
+const specialTag = $('specialTag');
+const scoreDisplay = $('scoreDisplay');
+const levelDisplay = $('levelDisplay');
+const livesDisplay = $('livesDisplay');
+const streakBadge = $('streakBadge');
+const particleContainer = $('particleContainer');
+
+// ===================== LANG =====================
+function applyLang() {
+  document.querySelectorAll('[data-he]').forEach(el => {
+    el.textContent = el.getAttribute(`data-${lang}`);
+  });
+  document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+  document.documentElement.lang = lang;
+  const langBtnEl = $('langBtn');
+  if (langBtnEl) langBtnEl.textContent = lang === 'he' ? 'EN' : 'עב';
+  updateIngredientLabels();
+  showHighScore();
+}
+
+function toggleLang() {
+  lang = lang === 'he' ? 'en' : 'he';
+  localStorage.setItem('fk-lang', lang);
+  applyLang();
+  if (state.isPlaying) updateLevelDisplay();
+}
+
+function updateIngredientLabels() {
+  document.querySelectorAll('.ingredient-btn .label').forEach(el => {
+    const ing = INGREDIENTS.find(i => i.id === el.dataset.id);
+    if (ing) el.textContent = ing[lang];
+  });
+}
+
+function showHighScore() {
+  const el = $('highScoreStart');
+  if (highScore > 0) {
+    el.textContent = lang === 'he' ? `🏆 שיא: ${highScore}` : `🏆 Best: ${highScore}`;
+    el.style.display = 'block';
+  } else {
+    el.style.display = 'none';
+  }
+}
+
+// ===================== INIT =====================
+function init() {
+  applyLang();
+  buildIngredientsGrid();
+  $('playBtn').addEventListener('click', startGame);
+  $('restartBtn').addEventListener('click', startGame);
+  $('backBtn').addEventListener('click', () => {
+    window.location.href = 'https://elirank1.github.io/keren-family/';
+  });
+}
+
+function buildIngredientsGrid() {
+  ingredientsGrid.innerHTML = '';
+  INGREDIENTS.forEach(ing => {
+    const btn = document.createElement('button');
+    btn.className = 'ingredient-btn';
+    btn.innerHTML = `<span class="emoji">${ing.emoji}</span><span class="label" data-id="${ing.id}">${ing[lang]}</span>`;
+    btn.addEventListener('click', () => onIngredientTap(ing.id, btn));
+    btn.addEventListener('touchstart', (e) => { e.preventDefault(); onIngredientTap(ing.id, btn); }, { passive: false });
+    ingredientsGrid.appendChild(btn);
+  });
+}
+
+// ===================== GAME FLOW =====================
+function startGame() {
+  state = { score:0, lives:3, level:1, streak:0, bestStreak:0, ordersCompleted:0, currentOrder:[], currentIndex:0, special:null, timerTotal:0, timerLeft:0, isPlaying:true, isPaused:false };
+  startScreen.classList.add('hidden');
+  gameOverScreen.classList.add('hidden');
+  gameArea.classList.remove('hidden');
+  topBar.style.display = 'flex';
+  updateScore();
+  updateLives();
+  updateLevelDisplay();
+  updateStreak();
+  nextOrder();
+}
+
+function endGame() {
+  state.isPlaying = false;
+  clearInterval(timerInterval);
+  gameArea.classList.add('hidden');
+  topBar.style.display = 'none';
+  const isNew = state.score > highScore;
+  if (isNew) {
+    highScore = state.score;
+    localStorage.setItem('fk-highscore', highScore);
+  }
+  $('finalScore').textContent = state.score;
+  const statsEl = $('gameOverStats');
+  if (lang === 'he') {
+    statsEl.innerHTML = `הזמנות: ${state.ordersCompleted}<br>שלב: ${state.level}<br>רצף הכי טוב: ${state.bestStreak}<br>שיא: ${highScore}`;
+  } else {
+    statsEl.innerHTML = `Orders: ${state.ordersCompleted}<br>Level: ${state.level}<br>Best Streak: ${state.bestStreak}<br>High Score: ${highScore}`;
+  }
+  const newRec = $('newRecord');
+  if (isNew) { newRec.classList.remove('hidden'); } else { newRec.classList.add('hidden'); }
+  gameOverScreen.classList.remove('hidden');
+  showHighScore();
+}
+
+// ===================== ORDERS =====================
+function getOrderLength() {
+  const base = 2;
+  const extra = Math.floor((state.level - 1) / 2);
+  return Math.min(base + extra, 7);
+}
+
+function getTimerDuration() {
+  const base = 10000;
+  const reduction = Math.min(state.level * 400, 6000);
+  return Math.max(base - reduction, 3500);
+}
+
+function generateOrder() {
+  const len = getOrderLength();
+  const order = [];
+  const pool = [...INGREDIENTS];
+  // Determine special
+  let special = null;
+  if (state.level >= 3 && Math.random() < 0.3) {
+    const idx = Math.floor(Math.random() * SPECIALS.length);
+    special = SPECIALS[idx];
+  }
+  // Build order
+  for (let i = 0; i < len; i++) {
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+    order.push(pick);
+  }
+  // Apply specials
+  if (special) {
+    if (special.id === 'extra_hot') {
+      // Add hot sauce at end
+      order.push(INGREDIENTS.find(i => i.id === 'hot'));
+      order.push(INGREDIENTS.find(i => i.id === 'hot'));
+    } else if (special.id === 'double_falafel') {
+      // Add 2 extra falafel at start
+      order.unshift(INGREDIENTS.find(i => i.id === 'falafel'));
+      order.unshift(INGREDIENTS.find(i => i.id === 'falafel'));
+    }
+    // speed: timer is shorter (handled in timer)
+  }
+  return { items: order, special };
+}
+
+function nextOrder() {
+  if (!state.isPlaying) return;
+  pitaIngredients.innerHTML = '';
+  const { items, special } = generateOrder();
+  state.currentOrder = items;
+  state.currentIndex = 0;
+  state.special = special;
+  // Customer face
+  customerFace.textContent = CUSTOMERS[Math.floor(Math.random() * CUSTOMERS.length)];
+  customerFace.style.animation = 'none';
+  void customerFace.offsetHeight;
+  customerFace.style.animation = 'customerBounce 0.5s ease-out';
+  // Speech bubble
+  renderOrderBubble();
+  // Special tag
+  if (special) {
+    specialTag.style.display = 'block';
+    specialTag.textContent = special[lang];
+    specialTag.style.background = special.bgColor;
+    specialTag.style.color = special.color;
+  } else {
+    specialTag.style.display = 'none';
+  }
+  // Timer
+  let dur = getTimerDuration();
+  if (special && special.id === 'speed') dur = Math.max(dur * 0.6, 2500);
+  state.timerTotal = dur;
+  state.timerLeft = dur;
+  startTimer();
+}
+
+function renderOrderBubble() {
+  speechBubble.innerHTML = '';
+  state.currentOrder.forEach((ing, i) => {
+    const div = document.createElement('div');
+    div.className = 'order-item';
+    if (i < state.currentIndex) div.classList.add('completed');
+    if (i === state.currentIndex) div.classList.add('current');
+    div.textContent = ing.emoji;
+    div.id = `order-item-${i}`;
+    speechBubble.appendChild(div);
+  });
+}
+
+// ===================== TIMER =====================
+function startTimer() {
+  clearInterval(timerInterval);
+  const circumference = 2 * Math.PI * 36;
+  timerCircle.style.strokeDasharray = circumference;
+  timerCircle.style.strokeDashoffset = 0;
+  timerCircle.classList.remove('warning', 'danger');
+  timerInterval = setInterval(() => {
+    if (state.isPaused || !state.isPlaying) return;
+    state.timerLeft -= TIMER_TICK;
+    const pct = state.timerLeft / state.timerTotal;
+    timerCircle.style.strokeDashoffset = circumference * (1 - pct);
+    // Color
+    timerCircle.classList.remove('warning', 'danger');
+    if (pct < 0.25) timerCircle.classList.add('danger');
+    else if (pct < 0.5) timerCircle.classList.add('warning');
+    if (state.timerLeft <= 0) {
+      clearInterval(timerInterval);
+      onTimerExpired();
+    }
+  }, TIMER_TICK);
+}
+
+function onTimerExpired() {
+  state.lives--;
+  state.streak = 0;
+  updateLives();
+  updateStreak();
+  showLifeLost();
+  if (state.lives <= 0) {
+    setTimeout(endGame, 600);
+  } else {
+    setTimeout(nextOrder, 800);
+  }
+}
+
+// ===================== INGREDIENT TAP =====================
+function onIngredientTap(id, btnEl) {
+  if (!state.isPlaying || state.isPaused) return;
+  const expected = state.currentOrder[state.currentIndex];
+  if (id === expected.id) {
+    onCorrectIngredient(btnEl);
+  } else {
+    onWrongIngredient(btnEl);
+  }
+}
+
+function onCorrectIngredient(btnEl) {
+  // Flash button
+  btnEl.classList.remove('correct-flash');
+  void btnEl.offsetHeight;
+  btnEl.classList.add('correct-flash');
+  setTimeout(() => btnEl.classList.remove('correct-flash'), 400);
+  // Add to pita
+  const ing = state.currentOrder[state.currentIndex];
+  const div = document.createElement('div');
+  div.className = 'pita-ingredient';
+  div.textContent = ing.emoji;
+  pitaIngredients.appendChild(div);
+  // Update order bubble
+  const orderItem = document.getElementById(`order-item-${state.currentIndex}`);
+  if (orderItem) {
+    orderItem.classList.remove('current');
+    orderItem.classList.add('completed');
+  }
+  state.currentIndex++;
+  // Next item highlight
+  const nextItem = document.getElementById(`order-item-${state.currentIndex}`);
+  if (nextItem) nextItem.classList.add('current');
+  // Check if order complete
+  if (state.currentIndex >= state.currentOrder.length) {
+    onOrderComplete();
+  }
+}
+
+function onWrongIngredient(btnEl) {
+  // Flash button
+  btnEl.classList.remove('wrong-flash');
+  void btnEl.offsetHeight;
+  btnEl.classList.add('wrong-flash');
+  setTimeout(() => btnEl.classList.remove('wrong-flash'), 400);
+  // Time penalty
+  const penalty = 1500;
+  state.timerLeft = Math.max(0, state.timerLeft - penalty);
+  showTimePenalty();
+  // Break streak
+  state.streak = 0;
+  updateStreak();
+}
+
+function onOrderComplete() {
+  clearInterval(timerInterval);
+  state.ordersCompleted++;
+  state.streak++;
+  if (state.streak > state.bestStreak) state.bestStreak = state.streak;
+  // Score: base + speed bonus + streak multiplier
+  const timeBonus = Math.floor((state.timerLeft / state.timerTotal) * 50);
+  const base = 100 + (state.level * 10);
+  const streakMult = Math.min(1 + (state.streak - 1) * 0.25, 3);
+  const specialBonus = state.special ? 50 : 0;
+  const total = Math.floor((base + timeBonus + specialBonus) * streakMult);
+  state.score += total;
+  updateScore();
+  updateStreak();
+  // Level up every 3 orders
+  if (state.ordersCompleted % 3 === 0) {
+    state.level++;
+    updateLevelDisplay();
+  }
+  // Effects
+  showOrderComplete(total);
+  spawnFalafelParticles();
+  // Next order
+  setTimeout(nextOrder, 1200);
+}
+
+// ===================== UI UPDATES =====================
+function updateScore() {
+  scoreDisplay.textContent = state.score;
+}
+
+function updateLives() {
+  let html = '';
+  for (let i = 0; i < 3; i++) {
+    html += i < state.lives ? '❤️' : '🖤';
+  }
+  livesDisplay.innerHTML = html;
+}
+
+function updateLevelDisplay() {
+  const txt = lang === 'he' ? `שלב ${state.level}` : `Level ${state.level}`;
+  levelDisplay.textContent = txt;
+  levelDisplay.setAttribute('data-he', `שלב ${state.level}`);
+  levelDisplay.setAttribute('data-en', `Level ${state.level}`);
+}
+
+function updateStreak() {
+  if (state.streak >= 2) {
+    streakBadge.textContent = `x${state.streak}`;
+    streakBadge.classList.add('active');
+    streakBadge.style.display = 'inline-block';
+    // Re-trigger animation
+    streakBadge.classList.remove('active');
+    void streakBadge.offsetHeight;
+    streakBadge.classList.add('active');
+  } else {
+    streakBadge.style.display = 'none';
+  }
+}
+
+// ===================== EFFECTS =====================
+function showOrderComplete(points) {
+  // Flash
+  const flash = document.createElement('div');
+  flash.className = 'order-complete-flash';
+  document.body.appendChild(flash);
+  setTimeout(() => flash.remove(), 600);
+  // Bonus text
+  const bonus = document.createElement('div');
+  bonus.className = 'bonus-text';
+  bonus.textContent = `+${points}`;
+  document.body.appendChild(bonus);
+  setTimeout(() => bonus.remove(), 1000);
+}
+
+function showLifeLost() {
+  const overlay = document.createElement('div');
+  overlay.className = 'life-lost';
+  overlay.innerHTML = '<div class="life-lost-icon">💔</div>';
+  document.body.appendChild(overlay);
+  setTimeout(() => overlay.remove(), 800);
+}
+
+function showTimePenalty() {
+  const el = document.createElement('div');
+  el.className = 'time-penalty';
+  el.textContent = lang === 'he' ? '-זמן!' : '-Time!';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 800);
+}
+
+function spawnFalafelParticles() {
+  const emojis = ['🧆','⭐','✨','🥙','🎉'];
+  for (let i = 0; i < 12; i++) {
+    const p = document.createElement('div');
+    p.className = 'falafel-particle';
+    p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    const startX = window.innerWidth / 2;
+    const startY = window.innerHeight * 0.4;
+    p.style.left = startX + 'px';
+    p.style.top = startY + 'px';
+    const dx = (Math.random() - 0.5) * 300;
+    const dy = -(Math.random() * 200 + 100);
+    p.style.setProperty('--dx', dx + 'px');
+    p.style.setProperty('--dy', dy + 'px');
+    p.style.animationDelay = (Math.random() * 0.3) + 's';
+    particleContainer.appendChild(p);
+    setTimeout(() => p.remove(), 1500);
+  }
+}
+
+// ===================== START =====================
+init();
+</script>
+</body>
+</html>
