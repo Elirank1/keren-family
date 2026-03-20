@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1a0533">
+<title>חתחתול 🐱 Chatchtul</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐱</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Nunito',sans-serif;min-height:100vh;min-height:100dvh;overflow-x:hidden;user-select:none;-webkit-user-select:none;background:#0a0118;color:white}
+h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
+.bg-main{background:linear-gradient(135deg,#1a0533 0%,#2d1b69 30%,#1a0533 50%,#0d1b3e 70%,#1a0533 100%);position:relative;overflow:hidden;min-height:100vh;min-height:100dvh}
+.bg-main::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 50%,rgba(132,94,194,0.08) 0%,transparent 50%),radial-gradient(circle at 70% 30%,rgba(255,107,107,0.06) 0%,transparent 50%),radial-gradient(circle at 50% 80%,rgba(255,217,61,0.05) 0%,transparent 50%);animation:bgRotate 30s linear infinite;pointer-events:none}
+@keyframes bgRotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.glass{background:rgba(255,255,255,0.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1)}
+.glass-strong{background:rgba(255,255,255,0.1);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.15)}
+
+/* Top bar */
+.top-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;position:relative;z-index:10}
+.back-btn{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:20px;border:none;color:white;cursor:pointer;font-weight:700;font-size:0.85rem;font-family:'Nunito',sans-serif;transition:all 0.2s}
+.back-btn:hover{transform:scale(1.05)}
+.lang-btn{padding:8px 16px;border-radius:20px;border:none;color:white;cursor:pointer;font-weight:800;font-size:0.85rem;font-family:'Nunito',sans-serif;transition:all 0.2s}
+.lang-btn:hover{transform:scale(1.05)}
+
+/* Container */
+.container{max-width:600px;margin:0 auto;padding:0 12px 24px;position:relative;z-index:1}
+
+/* Title */
+.title-gradient{background:linear-gradient(135deg,#fff 0%,#e0d0ff 40%,#ffd6e8 70%,#fff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 2px 10px rgba(0,0,0,0.2))}
+
+/* Screens */
+.screen{display:none;flex-direction:column;align-items:center;gap:16px}
+.screen.active{display:flex}
+
+/* Cards */
+.card-slot{width:72px;height:100px;border-radius:14px;position:relative;cursor:pointer;transition:all 0.3s cubic-bezier(0.175,0.885,0.32,1.275);perspective:600px;flex-shrink:0}
+.card-slot:hover{transform:translateY(-4px)}
+.card-slot:active{transform:scale(0.95)}
+.card-slot.selected{box-shadow:0 0 0 3px rgba(255,217,61,0.8),0 0 20px rgba(255,217,61,0.3)}
+.card-slot.glow-hint{animation:glowHint 1.5s ease-in-out infinite}
+@keyframes glowHint{0%,100%{box-shadow:0 0 8px rgba(255,217,61,0.2)}50%{box-shadow:0 0 20px rgba(255,217,61,0.5)}}
+
+.card-inner{width:100%;height:100%;position:relative;transition:transform 0.6s cubic-bezier(0.4,0,0.2,1);transform-style:preserve-3d}
+.card-inner.flipped{transform:rotateY(180deg)}
+
+.card-face{position:absolute;width:100%;height:100%;border-radius:14px;backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;overflow:hidden}
+
+.card-back{background:linear-gradient(135deg,#6b3fa0,#8b5fbf);border:2px solid rgba(255,255,255,0.15);box-shadow:inset 0 0 20px rgba(0,0,0,0.2)}
+.card-back::before{content:'🐾';position:absolute;font-size:1.4rem;opacity:0.25}
+.card-back::after{content:'';position:absolute;inset:6px;border-radius:10px;border:1.5px dashed rgba(255,255,255,0.15)}
+
+.card-front{transform:rotateY(180deg);border:2px solid rgba(255,255,255,0.2);box-shadow:0 4px 15px rgba(0,0,0,0.3)}
+.card-front .card-emoji{font-size:1.8rem;line-height:1}
+.card-front .card-value{font-size:1.1rem;font-family:'Fredoka One',cursive;margin-top:2px;text-shadow:0 1px 3px rgba(0,0,0,0.3)}
+
+/* Card colors by value range */
+.card-cat{background:linear-gradient(135deg,#2ecc71,#27ae60)}
+.card-mid{background:linear-gradient(135deg,#f1c40f,#e67e22)}
+.card-rat{background:linear-gradient(135deg,#e74c3c,#c0392b)}
+.card-super-rat{background:linear-gradient(135deg,#8b0000,#5c0000)}
+.card-special{background:linear-gradient(135deg,#3498db,#2980b9)}
+
+/* Peek timer ring */
+.peek-timer{position:absolute;top:-4px;right:-4px;width:24px;height:24px;z-index:5}
+.peek-timer circle{fill:none;stroke-width:3;transform:rotate(-90deg);transform-origin:center}
+.peek-timer .bg{stroke:rgba(255,255,255,0.2)}
+.peek-timer .progress{stroke:#ffd93d;stroke-dasharray:62.83;stroke-dashoffset:0;transition:stroke-dashoffset 1s linear}
+
+/* Player areas */
+.player-area{width:100%;padding:12px;border-radius:20px;text-align:center}
+.player-label{font-family:'Fredoka One',cursive;font-size:0.95rem;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:6px}
+.cards-row{display:flex;justify-content:center;gap:10px}
+
+/* Center area */
+.center-area{display:flex;align-items:center;justify-content:center;gap:20px;padding:10px 0;width:100%}
+.pile{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;transition:all 0.2s}
+.pile:hover{transform:scale(1.05)}
+.pile:active{transform:scale(0.95)}
+.pile-card{width:64px;height:90px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.pile-label{font-size:0.7rem;font-weight:700;color:rgba(255,255,255,0.5)}
+.draw-count{position:absolute;bottom:4px;font-size:0.6rem;font-weight:800;color:rgba(255,255,255,0.6)}
+
+/* Action buttons */
+.action-bar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;width:100%;padding:4px 0}
+.action-btn{padding:10px 20px;border-radius:16px;border:none;color:white;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.85rem;cursor:pointer;transition:all 0.2s;min-height:48px;min-width:56px;display:flex;align-items:center;justify-content:center;gap:6px}
+.action-btn:hover{transform:translateY(-2px)}
+.action-btn:active{transform:scale(0.95)}
+.action-btn:disabled{opacity:0.3;cursor:not-allowed;transform:none!important}
+.action-btn.primary{background:linear-gradient(135deg,#e74c3c,#c0392b);box-shadow:0 4px 15px rgba(231,76,60,0.3)}
+.action-btn.secondary{background:linear-gradient(135deg,#6b3fa0,#8b5fbf);box-shadow:0 4px 15px rgba(107,63,160,0.3)}
+.action-btn.gold{background:linear-gradient(135deg,#f39c12,#e67e22);box-shadow:0 4px 15px rgba(243,156,18,0.3)}
+.action-btn.green{background:linear-gradient(135deg,#27ae60,#2ecc71);box-shadow:0 4px 15px rgba(39,174,96,0.3)}
+
+/* Chatchtul button */
+.chatchtul-btn{background:linear-gradient(135deg,#e74c3c,#c0392b)!important;box-shadow:0 4px 20px rgba(231,76,60,0.4)!important;font-size:1rem!important;padding:12px 24px!important;position:relative;overflow:hidden}
+.chatchtul-btn.ready{animation:chatchtulGlow 2s ease-in-out infinite}
+@keyframes chatchtulGlow{0%,100%{box-shadow:0 4px 20px rgba(231,76,60,0.4)}50%{box-shadow:0 4px 35px rgba(231,76,60,0.7),0 0 60px rgba(231,76,60,0.2)}}
+
+/* Status message */
+.status-msg{text-align:center;font-weight:700;font-size:0.9rem;color:rgba(255,255,255,0.7);min-height:24px;padding:4px 12px;line-height:1.3}
+
+/* Drawn card display */
+.drawn-card-display{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);z-index:100;transition:transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275);pointer-events:none}
+.drawn-card-display.show{transform:translate(-50%,-50%) scale(1);pointer-events:auto}
+.drawn-card-big{width:120px;height:170px;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:3px solid rgba(255,255,255,0.3);box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+.drawn-card-big .card-emoji{font-size:3.5rem}
+.drawn-card-big .card-value{font-size:1.8rem;font-family:'Fredoka One',cursive;margin-top:4px}
+.drawn-card-big .card-name{font-size:0.8rem;font-weight:700;margin-top:2px;opacity:0.8}
+.drawn-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:99;opacity:0;transition:opacity 0.3s;pointer-events:none}
+.drawn-overlay.show{opacity:1;pointer-events:auto}
+
+/* Swap animation */
+.card-slot.swapping{animation:swapFly 0.6s cubic-bezier(0.4,0,0.2,1)}
+@keyframes swapFly{0%{transform:translateY(0) scale(1)}30%{transform:translateY(-40px) scale(1.1)}70%{transform:translateY(40px) scale(0.9)}100%{transform:translateY(0) scale(1)}}
+
+/* Score reveal */
+.score-overlay{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px)}
+.score-overlay.show{display:flex}
+.score-panel{width:90%;max-width:400px;border-radius:28px;padding:28px 20px;text-align:center;animation:bounceIn 0.6s cubic-bezier(0.175,0.885,0.32,1.275)}
+@keyframes bounceIn{0%{transform:scale(0);opacity:0}60%{transform:scale(1.1)}80%{transform:scale(0.95)}100%{transform:scale(1);opacity:1}}
+.score-title{font-size:2.2rem;font-family:'Fredoka One',cursive;margin-bottom:4px}
+.score-subtitle{font-size:0.9rem;color:rgba(255,255,255,0.5);margin-bottom:16px}
+.score-cards-reveal{display:flex;justify-content:center;gap:8px;margin:12px 0}
+.score-card-mini{width:52px;height:72px;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,0.2);font-size:0.7rem;font-weight:800}
+.score-card-mini .card-emoji{font-size:1.3rem}
+.score-card-mini .card-value{font-size:0.9rem;font-family:'Fredoka One',cursive}
+.score-total{font-size:1.5rem;font-family:'Fredoka One',cursive;margin:4px 0}
+.score-row{margin-bottom:16px}
+.score-row-label{font-size:0.8rem;color:rgba(255,255,255,0.5);font-weight:700}
+.result-emoji{font-size:4rem;margin:8px 0}
+
+/* Record */
+.record-bar{display:flex;justify-content:center;gap:16px;font-size:0.75rem;font-weight:700;color:rgba(255,255,255,0.4)}
+.record-bar span{display:flex;align-items:center;gap:4px}
+
+/* Menu screen */
+.menu-art{font-size:5rem;margin:12px 0;animation:menuBounce 3s ease-in-out infinite}
+@keyframes menuBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* Rules popup */
+.rules-popup{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px)}
+.rules-popup.show{display:flex}
+.rules-content{width:90%;max-width:420px;max-height:80vh;border-radius:24px;padding:24px 20px;overflow-y:auto;animation:bounceIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275)}
+.rules-content h3{font-size:1.1rem;margin:12px 0 6px;color:#ffd93d}
+.rules-content p,.rules-content li{font-size:0.82rem;line-height:1.5;color:rgba(255,255,255,0.7)}
+.rules-content ul{padding-right:16px;padding-left:16px}
+
+/* Difficulty */
+.diff-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.diff-btn{padding:10px 20px;border-radius:14px;border:2px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);color:white;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.85rem;cursor:pointer;transition:all 0.2s;min-height:48px}
+.diff-btn:hover{transform:translateY(-2px);border-color:rgba(255,255,255,0.3)}
+.diff-btn.selected{border-color:#ffd93d;background:rgba(255,217,61,0.15);color:#ffd93d}
+
+/* Turn indicator */
+.turn-indicator{font-size:0.8rem;font-weight:800;padding:4px 14px;border-radius:12px;display:inline-flex;align-items:center;gap:4px}
+.turn-player{background:rgba(46,204,113,0.2);color:#2ecc71}
+.turn-computer{background:rgba(231,76,60,0.2);color:#e74c3c}
+
+/* Thinking dots */
+.thinking-dots span{display:inline-block;animation:thinkDot 1.4s infinite;opacity:0.3}
+.thinking-dots span:nth-child(2){animation-delay:0.2s}
+.thinking-dots span:nth-child(3){animation-delay:0.4s}
+@keyframes thinkDot{0%,80%,100%{opacity:0.3}40%{opacity:1}}
+
+/* Toast */
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-100px);z-index:500;padding:10px 20px;border-radius:16px;font-weight:800;font-size:0.85rem;transition:transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275);white-space:nowrap;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* Special card actions overlay */
+.special-overlay{position:fixed;inset:0;z-index:150;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);backdrop-filter:blur(6px)}
+.special-overlay.show{display:flex}
+.special-panel{width:85%;max-width:360px;border-radius:24px;padding:24px 20px;text-align:center;animation:bounceIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275)}
+
+@media(max-width:380px){
+  .card-slot{width:62px;height:88px}
+  .pile-card{width:56px;height:78px}
+  .cards-row{gap:6px}
+}
+</style>
+</head>
+<body>
+<div class="bg-main">
+
+<!-- Toast -->
+<div class="toast glass-strong" id="toast"></div>
+
+<!-- Drawn card overlay -->
+<div class="drawn-overlay" id="drawnOverlay"></div>
+<div class="drawn-card-display" id="drawnCardDisplay">
+  <div class="drawn-card-big" id="drawnCardBig"></div>
+  <div style="display:flex;gap:8px;margin-top:16px;justify-content:center;flex-wrap:wrap" id="drawnActions"></div>
+</div>
+
+<!-- Special action overlay -->
+<div class="special-overlay" id="specialOverlay">
+  <div class="special-panel glass-strong" id="specialPanel"></div>
+</div>
+
+<!-- Score overlay -->
+<div class="score-overlay" id="scoreOverlay">
+  <div class="score-panel glass-strong" id="scorePanel"></div>
+</div>
+
+<!-- Rules popup -->
+<div class="rules-popup" id="rulesPopup" onclick="closeRules(event)">
+  <div class="rules-content glass-strong" id="rulesContent"></div>
+</div>
+
+<!-- Top bar -->
+<div class="top-bar">
+  <a href="../" class="back-btn glass" id="backBtn">
+    <span>🏠</span>
+    <span data-he="חזרה" data-en="Back">חזרה</span>
+  </a>
+  <button class="lang-btn glass" onclick="toggleLang()" id="langBtn">EN</button>
+</div>
+
+<div class="container">
+
+<!-- ========== MENU SCREEN ========== -->
+<div class="screen active" id="menuScreen">
+  <div class="menu-art">🐱</div>
+  <h1 class="title-gradient" style="font-size:2.4rem;line-height:1.1" data-he="חתחתול!" data-en="Chatchtul!">חתחתול!</h1>
+  <p style="color:rgba(255,255,255,0.4);font-size:0.85rem;font-weight:700;margin-top:-8px" data-he="הקלפים הנמוכים ביותר מנצחים" data-en="Lowest cards win">הקלפים הנמוכים ביותר מנצחים</p>
+
+  <div class="record-bar" id="recordBar">
+    <span data-he="ניצחונות" data-en="Wins">ניצחונות</span>: <span id="recWins">0</span>
+    <span>|</span>
+    <span data-he="הפסדים" data-en="Losses">הפסדים</span>: <span id="recLosses">0</span>
+  </div>
+
+  <div style="margin-top:8px">
+    <p style="font-weight:700;font-size:0.85rem;color:rgba(255,255,255,0.5);margin-bottom:8px" data-he="בחר רמת קושי" data-en="Choose difficulty">בחר רמת קושי</p>
+    <div class="diff-btns">
+      <button class="diff-btn selected" data-diff="easy" onclick="setDiff('easy',this)" data-he="קל" data-en="Easy">קל</button>
+      <button class="diff-btn" data-diff="medium" onclick="setDiff('medium',this)" data-he="בינוני" data-en="Medium">בינוני</button>
+      <button class="diff-btn" data-diff="hard" onclick="setDiff('hard',this)" data-he="קשה" data-en="Hard">קשה</button>
+    </div>
+  </div>
+
+  <button class="action-btn green" style="font-size:1.1rem;padding:14px 40px;margin-top:8px" onclick="startGame()" data-he="🎮 התחל משחק" data-en="🎮 Start Game">🎮 התחל משחק</button>
+  <button class="action-btn secondary" onclick="showRules()" data-he="📖 חוקי המשחק" data-en="📖 How to Play">📖 חוקי המשחק</button>
+</div>
+
+<!-- ========== GAME SCREEN ========== -->
+<div class="screen" id="gameScreen">
+
+  <!-- Computer area -->
+  <div class="player-area glass" style="border-color:rgba(231,76,60,0.2)">
+    <div class="player-label">
+      <span>🤖</span>
+      <span data-he="המחשב" data-en="Computer">המחשב</span>
+      <span class="turn-indicator turn-computer" id="compTurn" style="display:none">
+        <span class="thinking-dots"><span>.</span><span>.</span><span>.</span></span>
+        <span data-he="חושב" data-en="Thinking">חושב</span>
+      </span>
+    </div>
+    <div class="cards-row" id="compCards"></div>
+  </div>
+
+  <!-- Center: draw & discard -->
+  <div class="center-area">
+    <div class="pile" id="drawPile" onclick="drawFromDeck()">
+      <div class="pile-card card-back" style="border:2px solid rgba(255,255,255,0.15)">
+        <span style="font-size:1.6rem;opacity:0.3">🐾</span>
+        <span class="draw-count" id="deckCount">40</span>
+      </div>
+      <span class="pile-label" data-he="חפיסה" data-en="Deck">חפיסה</span>
+    </div>
+    <div class="pile" id="discardPile" onclick="drawFromDiscard()">
+      <div class="pile-card glass" id="discardTop" style="border:2px solid rgba(255,255,255,0.15)">
+        <span style="font-size:1.2rem;opacity:0.3">-</span>
+      </div>
+      <span class="pile-label" data-he="ערימת שליכה" data-en="Discard">ערימת שליכה</span>
+    </div>
+  </div>
+
+  <!-- Status -->
+  <div class="status-msg" id="statusMsg" data-he="תורך! שלוף קלף מהחפיסה או מערימת השליכה" data-en="Your turn! Draw from deck or discard pile">תורך! שלוף קלף מהחפיסה או מערימת השליכה</div>
+
+  <!-- Turn indicator for player -->
+  <div id="playerTurnInd"></div>
+
+  <!-- Player area -->
+  <div class="player-area glass" style="border-color:rgba(46,204,113,0.2)">
+    <div class="player-label">
+      <span>😊</span>
+      <span data-he="את/ה" data-en="You">את/ה</span>
+      <span class="turn-indicator turn-player" id="playerTurn" style="display:none" data-he="תורך!" data-en="Your turn!">תורך!</span>
+    </div>
+    <div class="cards-row" id="playerCards"></div>
+  </div>
+
+  <!-- Action bar -->
+  <div class="action-bar" id="actionBar">
+    <button class="action-btn chatchtul-btn" id="chatchtulBtn" onclick="callChatchtul()" disabled data-he="🐱 חתחתול!" data-en="🐱 Chatchtul!">🐱 חתחתול!</button>
+  </div>
+</div>
+
+</div><!-- container -->
+</div><!-- bg-main -->
+
+<script>
+// ============================================================
+// CHATCHTUL GAME - Complete Implementation
+// ============================================================
+
+// --- Internationalization ---
+let lang = localStorage.getItem('keren-lang') || 'he';
+const T = {
+  he: {
+    yourTurnDraw: 'תורך! שלוף קלף מהחפיסה או מערימת השליכה',
+    memorize: 'שנן את הקלפים שלך! ({s} שניות)',
+    compThinking: 'המחשב חושב...',
+    drawnNumber: 'שלפת {v}! החלף עם אחד מהקלפים שלך או השלך',
+    drawnSpecialPeek: 'שלפת הצצה! בחר קלף שלך להציץ בו, או השלך',
+    drawnSpecialSwap: 'שלפת החלפה! בחר קלף שלך ואז של המחשב, או השלך',
+    drawnSpecialDraw2: 'שלפת שלוף 2! בחר את הטוב יותר',
+    discardIt: 'השלך',
+    swapWith: 'בחר קלף שלך להחלפה',
+    pickOpponent: 'עכשיו בחר קלף של המחשב',
+    peekingCard: 'מציץ... ({s}ש)',
+    chatchtulCalled: '🐱 חתחתול! קראת חתחתול!',
+    compCalledChatchtul: '🤖 המחשב קרא חתחתול!',
+    lastTurn: 'תור אחרון! שלוף מהחפיסה או מהשליכה',
+    youWin: 'ניצחת! 🎉',
+    youLose: 'הפסדת 😿',
+    tie: 'תיקו! 🤝',
+    yourScore: 'הניקוד שלך',
+    compScore: 'ניקוד המחשב',
+    bonus: 'בונוס קורא חתחתול!',
+    penalty: 'עונש - קראת חתחתול אבל לא ניצחת!',
+    playAgain: '🔄 שחק שוב',
+    backToMenu: '🏠 תפריט',
+    callerBonus: '(-5 בונוס)',
+    callerPenalty: '(+10 עונש)',
+    keepCard: 'השאר',
+    draw2pick: 'בחר קלף לשמור',
+    rulesTitle: 'חוקי חתחתול',
+    ruleGoal: 'המטרה: צבור את הניקוד הנמוך ביותר!',
+    ruleCards: 'קלפים 0-2 (חתולים) = טובים, 6-9 (עכברושים) = רעים',
+    rulePeek: 'בתחילת המשחק תראה 2 מתוך 4 קלפים שלך',
+    ruleTurn: 'בכל תור: שלוף מהחפיסה או קח מערימת השליכה',
+    ruleSwapOrDiscard: 'אם שלפת מספר: החלף עם קלף שלך או השלך',
+    ruleSpecials: 'קלפים מיוחדים: הצצה, החלפה, שלוף 2',
+    ruleEnd: 'קרא "חתחתול!" לסיים - אם הנמוך ביותר, בונוס! אם לא, עונש!',
+    close: 'סגור',
+    you: 'את/ה',
+    computer: 'מחשב',
+  },
+  en: {
+    yourTurnDraw: 'Your turn! Draw from deck or discard pile',
+    memorize: 'Memorize your cards! ({s} sec)',
+    compThinking: 'Computer is thinking...',
+    drawnNumber: 'Drew {v}! Swap with one of your cards or discard',
+    drawnSpecialPeek: 'Drew Peek! Pick one of your cards to peek, or discard',
+    drawnSpecialSwap: 'Drew Swap! Pick your card then opponent\'s, or discard',
+    drawnSpecialDraw2: 'Drew Draw 2! Pick the better card',
+    discardIt: 'Discard',
+    swapWith: 'Pick your card to swap',
+    pickOpponent: 'Now pick an opponent\'s card',
+    peekingCard: 'Peeking... ({s}s)',
+    chatchtulCalled: '🐱 Chatchtul! You called it!',
+    compCalledChatchtul: '🤖 Computer called Chatchtul!',
+    lastTurn: 'Last turn! Draw from deck or discard',
+    youWin: 'You Win! 🎉',
+    youLose: 'You Lose 😿',
+    tie: 'It\'s a Tie! 🤝',
+    yourScore: 'Your Score',
+    compScore: 'Computer Score',
+    bonus: 'Chatchtul caller bonus!',
+    penalty: 'Penalty - called Chatchtul but didn\'t win!',
+    playAgain: '🔄 Play Again',
+    backToMenu: '🏠 Menu',
+    callerBonus: '(-5 bonus)',
+    callerPenalty: '(+10 penalty)',
+    keepCard: 'Keep',
+    draw2pick: 'Pick a card to keep',
+    rulesTitle: 'How to Play Chatchtul',
+    ruleGoal: 'Goal: Get the lowest total score!',
+    ruleCards: 'Cards 0-2 (cats) = good, 6-9 (rats) = bad',
+    rulePeek: 'At the start you see 2 of your 4 cards',
+    ruleTurn: 'Each turn: draw from deck or take from discard pile',
+    ruleSwapOrDiscard: 'If you drew a number: swap with your card or discard',
+    ruleSpecials: 'Special cards: Peek, Swap, Draw 2',
+    ruleEnd: 'Call "Chatchtul!" to end - if lowest score, bonus! If not, penalty!',
+    close: 'Close',
+    you: 'You',
+    computer: 'Computer',
+  }
+};
+function t(key, replacements) {
+  let s = T[lang][key] || key;
+  if (replacements) Object.entries(replacements).forEach(([k,v]) => s = s.replace(`{${k}}`, v));
+  return s;
+}
+
+function toggleLang() {
+  lang = lang === 'he' ? 'en' : 'he';
+  localStorage.setItem('keren-lang', lang);
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+  document.getElementById('langBtn').textContent = lang === 'he' ? 'EN' : 'עב';
+  document.querySelectorAll('[data-he]').forEach(el => {
+    el.textContent = el.getAttribute(lang === 'he' ? 'data-he' : 'data-en');
+  });
+  if (statusKey) setStatus(statusKey, statusReplacements);
+}
+
+let statusKey = '', statusReplacements = {};
+function setStatus(key, rep) {
+  statusKey = key; statusReplacements = rep || {};
+  document.getElementById('statusMsg').textContent = t(key, rep);
+}
+
+// Init lang
+(function initLang() {
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+  document.getElementById('langBtn').textContent = lang === 'he' ? 'EN' : 'עב';
+  if (lang === 'en') {
+    document.querySelectorAll('[data-en]').forEach(el => {
+      el.textContent = el.getAttribute('data-en');
+    });
+  }
+})();
+
+// --- Card data ---
+const CARD_TYPES = {
+  PEEK: 'peek',
+  SWAP: 'swap',
+  DRAW2: 'draw2',
+};
+
+function makeCard(value) {
+  if (typeof value === 'string') return { value, special: true };
+  return { value, special: false };
+}
+
+function cardEmoji(card) {
+  if (card.special) {
+    if (card.value === CARD_TYPES.PEEK) return '👁️';
+    if (card.value === CARD_TYPES.SWAP) return '🔄';
+    if (card.value === CARD_TYPES.DRAW2) return '🃏';
+  }
+  if (card.value <= 2) return '🐱';
+  if (card.value <= 5) return ['🐶','🐰','🐸'][card.value - 3] || '🐾';
+  if (card.value <= 8) return '🐀';
+  return '🐀';
+}
+
+function cardName(card) {
+  if (card.special) {
+    if (card.value === CARD_TYPES.PEEK) return lang === 'he' ? 'הצצה' : 'Peek';
+    if (card.value === CARD_TYPES.SWAP) return lang === 'he' ? 'החלפה' : 'Swap';
+    if (card.value === CARD_TYPES.DRAW2) return lang === 'he' ? 'שלוף 2' : 'Draw 2';
+  }
+  return card.value.toString();
+}
+
+function cardColorClass(card) {
+  if (card.special) return 'card-special';
+  if (card.value <= 2) return 'card-cat';
+  if (card.value <= 5) return 'card-mid';
+  if (card.value <= 8) return 'card-rat';
+  return 'card-super-rat';
+}
+
+function buildDeck() {
+  const deck = [];
+  // 4 copies of each number 0-9
+  for (let v = 0; v <= 9; v++) {
+    for (let i = 0; i < 4; i++) deck.push(makeCard(v));
+  }
+  // 2 of each special
+  for (let i = 0; i < 2; i++) {
+    deck.push(makeCard(CARD_TYPES.PEEK));
+    deck.push(makeCard(CARD_TYPES.SWAP));
+    deck.push(makeCard(CARD_TYPES.DRAW2));
+  }
+  return deck;
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// --- Game State ---
+let deck, discard, playerHand, compHand;
+let playerKnown, compKnown; // indices the player/comp have seen
+let compMemory; // what computer remembers: {index: value} for player and comp
+let phase; // 'memorize', 'playerTurn', 'playerDrew', 'playerSpecial', 'compTurn', 'ending', 'over'
+let drawnCard;
+let difficulty = 'easy';
+let chatchtulCaller = null; // 'player' | 'computer' | null
+let lastTurnFor = null; // who gets one more turn
+let turnCount = 0;
+
+// --- Records ---
+let record = JSON.parse(localStorage.getItem('chatchtul-record') || '{"w":0,"l":0}');
+function updateRecordUI() {
+  document.getElementById('recWins').textContent = record.w;
+  document.getElementById('recLosses').textContent = record.l;
+}
+updateRecordUI();
+
+// --- Difficulty ---
+function setDiff(d, btn) {
+  difficulty = d;
+  document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+// --- Screens ---
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// --- Rules ---
+function showRules() {
+  const rc = document.getElementById('rulesContent');
+  rc.innerHTML = `
+    <h2 style="font-size:1.5rem;text-align:center;margin-bottom:12px">${t('rulesTitle')}</h2>
+    <ul style="display:flex;flex-direction:column;gap:8px">
+      <li>${t('ruleGoal')}</li>
+      <li>${t('ruleCards')}</li>
+      <li>${t('rulePeek')}</li>
+      <li>${t('ruleTurn')}</li>
+      <li>${t('ruleSwapOrDiscard')}</li>
+      <li>${t('ruleSpecials')}</li>
+      <li>${t('ruleEnd')}</li>
+    </ul>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:16px">
+      <div style="text-align:center">
+        <div style="font-size:1.8rem">🐱</div>
+        <div style="font-size:0.7rem;font-weight:700;color:#2ecc71">0-2</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:1.8rem">🐶🐰🐸</div>
+        <div style="font-size:0.7rem;font-weight:700;color:#f1c40f">3-5</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:1.8rem">🐀</div>
+        <div style="font-size:0.7rem;font-weight:700;color:#e74c3c">6-9</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:1.8rem">👁️🔄🃏</div>
+        <div style="font-size:0.7rem;font-weight:700;color:#3498db">${lang==='he'?'מיוחד':'Special'}</div>
+      </div>
+    </div>
+    <button class="action-btn secondary" style="margin:16px auto 0;display:block" onclick="document.getElementById('rulesPopup').classList.remove('show')">${t('close')}</button>
+  `;
+  document.getElementById('rulesPopup').classList.add('show');
+}
+function closeRules(e) {
+  if (e.target === document.getElementById('rulesPopup')) document.getElementById('rulesPopup').classList.remove('show');
+}
+
+// --- Toast ---
+function toast(msg, dur = 2000) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), dur);
+}
+
+// --- Render cards ---
+function renderCard(container, card, faceUp, index, owner) {
+  const slot = document.createElement('div');
+  slot.className = 'card-slot';
+  slot.dataset.index = index;
+  slot.dataset.owner = owner;
+
+  const inner = document.createElement('div');
+  inner.className = 'card-inner' + (faceUp ? ' flipped' : '');
+
+  const back = document.createElement('div');
+  back.className = 'card-face card-back';
+
+  const front = document.createElement('div');
+  front.className = `card-face card-front ${cardColorClass(card)}`;
+  front.innerHTML = `<span class="card-emoji">${cardEmoji(card)}</span><span class="card-value">${card.special ? '' : card.value}</span>${card.special ? `<span class="card-name" style="font-size:0.65rem">${cardName(card)}</span>` : ''}`;
+
+  inner.appendChild(back);
+  inner.appendChild(front);
+  slot.appendChild(inner);
+  container.appendChild(slot);
+  return slot;
+}
+
+function renderPlayerCards() {
+  const cont = document.getElementById('playerCards');
+  cont.innerHTML = '';
+  playerHand.forEach((card, i) => {
+    const slot = renderCard(cont, card, false, i, 'player');
+    slot.onclick = () => handleCardClick('player', i, slot);
+  });
+}
+
+function renderCompCards() {
+  const cont = document.getElementById('compCards');
+  cont.innerHTML = '';
+  compHand.forEach((card, i) => {
+    renderCard(cont, card, false, i, 'computer');
+  });
+}
+
+function renderDiscardTop() {
+  const el = document.getElementById('discardTop');
+  if (discard.length === 0) {
+    el.className = 'pile-card glass';
+    el.style.border = '2px solid rgba(255,255,255,0.15)';
+    el.innerHTML = `<span style="font-size:1.2rem;opacity:0.3">-</span>`;
+    return;
+  }
+  const card = discard[discard.length - 1];
+  el.className = `pile-card ${cardColorClass(card)}`;
+  el.style.border = '2px solid rgba(255,255,255,0.2)';
+  el.innerHTML = `<span style="font-size:1.4rem">${cardEmoji(card)}</span><span style="font-size:0.9rem;font-weight:800;font-family:'Fredoka One',cursive">${card.special ? cardName(card) : card.value}</span>`;
+}
+
+function updateDeckCount() {
+  document.getElementById('deckCount').textContent = deck.length;
+}
+
+// --- Flip a card temporarily ---
+function peekCard(owner, index, duration = 3000) {
+  return new Promise(resolve => {
+    const cont = owner === 'player' ? document.getElementById('playerCards') : document.getElementById('compCards');
+    const slot = cont.children[index];
+    if (!slot) { resolve(); return; }
+    const inner = slot.querySelector('.card-inner');
+    inner.classList.add('flipped');
+
+    // Timer ring
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.classList.add('peek-timer');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    const bgC = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    bgC.classList.add('bg'); bgC.setAttribute('cx','12'); bgC.setAttribute('cy','12'); bgC.setAttribute('r','10');
+    const prC = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    prC.classList.add('progress'); prC.setAttribute('cx','12'); prC.setAttribute('cy','12'); prC.setAttribute('r','10');
+    svg.appendChild(bgC); svg.appendChild(prC);
+    slot.appendChild(svg);
+
+    const totalMs = duration;
+    const step = 50;
+    let elapsed = 0;
+    const interval = setInterval(() => {
+      elapsed += step;
+      const frac = elapsed / totalMs;
+      prC.style.strokeDashoffset = (62.83 * frac).toFixed(2);
+      if (elapsed >= totalMs) {
+        clearInterval(interval);
+        inner.classList.remove('flipped');
+        svg.remove();
+        resolve();
+      }
+    }, step);
+  });
+}
+
+// Flip card permanently (for end game reveal)
+function flipCardPermanent(owner, index) {
+  const cont = owner === 'player' ? document.getElementById('playerCards') : document.getElementById('compCards');
+  const slot = cont.children[index];
+  if (!slot) return;
+  slot.querySelector('.card-inner').classList.add('flipped');
+}
+
+// --- Show drawn card ---
+function showDrawnCard(card) {
+  return new Promise(resolve => {
+    const big = document.getElementById('drawnCardBig');
+    big.className = `drawn-card-big ${cardColorClass(card)}`;
+    big.innerHTML = `<span class="card-emoji">${cardEmoji(card)}</span><span class="card-value">${card.special ? '' : card.value}</span><span class="card-name">${cardName(card)}</span>`;
+
+    const actions = document.getElementById('drawnActions');
+    actions.innerHTML = '';
+
+    document.getElementById('drawnOverlay').classList.add('show');
+    document.getElementById('drawnCardDisplay').classList.add('show');
+    resolve();
+  });
+}
+
+function hideDrawnCard() {
+  document.getElementById('drawnOverlay').classList.remove('show');
+  document.getElementById('drawnCardDisplay').classList.remove('show');
+}
+
+// --- Start Game ---
+function startGame() {
+  deck = shuffle(buildDeck());
+  discard = [];
+  playerHand = []; compHand = [];
+  playerKnown = new Set();
+  compKnown = new Set();
+  compMemory = { player: {}, comp: {} };
+  chatchtulCaller = null;
+  lastTurnFor = null;
+  turnCount = 0;
+  phase = 'dealing';
+
+  // Deal 4 to each, ensuring no specials in initial hands
+  let dealing = true;
+  while (dealing) {
+    deck = shuffle(buildDeck());
+    playerHand = []; compHand = [];
+    let ok = true;
+    for (let i = 0; i < 4; i++) {
+      const pc = deck.pop();
+      if (pc.special) { ok = false; break; }
+      playerHand.push(pc);
+    }
+    if (!ok) continue;
+    for (let i = 0; i < 4; i++) {
+      const cc = deck.pop();
+      if (cc.special) { ok = false; break; }
+      compHand.push(cc);
+    }
+    if (ok) dealing = false;
+  }
+
+  // Discard first card (ensure not special)
+  let firstDiscard = deck.pop();
+  while (firstDiscard.special) {
+    deck.unshift(firstDiscard);
+    shuffle(deck);
+    firstDiscard = deck.pop();
+  }
+  discard.push(firstDiscard);
+
+  showScreen('gameScreen');
+  renderPlayerCards();
+  renderCompCards();
+  renderDiscardTop();
+  updateDeckCount();
+
+  // Computer memorizes its own edge cards
+  compMemory.comp[0] = compHand[0].value;
+  compMemory.comp[3] = compHand[3].value;
+
+  // Memorize phase
+  phase = 'memorize';
+  enableChatchtul(false);
+  document.getElementById('compTurn').style.display = 'none';
+  document.getElementById('playerTurn').style.display = 'none';
+
+  // Show player's leftmost and rightmost
+  const dur = 5000;
+  setStatus('memorize', { s: '5' });
+
+  let timeLeft = 5;
+  const countdown = setInterval(() => {
+    timeLeft--;
+    if (timeLeft > 0) setStatus('memorize', { s: String(timeLeft) });
+  }, 1000);
+
+  Promise.all([
+    peekCard('player', 0, dur),
+    peekCard('player', 3, dur)
+  ]).then(() => {
+    clearInterval(countdown);
+    playerKnown.add(0);
+    playerKnown.add(3);
+    startPlayerTurn();
+  });
+}
+
+// --- Turn management ---
+function startPlayerTurn() {
+  phase = 'playerTurn';
+  turnCount++;
+  document.getElementById('compTurn').style.display = 'none';
+  document.getElementById('playerTurn').style.display = 'inline-flex';
+  enableChatchtul(turnCount >= 2);
+  enablePiles(true);
+  removeCardHighlights();
+
+  if (lastTurnFor === 'player') {
+    setStatus('lastTurn');
+  } else {
+    setStatus('yourTurnDraw');
+  }
+}
+
+function startCompTurn() {
+  phase = 'compTurn';
+  turnCount++;
+  document.getElementById('playerTurn').style.display = 'none';
+  document.getElementById('compTurn').style.display = 'inline-flex';
+  enableChatchtul(false);
+  enablePiles(false);
+  removeCardHighlights();
+  setStatus('compThinking');
+
+  const delay = 800 + Math.random() * 1200;
+  setTimeout(() => computerPlay(), delay);
+}
+
+function enablePiles(on) {
+  document.getElementById('drawPile').style.pointerEvents = on ? 'auto' : 'none';
+  document.getElementById('drawPile').style.opacity = on ? '1' : '0.4';
+  document.getElementById('discardPile').style.pointerEvents = on ? 'auto' : 'none';
+  document.getElementById('discardPile').style.opacity = on ? '1' : '0.4';
+}
+
+function enableChatchtul(on) {
+  const btn = document.getElementById('chatchtulBtn');
+  btn.disabled = !on;
+  btn.classList.toggle('ready', on);
+}
+
+function removeCardHighlights() {
+  document.querySelectorAll('.card-slot').forEach(s => {
+    s.classList.remove('selected', 'glow-hint');
+  });
+}
+
+// --- Draw from deck ---
+function drawFromDeck() {
+  if (phase !== 'playerTurn') return;
+  if (deck.length === 0) { reshuffleDeck(); }
+  drawnCard = deck.pop();
+  updateDeckCount();
+  enablePiles(false);
+
+  showDrawnCard(drawnCard);
+
+  if (drawnCard.special) {
+    handleSpecialDraw(drawnCard);
+  } else {
+    handleNumberDraw(drawnCard);
+  }
+}
+
+function drawFromDiscard() {
+  if (phase !== 'playerTurn') return;
+  if (discard.length === 0) return;
+  drawnCard = discard.pop();
+  renderDiscardTop();
+  enablePiles(false);
+
+  // From discard can only be number (specials are discarded face up but rules say you can pick them - let's allow only numbers from discard for simplicity, or we allow all)
+  // Actually in Rat-a-Tat Cat you can take the discard and must swap it
+  showDrawnCard(drawnCard);
+
+  if (drawnCard.special) {
+    // If special from discard, use it or discard
+    handleSpecialDraw(drawnCard);
+  } else {
+    handleNumberDrawFromDiscard(drawnCard);
+  }
+}
+
+function handleNumberDraw(card) {
+  phase = 'playerDrew';
+  setStatus('drawnNumber', { v: card.value });
+
+  const actions = document.getElementById('drawnActions');
+  actions.innerHTML = `<button class="action-btn secondary" onclick="discardDrawn()" style="min-height:48px">${t('discardIt')}</button>`;
+
+  // Highlight player cards
+  highlightPlayerCards('swap');
+}
+
+function handleNumberDrawFromDiscard(card) {
+  phase = 'playerDrew';
+  setStatus('drawnNumber', { v: card.value });
+
+  const actions = document.getElementById('drawnActions');
+  actions.innerHTML = `<button class="action-btn secondary" onclick="discardDrawn()" style="min-height:48px">${t('discardIt')}</button>`;
+
+  highlightPlayerCards('swap');
+}
+
+function handleSpecialDraw(card) {
+  phase = 'playerSpecial';
+  const type = card.value;
+
+  if (type === CARD_TYPES.PEEK) {
+    setStatus('drawnSpecialPeek');
+    const actions = document.getElementById('drawnActions');
+    actions.innerHTML = `<button class="action-btn secondary" onclick="discardDrawn()" style="min-height:48px">${t('discardIt')}</button>`;
+    highlightPlayerCards('peek');
+  } else if (type === CARD_TYPES.SWAP) {
+    setStatus('drawnSpecialSwap');
+    const actions = document.getElementById('drawnActions');
+    actions.innerHTML = `<button class="action-btn secondary" onclick="discardDrawn()" style="min-height:48px">${t('discardIt')}</button>`;
+    highlightPlayerCards('swapSpecial');
+  } else if (type === CARD_TYPES.DRAW2) {
+    setStatus('drawnSpecialDraw2');
+    hideDrawnCard();
+    handleDraw2();
+  }
+}
+
+function highlightPlayerCards(mode) {
+  const cont = document.getElementById('playerCards');
+  Array.from(cont.children).forEach(slot => {
+    slot.classList.add('glow-hint');
+    slot.dataset.mode = mode;
+  });
+}
+
+// --- Handle card clicks ---
+let swapSpecialStep = null; // 'pickOwn' | 'pickOpponent'
+let swapSpecialOwnIndex = null;
+
+function handleCardClick(owner, index, slot) {
+  if (phase === 'playerDrew' && owner === 'player') {
+    // Swap drawn card with this card
+    const old = playerHand[index];
+    playerHand[index] = drawnCard;
+    discard.push(old);
+    playerKnown.add(index);
+
+    hideDrawnCard();
+    renderPlayerCards();
+    renderDiscardTop();
+    removeCardHighlights();
+
+    // Brief peek at new card
+    peekCard('player', index, 1500).then(() => {
+      endPlayerTurn();
+    });
+    return;
+  }
+
+  if (phase === 'playerSpecial') {
+    const mode = slot.dataset.mode;
+
+    if (mode === 'peek' && owner === 'player') {
+      // Peek at own card
+      hideDrawnCard();
+      discard.push(drawnCard);
+      renderDiscardTop();
+      removeCardHighlights();
+      playerKnown.add(index);
+      phase = 'peekAnim';
+      peekCard('player', index, 3000).then(() => {
+        endPlayerTurn();
+      });
+      return;
+    }
+
+    if (mode === 'swapSpecial') {
+      if (owner === 'player' && swapSpecialStep !== 'pickOpponent') {
+        swapSpecialStep = 'pickOpponent';
+        swapSpecialOwnIndex = index;
+        slot.classList.add('selected');
+        slot.classList.remove('glow-hint');
+        setStatus('pickOpponent');
+
+        // Highlight computer cards
+        const compCont = document.getElementById('compCards');
+        Array.from(compCont.children).forEach(cs => {
+          cs.classList.add('glow-hint');
+          cs.dataset.mode = 'swapSpecialTarget';
+          cs.onclick = () => handleCardClick('computer', parseInt(cs.dataset.index), cs);
+        });
+        return;
+      }
+    }
+
+    if ((mode === 'swapSpecialTarget' || slot.dataset.mode === 'swapSpecialTarget') && owner === 'computer') {
+      // Execute swap
+      hideDrawnCard();
+      discard.push(drawnCard);
+      renderDiscardTop();
+
+      const pi = swapSpecialOwnIndex;
+      const ci = index;
+      const temp = playerHand[pi];
+      playerHand[pi] = compHand[ci];
+      compHand[ci] = temp;
+
+      // Computer knows what it received
+      if (!compHand[ci].special) compMemory.comp[ci] = compHand[ci].value;
+      // Player doesn't know what they got (blind swap)
+
+      swapSpecialStep = null;
+      swapSpecialOwnIndex = null;
+      removeCardHighlights();
+
+      // Animate
+      const pSlot = document.getElementById('playerCards').children[pi];
+      const cSlot = document.getElementById('compCards').children[ci];
+      if (pSlot) pSlot.classList.add('swapping');
+      if (cSlot) cSlot.classList.add('swapping');
+
+      setTimeout(() => {
+        renderPlayerCards();
+        renderCompCards();
+        endPlayerTurn();
+      }, 600);
+      return;
+    }
+  }
+}
+
+function discardDrawn() {
+  discard.push(drawnCard);
+  drawnCard = null;
+  hideDrawnCard();
+  renderDiscardTop();
+  removeCardHighlights();
+  swapSpecialStep = null;
+  swapSpecialOwnIndex = null;
+  endPlayerTurn();
+}
+
+// --- Draw 2 ---
+function handleDraw2() {
+  discard.push(drawnCard); // discard the Draw2 card itself
+  renderDiscardTop();
+
+  if (deck.length < 2) reshuffleDeck();
+  const c1 = deck.pop();
+  const c2 = deck.pop();
+  updateDeckCount();
+
+  // If either is special, treat as value 10 (bad) for picking
+  const panel = document.getElementById('specialPanel');
+  panel.innerHTML = `
+    <h3 style="font-size:1.2rem;margin-bottom:12px">${t('draw2pick')}</h3>
+    <div style="display:flex;justify-content:center;gap:16px">
+      <div id="d2c1" class="card-slot" style="width:90px;height:126px;cursor:pointer" onclick="pickDraw2(0)">
+        <div class="card-inner flipped">
+          <div class="card-face card-back"></div>
+          <div class="card-face card-front ${cardColorClass(c1)}">
+            <span class="card-emoji" style="font-size:2.2rem">${cardEmoji(c1)}</span>
+            <span class="card-value" style="font-size:1.3rem">${c1.special ? '' : c1.value}</span>
+            ${c1.special ? `<span class="card-name">${cardName(c1)}</span>` : ''}
+          </div>
+        </div>
+      </div>
+      <div id="d2c2" class="card-slot" style="width:90px;height:126px;cursor:pointer" onclick="pickDraw2(1)">
+        <div class="card-inner flipped">
+          <div class="card-face card-back"></div>
+          <div class="card-face card-front ${cardColorClass(c2)}">
+            <span class="card-emoji" style="font-size:2.2rem">${cardEmoji(c2)}</span>
+            <span class="card-value" style="font-size:1.3rem">${c2.special ? '' : c2.value}</span>
+            ${c2.special ? `<span class="card-name">${cardName(c2)}</span>` : ''}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById('specialOverlay').classList.add('show');
+
+  window._draw2Cards = [c1, c2];
+}
+
+window.pickDraw2 = function(idx) {
+  const [c1, c2] = window._draw2Cards;
+  const kept = idx === 0 ? c1 : c2;
+  const discarded = idx === 0 ? c2 : c1;
+
+  discard.push(discarded);
+  document.getElementById('specialOverlay').classList.remove('show');
+  renderDiscardTop();
+
+  if (kept.special) {
+    // Use the special card
+    drawnCard = kept;
+    showDrawnCard(kept);
+    handleSpecialDraw(kept);
+  } else {
+    drawnCard = kept;
+    showDrawnCard(kept);
+    handleNumberDraw(kept);
+  }
+};
+
+// --- End player turn ---
+function endPlayerTurn() {
+  phase = 'transition';
+  if (chatchtulCaller && lastTurnFor === 'player') {
+    // This was the last turn
+    setTimeout(() => revealAll(), 500);
+    return;
+  }
+  if (chatchtulCaller && lastTurnFor === 'computer') {
+    // Computer already had last turn, now reveal
+    setTimeout(() => revealAll(), 500);
+    return;
+  }
+  setTimeout(() => startCompTurn(), 400);
+}
+
+// --- Computer AI ---
+function computerPlay() {
+  if (phase !== 'compTurn') return;
+
+  // Computer strategy based on difficulty
+  const memComp = compMemory.comp;
+  const memPlayer = compMemory.player;
+
+  // Find highest known card in computer's hand
+  let worstIdx = -1, worstVal = -1;
+  for (const [idx, val] of Object.entries(memComp)) {
+    if (typeof val === 'number' && val > worstVal) {
+      worstVal = val;
+      worstIdx = parseInt(idx);
+    }
+  }
+
+  // Check discard pile
+  const topDiscard = discard.length > 0 ? discard[discard.length - 1] : null;
+  const discardUseful = topDiscard && !topDiscard.special && topDiscard.value <= 3 && worstVal >= 5;
+
+  // Decision: take discard or draw
+  if (discardUseful && worstIdx >= 0) {
+    // Take from discard and swap with worst known
+    const taken = discard.pop();
+    const old = compHand[worstIdx];
+    compHand[worstIdx] = taken;
+    compMemory.comp[worstIdx] = taken.value;
+    discard.push(old);
+    renderDiscardTop();
+    renderCompCards();
+
+    // Brief animation
+    const slot = document.getElementById('compCards').children[worstIdx];
+    if (slot) slot.classList.add('swapping');
+    setTimeout(() => {
+      renderCompCards();
+      finishCompTurn();
+    }, 600);
+    return;
+  }
+
+  // Draw from deck
+  if (deck.length === 0) reshuffleDeck();
+  const drawn = deck.pop();
+  updateDeckCount();
+
+  if (drawn.special) {
+    compUseSpecial(drawn);
+    return;
+  }
+
+  // Number card drawn
+  const drawVal = drawn.value;
+
+  // Should we swap?
+  if (worstIdx >= 0 && drawVal < worstVal) {
+    const old = compHand[worstIdx];
+    compHand[worstIdx] = drawn;
+    compMemory.comp[worstIdx] = drawVal;
+    discard.push(old);
+  } else if (difficulty !== 'hard' && Math.random() < 0.3 && drawVal <= 3) {
+    // Random swap with unknown card
+    const unknowns = [0,1,2,3].filter(i => !(i in memComp));
+    if (unknowns.length > 0) {
+      const ri = unknowns[Math.floor(Math.random() * unknowns.length)];
+      const old = compHand[ri];
+      compHand[ri] = drawn;
+      compMemory.comp[ri] = drawVal;
+      discard.push(old);
+    } else {
+      discard.push(drawn);
+    }
+  } else {
+    discard.push(drawn);
+  }
+
+  renderDiscardTop();
+  renderCompCards();
+  updateDeckCount();
+
+  setTimeout(() => {
+    // Computer might call chatchtul
+    if (turnCount >= 4 && !chatchtulCaller) {
+      const knownSum = Object.values(memComp).reduce((a, b) => typeof b === 'number' ? a + b : a, 0);
+      const knownCount = Object.values(memComp).filter(v => typeof v === 'number').length;
+      const estimatedTotal = knownCount === 4 ? knownSum : knownSum + (4 - knownCount) * 4;
+
+      let threshold;
+      if (difficulty === 'easy') threshold = 6;
+      else if (difficulty === 'medium') threshold = 10;
+      else threshold = 14;
+
+      if (estimatedTotal <= threshold && knownCount >= (difficulty === 'easy' ? 4 : 3)) {
+        callChatchtulComp();
+        return;
+      }
+    }
+    finishCompTurn();
+  }, 400);
+}
+
+function compUseSpecial(card) {
+  const type = card.value;
+
+  if (type === CARD_TYPES.PEEK) {
+    // Peek at own unknown card
+    const unknowns = [0,1,2,3].filter(i => !(i in compMemory.comp));
+    if (unknowns.length > 0) {
+      const idx = unknowns[Math.floor(Math.random() * unknowns.length)];
+      compMemory.comp[idx] = compHand[idx].special ? 10 : compHand[idx].value;
+    }
+    discard.push(card);
+    renderDiscardTop();
+    toast(lang === 'he' ? '🤖 המחשב הציץ בקלף' : '🤖 Computer peeked');
+    setTimeout(() => finishCompTurn(), 800);
+  } else if (type === CARD_TYPES.SWAP) {
+    // Swap own worst with random player card
+    let worstIdx = -1, worstVal = -1;
+    for (const [idx, val] of Object.entries(compMemory.comp)) {
+      if (typeof val === 'number' && val > worstVal) { worstVal = val; worstIdx = parseInt(idx); }
+    }
+    if (worstIdx >= 0 && worstVal >= 5) {
+      const pIdx = Math.floor(Math.random() * 4);
+      const temp = compHand[worstIdx];
+      compHand[worstIdx] = playerHand[pIdx];
+      playerHand[pIdx] = temp;
+      if (!compHand[worstIdx].special) compMemory.comp[worstIdx] = compHand[worstIdx].value;
+      else delete compMemory.comp[worstIdx];
+
+      // Animate
+      const cSlot = document.getElementById('compCards').children[worstIdx];
+      const pSlot = document.getElementById('playerCards').children[pIdx];
+      if (cSlot) cSlot.classList.add('swapping');
+      if (pSlot) pSlot.classList.add('swapping');
+
+      discard.push(card);
+      toast(lang === 'he' ? '🤖 המחשב החליף קלף!' : '🤖 Computer swapped a card!');
+      setTimeout(() => {
+        renderCompCards(); renderPlayerCards(); renderDiscardTop();
+        finishCompTurn();
+      }, 800);
+    } else {
+      discard.push(card);
+      renderDiscardTop();
+      setTimeout(() => finishCompTurn(), 400);
+    }
+  } else if (type === CARD_TYPES.DRAW2) {
+    discard.push(card);
+    if (deck.length < 2) reshuffleDeck();
+    const c1 = deck.pop(), c2 = deck.pop();
+    updateDeckCount();
+
+    // Pick the better (lower) number card
+    const v1 = c1.special ? 10 : c1.value;
+    const v2 = c2.special ? 10 : c2.value;
+    const kept = v1 <= v2 ? c1 : c2;
+    const discarded = v1 <= v2 ? c2 : c1;
+    discard.push(discarded);
+
+    if (!kept.special) {
+      // Try to use it
+      let worstIdx = -1, worstVal = -1;
+      for (const [idx, val] of Object.entries(compMemory.comp)) {
+        if (typeof val === 'number' && val > worstVal) { worstVal = val; worstIdx = parseInt(idx); }
+      }
+      if (worstIdx >= 0 && kept.value < worstVal) {
+        const old = compHand[worstIdx];
+        compHand[worstIdx] = kept;
+        compMemory.comp[worstIdx] = kept.value;
+        discard.push(old);
+      } else {
+        discard.push(kept);
+      }
+    } else {
+      discard.push(kept);
+    }
+
+    renderDiscardTop(); renderCompCards(); updateDeckCount();
+    toast(lang === 'he' ? '🤖 המחשב שלף 2' : '🤖 Computer drew 2');
+    setTimeout(() => finishCompTurn(), 600);
+  }
+}
+
+function finishCompTurn() {
+  if (chatchtulCaller && lastTurnFor === 'computer') {
+    setTimeout(() => revealAll(), 500);
+    return;
+  }
+  if (chatchtulCaller && lastTurnFor === 'player') {
+    startPlayerTurn();
+    return;
+  }
+  startPlayerTurn();
+}
+
+// --- Chatchtul! ---
+function callChatchtul() {
+  if (phase !== 'playerTurn' || chatchtulCaller) return;
+  chatchtulCaller = 'player';
+  lastTurnFor = 'computer'; // computer gets one more turn
+  toast(t('chatchtulCalled'), 2500);
+  enableChatchtul(false);
+
+  // Player still takes their turn, then computer gets last turn
+  // Actually: calling chatchtul ends the round after opponent's turn
+  // Let player finish current turn first
+  setStatus('chatchtulCalled');
+  setTimeout(() => {
+    // Now computer gets last turn
+    startCompTurn();
+  }, 1500);
+}
+
+function callChatchtulComp() {
+  chatchtulCaller = 'computer';
+  lastTurnFor = 'player'; // player gets one more turn
+  toast(t('compCalledChatchtul'), 2500);
+  setStatus('compCalledChatchtul');
+  setTimeout(() => {
+    startPlayerTurn();
+  }, 1500);
+}
+
+// --- Reveal & Score ---
+function revealAll() {
+  phase = 'over';
+  enablePiles(false);
+  enableChatchtul(false);
+  document.getElementById('compTurn').style.display = 'none';
+  document.getElementById('playerTurn').style.display = 'none';
+
+  // Flip all cards with staggered animation
+  let delay = 0;
+  for (let i = 0; i < 4; i++) {
+    setTimeout(() => flipCardPermanent('player', i), delay);
+    setTimeout(() => flipCardPermanent('computer', i), delay + 200);
+    delay += 400;
+  }
+
+  setTimeout(() => showScoreScreen(), delay + 600);
+}
+
+function calcScore(hand) {
+  return hand.reduce((sum, c) => sum + (c.special ? 0 : c.value), 0);
+}
+
+function showScoreScreen() {
+  let pScore = calcScore(playerHand);
+  let cScore = calcScore(compHand);
+  let bonusText = '';
+
+  if (chatchtulCaller === 'player') {
+    if (pScore <= cScore) {
+      pScore -= 5;
+      bonusText = t('callerBonus');
+    } else {
+      pScore += 10;
+      bonusText = t('callerPenalty');
+    }
+  } else if (chatchtulCaller === 'computer') {
+    if (cScore <= pScore) {
+      cScore -= 5;
+    } else {
+      cScore += 10;
+    }
+  }
+
+  const won = pScore < cScore;
+  const tied = pScore === cScore;
+
+  if (won) { record.w++; }
+  else if (!tied) { record.l++; }
+  localStorage.setItem('chatchtul-record', JSON.stringify(record));
+  updateRecordUI();
+
+  const panel = document.getElementById('scorePanel');
+  panel.innerHTML = `
+    <div class="result-emoji">${won ? '🎉' : tied ? '🤝' : '😿'}</div>
+    <div class="score-title">${won ? t('youWin') : tied ? t('tie') : t('youLose')}</div>
+    ${bonusText ? `<div style="font-size:0.8rem;color:#ffd93d;font-weight:700;margin:4px 0">${chatchtulCaller === 'player' ? t(pScore < cScore + 5 ? 'bonus' : 'penalty') : ''} ${bonusText}</div>` : ''}
+
+    <div class="score-row" style="margin-top:12px">
+      <div class="score-row-label">${t('yourScore')}</div>
+      <div class="score-cards-reveal">
+        ${playerHand.map(c => `<div class="score-card-mini ${cardColorClass(c)}"><span class="card-emoji">${cardEmoji(c)}</span><span class="card-value">${c.special ? '0' : c.value}</span></div>`).join('')}
+      </div>
+      <div class="score-total" style="color:${pScore <= cScore ? '#2ecc71' : '#e74c3c'}">${pScore}</div>
+    </div>
+
+    <div class="score-row">
+      <div class="score-row-label">${t('compScore')}</div>
+      <div class="score-cards-reveal">
+        ${compHand.map(c => `<div class="score-card-mini ${cardColorClass(c)}"><span class="card-emoji">${cardEmoji(c)}</span><span class="card-value">${c.special ? '0' : c.value}</span></div>`).join('')}
+      </div>
+      <div class="score-total" style="color:${cScore <= pScore ? '#2ecc71' : '#e74c3c'}">${cScore}</div>
+    </div>
+
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:8px">
+      <button class="action-btn green" onclick="document.getElementById('scoreOverlay').classList.remove('show');startGame()" style="min-height:48px">${t('playAgain')}</button>
+      <button class="action-btn secondary" onclick="document.getElementById('scoreOverlay').classList.remove('show');showScreen('menuScreen')" style="min-height:48px">${t('backToMenu')}</button>
+    </div>
+  `;
+
+  document.getElementById('scoreOverlay').classList.add('show');
+}
+
+// --- Reshuffle ---
+function reshuffleDeck() {
+  if (discard.length <= 1) return;
+  const top = discard.pop();
+  deck = shuffle([...discard]);
+  discard = [top];
+  updateDeckCount();
+  renderDiscardTop();
+  toast(lang === 'he' ? '🔀 החפיסה עורבבה מחדש' : '🔀 Deck reshuffled');
+}
+</script>
+</body>
+</html>

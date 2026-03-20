@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1a0533">
+<title>Taki | Keren Family</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🃏</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #EF4444; --blue: #3B82F6; --green: #22C55E; --yellow: #F59E0B;
+  --red-dark: #DC2626; --blue-dark: #2563EB; --green-dark: #16A34A; --yellow-dark: #D97706;
+  --red-light: #FCA5A5; --blue-light: #93C5FD; --green-light: #86EFAC; --yellow-light: #FCD34D;
+  --card-w: 70px; --card-h: 100px; --card-r: 12px;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body { font-family:'Nunito',sans-serif; min-height:100vh; min-height:100dvh; overflow:hidden; user-select:none; -webkit-user-select:none;
+  background:linear-gradient(135deg,#1a0533 0%,#2d1b69 30%,#1a0533 50%,#0d1b3e 70%,#1a0533 100%); color:#fff; }
+h1,h2,h3,.font-display { font-family:'Fredoka One',cursive; }
+
+/* Top bar */
+.top-bar { position:fixed; top:0; left:0; right:0; z-index:200; display:flex; align-items:center; justify-content:space-between;
+  padding:8px 12px; background:rgba(0,0,0,0.4); backdrop-filter:blur(15px); -webkit-backdrop-filter:blur(15px); }
+.top-bar-btn { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:12px; color:#fff;
+  padding:6px 14px; font-size:0.8rem; font-weight:700; cursor:pointer; font-family:'Nunito',sans-serif; transition:all 0.2s; }
+.top-bar-btn:hover { background:rgba(255,255,255,0.2); }
+.top-bar-title { font-family:'Fredoka One',cursive; font-size:1.1rem; }
+.top-bar-score { font-size:0.75rem; color:rgba(255,255,255,0.5); font-weight:700; }
+
+/* Game area */
+.game-area { position:fixed; inset:0; display:flex; flex-direction:column; padding-top:52px; }
+
+/* Opponent zone */
+.opponent-zone { flex:0 0 auto; padding:8px 12px 4px; display:flex; align-items:center; gap:8px; min-height:80px; }
+.opp-cards { display:flex; gap:-20px; flex:1; justify-content:center; align-items:center; min-height:60px; position:relative; }
+.opp-card { width:44px; height:62px; border-radius:8px; background:linear-gradient(135deg,#845EC2,#6B21A8);
+  border:2px solid rgba(255,255,255,0.15); box-shadow:0 2px 8px rgba(0,0,0,0.3); position:relative; flex-shrink:0; transition:all 0.3s; }
+.opp-card::after { content:'🃏'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:1rem; opacity:0.6; }
+.opp-label { font-size:0.7rem; font-weight:800; color:rgba(255,255,255,0.4); text-align:center; white-space:nowrap; }
+.opp-count { font-size:1.5rem; font-weight:900; font-family:'Fredoka One',cursive; }
+
+/* Center zone */
+.center-zone { flex:1; display:flex; align-items:center; justify-content:center; gap:24px; padding:8px; position:relative; }
+.pile-area { position:relative; width:calc(var(--card-w) + 20px); height:calc(var(--card-h) + 20px); }
+.pile-card { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
+.pile-card:nth-child(1) { transform:translate(-50%,-50%) rotate(-3deg); opacity:0.3; }
+.pile-card:nth-child(2) { transform:translate(-50%,-50%) rotate(2deg); opacity:0.5; }
+.pile-card:nth-child(3) { transform:translate(-50%,-50%) rotate(-1deg); }
+.draw-pile { display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; transition:transform 0.2s; }
+.draw-pile:hover { transform:scale(1.05); }
+.draw-pile:active { transform:scale(0.95); }
+.draw-deck { width:var(--card-w); height:var(--card-h); border-radius:var(--card-r); position:relative;
+  background:linear-gradient(135deg,#845EC2,#6B21A8); border:2.5px solid rgba(255,255,255,0.2); box-shadow:0 4px 15px rgba(0,0,0,0.4);
+  display:flex; align-items:center; justify-content:center; }
+.draw-deck::before { content:''; position:absolute; inset:4px; border-radius:8px; border:1.5px dashed rgba(255,255,255,0.15); }
+.draw-count { font-size:0.65rem; font-weight:800; color:rgba(255,255,255,0.5); }
+
+/* Status message */
+.status-bar { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); font-size:0.8rem; font-weight:800;
+  padding:6px 18px; border-radius:20px; white-space:nowrap; z-index:50;
+  background:rgba(0,0,0,0.5); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.1); transition:all 0.3s; }
+
+/* Active color indicator */
+.active-color-ring { position:absolute; top:-14px; right:-14px; width:28px; height:28px; border-radius:50%;
+  border:3px solid rgba(255,255,255,0.8); box-shadow:0 0 10px rgba(0,0,0,0.3); z-index:5; }
+
+/* Player zone */
+.player-zone { flex:0 0 auto; padding:4px 8px 12px; padding-bottom:max(12px, env(safe-area-inset-bottom)); }
+.hand-container { display:flex; justify-content:center; align-items:flex-end; min-height:120px; position:relative; padding:0 4px; overflow-x:auto; overflow-y:visible; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+.hand-container::-webkit-scrollbar { display:none; }
+
+/* Card base */
+.card { width:var(--card-w); height:var(--card-h); border-radius:var(--card-r); position:relative;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  font-family:'Fredoka One',cursive; cursor:pointer; flex-shrink:0; transition:transform 0.2s, box-shadow 0.2s, margin 0.2s;
+  box-shadow:0 3px 10px rgba(0,0,0,0.3); border:2.5px solid rgba(255,255,255,0.25); }
+.card:hover { transform:translateY(-12px) scale(1.05); box-shadow:0 8px 25px rgba(0,0,0,0.4); z-index:10; }
+.card:active { transform:translateY(-8px) scale(0.98); }
+.card.unplayable { opacity:0.45; cursor:default; }
+.card.unplayable:hover { transform:none; box-shadow:0 3px 10px rgba(0,0,0,0.3); z-index:1; }
+
+.card-red { background:linear-gradient(135deg,var(--red),var(--red-dark)); }
+.card-blue { background:linear-gradient(135deg,var(--blue),var(--blue-dark)); }
+.card-green { background:linear-gradient(135deg,var(--green),var(--green-dark)); }
+.card-yellow { background:linear-gradient(135deg,var(--yellow),var(--yellow-dark)); }
+.card-wild { background:linear-gradient(135deg,#EC4899,#8B5CF6,#3B82F6,#22C55E); }
+
+.card-inner { position:absolute; inset:4px; border-radius:8px; border:1.5px solid rgba(255,255,255,0.2);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0px; }
+.card-num { font-size:1.8rem; line-height:1; text-shadow:0 2px 4px rgba(0,0,0,0.3); color:#fff; }
+.card-sym { font-size:0.65rem; font-weight:800; color:rgba(255,255,255,0.8); text-transform:uppercase; letter-spacing:0.5px; }
+.card-corner { position:absolute; font-size:0.55rem; font-weight:900; color:rgba(255,255,255,0.7); }
+.card-corner-tl { top:3px; left:5px; }
+.card-corner-br { bottom:3px; right:5px; transform:rotate(180deg); }
+
+/* TAKI open glow */
+.taki-open-glow { animation:takiPulse 0.8s ease-in-out infinite alternate; }
+@keyframes takiPulse { 0% { box-shadow:0 0 10px rgba(255,255,255,0.2); } 100% { box-shadow:0 0 25px rgba(255,217,61,0.6), 0 0 50px rgba(255,217,61,0.2); } }
+
+/* Close TAKI button */
+.close-taki-btn { position:fixed; bottom:160px; left:50%; transform:translateX(-50%); z-index:100;
+  background:linear-gradient(135deg,#F59E0B,#EF4444); color:#fff; border:none; border-radius:20px;
+  padding:12px 28px; font-size:1rem; font-weight:800; font-family:'Fredoka One',cursive;
+  cursor:pointer; box-shadow:0 4px 20px rgba(239,68,68,0.4); animation:closeTakiBounce 1s ease-in-out infinite alternate; }
+@keyframes closeTakiBounce { 0% { transform:translateX(-50%) scale(1); } 100% { transform:translateX(-50%) scale(1.08); } }
+
+/* Color picker */
+.color-picker-overlay { position:fixed; inset:0; z-index:300; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s; }
+.color-picker-overlay.active { opacity:1; pointer-events:auto; }
+.color-picker { text-align:center; }
+.color-picker h2 { margin-bottom:20px; font-size:1.3rem; }
+.color-circles { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.color-circle { width:80px; height:80px; border-radius:50%; border:4px solid rgba(255,255,255,0.3); cursor:pointer;
+  transition:all 0.2s; display:flex; align-items:center; justify-content:center; font-size:1.5rem; font-weight:900;
+  font-family:'Fredoka One',cursive; box-shadow:0 4px 15px rgba(0,0,0,0.3); }
+.color-circle:hover { transform:scale(1.15); border-color:rgba(255,255,255,0.7); }
+.color-circle:active { transform:scale(0.95); }
+
+/* Flying card animation */
+.flying-card { position:fixed; z-index:500; pointer-events:none; transition:none; }
+.flying-card.animate { transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275); }
+
+/* Winner overlay */
+.winner-overlay { position:fixed; inset:0; z-index:400; background:rgba(0,0,0,0.8); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;
+  opacity:0; pointer-events:none; transition:opacity 0.5s; }
+.winner-overlay.active { opacity:1; pointer-events:auto; }
+.winner-emoji { font-size:4rem; animation:winSpin 1s ease-in-out; }
+@keyframes winSpin { 0% { transform:scale(0) rotate(-180deg); } 60% { transform:scale(1.3) rotate(10deg); } 100% { transform:scale(1) rotate(0); } }
+.winner-title { font-family:'Fredoka One',cursive; font-size:2rem; }
+.winner-sub { font-size:1rem; color:rgba(255,255,255,0.6); font-weight:700; }
+.winner-btn { background:linear-gradient(135deg,#845EC2,#6B21A8); color:#fff; border:none; border-radius:20px;
+  padding:14px 36px; font-size:1.1rem; font-weight:800; font-family:'Fredoka One',cursive;
+  cursor:pointer; box-shadow:0 4px 20px rgba(132,94,194,0.4); margin-top:8px; transition:transform 0.2s; }
+.winner-btn:hover { transform:scale(1.05); }
+.winner-btn:active { transform:scale(0.95); }
+.winner-stats { font-size:0.8rem; color:rgba(255,255,255,0.4); font-weight:700; }
+
+/* Intro screen */
+.intro-screen { position:fixed; inset:0; z-index:600;
+  background:linear-gradient(135deg,#1a0533 0%,#2d1b69 30%,#1a0533 50%,#0d1b3e 70%,#1a0533 100%);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; padding:24px; text-align:center; }
+.intro-screen.hidden { display:none; }
+.intro-logo { font-size:5rem; margin-bottom:8px; animation:introFloat 2s ease-in-out infinite alternate; }
+@keyframes introFloat { 0% { transform:translateY(0); } 100% { transform:translateY(-10px); } }
+.intro-title { font-family:'Fredoka One',cursive; font-size:3rem;
+  background:linear-gradient(135deg,#EF4444,#F59E0B,#22C55E,#3B82F6);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.intro-sub { font-size:1rem; color:rgba(255,255,255,0.5); font-weight:700; max-width:300px; }
+.intro-play-btn { background:linear-gradient(135deg,#EF4444,#F59E0B); color:#fff; border:none; border-radius:24px;
+  padding:16px 48px; font-size:1.3rem; font-weight:800; font-family:'Fredoka One',cursive;
+  cursor:pointer; box-shadow:0 6px 25px rgba(239,68,68,0.4); margin-top:16px; transition:transform 0.2s; }
+.intro-play-btn:hover { transform:scale(1.05); }
+.intro-play-btn:active { transform:scale(0.95); }
+.intro-stats { font-size:0.75rem; color:rgba(255,255,255,0.3); font-weight:700; margin-top:12px; }
+.intro-back { margin-top:8px; }
+
+/* Plus2 stack indicator */
+.plus2-indicator { position:absolute; top:-18px; left:50%; transform:translateX(-50%);
+  background:rgba(239,68,68,0.9); color:#fff; font-size:0.7rem; font-weight:900;
+  padding:2px 10px; border-radius:10px; white-space:nowrap; font-family:'Fredoka One',cursive; }
+
+/* Direction indicator */
+.dir-indicator { position:absolute; font-size:1.2rem; opacity:0.3; pointer-events:none; }
+
+/* Responsive */
+@media (max-width:380px) {
+  :root { --card-w:60px; --card-h:86px; --card-r:10px; }
+  .card-num { font-size:1.5rem; }
+  .opp-card { width:38px; height:54px; }
+  .color-circle { width:65px; height:65px; }
+}
+@media (min-width:500px) {
+  :root { --card-w:80px; --card-h:114px; --card-r:14px; }
+  .card-num { font-size:2.1rem; }
+}
+@media (min-width:700px) {
+  :root { --card-w:90px; --card-h:128px; --card-r:16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- INTRO SCREEN -->
+<div class="intro-screen" id="introScreen">
+  <div class="intro-logo">🃏</div>
+  <h1 class="intro-title" data-he="טאקי" data-en="TAKI">טאקי</h1>
+  <p class="intro-sub" data-he="משחק הקלפים הישראלי האהוב! שחקו נגד המחשב" data-en="The beloved Israeli card game! Play vs Computer">משחק הקלפים הישראלי האהוב! שחקו נגד המחשב</p>
+  <button class="intro-play-btn" onclick="startGame()" data-he="🎮 שחק!" data-en="🎮 Play!">🎮 שחק!</button>
+  <div class="intro-stats" id="introStats"></div>
+  <a href="../" class="top-bar-btn intro-back" data-he="🏠 חזרה" data-en="🏠 Home">🏠 חזרה</a>
+</div>
+
+<!-- GAME UI -->
+<div class="top-bar" id="topBar" style="display:none">
+  <a href="../" class="top-bar-btn" data-he="🏠" data-en="🏠">🏠</a>
+  <div style="text-align:center">
+    <div class="top-bar-title" data-he="טאקי" data-en="TAKI">טאקי</div>
+    <div class="top-bar-score" id="topScore"></div>
+  </div>
+  <div style="display:flex; gap:6px">
+    <button class="top-bar-btn" onclick="toggleLang()" id="langBtn">EN</button>
+    <button class="top-bar-btn" onclick="showIntro()" data-he="חדש" data-en="New">חדש</button>
+  </div>
+</div>
+
+<div class="game-area" id="gameArea" style="display:none">
+  <!-- Opponent -->
+  <div class="opponent-zone">
+    <div style="text-align:center;min-width:40px">
+      <div class="opp-label" data-he="מחשב" data-en="CPU">מחשב</div>
+      <div class="opp-count" id="oppCount">8</div>
+    </div>
+    <div class="opp-cards" id="oppCards"></div>
+  </div>
+
+  <!-- Center -->
+  <div class="center-zone" id="centerZone">
+    <div class="draw-pile" id="drawPile" onclick="playerDraw()">
+      <div class="draw-deck">
+        <span style="font-size:1.6rem;opacity:0.5">🃏</span>
+      </div>
+      <div class="draw-count" id="drawCount" data-he-tpl="CARDS קלפים" data-en-tpl="CARDS cards"></div>
+    </div>
+    <div class="pile-area" id="pileArea"></div>
+    <div class="status-bar" id="statusBar"></div>
+  </div>
+
+  <!-- Player -->
+  <div class="player-zone">
+    <div class="hand-container" id="playerHand"></div>
+  </div>
+</div>
+
+<!-- Close TAKI button -->
+<button class="close-taki-btn" id="closeTakiBtn" style="display:none" onclick="closeTaki()" data-he="סגור טאקי ✋" data-en="Close TAKI ✋">סגור טאקי ✋</button>
+
+<!-- Color picker -->
+<div class="color-picker-overlay" id="colorPicker">
+  <div class="color-picker">
+    <h2 data-he="בחר צבע" data-en="Choose Color">בחר צבע</h2>
+    <div class="color-circles">
+      <div class="color-circle" style="background:var(--red)" onclick="pickColor('red')">R</div>
+      <div class="color-circle" style="background:var(--blue)" onclick="pickColor('blue')">B</div>
+      <div class="color-circle" style="background:var(--green)" onclick="pickColor('green')">G</div>
+      <div class="color-circle" style="background:var(--yellow)" onclick="pickColor('yellow')">Y</div>
+    </div>
+  </div>
+</div>
+
+<!-- Winner overlay -->
+<div class="winner-overlay" id="winnerOverlay">
+  <div class="winner-emoji" id="winnerEmoji"></div>
+  <div class="winner-title" id="winnerTitle"></div>
+  <div class="winner-sub" id="winnerSub"></div>
+  <div class="winner-stats" id="winnerStats"></div>
+  <button class="winner-btn" onclick="startGame()" data-he="🔄 משחק חדש" data-en="🔄 New Game">🔄 משחק חדש</button>
+  <button class="top-bar-btn" onclick="showIntro()" style="margin-top:4px" data-he="🏠 תפריט ראשי" data-en="🏠 Main Menu">🏠 תפריט ראשי</button>
+</div>
+
+<script>
+// ─── LANGUAGE ───
+let lang = localStorage.getItem('keren-lang') || 'he';
+const T = {
+  yourTurn: { he:'תורך! שחק קלף או משוך', en:'Your turn! Play or draw' },
+  oppTurn: { he:'תור המחשב...', en:"Computer's turn..." },
+  youWin: { he:'ניצחת! 🎉', en:'You Win! 🎉' },
+  oppWin: { he:'המחשב ניצח 😅', en:'Computer Wins 😅' },
+  takiOpen: { he:'טאקי פתוח! שחק עוד או סגור', en:'TAKI open! Play more or close' },
+  mustDraw: { he:'אין קלף מתאים - משוך!', en:'No match - draw!' },
+  skipped: { he:'דילגת! תור המחשב', en:'Skipped! CPU turn' },
+  oppSkipped: { he:'המחשב דולג!', en:'CPU skipped!' },
+  plus2: { he:'המחשב משך CARDS קלפים!', en:'CPU draws CARDS cards!' },
+  youDraw: { he:'משכת קלף', en:'Drew a card' },
+  plus2you: { he:'משכת CARDS קלפים!', en:'You drew CARDS cards!' },
+  wins: { he:'נצחונות', en:'Wins' },
+  score: { he:'ניקוד', en:'Score' },
+  closeTaki: { he:'סגור טאקי ✋', en:'Close TAKI ✋' },
+  chooseColor: { he:'בחר צבע', en:'Choose Color' },
+  cpu: { he:'מחשב', en:'CPU' },
+  newGame: { he:'חדש', en:'New' },
+  home: { he:'🏠', en:'🏠' },
+  play: { he:'🎮 שחק!', en:'🎮 Play!' },
+  back: { he:'🏠 חזרה', en:'🏠 Home' },
+  newGameBtn: { he:'🔄 משחק חדש', en:'🔄 New Game' },
+  mainMenu: { he:'🏠 תפריט ראשי', en:'🏠 Main Menu' },
+  introSub: { he:'משחק הקלפים הישראלי האהוב! שחקו נגד המחשב', en:'The beloved Israeli card game! Play vs Computer' },
+  pointsLeft: { he:'נקודות נשארו ליריב', en:'points left for opponent' },
+  youLostPoints: { he:'נקודות נשארו לך', en:'points left for you' },
+  stackPlus2: { he:'+CARDS! שחק +2 או משוך', en:'+CARDS! Play +2 or draw' },
+};
+function t(key, replacements) {
+  let s = T[key] ? T[key][lang] || T[key].he : key;
+  if (replacements) Object.entries(replacements).forEach(([k,v]) => s = s.replace(k, v));
+  return s;
+}
+function applyLang() {
+  const isHe = lang === 'he';
+  document.documentElement.lang = isHe ? 'he' : 'en';
+  document.documentElement.dir = isHe ? 'rtl' : 'ltr';
+  const lb = document.getElementById('langBtn');
+  if (lb) lb.textContent = isHe ? 'EN' : 'עב';
+  document.querySelectorAll('[data-he]').forEach(el => {
+    el.textContent = isHe ? el.dataset.he : el.dataset.en;
+  });
+}
+function toggleLang() {
+  lang = lang === 'he' ? 'en' : 'he';
+  localStorage.setItem('keren-lang', lang);
+  applyLang();
+  if (gameActive) renderAll();
+  updateIntroStats();
+}
+
+// ─── GAME STATE ───
+const COLORS = ['red','blue','green','yellow'];
+const NUMBERS = [1,2,3,4,5,6,7,8,9];
+const SPECIALS = ['taki','stop','change_dir','plus2']; // per color
+let deck=[], discard=[], playerCards=[], oppCards=[], currentColor='', currentValue='';
+let isPlayerTurn=true, gameActive=false, takiOpen=false, takiColor='';
+let plus2Stack=0, colorPickerCallback=null;
+let stats = JSON.parse(localStorage.getItem('taki-stats') || '{"wins":0,"losses":0,"totalScore":0}');
+
+// ─── DECK ───
+function createDeck() {
+  const d = [];
+  for (const color of COLORS) {
+    for (const num of NUMBERS) {
+      d.push({ color, value:String(num), type:'number' });
+      d.push({ color, value:String(num), type:'number' });
+    }
+    for (const sp of SPECIALS) {
+      d.push({ color, value:sp, type:'special' });
+      d.push({ color, value:sp, type:'special' });
+    }
+  }
+  // 4 change-color, 2 super-taki
+  for (let i=0; i<4; i++) d.push({ color:'wild', value:'change_color', type:'wild' });
+  for (let i=0; i<2; i++) d.push({ color:'wild', value:'super_taki', type:'wild' });
+  return d;
+}
+function shuffle(arr) { for (let i=arr.length-1; i>0; i--) { const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } return arr; }
+
+function cardLabel(card) {
+  if (card.type === 'number') return card.value;
+  const labels = { taki:'TAKI', stop:'🚫', change_dir:'↩️', plus2:'+2', change_color:'🌈', super_taki:'S.TAKI' };
+  return labels[card.value] || card.value;
+}
+function cardPoints(card) {
+  if (card.type === 'number') return parseInt(card.value);
+  const pts = { taki:20, stop:15, change_dir:15, plus2:20, change_color:30, super_taki:50 };
+  return pts[card.value] || 10;
+}
+
+// ─── GAME INIT ───
+function startGame() {
+  document.getElementById('introScreen').classList.add('hidden');
+  document.getElementById('topBar').style.display = '';
+  document.getElementById('gameArea').style.display = '';
+  document.getElementById('winnerOverlay').classList.remove('active');
+  document.getElementById('closeTakiBtn').style.display = 'none';
+  document.getElementById('colorPicker').classList.remove('active');
+
+  deck = shuffle(createDeck());
+  discard = [];
+  playerCards = [];
+  oppCards = [];
+  takiOpen = false; takiColor = '';
+  plus2Stack = 0;
+  isPlayerTurn = true;
+  gameActive = true;
+
+  // Deal 8 each
+  for (let i=0; i<8; i++) { playerCards.push(deck.pop()); oppCards.push(deck.pop()); }
+
+  // Flip starter (ensure it's a number card)
+  let starter;
+  do { starter = deck.pop(); if (starter.type !== 'number') deck.unshift(starter); } while (starter.type !== 'number');
+  discard.push(starter);
+  currentColor = starter.color;
+  currentValue = starter.value;
+
+  renderAll();
+  setStatus(t('yourTurn'));
+  applyLang();
+}
+
+function showIntro() {
+  gameActive = false;
+  document.getElementById('introScreen').classList.remove('hidden');
+  document.getElementById('topBar').style.display = 'none';
+  document.getElementById('gameArea').style.display = 'none';
+  document.getElementById('winnerOverlay').classList.remove('active');
+  document.getElementById('closeTakiBtn').style.display = 'none';
+  updateIntroStats();
+  applyLang();
+}
+
+function updateIntroStats() {
+  const el = document.getElementById('introStats');
+  if (el) el.textContent = `${t('wins')}: ${stats.wins} | ${t('score')}: ${stats.totalScore}`;
+}
+
+// ─── CAN PLAY ───
+function canPlay(card) {
+  if (card.color === 'wild') return true;
+  if (card.color === currentColor) return true;
+  if (card.type === 'number' && card.value === currentValue) return true;
+  if (card.type === 'special' && card.value === currentValue) return true;
+  return false;
+}
+function canPlayInTaki(card) {
+  if (card.color === takiColor) return true;
+  if (card.color === 'wild') return true;
+  return false;
+}
+function canPlayPlus2(card) {
+  return card.value === 'plus2';
+}
+
+// ─── RENDER ───
+function renderAll() {
+  renderOpp();
+  renderPile();
+  renderHand();
+  renderDeck();
+  updateTopScore();
+}
+
+function renderOpp() {
+  const cont = document.getElementById('oppCards');
+  const count = document.getElementById('oppCount');
+  count.textContent = oppCards.length;
+  cont.innerHTML = '';
+  const max = Math.min(oppCards.length, 15);
+  const overlap = Math.min(28, (cont.offsetWidth - 44) / Math.max(max - 1, 1));
+  for (let i=0; i<max; i++) {
+    const el = document.createElement('div');
+    el.className = 'opp-card';
+    el.style.marginLeft = i === 0 ? '0' : `-${overlap}px`;
+    cont.appendChild(el);
+  }
+}
+
+function renderPile() {
+  const area = document.getElementById('pileArea');
+  area.innerHTML = '';
+  const show = discard.slice(-3);
+  show.forEach((card, i) => {
+    const el = createCardEl(card, false);
+    el.classList.add('pile-card');
+    el.style.cursor = 'default';
+    el.onmouseenter = null;
+    area.appendChild(el);
+  });
+  // Active color indicator
+  if (currentColor && currentColor !== 'wild') {
+    const ring = document.createElement('div');
+    ring.className = 'active-color-ring';
+    ring.style.background = `var(--${currentColor})`;
+    area.appendChild(ring);
+  }
+  // Plus2 stack indicator
+  if (plus2Stack > 0) {
+    const ind = document.createElement('div');
+    ind.className = 'plus2-indicator';
+    ind.textContent = `+${plus2Stack * 2}`;
+    area.appendChild(ind);
+  }
+  // TAKI glow
+  if (takiOpen) area.classList.add('taki-open-glow');
+  else area.classList.remove('taki-open-glow');
+}
+
+function renderHand() {
+  const cont = document.getElementById('playerHand');
+  cont.innerHTML = '';
+  const sorted = [...playerCards].sort((a,b) => {
+    const ci = c => COLORS.indexOf(c.color) === -1 ? 99 : COLORS.indexOf(c.color);
+    if (ci(a) !== ci(b)) return ci(a) - ci(b);
+    if (a.type !== b.type) return a.type === 'number' ? -1 : 1;
+    return (parseInt(a.value)||0) - (parseInt(b.value)||0);
+  });
+  const cardCount = sorted.length;
+  const maxWidth = window.innerWidth - 16;
+  const overlap = cardCount > 1 ? Math.min(0, (maxWidth - 70 * cardCount) / (cardCount - 1)) : 0;
+
+  sorted.forEach((card, i) => {
+    const el = createCardEl(card, true);
+    const playable = isPlayerTurn && gameActive && !takiOpen ? (plus2Stack > 0 ? canPlayPlus2(card) : canPlay(card))
+      : (takiOpen ? canPlayInTaki(card) : false);
+    if (!playable && isPlayerTurn) el.classList.add('unplayable');
+    if (overlap < 0) el.style.marginLeft = i === 0 ? '0' : `${overlap}px`;
+    el.onclick = () => playerPlayCard(card, el);
+    cont.appendChild(el);
+  });
+}
+
+function renderDeck() {
+  const el = document.getElementById('drawCount');
+  const n = deck.length;
+  el.textContent = lang === 'he' ? `${n} קלפים` : `${n} cards`;
+}
+
+function updateTopScore() {
+  const el = document.getElementById('topScore');
+  el.textContent = `${t('wins')}: ${stats.wins}`;
+}
+
+function createCardEl(card, interactive) {
+  const el = document.createElement('div');
+  el.className = `card card-${card.color}`;
+  const label = cardLabel(card);
+  const corner = card.type === 'number' ? card.value : (card.value === 'plus2' ? '+2' : '');
+  el.innerHTML = `
+    <div class="card-inner">
+      <div class="card-num">${label}</div>
+      ${card.type !== 'number' && card.value !== 'change_color' && card.value !== 'super_taki' ? `<div class="card-sym">${getSymName(card)}</div>` : ''}
+    </div>
+    ${corner ? `<span class="card-corner card-corner-tl">${corner}</span><span class="card-corner card-corner-br">${corner}</span>` : ''}
+  `;
+  return el;
+}
+function getSymName(card) {
+  const names = { taki:'TAKI', stop: lang==='he'?'עצור':'STOP', change_dir: lang==='he'?'כיוון':'DIR', plus2:'+2' };
+  return names[card.value] || '';
+}
+
+function setStatus(msg) {
+  document.getElementById('statusBar').textContent = msg;
+}
+
+// ─── PLAYER ACTIONS ───
+function playerPlayCard(card, el) {
+  if (!gameActive || !isPlayerTurn) return;
+
+  // TAKI open mode
+  if (takiOpen) {
+    if (!canPlayInTaki(card)) return;
+    if (card.color === 'wild') {
+      // wild in taki — just play it, taki stays open with same color
+      playCard(card, 'player');
+      removeFromHand(card, 'player');
+      if (checkWin('player')) return;
+      renderAll();
+      return;
+    }
+    playCard(card, 'player');
+    removeFromHand(card, 'player');
+    if (checkWin('player')) return;
+    // If played another TAKI, taki stays open
+    if (card.value === 'taki') { renderAll(); return; }
+    renderAll();
+    return;
+  }
+
+  // Plus2 stack — must play plus2 or draw
+  if (plus2Stack > 0) {
+    if (card.value !== 'plus2') return;
+    plus2Stack++;
+    playCard(card, 'player');
+    removeFromHand(card, 'player');
+    if (checkWin('player')) return;
+    isPlayerTurn = false;
+    renderAll();
+    setTimeout(() => aiTurn(), 800);
+    return;
+  }
+
+  if (!canPlay(card)) return;
+
+  // Change color / Super TAKI
+  if (card.value === 'change_color') {
+    removeFromHand(card, 'player');
+    showColorPicker(color => {
+      currentColor = color;
+      currentValue = 'change_color';
+      discard.push(card);
+      if (checkWin('player')) return;
+      isPlayerTurn = false;
+      renderAll();
+      setTimeout(() => aiTurn(), 800);
+    });
+    return;
+  }
+  if (card.value === 'super_taki') {
+    removeFromHand(card, 'player');
+    showColorPicker(color => {
+      currentColor = color;
+      currentValue = 'super_taki';
+      discard.push(card);
+      takiOpen = true;
+      takiColor = color;
+      document.getElementById('closeTakiBtn').style.display = '';
+      setStatus(t('takiOpen'));
+      if (checkWin('player')) return;
+      renderAll();
+    });
+    return;
+  }
+
+  playCard(card, 'player');
+  removeFromHand(card, 'player');
+  if (checkWin('player')) return;
+
+  // Handle specials
+  if (card.value === 'taki') {
+    takiOpen = true;
+    takiColor = card.color;
+    document.getElementById('closeTakiBtn').style.display = '';
+    setStatus(t('takiOpen'));
+    renderAll();
+    return;
+  }
+  if (card.value === 'stop' || card.value === 'change_dir') {
+    setStatus(t('oppSkipped'));
+    renderAll();
+    // Player gets another turn (opponent skipped)
+    setTimeout(() => { setStatus(t('yourTurn')); renderAll(); }, 1000);
+    return;
+  }
+  if (card.value === 'plus2') {
+    plus2Stack = 1;
+    isPlayerTurn = false;
+    renderAll();
+    setTimeout(() => aiTurn(), 800);
+    return;
+  }
+
+  isPlayerTurn = false;
+  renderAll();
+  setStatus(t('oppTurn'));
+  setTimeout(() => aiTurn(), 800);
+}
+
+function closeTaki() {
+  if (!takiOpen) return;
+  takiOpen = false;
+  takiColor = '';
+  document.getElementById('closeTakiBtn').style.display = 'none';
+  isPlayerTurn = false;
+  renderAll();
+  setStatus(t('oppTurn'));
+  setTimeout(() => aiTurn(), 800);
+}
+
+function playerDraw() {
+  if (!gameActive || !isPlayerTurn || takiOpen) return;
+
+  if (plus2Stack > 0) {
+    const count = plus2Stack * 2;
+    for (let i=0; i<count; i++) playerCards.push(drawCard());
+    setStatus(t('plus2you', { CARDS: count }));
+    plus2Stack = 0;
+    isPlayerTurn = false;
+    renderAll();
+    setTimeout(() => aiTurn(), 1000);
+    return;
+  }
+
+  const drawn = drawCard();
+  playerCards.push(drawn);
+  setStatus(t('youDraw'));
+  isPlayerTurn = false;
+  renderAll();
+  setTimeout(() => aiTurn(), 800);
+}
+
+// ─── PLAY CARD (shared) ───
+function playCard(card, who) {
+  discard.push(card);
+  if (card.color !== 'wild') {
+    currentColor = card.color;
+  }
+  currentValue = card.value;
+}
+
+function removeFromHand(card, who) {
+  const hand = who === 'player' ? playerCards : oppCards;
+  const idx = hand.indexOf(card);
+  if (idx !== -1) hand.splice(idx, 1);
+}
+
+function drawCard() {
+  if (deck.length === 0) {
+    // Reshuffle discard into deck, keep top card
+    const top = discard.pop();
+    deck = shuffle(discard);
+    discard = [top];
+  }
+  return deck.pop();
+}
+
+// ─── AI ───
+function aiTurn() {
+  if (!gameActive) return;
+  isPlayerTurn = false;
+  setStatus(t('oppTurn'));
+
+  // Plus2 stack — AI tries to stack or draws
+  if (plus2Stack > 0) {
+    const p2 = oppCards.filter(c => c.value === 'plus2');
+    if (p2.length > 0) {
+      const card = p2[0];
+      plus2Stack++;
+      playCard(card, 'opp');
+      removeFromHand(card, 'opp');
+      renderAll();
+      if (checkWin('opp')) return;
+      // Pass to player with stack
+      isPlayerTurn = true;
+      setTimeout(() => {
+        setStatus(t('stackPlus2', { CARDS: plus2Stack * 2 }));
+        renderAll();
+      }, 600);
+      return;
+    } else {
+      const count = plus2Stack * 2;
+      for (let i=0; i<count; i++) oppCards.push(drawCard());
+      plus2Stack = 0;
+      setStatus(t('plus2', { CARDS: count }));
+      renderAll();
+      isPlayerTurn = true;
+      setTimeout(() => { setStatus(t('yourTurn')); renderAll(); }, 1200);
+      return;
+    }
+  }
+
+  // Find playable cards
+  const playable = oppCards.filter(c => canPlay(c));
+  if (playable.length === 0) {
+    // Draw
+    oppCards.push(drawCard());
+    renderAll();
+    isPlayerTurn = true;
+    setTimeout(() => { setStatus(t('yourTurn')); renderAll(); }, 800);
+    return;
+  }
+
+  // AI strategy: prefer specials, then number matches
+  const card = aiChooseCard(playable);
+
+  // Handle wild cards
+  if (card.value === 'change_color' || card.value === 'super_taki') {
+    removeFromHand(card, 'opp');
+    // Pick most common color in hand
+    const chosen = aiPickColor();
+    currentColor = chosen;
+    currentValue = card.value;
+    discard.push(card);
+    renderAll();
+    if (checkWin('opp')) return;
+
+    if (card.value === 'super_taki') {
+      // AI plays all cards of chosen color
+      setTimeout(() => aiPlayTakiSequence(chosen), 600);
+      return;
+    }
+    isPlayerTurn = true;
+    setTimeout(() => { setStatus(t('yourTurn')); renderAll(); }, 800);
+    return;
+  }
+
+  playCard(card, 'opp');
+  removeFromHand(card, 'opp');
+  renderAll();
+  if (checkWin('opp')) return;
+
+  // Handle specials
+  if (card.value === 'taki') {
+    // AI plays all matching color cards
+    setTimeout(() => aiPlayTakiSequence(card.color), 600);
+    return;
+  }
+  if (card.value === 'stop' || card.value === 'change_dir') {
+    setStatus(t('skipped'));
+    renderAll();
+    // AI gets another turn
+    setTimeout(() => aiTurn(), 1000);
+    return;
+  }
+  if (card.value === 'plus2') {
+    plus2Stack = 1;
+    isPlayerTurn = true;
+    setTimeout(() => {
+      setStatus(t('stackPlus2', { CARDS: plus2Stack * 2 }));
+      renderAll();
+    }, 600);
+    return;
+  }
+
+  isPlayerTurn = true;
+  setTimeout(() => { setStatus(t('yourTurn')); renderAll(); }, 800);
+}
+
+function aiPlayTakiSequence(color) {
+  if (!gameActive) return;
+  const matching = oppCards.filter(c => c.color === color);
+  if (matching.length === 0) {
+    // Close taki, pass turn
+    isPlayerTurn = true;
+    setTimeout(() => { setStatus(t('yourTurn')); renderAll(); }, 500);
+    return;
+  }
+  const card = matching[0];
+  playCard(card, 'opp');
+  removeFromHand(card, 'opp');
+  renderAll();
+  if (checkWin('opp')) return;
+  // If another TAKI, continue
+  if (card.value === 'taki') {
+    setTimeout(() => aiPlayTakiSequence(color), 500);
+    return;
+  }
+  // Continue playing matching color
+  setTimeout(() => {
+    const more = oppCards.filter(c => c.color === color);
+    if (more.length > 0) {
+      aiPlayTakiSequence(color);
+    } else {
+      isPlayerTurn = true;
+      setStatus(t('yourTurn'));
+      renderAll();
+    }
+  }, 500);
+}
+
+function aiChooseCard(playable) {
+  // Priority: plus2 > stop > change_dir > taki > number > wild
+  const prio = ['plus2','stop','change_dir','taki'];
+  for (const p of prio) {
+    const found = playable.find(c => c.value === p && c.color !== 'wild');
+    if (found) return found;
+  }
+  // Prefer playing highest number
+  const numbers = playable.filter(c => c.type === 'number').sort((a,b) => parseInt(b.value) - parseInt(a.value));
+  if (numbers.length > 0) return numbers[0];
+  // Wild as last resort
+  return playable[0];
+}
+
+function aiPickColor() {
+  const counts = {};
+  COLORS.forEach(c => counts[c] = 0);
+  oppCards.forEach(c => { if (c.color !== 'wild') counts[c.color]++; });
+  return Object.entries(counts).sort((a,b) => b[1]-a[1])[0][0];
+}
+
+// ─── COLOR PICKER ───
+function showColorPicker(callback) {
+  colorPickerCallback = callback;
+  document.getElementById('colorPicker').classList.add('active');
+}
+function pickColor(color) {
+  document.getElementById('colorPicker').classList.remove('active');
+  if (colorPickerCallback) {
+    colorPickerCallback(color);
+    colorPickerCallback = null;
+  }
+}
+
+// ─── WIN CHECK ───
+function checkWin(who) {
+  const hand = who === 'player' ? playerCards : oppCards;
+  if (hand.length > 0) return false;
+  gameActive = false;
+  takiOpen = false;
+  document.getElementById('closeTakiBtn').style.display = 'none';
+
+  const overlay = document.getElementById('winnerOverlay');
+  const emoji = document.getElementById('winnerEmoji');
+  const title = document.getElementById('winnerTitle');
+  const sub = document.getElementById('winnerSub');
+  const wstats = document.getElementById('winnerStats');
+
+  if (who === 'player') {
+    const score = oppCards.reduce((s,c) => s + cardPoints(c), 0);
+    stats.wins++;
+    stats.totalScore += score;
+    localStorage.setItem('taki-stats', JSON.stringify(stats));
+    emoji.textContent = '🏆';
+    title.textContent = t('youWin');
+    sub.textContent = `${score} ${t('pointsLeft')}`;
+    wstats.textContent = `${t('wins')}: ${stats.wins} | ${t('score')}: ${stats.totalScore}`;
+  } else {
+    const score = playerCards.reduce((s,c) => s + cardPoints(c), 0);
+    stats.losses++;
+    localStorage.setItem('taki-stats', JSON.stringify(stats));
+    emoji.textContent = '😅';
+    title.textContent = t('oppWin');
+    sub.textContent = `${score} ${t('youLostPoints')}`;
+    wstats.textContent = `${t('wins')}: ${stats.wins} | ${t('score')}: ${stats.totalScore}`;
+  }
+  setTimeout(() => overlay.classList.add('active'), 300);
+  return true;
+}
+
+// ─── INIT ───
+updateIntroStats();
+applyLang();
+</script>
+</body>
+</html>

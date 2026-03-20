@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1a0533">
+<title>כיףכפל 🎰 KifKefel</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎰</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Nunito',sans-serif;min-height:100vh;min-height:100dvh;overflow-x:hidden;user-select:none;-webkit-user-select:none;background:#0a0118;color:white}
+h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
+
+/* Background */
+.bg-main{position:fixed;inset:0;background:linear-gradient(135deg,#1a0533 0%,#2d1b69 30%,#1a0533 50%,#0d1b3e 70%,#1a0533 100%);z-index:0}
+.bg-main::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 50%,rgba(132,94,194,0.08) 0%,transparent 50%),radial-gradient(circle at 70% 30%,rgba(255,107,107,0.06) 0%,transparent 50%),radial-gradient(circle at 50% 80%,rgba(255,217,61,0.05) 0%,transparent 50%);animation:bgRotate 30s linear infinite;pointer-events:none}
+@keyframes bgRotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+
+.app{position:relative;z-index:1;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;padding:16px;padding-bottom:env(safe-area-inset-bottom,16px)}
+
+/* Glass */
+.glass{background:rgba(255,255,255,0.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:24px}
+.glass-strong{background:rgba(255,255,255,0.1);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.15);border-radius:24px}
+
+/* Nav */
+.top-bar{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:500px;margin-bottom:12px;gap:8px}
+.back-btn,.lang-btn{padding:10px 18px;border-radius:20px;border:none;font-weight:800;font-size:0.85rem;cursor:pointer;transition:all 0.2s;color:white;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);text-decoration:none;display:flex;align-items:center;gap:6px}
+.back-btn:hover,.lang-btn:hover{background:rgba(255,255,255,0.2);transform:scale(1.05)}
+
+/* Screens */
+.screen{display:none;flex-direction:column;align-items:center;width:100%;max-width:500px;animation:fadeIn 0.4s ease}
+.screen.active{display:flex}
+@keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+
+/* MENU SCREEN */
+.menu-title{font-family:'Fredoka One',cursive;font-size:2.8rem;background:linear-gradient(135deg,#c084fc,#f472b6,#fbbf24,#22d3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;margin:8px 0;line-height:1.2}
+.menu-subtitle{color:rgba(255,255,255,0.5);font-size:0.9rem;font-weight:700;text-align:center;margin-bottom:20px}
+.menu-emoji{font-size:4rem;text-align:center;animation:emojiPulse 2s ease-in-out infinite}
+@keyframes emojiPulse{0%,100%{transform:scale(1) rotate(0deg)}25%{transform:scale(1.1) rotate(5deg)}75%{transform:scale(1.1) rotate(-5deg)}}
+
+.difficulty-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;margin-bottom:16px}
+.diff-btn{padding:20px 12px;border-radius:20px;border:none;cursor:pointer;font-family:'Fredoka One',cursive;font-size:1rem;color:white;transition:all 0.2s;position:relative;overflow:hidden}
+.diff-btn:hover{transform:translateY(-2px) scale(1.03)}
+.diff-btn:active{transform:scale(0.96)}
+.diff-btn .diff-range{display:block;font-family:'Nunito',sans-serif;font-size:0.7rem;font-weight:700;opacity:0.7;margin-top:4px}
+.diff-easy{background:linear-gradient(135deg,#22c55e,#16a34a)}
+.diff-medium{background:linear-gradient(135deg,#3b82f6,#2563eb)}
+.diff-hard{background:linear-gradient(135deg,#f59e0b,#d97706)}
+.diff-insane{background:linear-gradient(135deg,#ef4444,#dc2626);grid-column:1/-1}
+.diff-insane::after{content:'';position:absolute;inset:0;background:linear-gradient(45deg,transparent 40%,rgba(255,255,255,0.1) 50%,transparent 60%);animation:insaneShine 2s linear infinite}
+@keyframes insaneShine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
+.high-score-box{width:100%;padding:16px 20px;text-align:center;margin-bottom:12px}
+.high-score-box .label{font-size:0.75rem;color:rgba(255,255,255,0.4);font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.high-score-box .value{font-family:'Fredoka One',cursive;font-size:1.8rem;background:linear-gradient(135deg,#fbbf24,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* GAME SCREEN */
+.game-header{display:flex;justify-content:space-between;align-items:center;width:100%;padding:8px 4px;margin-bottom:8px}
+.round-info{font-weight:800;font-size:0.85rem;color:rgba(255,255,255,0.6)}
+.score-display{font-family:'Fredoka One',cursive;font-size:1.3rem;color:#fbbf24;transition:all 0.3s}
+.score-display.pop{animation:scorePop 0.4s ease}
+@keyframes scorePop{0%{transform:scale(1)}50%{transform:scale(1.4);color:#f472b6}100%{transform:scale(1);color:#fbbf24}}
+
+.streak-bar{width:100%;height:36px;border-radius:18px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-family:'Fredoka One',cursive;font-size:0.9rem;transition:all 0.3s;overflow:hidden;position:relative}
+.streak-bar.idle{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.3)}
+.streak-bar.warm{background:linear-gradient(90deg,#f59e0b,#ef4444);color:white;animation:streakGlow 1s ease-in-out infinite}
+.streak-bar.fire{background:linear-gradient(90deg,#ef4444,#f472b6,#ef4444);background-size:200% 100%;color:white;animation:streakFire 0.8s linear infinite}
+.streak-bar.legendary{background:linear-gradient(90deg,#8b5cf6,#22d3ee,#fbbf24,#f472b6,#8b5cf6);background-size:300% 100%;color:white;animation:streakLegendary 1.5s linear infinite;box-shadow:0 0 30px rgba(139,92,246,0.5)}
+@keyframes streakGlow{0%,100%{box-shadow:0 0 10px rgba(245,158,11,0.3)}50%{box-shadow:0 0 20px rgba(239,68,68,0.5)}}
+@keyframes streakFire{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@keyframes streakLegendary{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+
+/* SLOT MACHINE */
+.slot-machine{width:100%;padding:20px;margin-bottom:12px;position:relative}
+.slot-display{display:flex;align-items:center;justify-content:center;gap:16px}
+.slot-wheel-container{width:100px;height:120px;border-radius:20px;overflow:hidden;position:relative;background:rgba(0,0,0,0.4);border:2px solid rgba(255,255,255,0.15);box-shadow:inset 0 0 30px rgba(0,0,0,0.5)}
+.slot-wheel-container::before,.slot-wheel-container::after{content:'';position:absolute;left:0;right:0;height:30px;z-index:2;pointer-events:none}
+.slot-wheel-container::before{top:0;background:linear-gradient(to bottom,rgba(10,1,24,0.9),transparent)}
+.slot-wheel-container::after{bottom:0;background:linear-gradient(to top,rgba(10,1,24,0.9),transparent)}
+.slot-wheel{position:absolute;width:100%;transition:transform 0.1s linear}
+.slot-number{height:120px;display:flex;align-items:center;justify-content:center;font-family:'Fredoka One',cursive;font-size:3.2rem;color:white;text-shadow:0 0 20px rgba(255,255,255,0.3)}
+.slot-x{font-family:'Fredoka One',cursive;font-size:2.5rem;color:#f472b6;text-shadow:0 0 15px rgba(244,114,182,0.5)}
+.slot-equals{font-family:'Fredoka One',cursive;font-size:2rem;color:#22d3ee;text-shadow:0 0 15px rgba(34,211,238,0.5)}
+.answer-slot{width:130px;height:120px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-family:'Fredoka One',cursive;font-size:2.8rem;background:rgba(0,0,0,0.3);border:2px dashed rgba(255,255,255,0.2);color:#22d3ee;min-width:0;overflow:hidden;text-overflow:clip;transition:all 0.2s}
+.answer-slot.correct{border-color:#22c55e;background:rgba(34,197,94,0.15);color:#22c55e;animation:correctPulse 0.5s ease}
+.answer-slot.wrong{border-color:#ef4444;background:rgba(239,68,68,0.15);color:#ef4444;animation:wrongShake 0.5s ease}
+@keyframes correctPulse{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+@keyframes wrongShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+
+.bonus-badge{position:absolute;top:-8px;left:50%;transform:translateX(-50%);font-family:'Fredoka One',cursive;font-size:0.75rem;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1a0533;padding:4px 14px;border-radius:12px;white-space:nowrap;animation:bonusPulse 0.6s ease-in-out infinite alternate;z-index:5}
+@keyframes bonusPulse{0%{transform:translateX(-50%) scale(1)}100%{transform:translateX(-50%) scale(1.08)}}
+
+/* Timer bar */
+.timer-bar-wrap{width:100%;height:6px;border-radius:3px;background:rgba(255,255,255,0.08);margin-bottom:12px;overflow:hidden}
+.timer-bar{height:100%;border-radius:3px;transition:width 0.1s linear,background 0.3s;background:linear-gradient(90deg,#22c55e,#22c55e)}
+.timer-bar.warn{background:linear-gradient(90deg,#f59e0b,#ef4444)}
+
+/* Number pad */
+.numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:360px;margin:0 auto}
+.num-btn{height:64px;border-radius:18px;border:none;font-family:'Fredoka One',cursive;font-size:1.6rem;color:white;cursor:pointer;transition:all 0.15s;position:relative;overflow:hidden}
+.num-btn:active{transform:scale(0.92)}
+.num-btn.digit{background:linear-gradient(135deg,rgba(139,92,246,0.3),rgba(139,92,246,0.15));border:1px solid rgba(139,92,246,0.3)}
+.num-btn.digit:hover{background:linear-gradient(135deg,rgba(139,92,246,0.5),rgba(139,92,246,0.25))}
+.num-btn.submit{background:linear-gradient(135deg,#22c55e,#16a34a);font-size:1.1rem}
+.num-btn.submit:hover{background:linear-gradient(135deg,#4ade80,#22c55e)}
+.num-btn.clear{background:linear-gradient(135deg,rgba(239,68,68,0.3),rgba(239,68,68,0.15));border:1px solid rgba(239,68,68,0.3);font-size:1.1rem}
+.num-btn.clear:hover{background:linear-gradient(135deg,rgba(239,68,68,0.5),rgba(239,68,68,0.25))}
+.num-btn.zero{grid-column:2/3}
+
+/* Feedback overlay */
+.feedback-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:100;pointer-events:none;opacity:0;transition:opacity 0.3s}
+.feedback-overlay.show{opacity:1}
+.feedback-content{text-align:center;animation:feedbackPop 0.5s cubic-bezier(0.175,0.885,0.32,1.275)}
+@keyframes feedbackPop{from{transform:scale(0.3);opacity:0}to{transform:scale(1);opacity:1}}
+.feedback-stars{font-size:3rem;margin-bottom:8px}
+.feedback-text{font-family:'Fredoka One',cursive;font-size:1.5rem}
+.feedback-points{font-family:'Fredoka One',cursive;font-size:1.1rem;color:#fbbf24;margin-top:4px}
+
+/* Stars particles */
+.star-particle{position:fixed;pointer-events:none;z-index:101;font-size:1.5rem;animation:starBurst 0.8s ease-out forwards}
+@keyframes starBurst{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+
+/* RESULTS SCREEN */
+.results-container{width:100%;text-align:center}
+.results-title{font-family:'Fredoka One',cursive;font-size:2.2rem;margin:12px 0;background:linear-gradient(135deg,#c084fc,#f472b6,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.results-score{font-family:'Fredoka One',cursive;font-size:3.5rem;color:#fbbf24;margin:8px 0}
+.results-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:16px 0}
+.stat-box{padding:14px 8px;border-radius:16px;text-align:center}
+.stat-value{font-family:'Fredoka One',cursive;font-size:1.5rem}
+.stat-label{font-size:0.7rem;color:rgba(255,255,255,0.5);font-weight:700;margin-top:2px}
+.weak-tables{width:100%;padding:16px;margin:12px 0;text-align:center}
+.weak-title{font-weight:800;font-size:0.85rem;color:rgba(255,255,255,0.5);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
+.weak-list{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.weak-item{padding:6px 14px;border-radius:12px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);font-weight:800;font-size:0.85rem;color:#fca5a5}
+.results-btns{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.result-btn{padding:18px 24px;border-radius:20px;border:none;font-family:'Fredoka One',cursive;font-size:1.1rem;color:white;cursor:pointer;transition:all 0.2s}
+.result-btn:active{transform:scale(0.96)}
+.result-btn.primary{background:linear-gradient(135deg,#8b5cf6,#7c3aed)}
+.result-btn.secondary{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15)}
+
+/* Stars display */
+.stars-row{display:flex;gap:4px;justify-content:center;margin:8px 0}
+.star{font-size:2rem;transition:all 0.3s}
+.star.earned{animation:starEarn 0.4s cubic-bezier(0.175,0.885,0.32,1.275) both}
+@keyframes starEarn{from{transform:scale(0) rotate(-180deg)}to{transform:scale(1) rotate(0deg)}}
+
+/* Countdown overlay */
+.countdown-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:200;background:rgba(10,1,24,0.85);backdrop-filter:blur(10px);opacity:0;transition:opacity 0.3s}
+.countdown-overlay.show{opacity:1}
+.countdown-number{font-family:'Fredoka One',cursive;font-size:8rem;color:white;text-shadow:0 0 40px rgba(139,92,246,0.5);animation:countPop 0.5s cubic-bezier(0.175,0.885,0.32,1.275)}
+@keyframes countPop{from{transform:scale(2);opacity:0}to{transform:scale(1);opacity:1}}
+
+/* Messages */
+.encourage-msg{font-weight:800;font-size:0.85rem;color:rgba(255,255,255,0.4);text-align:center;min-height:24px;margin-bottom:8px;transition:all 0.3s}
+
+/* Responsive */
+@media(max-width:380px){
+  .menu-title{font-size:2.2rem}
+  .slot-wheel-container{width:80px;height:100px}
+  .slot-number{height:100px;font-size:2.5rem}
+  .answer-slot{width:100px;height:100px;font-size:2.2rem}
+  .slot-x{font-size:2rem}
+  .num-btn{height:58px;font-size:1.4rem}
+}
+@media(min-width:500px){
+  .num-btn{height:72px;font-size:1.8rem}
+}
+</style>
+</head>
+<body>
+<div class="bg-main"></div>
+<div class="app" id="app">
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <a href="https://elirank1.github.io/keren-family/" class="back-btn" id="backBtn">🏠 <span data-he="חזרה" data-en="Back">חזרה</span></a>
+    <button class="lang-btn" id="langBtn" onclick="toggleLang()">EN</button>
+  </div>
+
+  <!-- MENU SCREEN -->
+  <div class="screen active" id="menuScreen">
+    <div class="menu-emoji">🎰</div>
+    <div class="menu-title" data-he="כיףכפל" data-en="KifKefel">כיףכפל</div>
+    <div class="menu-subtitle" data-he="קרב כפל עם גלגל מזל!" data-en="Multiplication Battle with a Spinning Wheel!">קרב כפל עם גלגל מזל!</div>
+
+    <div class="high-score-box glass">
+      <div class="label" data-he="שיא אישי" data-en="High Score">שיא אישי</div>
+      <div class="value" id="highScoreDisplay">0</div>
+    </div>
+
+    <div class="difficulty-grid">
+      <button class="diff-btn diff-easy" onclick="startGame('easy')">
+        <span data-he="קל" data-en="Easy">קל</span>
+        <span class="diff-range">1-5</span>
+      </button>
+      <button class="diff-btn diff-medium" onclick="startGame('medium')">
+        <span data-he="בינוני" data-en="Medium">בינוני</span>
+        <span class="diff-range">1-10</span>
+      </button>
+      <button class="diff-btn diff-hard" onclick="startGame('hard')">
+        <span data-he="קשה" data-en="Hard">קשה</span>
+        <span class="diff-range">1-12</span>
+      </button>
+      <button class="diff-btn diff-insane" onclick="startGame('insane')">
+        <span data-he="מטורף! ⚡" data-en="INSANE! ⚡">מטורף! ⚡</span>
+        <span class="diff-range" data-he="1-15 + לחץ זמן" data-en="1-15 + time pressure">1-15 + לחץ זמן</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- GAME SCREEN -->
+  <div class="screen" id="gameScreen">
+    <div class="game-header">
+      <div class="round-info" id="roundInfo"></div>
+      <div class="score-display" id="scoreDisplay">0</div>
+    </div>
+
+    <div class="streak-bar idle" id="streakBar">
+      <span id="streakText" data-he="התחל רצף!" data-en="Start a streak!">התחל רצף!</span>
+    </div>
+
+    <div class="slot-machine glass" id="slotMachine">
+      <div class="bonus-badge" id="bonusBadge" style="display:none" data-he="סיבוב בונוס! x3" data-en="BONUS ROUND! x3">סיבוב בונוס! x3</div>
+      <div class="slot-display">
+        <div class="slot-wheel-container">
+          <div class="slot-wheel" id="wheel1"></div>
+        </div>
+        <div class="slot-x">&times;</div>
+        <div class="slot-wheel-container">
+          <div class="slot-wheel" id="wheel2"></div>
+        </div>
+        <div class="slot-equals">=</div>
+        <div class="answer-slot" id="answerSlot">?</div>
+      </div>
+    </div>
+
+    <div class="timer-bar-wrap" id="timerWrap" style="display:none">
+      <div class="timer-bar" id="timerBar"></div>
+    </div>
+
+    <div class="encourage-msg" id="encourageMsg"></div>
+
+    <div class="numpad" id="numpad">
+      <button class="num-btn digit" onclick="pressNum(1)">1</button>
+      <button class="num-btn digit" onclick="pressNum(2)">2</button>
+      <button class="num-btn digit" onclick="pressNum(3)">3</button>
+      <button class="num-btn digit" onclick="pressNum(4)">4</button>
+      <button class="num-btn digit" onclick="pressNum(5)">5</button>
+      <button class="num-btn digit" onclick="pressNum(6)">6</button>
+      <button class="num-btn digit" onclick="pressNum(7)">7</button>
+      <button class="num-btn digit" onclick="pressNum(8)">8</button>
+      <button class="num-btn digit" onclick="pressNum(9)">9</button>
+      <button class="num-btn clear" onclick="pressClear()" data-he="מחק" data-en="CLR">מחק</button>
+      <button class="num-btn digit zero" onclick="pressNum(0)">0</button>
+      <button class="num-btn submit" onclick="submitAnswer()">&#10003;</button>
+    </div>
+  </div>
+
+  <!-- RESULTS SCREEN -->
+  <div class="screen" id="resultsScreen">
+    <div class="results-container">
+      <div class="menu-emoji" id="resultsEmoji">🏆</div>
+      <div class="results-title" id="resultsTitle" data-he="סיום!" data-en="Game Over!">סיום!</div>
+      <div class="results-score" id="finalScore">0</div>
+      <div class="results-stats">
+        <div class="stat-box glass">
+          <div class="stat-value" id="statCorrect" style="color:#22c55e">0</div>
+          <div class="stat-label" data-he="נכונות" data-en="Correct">נכונות</div>
+        </div>
+        <div class="stat-box glass">
+          <div class="stat-value" id="statSpeed" style="color:#22d3ee">0s</div>
+          <div class="stat-label" data-he="ממוצע זמן" data-en="Avg Time">ממוצע זמן</div>
+        </div>
+        <div class="stat-box glass">
+          <div class="stat-value" id="statStreak" style="color:#f472b6">0</div>
+          <div class="stat-label" data-he="רצף מקסימלי" data-en="Best Streak">רצף מקסימלי</div>
+        </div>
+      </div>
+      <div class="stars-row" id="totalStars"></div>
+      <div class="weak-tables glass" id="weakSection" style="display:none">
+        <div class="weak-title" data-he="כדאי לתרגל:" data-en="Practice these:">כדאי לתרגל:</div>
+        <div class="weak-list" id="weakList"></div>
+      </div>
+      <div class="results-btns">
+        <button class="result-btn primary" onclick="playAgain()" data-he="שחק שוב!" data-en="Play Again!">שחק שוב!</button>
+        <button class="result-btn secondary" onclick="goToMenu()" data-he="תפריט ראשי" data-en="Main Menu">תפריט ראשי</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Feedback Overlay -->
+<div class="feedback-overlay" id="feedbackOverlay">
+  <div class="feedback-content">
+    <div class="feedback-stars" id="feedbackStars"></div>
+    <div class="feedback-text" id="feedbackText"></div>
+    <div class="feedback-points" id="feedbackPoints"></div>
+  </div>
+</div>
+
+<!-- Countdown Overlay -->
+<div class="countdown-overlay" id="countdownOverlay">
+  <div class="countdown-number" id="countdownNum"></div>
+</div>
+
+<script>
+// ========== STATE ==========
+let lang = localStorage.getItem('kifkefel-lang') || 'he';
+let currentScreen = 'menuScreen';
+let difficulty = 'medium';
+const TOTAL_ROUNDS = 15;
+let round = 0;
+let score = 0;
+let streak = 0;
+let maxStreak = 0;
+let correctCount = 0;
+let totalTime = 0;
+let currentAnswer = '';
+let num1 = 0, num2 = 0, correctResult = 0;
+let roundStartTime = 0;
+let isSpinning = false;
+let canAnswer = false;
+let isBonus = false;
+let timerInterval = null;
+let timerRemaining = 0;
+let roundResults = []; // {num1, num2, correct, userAnswer, time, stars}
+let weakMap = {}; // "7x8" -> {wrong:2, total:3}
+
+const diffConfig = {
+  easy: { max: 5, timeLimit: 0 },
+  medium: { max: 10, timeLimit: 0 },
+  hard: { max: 12, timeLimit: 0 },
+  insane: { max: 15, timeLimit: 5 }
+};
+
+const encourageCorrectHe = ['מדהים!','נכון!','יופי!','אלוף!','בול!','מעולה!','ותותח!','רצח!','וואו!'];
+const encourageCorrectEn = ['Amazing!','Correct!','Great!','Champion!','Spot on!','Excellent!','Beast!','Wow!','Fire!'];
+const encourageWrongHe = ['כמעט!','לא נורא!','נסה שוב!','בפעם הבאה!','קרוב!'];
+const encourageWrongEn = ['Almost!','No worries!','Try again!','Next time!','Close!'];
+
+// ========== INIT ==========
+document.addEventListener('DOMContentLoaded', () => {
+  applyLang();
+  loadHighScore();
+  buildWheels();
+
+  // Keyboard support
+  document.addEventListener('keydown', (e) => {
+    if (currentScreen !== 'gameScreen' || !canAnswer) return;
+    if (e.key >= '0' && e.key <= '9') pressNum(parseInt(e.key));
+    else if (e.key === 'Backspace' || e.key === 'Delete') pressClear();
+    else if (e.key === 'Enter') submitAnswer();
+  });
+});
+
+// ========== LANGUAGE ==========
+function toggleLang() {
+  lang = lang === 'he' ? 'en' : 'he';
+  localStorage.setItem('kifkefel-lang', lang);
+  applyLang();
+}
+
+function applyLang() {
+  const isHe = lang === 'he';
+  document.documentElement.lang = isHe ? 'he' : 'en';
+  document.documentElement.dir = isHe ? 'rtl' : 'ltr';
+  document.getElementById('langBtn').textContent = isHe ? 'EN' : 'עב';
+
+  document.querySelectorAll('[data-he][data-en]').forEach(el => {
+    el.textContent = isHe ? el.dataset.he : el.dataset.en;
+  });
+}
+
+// ========== SCREENS ==========
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  currentScreen = id;
+}
+
+// ========== HIGH SCORE ==========
+function loadHighScore() {
+  const hs = JSON.parse(localStorage.getItem('kifkefel-highscores') || '{}');
+  const best = Math.max(0, ...Object.values(hs));
+  document.getElementById('highScoreDisplay').textContent = best;
+}
+function saveHighScore(s) {
+  const hs = JSON.parse(localStorage.getItem('kifkefel-highscores') || '{}');
+  if (!hs[difficulty] || s > hs[difficulty]) hs[difficulty] = s;
+  localStorage.setItem('kifkefel-highscores', JSON.stringify(hs));
+}
+
+// ========== WEAK TABLES ==========
+function loadWeakMap() {
+  return JSON.parse(localStorage.getItem('kifkefel-weaktables') || '{}');
+}
+function saveWeakMap() {
+  const stored = loadWeakMap();
+  for (const k in weakMap) {
+    if (!stored[k]) stored[k] = { wrong: 0, total: 0 };
+    stored[k].wrong += weakMap[k].wrong;
+    stored[k].total += weakMap[k].total;
+  }
+  localStorage.setItem('kifkefel-weaktables', JSON.stringify(stored));
+}
+
+// ========== BUILD WHEELS ==========
+function buildWheels() {
+  const w1 = document.getElementById('wheel1');
+  const w2 = document.getElementById('wheel2');
+  w1.innerHTML = '';
+  w2.innerHTML = '';
+  for (let i = 0; i < 60; i++) {
+    const n1 = document.createElement('div');
+    n1.className = 'slot-number';
+    n1.textContent = Math.floor(Math.random() * 15) + 1;
+    w1.appendChild(n1);
+    const n2 = document.createElement('div');
+    n2.className = 'slot-number';
+    n2.textContent = Math.floor(Math.random() * 15) + 1;
+    w2.appendChild(n2);
+  }
+}
+
+// ========== START GAME ==========
+function startGame(diff) {
+  difficulty = diff;
+  round = 0;
+  score = 0;
+  streak = 0;
+  maxStreak = 0;
+  correctCount = 0;
+  totalTime = 0;
+  currentAnswer = '';
+  roundResults = [];
+  weakMap = {};
+
+  updateScoreDisplay();
+  updateStreakBar();
+  showScreen('gameScreen');
+
+  // Countdown
+  doCountdown(() => {
+    nextRound();
+  });
+}
+
+function doCountdown(cb) {
+  const overlay = document.getElementById('countdownOverlay');
+  const numEl = document.getElementById('countdownNum');
+  overlay.classList.add('show');
+  let count = 3;
+  numEl.textContent = count;
+  numEl.style.animation = 'none';
+  void numEl.offsetWidth;
+  numEl.style.animation = '';
+
+  const iv = setInterval(() => {
+    count--;
+    if (count > 0) {
+      numEl.textContent = count;
+      numEl.style.animation = 'none';
+      void numEl.offsetWidth;
+      numEl.style.animation = '';
+    } else {
+      clearInterval(iv);
+      numEl.textContent = lang === 'he' ? '!קדימה' : 'GO!';
+      numEl.style.animation = 'none';
+      void numEl.offsetWidth;
+      numEl.style.animation = '';
+      setTimeout(() => {
+        overlay.classList.remove('show');
+        cb();
+      }, 500);
+    }
+  }, 700);
+}
+
+// ========== NEXT ROUND ==========
+function nextRound() {
+  round++;
+  if (round > TOTAL_ROUNDS) {
+    endGame();
+    return;
+  }
+
+  currentAnswer = '';
+  canAnswer = false;
+  isBonus = (round % 5 === 0);
+
+  const cfg = diffConfig[difficulty];
+  num1 = Math.floor(Math.random() * cfg.max) + 1;
+  num2 = Math.floor(Math.random() * cfg.max) + 1;
+  correctResult = num1 * num2;
+
+  // Update UI
+  document.getElementById('roundInfo').textContent =
+    (lang === 'he' ? `סיבוב ${round} מתוך ${TOTAL_ROUNDS}` : `Round ${round} of ${TOTAL_ROUNDS}`);
+  document.getElementById('answerSlot').textContent = '?';
+  document.getElementById('answerSlot').className = 'answer-slot';
+  document.getElementById('encourageMsg').textContent = '';
+
+  const bonusBadge = document.getElementById('bonusBadge');
+  bonusBadge.style.display = isBonus ? 'block' : 'none';
+
+  // Timer
+  const timerWrap = document.getElementById('timerWrap');
+  if (cfg.timeLimit > 0 || isBonus) {
+    timerWrap.style.display = 'block';
+    document.getElementById('timerBar').style.width = '100%';
+    document.getElementById('timerBar').className = 'timer-bar';
+  } else {
+    timerWrap.style.display = 'none';
+  }
+
+  // Spin wheels
+  spinWheels(num1, num2, () => {
+    canAnswer = true;
+    roundStartTime = Date.now();
+    // Start timer if needed
+    const limit = isBonus ? 3 : cfg.timeLimit;
+    if (limit > 0) startTimer(limit);
+  });
+}
+
+// ========== SPIN WHEELS ==========
+function spinWheels(target1, target2, cb) {
+  isSpinning = true;
+  const w1 = document.getElementById('wheel1');
+  const w2 = document.getElementById('wheel2');
+  const containerH = w1.parentElement.offsetHeight || 120;
+
+  // Rebuild wheel numbers with targets at specific positions
+  rebuildWheel(w1, target1, 50, containerH);
+  rebuildWheel(w2, target2, 52, containerH);
+
+  // Reset positions
+  w1.style.transition = 'none';
+  w2.style.transition = 'none';
+  w1.style.transform = 'translateY(0)';
+  w2.style.transform = 'translateY(0)';
+  void w1.offsetWidth;
+
+  // Target position: center the target number
+  const targetPos1 = 50 * containerH;
+  const targetPos2 = 52 * containerH;
+
+  // Animate with CSS transition (ease-out for slot machine feel)
+  setTimeout(() => {
+    w1.style.transition = 'transform 2s cubic-bezier(0.15, 0.85, 0.35, 1)';
+    w1.style.transform = `translateY(-${targetPos1}px)`;
+  }, 50);
+
+  setTimeout(() => {
+    w2.style.transition = 'transform 2.4s cubic-bezier(0.15, 0.85, 0.35, 1)';
+    w2.style.transform = `translateY(-${targetPos2}px)`;
+  }, 200);
+
+  setTimeout(() => {
+    isSpinning = false;
+    cb();
+  }, 2700);
+}
+
+function rebuildWheel(wheel, targetNum, targetIndex, h) {
+  const max = diffConfig[difficulty].max;
+  wheel.innerHTML = '';
+  for (let i = 0; i < 60; i++) {
+    const div = document.createElement('div');
+    div.className = 'slot-number';
+    div.style.height = h + 'px';
+    if (i === targetIndex) {
+      div.textContent = targetNum;
+      div.style.color = '#fbbf24';
+    } else {
+      div.textContent = Math.floor(Math.random() * max) + 1;
+    }
+    wheel.appendChild(div);
+  }
+}
+
+// ========== TIMER ==========
+function startTimer(seconds) {
+  clearInterval(timerInterval);
+  timerRemaining = seconds;
+  const total = seconds;
+  const bar = document.getElementById('timerBar');
+  bar.style.width = '100%';
+  bar.className = 'timer-bar';
+
+  timerInterval = setInterval(() => {
+    timerRemaining -= 0.05;
+    const pct = Math.max(0, (timerRemaining / total) * 100);
+    bar.style.width = pct + '%';
+    if (pct < 30) bar.className = 'timer-bar warn';
+    if (timerRemaining <= 0) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      // Time's up
+      if (canAnswer) handleAnswer(true);
+    }
+  }, 50);
+}
+
+// ========== INPUT ==========
+function pressNum(n) {
+  if (!canAnswer || isSpinning) return;
+  if (currentAnswer.length >= 3) return;
+  currentAnswer += n;
+  document.getElementById('answerSlot').textContent = currentAnswer;
+  vibrate(10);
+}
+
+function pressClear() {
+  if (!canAnswer) return;
+  currentAnswer = '';
+  document.getElementById('answerSlot').textContent = '?';
+  vibrate(10);
+}
+
+function submitAnswer() {
+  if (!canAnswer || currentAnswer === '') return;
+  handleAnswer(false);
+}
+
+function vibrate(ms) {
+  if (navigator.vibrate) navigator.vibrate(ms);
+}
+
+// ========== HANDLE ANSWER ==========
+function handleAnswer(timedOut) {
+  canAnswer = false;
+  clearInterval(timerInterval);
+  timerInterval = null;
+
+  const elapsed = (Date.now() - roundStartTime) / 1000;
+  const userAns = timedOut ? -1 : parseInt(currentAnswer);
+  const isCorrect = !timedOut && userAns === correctResult;
+
+  // Track
+  const key = `${Math.min(num1,num2)}x${Math.max(num1,num2)}`;
+  if (!weakMap[key]) weakMap[key] = { wrong: 0, total: 0 };
+  weakMap[key].total++;
+
+  let stars = 0;
+  let points = 0;
+
+  if (isCorrect) {
+    correctCount++;
+    totalTime += elapsed;
+
+    if (elapsed < 2) stars = 3;
+    else if (elapsed < 4) stars = 2;
+    else if (elapsed < 7) stars = 1;
+
+    const basePoints = stars === 3 ? 150 : stars === 2 ? 100 : 50;
+    const multiplier = isBonus ? 3 : 1;
+    points = basePoints * multiplier;
+
+    streak++;
+    if (streak > maxStreak) maxStreak = streak;
+    score += points;
+
+    document.getElementById('answerSlot').className = 'answer-slot correct';
+    document.getElementById('answerSlot').textContent = correctResult;
+
+    showFeedback(true, stars, points, elapsed);
+    spawnStars();
+  } else {
+    weakMap[key].wrong++;
+    streak = 0;
+
+    const slot = document.getElementById('answerSlot');
+    slot.className = 'answer-slot wrong';
+    if (timedOut) slot.textContent = '⏱';
+
+    showFeedback(false, 0, 0, elapsed);
+  }
+
+  roundResults.push({ num1, num2, correct: isCorrect, userAnswer: userAns, time: elapsed, stars });
+
+  updateScoreDisplay();
+  updateStreakBar();
+
+  // Show correct answer if wrong
+  if (!isCorrect) {
+    setTimeout(() => {
+      const slot = document.getElementById('answerSlot');
+      slot.textContent = correctResult;
+      slot.className = 'answer-slot';
+      slot.style.opacity = '0.5';
+      setTimeout(() => { slot.style.opacity = '1'; }, 600);
+    }, 800);
+  }
+
+  setTimeout(() => {
+    nextRound();
+  }, isCorrect ? 1400 : 2200);
+}
+
+// ========== FEEDBACK ==========
+function showFeedback(correct, stars, points, time) {
+  const overlay = document.getElementById('feedbackOverlay');
+  const starsEl = document.getElementById('feedbackStars');
+  const textEl = document.getElementById('feedbackText');
+  const pointsEl = document.getElementById('feedbackPoints');
+
+  if (correct) {
+    starsEl.textContent = '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
+    const msgs = lang === 'he' ? encourageCorrectHe : encourageCorrectEn;
+    textEl.textContent = msgs[Math.floor(Math.random() * msgs.length)];
+    textEl.style.color = '#22c55e';
+    pointsEl.textContent = `+${points}`;
+    pointsEl.style.display = 'block';
+  } else {
+    starsEl.textContent = '';
+    const msgs = lang === 'he' ? encourageWrongHe : encourageWrongEn;
+    textEl.textContent = msgs[Math.floor(Math.random() * msgs.length)];
+    textEl.style.color = '#ef4444';
+    pointsEl.style.display = 'none';
+  }
+
+  const msgEl = document.getElementById('encourageMsg');
+  if (correct && time < 2) {
+    msgEl.textContent = lang === 'he' ? '⚡ מהיר בטירוף!' : '⚡ Lightning fast!';
+    msgEl.style.color = '#fbbf24';
+  } else if (correct) {
+    msgEl.textContent = '';
+  } else {
+    msgEl.textContent = `${num1} × ${num2} = ${correctResult}`;
+    msgEl.style.color = 'rgba(255,255,255,0.5)';
+  }
+
+  overlay.classList.add('show');
+  setTimeout(() => overlay.classList.remove('show'), correct ? 1000 : 1600);
+}
+
+// ========== STARS PARTICLES ==========
+function spawnStars() {
+  const symbols = ['⭐','✨','💫','🌟'];
+  for (let i = 0; i < 8; i++) {
+    const s = document.createElement('div');
+    s.className = 'star-particle';
+    s.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    s.style.left = (30 + Math.random() * 40) + 'vw';
+    s.style.top = (30 + Math.random() * 20) + 'vh';
+    s.style.setProperty('--dx', (Math.random() * 200 - 100) + 'px');
+    s.style.setProperty('--dy', (Math.random() * -200 - 50) + 'px');
+    s.style.animationDelay = (Math.random() * 0.3) + 's';
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 1200);
+  }
+}
+
+// ========== SCORE DISPLAY ==========
+function updateScoreDisplay() {
+  const el = document.getElementById('scoreDisplay');
+  el.textContent = score;
+  el.classList.remove('pop');
+  void el.offsetWidth;
+  el.classList.add('pop');
+}
+
+// ========== STREAK BAR ==========
+function updateStreakBar() {
+  const bar = document.getElementById('streakBar');
+  const text = document.getElementById('streakText');
+
+  if (streak >= 10) {
+    bar.className = 'streak-bar legendary';
+    text.textContent = lang === 'he' ? `⚡ אגדי! ${streak} רצף ⚡` : `⚡ LEGENDARY! ${streak} streak ⚡`;
+  } else if (streak >= 5) {
+    bar.className = 'streak-bar fire';
+    text.textContent = lang === 'he' ? `🔥 בוער! ${streak} רצף 🔥` : `🔥 ON FIRE! ${streak} streak 🔥`;
+  } else if (streak >= 3) {
+    bar.className = 'streak-bar warm';
+    text.textContent = lang === 'he' ? `${streak} ברצף! 💪` : `${streak} in a row! 💪`;
+  } else {
+    bar.className = 'streak-bar idle';
+    if (streak > 0) {
+      text.textContent = lang === 'he' ? `${streak} ברצף` : `${streak} in a row`;
+    } else {
+      const he = text.dataset ? text.dataset.he : 'התחל רצף!';
+      const en = text.dataset ? text.dataset.en : 'Start a streak!';
+      text.textContent = lang === 'he' ? 'התחל רצף!' : 'Start a streak!';
+    }
+  }
+}
+
+// ========== END GAME ==========
+function endGame() {
+  clearInterval(timerInterval);
+  saveHighScore(score);
+  saveWeakMap();
+
+  // Calculate stats
+  const avgTime = correctCount > 0 ? (totalTime / correctCount).toFixed(1) : '—';
+  const totalStarsEarned = roundResults.reduce((a, r) => a + r.stars, 0);
+
+  // Results emoji
+  const emoji = correctCount >= 13 ? '🏆' : correctCount >= 10 ? '🌟' : correctCount >= 7 ? '👏' : '💪';
+  document.getElementById('resultsEmoji').textContent = emoji;
+
+  document.getElementById('finalScore').textContent = score;
+  document.getElementById('statCorrect').textContent = `${correctCount}/${TOTAL_ROUNDS}`;
+  document.getElementById('statSpeed').textContent = avgTime === '—' ? '—' : `${avgTime}s`;
+  document.getElementById('statStreak').textContent = maxStreak;
+
+  // Stars
+  const starsRow = document.getElementById('totalStars');
+  starsRow.innerHTML = '';
+  const maxPossibleStars = TOTAL_ROUNDS * 3;
+  const filledStars = Math.round((totalStarsEarned / maxPossibleStars) * 5);
+  for (let i = 0; i < 5; i++) {
+    const span = document.createElement('span');
+    span.className = 'star' + (i < filledStars ? ' earned' : '');
+    span.textContent = i < filledStars ? '⭐' : '☆';
+    span.style.animationDelay = (i * 0.15) + 's';
+    starsRow.appendChild(span);
+  }
+
+  // Weak tables
+  const stored = loadWeakMap();
+  const weakItems = [];
+  for (const k in stored) {
+    const ratio = stored[k].total > 0 ? stored[k].wrong / stored[k].total : 0;
+    if (ratio > 0.3 && stored[k].total >= 2) {
+      weakItems.push({ key: k, ratio, wrong: stored[k].wrong, total: stored[k].total });
+    }
+  }
+  weakItems.sort((a, b) => b.ratio - a.ratio);
+
+  const weakSection = document.getElementById('weakSection');
+  const weakList = document.getElementById('weakList');
+  weakList.innerHTML = '';
+  if (weakItems.length > 0) {
+    weakSection.style.display = 'block';
+    weakItems.slice(0, 6).forEach(w => {
+      const div = document.createElement('div');
+      div.className = 'weak-item';
+      div.textContent = w.key.replace('x', ' × ');
+      weakList.appendChild(div);
+    });
+  } else {
+    weakSection.style.display = 'none';
+  }
+
+  // Title
+  const resultsTitle = document.getElementById('resultsTitle');
+  if (correctCount >= 14) {
+    resultsTitle.dataset.he = 'מושלם!';
+    resultsTitle.dataset.en = 'Perfect!';
+  } else if (correctCount >= 10) {
+    resultsTitle.dataset.he = 'מעולה!';
+    resultsTitle.dataset.en = 'Excellent!';
+  } else if (correctCount >= 7) {
+    resultsTitle.dataset.he = 'יפה מאוד!';
+    resultsTitle.dataset.en = 'Well Done!';
+  } else {
+    resultsTitle.dataset.he = 'תמשיך לתרגל!';
+    resultsTitle.dataset.en = 'Keep Practicing!';
+  }
+  resultsTitle.textContent = lang === 'he' ? resultsTitle.dataset.he : resultsTitle.dataset.en;
+
+  showScreen('resultsScreen');
+  loadHighScore();
+}
+
+// ========== NAV ==========
+function playAgain() {
+  startGame(difficulty);
+}
+
+function goToMenu() {
+  showScreen('menuScreen');
+  loadHighScore();
+}
+
+// ========== BACK BUTTON ==========
+// Detect local vs deployed
+(function() {
+  const isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:';
+  const backBtn = document.getElementById('backBtn');
+  if (isLocal) {
+    backBtn.href = '../index.html';
+  }
+})();
+</script>
+</body>
+</html>
