@@ -6,136 +6,454 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#2d1a0a">
+<meta name="theme-color" content="#2D1810">
 <title>מלך הפלאפל 🧆 Falafel King</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧆</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family:'Nunito',sans-serif;min-height:100vh;min-height:100dvh;overflow:hidden;user-select:none;-webkit-user-select:none;background:#1a0d02;color:white}
+
+body{
+  font-family:'Nunito',sans-serif;
+  min-height:100vh;min-height:100dvh;
+  overflow:hidden;
+  user-select:none;-webkit-user-select:none;
+  background:#2D1810;
+  color:#FFF5E1;
+}
 h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
-.bg-main{background:linear-gradient(135deg,#2d1a0a 0%,#3d2517 30%,#2d1a0a 50%,#1a2e0a 70%,#2d1a0a 100%);position:fixed;inset:0;overflow:hidden}
-.bg-main::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 50%,rgba(217,119,6,0.08) 0%,transparent 50%),radial-gradient(circle at 70% 30%,rgba(22,163,74,0.06) 0%,transparent 50%),radial-gradient(circle at 50% 80%,rgba(251,191,36,0.05) 0%,transparent 50%);animation:bgRotate 30s linear infinite;pointer-events:none}
+
+/* ============ WARM BACKGROUND ============ */
+.bg-main{
+  position:fixed;inset:0;overflow:hidden;
+  background:linear-gradient(160deg,#2D1810 0%,#3E1F0F 25%,#92400E 55%,#78350F 80%,#2D1810 100%);
+}
+.bg-main::before{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:
+    radial-gradient(circle at 30% 40%,rgba(251,191,36,0.12) 0%,transparent 50%),
+    radial-gradient(circle at 70% 60%,rgba(217,119,6,0.10) 0%,transparent 50%),
+    radial-gradient(circle at 50% 80%,rgba(180,83,9,0.08) 0%,transparent 50%);
+  animation:bgRotate 40s linear infinite;pointer-events:none;
+}
 @keyframes bgRotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
-.glass{background:rgba(255,255,255,0.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1)}
-.glass-strong{background:rgba(255,255,255,0.1);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.15)}
 
-/* SCREENS */
-.screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;transition:opacity 0.4s,transform 0.4s;padding:20px}
-.screen.hidden{opacity:0;pointer-events:none;transform:scale(0.95)}
+/* Floating food particles */
+.bg-particle{
+  position:fixed;pointer-events:none;z-index:1;
+  font-size:1.6rem;opacity:0.12;
+  animation:floatParticle linear infinite;
+}
+@keyframes floatParticle{
+  0%{transform:translateY(110vh) rotate(0deg)}
+  100%{transform:translateY(-10vh) rotate(360deg)}
+}
 
-/* START SCREEN */
-.start-title{font-family:'Fredoka One',cursive;font-size:clamp(2.2rem,8vw,3.5rem);background:linear-gradient(135deg,#fbbf24,#f59e0b,#d97706);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;line-height:1.2;margin-bottom:8px}
-.start-subtitle{color:rgba(255,255,255,0.5);font-size:1rem;font-weight:700;text-align:center;margin-bottom:32px}
-.start-emoji{font-size:5rem;margin-bottom:16px;animation:emojiPulse 2s ease-in-out infinite}
+/* ============ GLASS PANELS ============ */
+.glass{
+  background:rgba(255,200,100,0.08);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border:1px solid rgba(255,200,100,0.15);
+}
+.glass-strong{
+  background:rgba(255,200,100,0.12);
+  backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
+  border:1px solid rgba(255,200,100,0.2);
+}
+
+/* ============ SCREENS ============ */
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;transition:opacity 0.5s ease,transform 0.5s ease;padding:20px}
+.screen.hidden{opacity:0;pointer-events:none;transform:scale(0.92)}
+
+/* ============ START SCREEN ============ */
+.start-wrap{
+  display:flex;flex-direction:column;align-items:center;
+  background:rgba(255,200,100,0.06);
+  backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
+  border:1px solid rgba(255,200,100,0.12);
+  border-radius:40px;padding:40px 36px 36px;
+  box-shadow:0 20px 80px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.08);
+  max-width:380px;width:100%;
+}
+.start-emoji{font-size:6rem;margin-bottom:12px;animation:emojiPulse 2.5s ease-in-out infinite;filter:drop-shadow(0 8px 24px rgba(217,119,6,0.5))}
 @keyframes emojiPulse{0%,100%{transform:scale(1) rotate(-5deg)}50%{transform:scale(1.15) rotate(5deg)}}
-.play-btn{font-family:'Fredoka One',cursive;font-size:1.6rem;padding:18px 56px;border:none;border-radius:60px;cursor:pointer;color:white;background:linear-gradient(135deg,#d97706,#b45309);box-shadow:0 8px 32px rgba(217,119,6,0.4),inset 0 2px 0 rgba(255,255,255,0.2);transition:all 0.2s;position:relative;overflow:hidden}
-.play-btn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(217,119,6,0.5)}
-.play-btn:active{transform:scale(0.95)}
-.high-score-display{margin-top:20px;font-size:0.9rem;color:rgba(255,255,255,0.4);font-weight:700}
+.start-title{
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(2.4rem,9vw,3.8rem);
+  background:linear-gradient(135deg,#FBBF24,#F59E0B,#D97706,#FBBF24);
+  background-size:300% 100%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  text-align:center;line-height:1.2;margin-bottom:6px;
+  animation:shimmer 4s ease-in-out infinite;
+}
+@keyframes shimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.start-subtitle{color:rgba(255,245,225,0.5);font-size:1.05rem;font-weight:700;text-align:center;margin-bottom:36px}
+.play-btn{
+  font-family:'Fredoka One',cursive;font-size:1.7rem;
+  padding:20px 64px;border:none;border-radius:60px;cursor:pointer;
+  color:#2D1810;
+  background:linear-gradient(135deg,#FBBF24,#F59E0B,#D97706);
+  box-shadow:0 8px 36px rgba(251,191,36,0.45),0 2px 0 rgba(255,255,255,0.3) inset;
+  transition:all 0.2s;position:relative;overflow:hidden;
+  letter-spacing:0.5px;
+}
+.play-btn::after{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:linear-gradient(45deg,transparent 40%,rgba(255,255,255,0.25) 50%,transparent 60%);
+  animation:btnShine 3s ease-in-out infinite;
+}
+@keyframes btnShine{0%{transform:translateX(-100%) rotate(25deg)}100%{transform:translateX(100%) rotate(25deg)}}
+.play-btn:hover{transform:translateY(-3px);box-shadow:0 14px 48px rgba(251,191,36,0.55)}
+.play-btn:active{transform:scale(0.94);box-shadow:0 4px 16px rgba(251,191,36,0.3)}
+.high-score-display{margin-top:20px;font-size:0.95rem;color:rgba(251,191,36,0.6);font-weight:800}
 
-/* TOP BAR */
-.top-bar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;gap:8px}
-.back-btn{width:40px;height:40px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;color:white;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:all 0.2s}
-.back-btn:hover{background:rgba(255,255,255,0.2)}
-.lives{display:flex;gap:4px;font-size:1.3rem}
-.score-display{font-family:'Fredoka One',cursive;font-size:1.1rem;color:#fbbf24}
-.level-display{font-size:0.75rem;color:rgba(255,255,255,0.5);font-weight:700}
-.streak-badge{font-size:0.7rem;font-weight:800;color:#f97316;background:rgba(249,115,22,0.2);padding:2px 8px;border-radius:10px;display:none}
-.streak-badge.active{display:inline-block;animation:streakPop 0.3s ease-out}
-@keyframes streakPop{0%{transform:scale(0)}60%{transform:scale(1.3)}100%{transform:scale(1)}}
-.lang-btn{width:36px;height:36px;border-radius:50%;border:none;font-size:0.7rem;font-weight:800;cursor:pointer;color:white;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:all 0.2s}
+/* ============ TOP BAR ============ */
+.top-bar{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px;gap:8px;
+  background:linear-gradient(180deg,rgba(45,24,16,0.9) 0%,rgba(45,24,16,0) 100%);
+}
+.back-btn,.lang-btn{
+  width:42px;height:42px;border-radius:50%;border:none;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;cursor:pointer;color:#FFF5E1;
+  background:rgba(255,200,100,0.1);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,200,100,0.15);
+  transition:all 0.2s;
+}
+.back-btn:hover,.lang-btn:hover{background:rgba(255,200,100,0.2);transform:scale(1.05)}
+.back-btn:active,.lang-btn:active{transform:scale(0.92)}
+.lang-btn{font-size:0.7rem;font-weight:900;width:38px;height:38px}
 
-/* GAME AREA */
-.game-area{position:fixed;inset:0;display:flex;flex-direction:column;z-index:10;padding-top:56px}
+.lives{display:flex;gap:3px;font-size:1.5rem;filter:drop-shadow(0 2px 6px rgba(239,68,68,0.4))}
+.lives .heart{transition:all 0.3s;display:inline-block}
+.lives .heart.breaking{animation:heartBreak 0.6s ease-out forwards}
+@keyframes heartBreak{
+  0%{transform:scale(1);opacity:1}
+  20%{transform:scale(1.4);opacity:1}
+  40%{transform:scale(1) rotate(-15deg);opacity:0.8}
+  60%{transform:scale(0.8) rotate(15deg);opacity:0.5}
+  100%{transform:scale(0) rotate(-30deg) translateY(20px);opacity:0}
+}
+
+.score-display{font-family:'Fredoka One',cursive;font-size:1.3rem;color:#FBBF24;text-shadow:0 2px 12px rgba(251,191,36,0.4)}
+.level-display{font-size:0.75rem;color:rgba(255,245,225,0.45);font-weight:800;letter-spacing:0.5px}
+.streak-badge{
+  font-size:0.8rem;font-weight:900;color:#FBBF24;
+  background:rgba(251,191,36,0.2);
+  padding:3px 10px;border-radius:12px;display:none;
+  border:1px solid rgba(251,191,36,0.3);
+  text-shadow:0 1px 8px rgba(251,191,36,0.5);
+}
+.streak-badge.active{display:inline-block;animation:streakPop 0.35s cubic-bezier(0.175,0.885,0.32,1.275)}
+@keyframes streakPop{0%{transform:scale(0)}60%{transform:scale(1.4)}100%{transform:scale(1)}}
+
+/* ============ FLAME BORDER (streak >= 3) ============ */
+.flame-border{
+  position:fixed;inset:0;pointer-events:none;z-index:45;
+  border:3px solid transparent;border-radius:0;
+  opacity:0;transition:opacity 0.5s;
+}
+.flame-border.active{
+  opacity:1;
+  border-image:linear-gradient(180deg,#FBBF24,#F97316,#EF4444,#F97316,#FBBF24) 1;
+  animation:flamePulse 1.5s ease-in-out infinite;
+}
+@keyframes flamePulse{0%,100%{box-shadow:inset 0 0 30px rgba(251,191,36,0.15)}50%{box-shadow:inset 0 0 60px rgba(249,115,22,0.25)}}
+
+/* ============ GAME AREA ============ */
+.game-area{position:fixed;inset:0;display:flex;flex-direction:column;z-index:10;padding-top:58px}
 .game-area.hidden{display:none}
 
-/* CUSTOMER AREA */
-.customer-zone{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;padding:8px 16px 4px;position:relative}
-.customer-face{font-size:3rem;position:relative;animation:customerBounce 0.5s ease-out}
-@keyframes customerBounce{0%{transform:translateY(-30px) scale(0);opacity:0}60%{transform:translateY(5px) scale(1.1)}100%{transform:translateY(0) scale(1);opacity:1}}
-.timer-ring{width:80px;height:80px;position:relative;display:flex;align-items:center;justify-content:center}
-.timer-ring svg{position:absolute;inset:0;transform:rotate(-90deg)}
-.timer-ring circle{fill:none;stroke-width:4;stroke-linecap:round}
-.timer-bg{stroke:rgba(255,255,255,0.08)}
-.timer-fg{stroke:#4ade80;transition:stroke 0.3s}
-.timer-fg.warning{stroke:#f59e0b}
-.timer-fg.danger{stroke:#ef4444}
-.speech-bubble{background:rgba(255,255,255,0.12);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.15);border-radius:20px;padding:10px 16px;margin-top:6px;position:relative;display:flex;gap:6px;flex-wrap:wrap;justify-content:center;align-items:center;max-width:340px}
-.speech-bubble::before{content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:8px solid rgba(255,255,255,0.12)}
-.order-item{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.1);transition:all 0.3s;position:relative}
-.order-item.completed{background:rgba(74,222,128,0.2);border-color:rgba(74,222,128,0.5);transform:scale(1.1)}
-.order-item.completed::after{content:'✓';position:absolute;top:-4px;right:-4px;width:16px;height:16px;border-radius:50%;background:#4ade80;font-size:0.55rem;display:flex;align-items:center;justify-content:center;color:#064e3b;font-weight:900}
-.order-item.current{border-color:#fbbf24;box-shadow:0 0 12px rgba(251,191,36,0.4);animation:currentPulse 1s ease-in-out infinite}
-@keyframes currentPulse{0%,100%{box-shadow:0 0 12px rgba(251,191,36,0.4)}50%{box-shadow:0 0 20px rgba(251,191,36,0.7)}}
-.special-tag{font-size:0.65rem;font-weight:800;padding:2px 8px;border-radius:8px;color:white;margin-top:4px;animation:tagPulse 1.5s ease-in-out infinite}
-@keyframes tagPulse{0%,100%{opacity:1}50%{opacity:0.7}}
+/* ============ CUSTOMER ZONE ============ */
+.customer-zone{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;padding:6px 16px 2px;position:relative}
+.timer-ring{width:90px;height:90px;position:relative;display:flex;align-items:center;justify-content:center}
+.timer-ring svg{position:absolute;inset:0;transform:rotate(-90deg);filter:drop-shadow(0 0 8px rgba(74,222,128,0.3))}
+.timer-ring circle{fill:none;stroke-width:4.5;stroke-linecap:round}
+.timer-bg{stroke:rgba(255,200,100,0.1)}
+.timer-fg{stroke:#4ADE80;transition:stroke 0.3s,filter 0.3s}
+.timer-fg.warning{stroke:#FBBF24;filter:drop-shadow(0 0 8px rgba(251,191,36,0.5))}
+.timer-fg.danger{stroke:#EF4444;filter:drop-shadow(0 0 12px rgba(239,68,68,0.6));animation:timerShake 0.3s ease-in-out infinite}
+@keyframes timerShake{0%,100%{transform:rotate(-90deg)}50%{transform:rotate(-88deg)}}
+.customer-face{
+  font-size:3.2rem;position:relative;
+  animation:customerBounce 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
+  filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+}
+@keyframes customerBounce{0%{transform:translateY(-40px) scale(0);opacity:0}60%{transform:translateY(6px) scale(1.15)}100%{transform:translateY(0) scale(1);opacity:1}}
 
-/* PITA BUILDING ZONE */
+.speech-bubble{
+  background:rgba(255,200,100,0.1);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border:1px solid rgba(255,200,100,0.18);
+  border-radius:22px;padding:12px 18px;margin-top:8px;
+  position:relative;display:flex;gap:7px;flex-wrap:wrap;
+  justify-content:center;align-items:center;max-width:360px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.2);
+}
+.speech-bubble::before{
+  content:'';position:absolute;top:-9px;left:50%;transform:translateX(-50%);
+  width:0;height:0;
+  border-left:10px solid transparent;border-right:10px solid transparent;
+  border-bottom:9px solid rgba(255,200,100,0.15);
+}
+.order-item{
+  width:40px;height:40px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;
+  background:rgba(255,200,100,0.06);
+  border:2px solid rgba(255,200,100,0.12);
+  transition:all 0.35s cubic-bezier(0.175,0.885,0.32,1.275);
+  position:relative;
+}
+.order-item.completed{
+  background:rgba(74,222,128,0.2);
+  border-color:rgba(74,222,128,0.5);
+  transform:scale(1.1);
+}
+.order-item.completed::after{
+  content:'✓';position:absolute;top:-5px;right:-5px;
+  width:18px;height:18px;border-radius:50%;
+  background:linear-gradient(135deg,#4ADE80,#22C55E);
+  font-size:0.6rem;display:flex;align-items:center;justify-content:center;
+  color:#064E3B;font-weight:900;
+  box-shadow:0 2px 8px rgba(74,222,128,0.4);
+}
+.order-item.current{
+  border-color:#FBBF24;
+  box-shadow:0 0 16px rgba(251,191,36,0.5),0 0 32px rgba(251,191,36,0.2);
+  animation:currentPulse 1.2s ease-in-out infinite;
+  transform:scale(1.08);
+}
+@keyframes currentPulse{0%,100%{box-shadow:0 0 16px rgba(251,191,36,0.5)}50%{box-shadow:0 0 28px rgba(251,191,36,0.8)}}
+.special-tag{
+  font-size:0.7rem;font-weight:900;padding:4px 12px;border-radius:10px;
+  color:white;margin-top:6px;animation:tagPulse 1.8s ease-in-out infinite;
+  letter-spacing:0.3px;
+}
+@keyframes tagPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.8;transform:scale(1.03)}}
+
+/* ============ PITA BUILDING ZONE ============ */
 .pita-zone{flex:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;min-height:0}
-.pita-wrap{position:relative;width:140px;height:180px;display:flex;align-items:flex-end;justify-content:center}
-.pita-base{font-size:5rem;filter:drop-shadow(0 4px 20px rgba(0,0,0,0.4))}
-.pita-ingredients{position:absolute;bottom:50px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column-reverse;align-items:center;gap:2px}
-.pita-ingredient{font-size:1.4rem;animation:ingredientDrop 0.4s cubic-bezier(0.175,0.885,0.32,1.275)}
-@keyframes ingredientDrop{0%{transform:translateY(-40px) scale(0);opacity:0}60%{transform:translateY(5px) scale(1.1)}100%{transform:translateY(0) scale(1);opacity:1}}
+.pita-wrap{
+  position:relative;width:180px;height:220px;
+  display:flex;align-items:flex-end;justify-content:center;
+}
+.pita-base{
+  font-size:6.5rem;
+  filter:drop-shadow(0 8px 32px rgba(0,0,0,0.5));
+  animation:pitaWobble 3s ease-in-out infinite;
+}
+@keyframes pitaWobble{0%,100%{transform:rotate(-1deg)}50%{transform:rotate(1deg)}}
+.pita-ingredients{
+  position:absolute;bottom:60px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column-reverse;align-items:center;gap:1px;
+}
+.pita-ingredient{
+  font-size:1.6rem;
+  animation:ingredientDrop 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+@keyframes ingredientDrop{
+  0%{transform:translateY(-60px) scale(0) rotate(-20deg);opacity:0}
+  50%{transform:translateY(8px) scale(1.2) rotate(5deg);opacity:1}
+  70%{transform:translateY(-4px) scale(0.95) rotate(-2deg)}
+  100%{transform:translateY(0) scale(1) rotate(0deg);opacity:1}
+}
 
-/* INGREDIENTS GRID */
-.ingredients-zone{flex:0 0 auto;padding:6px 8px;padding-bottom:max(12px,env(safe-area-inset-bottom))}
-.ingredients-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-width:400px;margin:0 auto}
-.ingredient-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:8px 4px;border-radius:16px;border:2px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.06);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);cursor:pointer;transition:all 0.15s;-webkit-tap-highlight-color:transparent;min-height:60px;position:relative}
-.ingredient-btn:active{transform:scale(0.9)}
-.ingredient-btn .emoji{font-size:1.6rem;line-height:1}
-.ingredient-btn .label{font-size:0.55rem;font-weight:700;color:rgba(255,255,255,0.5);line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
-.ingredient-btn.correct-flash{animation:correctFlash 0.4s ease-out;background:rgba(74,222,128,0.3);border-color:rgba(74,222,128,0.5)}
-@keyframes correctFlash{0%{transform:scale(0.9)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
-.ingredient-btn.wrong-flash{animation:wrongShake 0.4s ease-out;background:rgba(239,68,68,0.3);border-color:rgba(239,68,68,0.5)}
-@keyframes wrongShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+/* Glow under pita */
+.pita-glow{
+  position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+  width:140px;height:40px;
+  background:radial-gradient(ellipse,rgba(251,191,36,0.15) 0%,transparent 70%);
+  border-radius:50%;
+  animation:pitaGlow 3s ease-in-out infinite;
+}
+@keyframes pitaGlow{0%,100%{opacity:0.6;transform:translateX(-50%) scaleX(1)}50%{opacity:1;transform:translateX(-50%) scaleX(1.1)}}
 
-/* PARTICLES */
+/* ============ INGREDIENTS GRID ============ */
+.ingredients-zone{
+  flex:0 0 auto;padding:8px 10px;
+  padding-bottom:max(14px,env(safe-area-inset-bottom));
+}
+.ingredients-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  gap:8px;max-width:420px;margin:0 auto;
+}
+.ingredient-btn{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;padding:10px 4px;
+  border-radius:20px;
+  border:2px solid rgba(255,200,100,0.1);
+  background:rgba(255,200,100,0.06);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  cursor:pointer;transition:all 0.15s;
+  -webkit-tap-highlight-color:transparent;
+  min-height:68px;position:relative;
+  box-shadow:0 4px 16px rgba(0,0,0,0.15);
+}
+.ingredient-btn:active{transform:scale(0.88);box-shadow:0 1px 4px rgba(0,0,0,0.2)}
+.ingredient-btn .emoji{font-size:1.8rem;line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.2))}
+.ingredient-btn .label{
+  font-size:0.58rem;font-weight:700;
+  color:rgba(255,245,225,0.45);line-height:1;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;
+}
+/* Glow for needed ingredient */
+.ingredient-btn.needed{
+  border-color:rgba(251,191,36,0.5);
+  box-shadow:0 0 20px rgba(251,191,36,0.25),0 4px 16px rgba(0,0,0,0.15);
+  animation:neededPulse 1.5s ease-in-out infinite;
+}
+@keyframes neededPulse{0%,100%{box-shadow:0 0 20px rgba(251,191,36,0.25)}50%{box-shadow:0 0 36px rgba(251,191,36,0.45)}}
+
+.ingredient-btn.correct-flash{
+  animation:correctFlash 0.45s cubic-bezier(0.175,0.885,0.32,1.275);
+  background:rgba(74,222,128,0.25);border-color:rgba(74,222,128,0.5);
+}
+@keyframes correctFlash{0%{transform:scale(0.88)}50%{transform:scale(1.12)}100%{transform:scale(1)}}
+.ingredient-btn.wrong-flash{
+  animation:wrongShake 0.45s ease-out;
+  background:rgba(239,68,68,0.25);border-color:rgba(239,68,68,0.5);
+}
+@keyframes wrongShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+
+/* ============ PARTICLES ============ */
 .particle-container{position:fixed;inset:0;pointer-events:none;z-index:100;overflow:hidden}
-.falafel-particle{position:absolute;font-size:1.5rem;animation:falafelFly 1.2s ease-out forwards;pointer-events:none}
+.falafel-particle{position:absolute;font-size:1.8rem;animation:falafelFly 1.4s ease-out forwards;pointer-events:none}
 @keyframes falafelFly{0%{transform:translate(0,0) rotate(0deg) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) rotate(720deg) scale(0);opacity:0}}
 
-/* ORDER COMPLETE */
-.order-complete-flash{position:fixed;inset:0;background:rgba(74,222,128,0.08);pointer-events:none;z-index:90;animation:flashFade 0.6s ease-out forwards}
+/* Flying stars for perfect order */
+.star-fly{
+  position:fixed;font-size:2rem;pointer-events:none;z-index:110;
+  animation:starFly 1.2s ease-out forwards;
+}
+@keyframes starFly{
+  0%{transform:translate(0,0) scale(0) rotate(0deg);opacity:0}
+  20%{opacity:1;transform:translate(0,0) scale(1.3) rotate(60deg)}
+  100%{transform:translate(var(--sx),var(--sy)) scale(0.3) rotate(360deg);opacity:0}
+}
+
+/* ============ ORDER COMPLETE ============ */
+.order-complete-flash{position:fixed;inset:0;background:rgba(251,191,36,0.08);pointer-events:none;z-index:90;animation:flashFade 0.7s ease-out forwards}
 @keyframes flashFade{0%{opacity:1}100%{opacity:0}}
-.bonus-text{position:fixed;top:35%;left:50%;transform:translate(-50%,-50%);font-family:'Fredoka One',cursive;font-size:2rem;color:#fbbf24;text-shadow:0 2px 20px rgba(251,191,36,0.6);z-index:95;animation:bonusFloat 1s ease-out forwards;pointer-events:none}
-@keyframes bonusFloat{0%{transform:translate(-50%,-50%) scale(0);opacity:0}30%{transform:translate(-50%,-50%) scale(1.3);opacity:1}100%{transform:translate(-50%,-80%) scale(1);opacity:0}}
+.bonus-text{
+  position:fixed;top:35%;left:50%;transform:translate(-50%,-50%);
+  font-family:'Fredoka One',cursive;font-size:2.5rem;
+  color:#FBBF24;
+  text-shadow:0 2px 24px rgba(251,191,36,0.7),0 0 60px rgba(251,191,36,0.3);
+  z-index:95;animation:bonusFloat 1.1s ease-out forwards;pointer-events:none;
+}
+@keyframes bonusFloat{0%{transform:translate(-50%,-50%) scale(0);opacity:0}25%{transform:translate(-50%,-50%) scale(1.35);opacity:1}100%{transform:translate(-50%,-85%) scale(0.9);opacity:0}}
 
-/* GAME OVER */
-.game-over-screen{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:24px;transition:opacity 0.5s}
+/* ============ GAME OVER ============ */
+.game-over-screen{
+  position:fixed;inset:0;z-index:200;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:rgba(20,10,5,0.88);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  padding:24px;transition:opacity 0.5s;
+}
 .game-over-screen.hidden{opacity:0;pointer-events:none}
-.game-over-title{font-family:'Fredoka One',cursive;font-size:2.5rem;color:#ef4444;margin-bottom:8px}
-.game-over-score{font-family:'Fredoka One',cursive;font-size:3.5rem;color:#fbbf24;margin:8px 0}
-.game-over-stats{text-align:center;margin:16px 0 24px;color:rgba(255,255,255,0.5);font-weight:700;font-size:0.9rem;line-height:1.8}
-.new-record{color:#4ade80;font-weight:800;font-size:1.1rem;animation:recordPulse 1s ease-in-out infinite}
-@keyframes recordPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
-.restart-btn{font-family:'Fredoka One',cursive;font-size:1.3rem;padding:16px 48px;border:none;border-radius:50px;cursor:pointer;color:white;background:linear-gradient(135deg,#d97706,#b45309);box-shadow:0 6px 24px rgba(217,119,6,0.4);transition:all 0.2s;margin-top:8px}
-.restart-btn:active{transform:scale(0.95)}
-.home-link{margin-top:16px;color:rgba(255,255,255,0.4);font-weight:700;font-size:0.85rem;text-decoration:none;padding:8px 16px}
-.home-link:hover{color:rgba(255,255,255,0.6)}
+.game-over-card{
+  background:rgba(255,200,100,0.08);
+  backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
+  border:1px solid rgba(255,200,100,0.15);
+  border-radius:36px;padding:36px 32px 28px;
+  text-align:center;max-width:360px;width:100%;
+  box-shadow:0 20px 80px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.game-over-emoji{font-size:4.5rem;margin-bottom:8px}
+.game-over-title{font-family:'Fredoka One',cursive;font-size:2.2rem;color:#EF4444;margin-bottom:4px;text-shadow:0 2px 16px rgba(239,68,68,0.3)}
+.game-over-score{font-family:'Fredoka One',cursive;font-size:3.8rem;color:#FBBF24;margin:8px 0;text-shadow:0 4px 24px rgba(251,191,36,0.4)}
 
-/* LIFE LOST OVERLAY */
+/* Star rating */
+.star-rating{display:flex;justify-content:center;gap:8px;margin:8px 0 16px;font-size:2rem}
+.star-rating .star{opacity:0.2;transition:all 0.3s;filter:grayscale(1)}
+.star-rating .star.earned{opacity:1;filter:grayscale(0);animation:starEarn 0.5s cubic-bezier(0.175,0.885,0.32,1.275);animation-fill-mode:both}
+@keyframes starEarn{0%{transform:scale(0) rotate(-30deg)}60%{transform:scale(1.3) rotate(10deg)}100%{transform:scale(1) rotate(0)}}
+
+.game-over-stats{text-align:center;margin:0 0 20px;color:rgba(255,245,225,0.45);font-weight:700;font-size:0.9rem;line-height:2}
+.new-record{
+  color:#4ADE80;font-weight:900;font-size:1.2rem;
+  animation:recordPulse 1s ease-in-out infinite;
+  text-shadow:0 2px 16px rgba(74,222,128,0.4);
+  margin-bottom:12px;
+}
+@keyframes recordPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.restart-btn{
+  font-family:'Fredoka One',cursive;font-size:1.4rem;
+  padding:16px 52px;border:none;border-radius:50px;cursor:pointer;
+  color:#2D1810;
+  background:linear-gradient(135deg,#FBBF24,#F59E0B,#D97706);
+  box-shadow:0 6px 28px rgba(251,191,36,0.4),inset 0 2px 0 rgba(255,255,255,0.25);
+  transition:all 0.2s;
+}
+.restart-btn:active{transform:scale(0.94)}
+.home-link{
+  display:inline-block;margin-top:16px;
+  color:rgba(255,245,225,0.35);font-weight:800;font-size:0.85rem;
+  text-decoration:none;padding:10px 18px;border-radius:20px;
+  transition:all 0.2s;
+}
+.home-link:hover{color:rgba(255,245,225,0.6);background:rgba(255,200,100,0.06)}
+
+/* ============ LIFE LOST OVERLAY ============ */
 .life-lost{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;pointer-events:none}
-.life-lost-icon{font-size:4rem;animation:lifeLost 0.8s ease-out forwards}
-@keyframes lifeLost{0%{transform:scale(0);opacity:0}30%{transform:scale(1.5);opacity:1}60%{transform:scale(1);opacity:1}100%{transform:scale(1) translateY(-30px);opacity:0}}
+.life-lost-icon{font-size:5rem;animation:lifeLost 0.9s ease-out forwards;filter:drop-shadow(0 0 30px rgba(239,68,68,0.6))}
+@keyframes lifeLost{0%{transform:scale(0);opacity:0}25%{transform:scale(1.6);opacity:1}50%{transform:scale(1);opacity:1}100%{transform:scale(0.8) translateY(-40px);opacity:0}}
 
-/* TIME PENALTY */
-.time-penalty{position:fixed;top:30%;left:50%;transform:translateX(-50%);font-family:'Fredoka One',cursive;font-size:1.2rem;color:#ef4444;z-index:95;animation:penaltyFloat 0.8s ease-out forwards;pointer-events:none}
-@keyframes penaltyFloat{0%{opacity:1;transform:translateX(-50%) translateY(0)}100%{opacity:0;transform:translateX(-50%) translateY(-30px)}}
+/* Screen shake */
+.screen-shake{animation:screenShake 0.5s ease-out}
+@keyframes screenShake{
+  0%,100%{transform:translate(0,0)}
+  10%{transform:translate(-8px,4px)}
+  20%{transform:translate(8px,-4px)}
+  30%{transform:translate(-6px,6px)}
+  40%{transform:translate(6px,-2px)}
+  50%{transform:translate(-4px,4px)}
+  60%{transform:translate(4px,-2px)}
+  70%{transform:translate(-2px,2px)}
+}
+
+/* ============ TIME PENALTY ============ */
+.time-penalty{
+  position:fixed;top:28%;left:50%;transform:translateX(-50%);
+  font-family:'Fredoka One',cursive;font-size:1.4rem;color:#EF4444;
+  text-shadow:0 2px 16px rgba(239,68,68,0.5);
+  z-index:95;animation:penaltyFloat 0.9s ease-out forwards;pointer-events:none;
+}
+@keyframes penaltyFloat{0%{opacity:1;transform:translateX(-50%) translateY(0) scale(1.2)}100%{opacity:0;transform:translateX(-50%) translateY(-35px) scale(0.8)}}
+
+/* ============ HIGH SCORE CELEBRATION ============ */
+.celebration-container{position:fixed;inset:0;pointer-events:none;z-index:210;overflow:hidden}
+.confetti{
+  position:absolute;width:8px;height:8px;border-radius:2px;
+  animation:confettiFall linear forwards;
+}
+@keyframes confettiFall{
+  0%{transform:translateY(-10vh) rotate(0deg);opacity:1}
+  100%{transform:translateY(110vh) rotate(1080deg);opacity:0}
+}
 </style>
 </head>
 <body>
 <div class="bg-main"></div>
+<div id="bgParticles"></div>
 <div class="particle-container" id="particleContainer"></div>
+<div class="flame-border" id="flameBorder"></div>
 
 <!-- START SCREEN -->
 <div class="screen" id="startScreen">
-  <div class="start-emoji">🧆</div>
-  <div class="start-title" data-he="מלך הפלאפל" data-en="Falafel King">מלך הפלאפל</div>
-  <div class="start-subtitle" data-he="הכינו את הפיתה המושלמת!" data-en="Build the perfect pita!">הכינו את הפיתה המושלמת!</div>
-  <button class="play-btn" id="playBtn" data-he="יאללה!" data-en="Let's Go!">יאללה!</button>
-  <div class="high-score-display" id="highScoreStart"></div>
+  <div class="start-wrap">
+    <div class="start-emoji">🧆</div>
+    <div class="start-title" data-he="מלך הפלאפל" data-en="Falafel King">מלך הפלאפל</div>
+    <div class="start-subtitle" data-he="הכינו את הפיתה המושלמת!" data-en="Build the perfect pita!">הכינו את הפיתה המושלמת!</div>
+    <button class="play-btn" id="playBtn" data-he="יאללה!" data-en="Let's Go!">יאללה!</button>
+    <div class="high-score-display" id="highScoreStart"></div>
+  </div>
 </div>
 
 <!-- TOP BAR -->
@@ -168,6 +486,7 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
   <!-- Pita -->
   <div class="pita-zone">
     <div class="pita-wrap">
+      <div class="pita-glow"></div>
       <div class="pita-ingredients" id="pitaIngredients"></div>
       <div class="pita-base">🥙</div>
     </div>
@@ -180,14 +499,26 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 
 <!-- GAME OVER -->
 <div class="game-over-screen hidden" id="gameOverScreen">
-  <div style="font-size:4rem;margin-bottom:8px">😢</div>
-  <div class="game-over-title" data-he="נגמר המשחק!" data-en="Game Over!">נגמר המשחק!</div>
-  <div class="game-over-score" id="finalScore">0</div>
-  <div class="game-over-stats" id="gameOverStats"></div>
-  <div class="new-record hidden" id="newRecord" data-he="🏆 שיא חדש!" data-en="🏆 New Record!">🏆 שיא חדש!</div>
-  <button class="restart-btn" id="restartBtn" data-he="שחקו שוב" data-en="Play Again">שחקו שוב</button>
-  <a class="home-link" href="https://elirank1.github.io/keren-family/" data-he="← חזרה לדף הבית" data-en="← Back to Home">← חזרה לדף הבית</a>
+  <div class="game-over-card">
+    <div class="game-over-emoji">😢</div>
+    <div class="game-over-title" data-he="נגמר המשחק!" data-en="Game Over!">נגמר המשחק!</div>
+    <div class="game-over-score" id="finalScore">0</div>
+    <div class="star-rating" id="starRating">
+      <span class="star" data-i="1">⭐</span>
+      <span class="star" data-i="2">⭐</span>
+      <span class="star" data-i="3">⭐</span>
+      <span class="star" data-i="4">⭐</span>
+      <span class="star" data-i="5">⭐</span>
+    </div>
+    <div class="game-over-stats" id="gameOverStats"></div>
+    <div class="new-record hidden" id="newRecord" data-he="🏆 שיא חדש!" data-en="🏆 New Record!">🏆 שיא חדש!</div>
+    <button class="restart-btn" id="restartBtn" data-he="שחקו שוב" data-en="Play Again">שחקו שוב</button>
+    <br>
+    <a class="home-link" href="../" data-he="← חזרה לדף הבית" data-en="← Back to Home">← חזרה לדף הבית</a>
+  </div>
 </div>
+
+<div class="celebration-container" id="celebrationContainer"></div>
 
 <script>
 // ===================== GAME CONFIG =====================
@@ -211,6 +542,11 @@ const SPECIALS = [
   { id:'speed',          he:'⚡ מהיר מהיר!',        en:'⚡ Rush Order!',    color:'#8b5cf6', bgColor:'rgba(139,92,246,0.2)' },
 ];
 
+// Customer face expressions based on timer
+const FACE_HAPPY = ['😊','😄','🤩','😋','🤤','😎','😁','🥳','🤠'];
+const FACE_IMPATIENT = ['😐','🤨','😑','🙄','😤'];
+const FACE_ANGRY = ['😠','😡','🤬','👿'];
+
 // ===================== STATE =====================
 let lang = localStorage.getItem('fk-lang') || 'he';
 let highScore = parseInt(localStorage.getItem('fk-highscore')) || 0;
@@ -218,7 +554,8 @@ let state = {
   score: 0, lives: 3, level: 1, streak: 0, bestStreak: 0,
   ordersCompleted: 0, currentOrder: [], currentIndex: 0,
   special: null, timerTotal: 0, timerLeft: 0,
-  isPlaying: false, isPaused: false
+  isPlaying: false, isPaused: false,
+  customerBaseFace: '😊'
 };
 let timerInterval = null;
 const TIMER_TICK = 50; // ms
@@ -240,6 +577,25 @@ const levelDisplay = $('levelDisplay');
 const livesDisplay = $('livesDisplay');
 const streakBadge = $('streakBadge');
 const particleContainer = $('particleContainer');
+const flameBorder = $('flameBorder');
+const celebrationContainer = $('celebrationContainer');
+
+// ===================== FLOATING BG PARTICLES =====================
+function createBgParticles() {
+  const container = $('bgParticles');
+  const foods = ['🧆','🥙','🫓','🥒','🌶️','🍟','🫘','🥗','🧅','🥬'];
+  for (let i = 0; i < 15; i++) {
+    const p = document.createElement('div');
+    p.className = 'bg-particle';
+    p.textContent = foods[Math.floor(Math.random() * foods.length)];
+    p.style.left = (Math.random() * 100) + '%';
+    p.style.fontSize = (1.2 + Math.random() * 1.2) + 'rem';
+    p.style.opacity = 0.06 + Math.random() * 0.08;
+    p.style.animationDuration = (18 + Math.random() * 25) + 's';
+    p.style.animationDelay = (-Math.random() * 30) + 's';
+    container.appendChild(p);
+  }
+}
 
 // ===================== LANG =====================
 function applyLang() {
@@ -282,10 +638,11 @@ function showHighScore() {
 function init() {
   applyLang();
   buildIngredientsGrid();
+  createBgParticles();
   $('playBtn').addEventListener('click', startGame);
   $('restartBtn').addEventListener('click', startGame);
   $('backBtn').addEventListener('click', () => {
-    window.location.href = 'https://elirank1.github.io/keren-family/';
+    window.location.href = '../';
   });
 }
 
@@ -294,6 +651,7 @@ function buildIngredientsGrid() {
   INGREDIENTS.forEach(ing => {
     const btn = document.createElement('button');
     btn.className = 'ingredient-btn';
+    btn.dataset.ingredientId = ing.id;
     btn.innerHTML = `<span class="emoji">${ing.emoji}</span><span class="label" data-id="${ing.id}">${ing[lang]}</span>`;
     btn.addEventListener('click', () => onIngredientTap(ing.id, btn));
     btn.addEventListener('touchstart', (e) => { e.preventDefault(); onIngredientTap(ing.id, btn); }, { passive: false });
@@ -301,13 +659,24 @@ function buildIngredientsGrid() {
   });
 }
 
+// ===================== HIGHLIGHT NEEDED INGREDIENT =====================
+function highlightNeededIngredient() {
+  // Remove all needed highlights
+  document.querySelectorAll('.ingredient-btn').forEach(btn => btn.classList.remove('needed'));
+  if (!state.isPlaying || state.currentIndex >= state.currentOrder.length) return;
+  const needed = state.currentOrder[state.currentIndex];
+  const btn = document.querySelector(`.ingredient-btn[data-ingredient-id="${needed.id}"]`);
+  if (btn) btn.classList.add('needed');
+}
+
 // ===================== GAME FLOW =====================
 function startGame() {
-  state = { score:0, lives:3, level:1, streak:0, bestStreak:0, ordersCompleted:0, currentOrder:[], currentIndex:0, special:null, timerTotal:0, timerLeft:0, isPlaying:true, isPaused:false };
+  state = { score:0, lives:3, level:1, streak:0, bestStreak:0, ordersCompleted:0, currentOrder:[], currentIndex:0, special:null, timerTotal:0, timerLeft:0, isPlaying:true, isPaused:false, customerBaseFace:'😊' };
   startScreen.classList.add('hidden');
   gameOverScreen.classList.add('hidden');
   gameArea.classList.remove('hidden');
   topBar.style.display = 'flex';
+  flameBorder.classList.remove('active');
   updateScore();
   updateLives();
   updateLevelDisplay();
@@ -320,6 +689,7 @@ function endGame() {
   clearInterval(timerInterval);
   gameArea.classList.add('hidden');
   topBar.style.display = 'none';
+  flameBorder.classList.remove('active');
   const isNew = state.score > highScore;
   if (isNew) {
     highScore = state.score;
@@ -332,8 +702,27 @@ function endGame() {
   } else {
     statsEl.innerHTML = `Orders: ${state.ordersCompleted}<br>Level: ${state.level}<br>Best Streak: ${state.bestStreak}<br>High Score: ${highScore}`;
   }
+  // Star rating based on orders completed
+  const stars = Math.min(5, Math.floor(state.ordersCompleted / 2) + (state.ordersCompleted > 0 ? 1 : 0));
+  document.querySelectorAll('#starRating .star').forEach((s, i) => {
+    s.classList.remove('earned');
+    if (i < stars) {
+      setTimeout(() => s.classList.add('earned'), 200 + i * 200);
+    }
+  });
+  // Game over emoji based on performance
+  const goEmoji = document.querySelector('.game-over-emoji');
+  if (state.ordersCompleted >= 10) goEmoji.textContent = '🌟';
+  else if (state.ordersCompleted >= 5) goEmoji.textContent = '😊';
+  else goEmoji.textContent = '😢';
+
   const newRec = $('newRecord');
-  if (isNew) { newRec.classList.remove('hidden'); } else { newRec.classList.add('hidden'); }
+  if (isNew) {
+    newRec.classList.remove('hidden');
+    spawnConfetti();
+  } else {
+    newRec.classList.add('hidden');
+  }
   gameOverScreen.classList.remove('hidden');
   showHighScore();
 }
@@ -369,15 +758,12 @@ function generateOrder() {
   // Apply specials
   if (special) {
     if (special.id === 'extra_hot') {
-      // Add hot sauce at end
       order.push(INGREDIENTS.find(i => i.id === 'hot'));
       order.push(INGREDIENTS.find(i => i.id === 'hot'));
     } else if (special.id === 'double_falafel') {
-      // Add 2 extra falafel at start
       order.unshift(INGREDIENTS.find(i => i.id === 'falafel'));
       order.unshift(INGREDIENTS.find(i => i.id === 'falafel'));
     }
-    // speed: timer is shorter (handled in timer)
   }
   return { items: order, special };
 }
@@ -390,12 +776,15 @@ function nextOrder() {
   state.currentIndex = 0;
   state.special = special;
   // Customer face
-  customerFace.textContent = CUSTOMERS[Math.floor(Math.random() * CUSTOMERS.length)];
+  state.customerBaseFace = CUSTOMERS[Math.floor(Math.random() * CUSTOMERS.length)];
+  customerFace.textContent = state.customerBaseFace;
   customerFace.style.animation = 'none';
   void customerFace.offsetHeight;
-  customerFace.style.animation = 'customerBounce 0.5s ease-out';
+  customerFace.style.animation = 'customerBounce 0.5s cubic-bezier(0.175,0.885,0.32,1.275)';
   // Speech bubble
   renderOrderBubble();
+  // Highlight needed
+  highlightNeededIngredient();
   // Special tag
   if (special) {
     specialTag.style.display = 'block';
@@ -442,6 +831,8 @@ function startTimer() {
     timerCircle.classList.remove('warning', 'danger');
     if (pct < 0.25) timerCircle.classList.add('danger');
     else if (pct < 0.5) timerCircle.classList.add('warning');
+    // Update customer face expression based on time
+    updateCustomerExpression(pct);
     if (state.timerLeft <= 0) {
       clearInterval(timerInterval);
       onTimerExpired();
@@ -449,10 +840,23 @@ function startTimer() {
   }, TIMER_TICK);
 }
 
+function updateCustomerExpression(pct) {
+  // Only update every ~500ms worth of ticks to avoid constant DOM writes
+  if (Math.floor(state.timerLeft / 500) !== Math.floor((state.timerLeft + TIMER_TICK) / 500)) return;
+  if (pct > 0.5) {
+    // Happy - keep base face
+    // no change needed
+  } else if (pct > 0.25) {
+    customerFace.textContent = FACE_IMPATIENT[Math.floor(Math.random() * FACE_IMPATIENT.length)];
+  } else {
+    customerFace.textContent = FACE_ANGRY[Math.floor(Math.random() * FACE_ANGRY.length)];
+  }
+}
+
 function onTimerExpired() {
   state.lives--;
   state.streak = 0;
-  updateLives();
+  updateLives(true); // true = animate heart break
   updateStreak();
   showLifeLost();
   if (state.lives <= 0) {
@@ -478,7 +882,7 @@ function onCorrectIngredient(btnEl) {
   btnEl.classList.remove('correct-flash');
   void btnEl.offsetHeight;
   btnEl.classList.add('correct-flash');
-  setTimeout(() => btnEl.classList.remove('correct-flash'), 400);
+  setTimeout(() => btnEl.classList.remove('correct-flash'), 450);
   // Add to pita
   const ing = state.currentOrder[state.currentIndex];
   const div = document.createElement('div');
@@ -495,6 +899,8 @@ function onCorrectIngredient(btnEl) {
   // Next item highlight
   const nextItem = document.getElementById(`order-item-${state.currentIndex}`);
   if (nextItem) nextItem.classList.add('current');
+  // Highlight needed ingredient button
+  highlightNeededIngredient();
   // Check if order complete
   if (state.currentIndex >= state.currentOrder.length) {
     onOrderComplete();
@@ -506,7 +912,7 @@ function onWrongIngredient(btnEl) {
   btnEl.classList.remove('wrong-flash');
   void btnEl.offsetHeight;
   btnEl.classList.add('wrong-flash');
-  setTimeout(() => btnEl.classList.remove('wrong-flash'), 400);
+  setTimeout(() => btnEl.classList.remove('wrong-flash'), 450);
   // Time penalty
   const penalty = 1500;
   state.timerLeft = Math.max(0, state.timerLeft - penalty);
@@ -538,6 +944,10 @@ function onOrderComplete() {
   // Effects
   showOrderComplete(total);
   spawnFalafelParticles();
+  // Flying stars on perfect (fast) completion
+  if (state.timerLeft / state.timerTotal > 0.5) {
+    spawnFlyingStars();
+  }
   // Next order
   setTimeout(nextOrder, 1200);
 }
@@ -545,12 +955,18 @@ function onOrderComplete() {
 // ===================== UI UPDATES =====================
 function updateScore() {
   scoreDisplay.textContent = state.score;
+  // Pop animation
+  scoreDisplay.style.transform = 'scale(1.3)';
+  setTimeout(() => scoreDisplay.style.transform = 'scale(1)', 200);
 }
 
-function updateLives() {
+function updateLives(animateBreak) {
   let html = '';
   for (let i = 0; i < 3; i++) {
-    html += i < state.lives ? '❤️' : '🖤';
+    const isAlive = i < state.lives;
+    const isBreaking = animateBreak && i === state.lives; // the one that just broke
+    const cls = isBreaking ? 'heart breaking' : 'heart';
+    html += `<span class="${cls}">${isAlive ? '❤️' : (isBreaking ? '💔' : '🖤')}</span>`;
   }
   livesDisplay.innerHTML = html;
 }
@@ -564,7 +980,7 @@ function updateLevelDisplay() {
 
 function updateStreak() {
   if (state.streak >= 2) {
-    streakBadge.textContent = `x${state.streak}`;
+    streakBadge.textContent = `🔥 x${state.streak}`;
     streakBadge.classList.add('active');
     streakBadge.style.display = 'inline-block';
     // Re-trigger animation
@@ -574,6 +990,12 @@ function updateStreak() {
   } else {
     streakBadge.style.display = 'none';
   }
+  // Flame border for streak >= 3
+  if (state.streak >= 3) {
+    flameBorder.classList.add('active');
+  } else {
+    flameBorder.classList.remove('active');
+  }
 }
 
 // ===================== EFFECTS =====================
@@ -582,21 +1004,28 @@ function showOrderComplete(points) {
   const flash = document.createElement('div');
   flash.className = 'order-complete-flash';
   document.body.appendChild(flash);
-  setTimeout(() => flash.remove(), 600);
+  setTimeout(() => flash.remove(), 700);
   // Bonus text
   const bonus = document.createElement('div');
   bonus.className = 'bonus-text';
   bonus.textContent = `+${points}`;
   document.body.appendChild(bonus);
-  setTimeout(() => bonus.remove(), 1000);
+  setTimeout(() => bonus.remove(), 1100);
 }
 
 function showLifeLost() {
+  // Screen shake
+  const ga = $('gameArea');
+  ga.classList.remove('screen-shake');
+  void ga.offsetHeight;
+  ga.classList.add('screen-shake');
+  setTimeout(() => ga.classList.remove('screen-shake'), 500);
+  // Heart icon
   const overlay = document.createElement('div');
   overlay.className = 'life-lost';
   overlay.innerHTML = '<div class="life-lost-icon">💔</div>';
   document.body.appendChild(overlay);
-  setTimeout(() => overlay.remove(), 800);
+  setTimeout(() => overlay.remove(), 900);
 }
 
 function showTimePenalty() {
@@ -604,12 +1033,12 @@ function showTimePenalty() {
   el.className = 'time-penalty';
   el.textContent = lang === 'he' ? '-זמן!' : '-Time!';
   document.body.appendChild(el);
-  setTimeout(() => el.remove(), 800);
+  setTimeout(() => el.remove(), 900);
 }
 
 function spawnFalafelParticles() {
-  const emojis = ['🧆','⭐','✨','🥙','🎉'];
-  for (let i = 0; i < 12; i++) {
+  const emojis = ['🧆','⭐','✨','🥙','🎉','💛'];
+  for (let i = 0; i < 16; i++) {
     const p = document.createElement('div');
     p.className = 'falafel-particle';
     p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
@@ -617,13 +1046,47 @@ function spawnFalafelParticles() {
     const startY = window.innerHeight * 0.4;
     p.style.left = startX + 'px';
     p.style.top = startY + 'px';
-    const dx = (Math.random() - 0.5) * 300;
-    const dy = -(Math.random() * 200 + 100);
+    const dx = (Math.random() - 0.5) * 350;
+    const dy = -(Math.random() * 250 + 100);
     p.style.setProperty('--dx', dx + 'px');
     p.style.setProperty('--dy', dy + 'px');
     p.style.animationDelay = (Math.random() * 0.3) + 's';
     particleContainer.appendChild(p);
-    setTimeout(() => p.remove(), 1500);
+    setTimeout(() => p.remove(), 1700);
+  }
+}
+
+function spawnFlyingStars() {
+  for (let i = 0; i < 8; i++) {
+    const s = document.createElement('div');
+    s.className = 'star-fly';
+    s.textContent = '⭐';
+    s.style.left = (window.innerWidth / 2) + 'px';
+    s.style.top = (window.innerHeight * 0.35) + 'px';
+    const angle = (Math.PI * 2 / 8) * i;
+    const dist = 120 + Math.random() * 80;
+    s.style.setProperty('--sx', Math.cos(angle) * dist + 'px');
+    s.style.setProperty('--sy', Math.sin(angle) * dist + 'px');
+    s.style.animationDelay = (i * 0.05) + 's';
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 1400);
+  }
+}
+
+function spawnConfetti() {
+  const colors = ['#FBBF24','#F59E0B','#EF4444','#4ADE80','#8B5CF6','#F97316','#EC4899'];
+  for (let i = 0; i < 60; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = (Math.random() * 100) + '%';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.width = (4 + Math.random() * 8) + 'px';
+    c.style.height = (4 + Math.random() * 8) + 'px';
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    c.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+    c.style.animationDelay = (Math.random() * 0.8) + 's';
+    celebrationContainer.appendChild(c);
+    setTimeout(() => c.remove(), 4000);
   }
 }
 
