@@ -23,20 +23,29 @@ body{
 }
 h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 
-/* ============ WARM BACKGROUND ============ */
+/* ============ WARM WOOD/RESTAURANT BACKGROUND ============ */
 .bg-main{
   position:fixed;inset:0;overflow:hidden;
-  background:linear-gradient(160deg,#2D1810 0%,#3E1F0F 25%,#92400E 55%,#78350F 80%,#2D1810 100%);
-}
-.bg-main::before{
-  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
   background:
+    linear-gradient(160deg,#2D1810 0%,#3E1F0F 25%,#92400E 55%,#78350F 80%,#2D1810 100%);
+}
+/* Warm wood grain texture via CSS */
+.bg-main::before{
+  content:'';position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(139,69,19,0.03) 40px,rgba(139,69,19,0.03) 42px),
+    repeating-linear-gradient(0deg,transparent,transparent 80px,rgba(160,82,45,0.02) 80px,rgba(160,82,45,0.02) 82px),
     radial-gradient(circle at 30% 40%,rgba(251,191,36,0.12) 0%,transparent 50%),
     radial-gradient(circle at 70% 60%,rgba(217,119,6,0.10) 0%,transparent 50%),
     radial-gradient(circle at 50% 80%,rgba(180,83,9,0.08) 0%,transparent 50%);
-  animation:bgRotate 40s linear infinite;pointer-events:none;
+  pointer-events:none;
 }
-@keyframes bgRotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.bg-main::after{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 50% 30%,rgba(251,191,36,0.06) 0%,transparent 60%);
+  pointer-events:none;
+}
 
 /* Floating food particles */
 .bg-particle{
@@ -49,7 +58,7 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
   100%{transform:translateY(-10vh) rotate(360deg)}
 }
 
-/* ============ GLASS PANELS ============ */
+/* ============ GLASS PANELS (UI only) ============ */
 .glass{
   background:rgba(255,200,100,0.08);
   backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
@@ -94,8 +103,7 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
   color:#2D1810;
   background:linear-gradient(135deg,#FBBF24,#F59E0B,#D97706);
   box-shadow:0 8px 36px rgba(251,191,36,0.45),0 2px 0 rgba(255,255,255,0.3) inset;
-  transition:all 0.2s;position:relative;overflow:hidden;
-  letter-spacing:0.5px;
+  transition:all 0.2s;position:relative;overflow:hidden;letter-spacing:0.5px;
 }
 .play-btn::after{
   content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
@@ -131,8 +139,7 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 .lives .heart{transition:all 0.3s;display:inline-block}
 .lives .heart.breaking{animation:heartBreak 0.6s ease-out forwards}
 @keyframes heartBreak{
-  0%{transform:scale(1);opacity:1}
-  20%{transform:scale(1.4);opacity:1}
+  0%{transform:scale(1);opacity:1}20%{transform:scale(1.4);opacity:1}
   40%{transform:scale(1) rotate(-15deg);opacity:0.8}
   60%{transform:scale(0.8) rotate(15deg);opacity:0.5}
   100%{transform:scale(0) rotate(-30deg) translateY(20px);opacity:0}
@@ -150,7 +157,7 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 .streak-badge.active{display:inline-block;animation:streakPop 0.35s cubic-bezier(0.175,0.885,0.32,1.275)}
 @keyframes streakPop{0%{transform:scale(0)}60%{transform:scale(1.4)}100%{transform:scale(1)}}
 
-/* ============ FLAME BORDER (streak >= 3) ============ */
+/* ============ FLAME BORDER ============ */
 .flame-border{
   position:fixed;inset:0;pointer-events:none;z-index:45;
   border:3px solid transparent;border-radius:0;
@@ -167,9 +174,9 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 .game-area{position:fixed;inset:0;display:flex;flex-direction:column;z-index:10;padding-top:58px}
 .game-area.hidden{display:none}
 
-/* ============ CUSTOMER ZONE ============ */
-.customer-zone{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;padding:6px 16px 2px;position:relative}
-.timer-ring{width:90px;height:90px;position:relative;display:flex;align-items:center;justify-content:center}
+/* ============ CUSTOMER ZONE — bigger character with name ============ */
+.customer-zone{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;padding:4px 16px 2px;position:relative}
+.timer-ring{width:100px;height:100px;position:relative;display:flex;align-items:center;justify-content:center}
 .timer-ring svg{position:absolute;inset:0;transform:rotate(-90deg);filter:drop-shadow(0 0 8px rgba(74,222,128,0.3))}
 .timer-ring circle{fill:none;stroke-width:4.5;stroke-linecap:round}
 .timer-bg{stroke:rgba(255,200,100,0.1)}
@@ -178,31 +185,31 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 .timer-fg.danger{stroke:#EF4444;filter:drop-shadow(0 0 12px rgba(239,68,68,0.6));animation:timerShake 0.3s ease-in-out infinite}
 @keyframes timerShake{0%,100%{transform:rotate(-90deg)}50%{transform:rotate(-88deg)}}
 .customer-face{
-  font-size:3.2rem;position:relative;
+  font-size:3.8rem;position:relative;
   animation:customerBounce 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
   filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3));
 }
 @keyframes customerBounce{0%{transform:translateY(-40px) scale(0);opacity:0}60%{transform:translateY(6px) scale(1.15)}100%{transform:translateY(0) scale(1);opacity:1}}
-
-.speech-bubble{
-  background:rgba(255,200,100,0.1);
-  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border:1px solid rgba(255,200,100,0.18);
-  border-radius:22px;padding:12px 18px;margin-top:8px;
-  position:relative;display:flex;gap:7px;flex-wrap:wrap;
-  justify-content:center;align-items:center;max-width:360px;
-  box-shadow:0 8px 32px rgba(0,0,0,0.2);
+.customer-name{
+  font-family:'Fredoka One',cursive;font-size:0.8rem;color:rgba(255,245,225,0.5);
+  margin-top:2px;letter-spacing:0.5px;
 }
-.speech-bubble::before{
-  content:'';position:absolute;top:-9px;left:50%;transform:translateX(-50%);
-  width:0;height:0;
-  border-left:10px solid transparent;border-right:10px solid transparent;
-  border-bottom:9px solid rgba(255,200,100,0.15);
+
+/* Order strip — horizontal icons */
+.order-strip{
+  display:flex;gap:6px;flex-wrap:wrap;
+  justify-content:center;align-items:center;
+  padding:10px 16px;margin-top:6px;
+  background:rgba(255,200,100,0.08);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border:1px solid rgba(255,200,100,0.15);
+  border-radius:20px;max-width:380px;
+  box-shadow:0 6px 24px rgba(0,0,0,0.15);
 }
 .order-item{
-  width:40px;height:40px;border-radius:12px;
+  width:42px;height:42px;border-radius:12px;
   display:flex;align-items:center;justify-content:center;
-  font-size:1.4rem;
+  font-size:1.5rem;
   background:rgba(255,200,100,0.06);
   border:2px solid rgba(255,200,100,0.12);
   transition:all 0.35s cubic-bezier(0.175,0.885,0.32,1.275);
@@ -214,7 +221,7 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
   transform:scale(1.1);
 }
 .order-item.completed::after{
-  content:'✓';position:absolute;top:-5px;right:-5px;
+  content:'\2713';position:absolute;top:-5px;right:-5px;
   width:18px;height:18px;border-radius:50%;
   background:linear-gradient(135deg,#4ADE80,#22C55E);
   font-size:0.6rem;display:flex;align-items:center;justify-content:center;
@@ -235,24 +242,52 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 }
 @keyframes tagPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.8;transform:scale(1.03)}}
 
-/* ============ PITA BUILDING ZONE ============ */
+/* ============ KITCHEN COUNTER DIVIDER ============ */
+.kitchen-counter{
+  flex:0 0 auto;height:12px;position:relative;
+  background:linear-gradient(180deg,
+    rgba(139,69,19,0.5) 0%,
+    rgba(160,82,45,0.6) 20%,
+    rgba(205,133,63,0.4) 50%,
+    rgba(160,82,45,0.6) 80%,
+    rgba(101,67,33,0.5) 100%);
+  box-shadow:0 2px 8px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,200,100,0.15);
+  margin:4px 0;
+}
+.kitchen-counter::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(139,69,19,0.1) 60px,rgba(139,69,19,0.1) 62px);
+}
+
+/* ============ PITA ZONE — much bigger with plate ============ */
 .pita-zone{flex:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;min-height:0}
 .pita-wrap{
-  position:relative;width:180px;height:220px;
+  position:relative;width:200px;height:220px;
   display:flex;align-items:flex-end;justify-content:center;
 }
+/* Plate/wrapper under pita */
+.pita-plate{
+  position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
+  width:160px;height:50px;
+  background:radial-gradient(ellipse at 50% 30%,rgba(255,240,200,0.15) 0%,rgba(200,160,100,0.08) 60%,transparent 100%);
+  border-radius:50%;
+  border:1px solid rgba(255,200,100,0.1);
+  box-shadow:0 4px 20px rgba(0,0,0,0.15);
+}
 .pita-base{
-  font-size:6.5rem;
-  filter:drop-shadow(0 8px 32px rgba(0,0,0,0.5));
+  font-size:8rem;
+  filter:drop-shadow(0 10px 40px rgba(0,0,0,0.6));
   animation:pitaWobble 3s ease-in-out infinite;
+  position:relative;z-index:2;
 }
 @keyframes pitaWobble{0%,100%{transform:rotate(-1deg)}50%{transform:rotate(1deg)}}
 .pita-ingredients{
-  position:absolute;bottom:60px;left:50%;transform:translateX(-50%);
+  position:absolute;bottom:70px;left:50%;transform:translateX(-50%);
   display:flex;flex-direction:column-reverse;align-items:center;gap:1px;
+  z-index:3;
 }
 .pita-ingredient{
-  font-size:1.6rem;
+  font-size:1.8rem;
   animation:ingredientDrop 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
   filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 }
@@ -263,51 +298,59 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
   100%{transform:translateY(0) scale(1) rotate(0deg);opacity:1}
 }
 
-/* Glow under pita */
 .pita-glow{
-  position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
-  width:140px;height:40px;
-  background:radial-gradient(ellipse,rgba(251,191,36,0.15) 0%,transparent 70%);
+  position:absolute;bottom:15px;left:50%;transform:translateX(-50%);
+  width:160px;height:50px;
+  background:radial-gradient(ellipse,rgba(251,191,36,0.2) 0%,transparent 70%);
   border-radius:50%;
   animation:pitaGlow 3s ease-in-out infinite;
 }
 @keyframes pitaGlow{0%,100%{opacity:0.6;transform:translateX(-50%) scaleX(1)}50%{opacity:1;transform:translateX(-50%) scaleX(1.1)}}
 
-/* ============ INGREDIENTS GRID ============ */
+/* Bouncing arrow pointing to needed ingredient */
+.bounce-arrow{
+  position:absolute;z-index:10;font-size:1.4rem;pointer-events:none;
+  animation:bounceArrow 0.8s ease-in-out infinite;
+  filter:drop-shadow(0 2px 8px rgba(251,191,36,0.6));
+}
+@keyframes bounceArrow{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* ============ INGREDIENTS GRID — 2 rows of 5, bigger ============ */
 .ingredients-zone{
   flex:0 0 auto;padding:8px 10px;
   padding-bottom:max(14px,env(safe-area-inset-bottom));
 }
 .ingredients-grid{
-  display:grid;grid-template-columns:repeat(5,1fr);
-  gap:8px;max-width:420px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(2,1fr);
+  gap:8px;max-width:440px;margin:0 auto;
 }
 .ingredient-btn{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:3px;padding:10px 4px;
-  border-radius:20px;
+  gap:4px;padding:8px 4px;
+  border-radius:18px;
   border:2px solid rgba(255,200,100,0.1);
   background:rgba(255,200,100,0.06);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
   cursor:pointer;transition:all 0.15s;
   -webkit-tap-highlight-color:transparent;
-  min-height:68px;position:relative;
+  min-height:76px;position:relative;
   box-shadow:0 4px 16px rgba(0,0,0,0.15);
 }
 .ingredient-btn:active{transform:scale(0.88);box-shadow:0 1px 4px rgba(0,0,0,0.2)}
-.ingredient-btn .emoji{font-size:1.8rem;line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.2))}
+.ingredient-btn .emoji{font-size:2rem;line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.2))}
 .ingredient-btn .label{
-  font-size:0.58rem;font-weight:700;
-  color:rgba(255,245,225,0.45);line-height:1;
+  font-size:0.6rem;font-weight:700;
+  color:rgba(255,245,225,0.5);line-height:1;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;
 }
 /* Glow for needed ingredient */
 .ingredient-btn.needed{
-  border-color:rgba(251,191,36,0.5);
-  box-shadow:0 0 20px rgba(251,191,36,0.25),0 4px 16px rgba(0,0,0,0.15);
-  animation:neededPulse 1.5s ease-in-out infinite;
+  border-color:rgba(251,191,36,0.6);
+  box-shadow:0 0 24px rgba(251,191,36,0.3),0 4px 16px rgba(0,0,0,0.15);
+  animation:neededPulse 1.2s ease-in-out infinite;
+  background:rgba(251,191,36,0.1);
 }
-@keyframes neededPulse{0%,100%{box-shadow:0 0 20px rgba(251,191,36,0.25)}50%{box-shadow:0 0 36px rgba(251,191,36,0.45)}}
+@keyframes neededPulse{0%,100%{box-shadow:0 0 24px rgba(251,191,36,0.3)}50%{box-shadow:0 0 40px rgba(251,191,36,0.55)}}
 
 .ingredient-btn.correct-flash{
   animation:correctFlash 0.45s cubic-bezier(0.175,0.885,0.32,1.275);
@@ -325,7 +368,6 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 .falafel-particle{position:absolute;font-size:1.8rem;animation:falafelFly 1.4s ease-out forwards;pointer-events:none}
 @keyframes falafelFly{0%{transform:translate(0,0) rotate(0deg) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) rotate(720deg) scale(0);opacity:0}}
 
-/* Flying stars for perfect order */
 .star-fly{
   position:fixed;font-size:2rem;pointer-events:none;z-index:110;
   animation:starFly 1.2s ease-out forwards;
@@ -369,7 +411,6 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 .game-over-title{font-family:'Fredoka One',cursive;font-size:2.2rem;color:#EF4444;margin-bottom:4px;text-shadow:0 2px 16px rgba(239,68,68,0.3)}
 .game-over-score{font-family:'Fredoka One',cursive;font-size:3.8rem;color:#FBBF24;margin:8px 0;text-shadow:0 4px 24px rgba(251,191,36,0.4)}
 
-/* Star rating */
 .star-rating{display:flex;justify-content:center;gap:8px;margin:8px 0 16px;font-size:2rem}
 .star-rating .star{opacity:0.2;transition:all 0.3s;filter:grayscale(1)}
 .star-rating .star.earned{opacity:1;filter:grayscale(0);animation:starEarn 0.5s cubic-bezier(0.175,0.885,0.32,1.275);animation-fill-mode:both}
@@ -400,25 +441,16 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 }
 .home-link:hover{color:rgba(255,245,225,0.6);background:rgba(255,200,100,0.06)}
 
-/* ============ LIFE LOST OVERLAY ============ */
+/* ============ LIFE LOST / EFFECTS ============ */
 .life-lost{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;pointer-events:none}
 .life-lost-icon{font-size:5rem;animation:lifeLost 0.9s ease-out forwards;filter:drop-shadow(0 0 30px rgba(239,68,68,0.6))}
 @keyframes lifeLost{0%{transform:scale(0);opacity:0}25%{transform:scale(1.6);opacity:1}50%{transform:scale(1);opacity:1}100%{transform:scale(0.8) translateY(-40px);opacity:0}}
 
-/* Screen shake */
 .screen-shake{animation:screenShake 0.5s ease-out}
 @keyframes screenShake{
-  0%,100%{transform:translate(0,0)}
-  10%{transform:translate(-8px,4px)}
-  20%{transform:translate(8px,-4px)}
-  30%{transform:translate(-6px,6px)}
-  40%{transform:translate(6px,-2px)}
-  50%{transform:translate(-4px,4px)}
-  60%{transform:translate(4px,-2px)}
-  70%{transform:translate(-2px,2px)}
+  0%,100%{transform:translate(0,0)}10%{transform:translate(-8px,4px)}20%{transform:translate(8px,-4px)}30%{transform:translate(-6px,6px)}40%{transform:translate(6px,-2px)}50%{transform:translate(-4px,4px)}60%{transform:translate(4px,-2px)}70%{transform:translate(-2px,2px)}
 }
 
-/* ============ TIME PENALTY ============ */
 .time-penalty{
   position:fixed;top:28%;left:50%;transform:translateX(-50%);
   font-family:'Fredoka One',cursive;font-size:1.4rem;color:#EF4444;
@@ -427,7 +459,6 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 }
 @keyframes penaltyFloat{0%{opacity:1;transform:translateX(-50%) translateY(0) scale(1.2)}100%{opacity:0;transform:translateX(-50%) translateY(-35px) scale(0.8)}}
 
-/* ============ HIGH SCORE CELEBRATION ============ */
 .celebration-container{position:fixed;inset:0;pointer-events:none;z-index:210;overflow:hidden}
 .confetti{
   position:absolute;width:8px;height:8px;border-radius:2px;
@@ -437,6 +468,32 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
   0%{transform:translateY(-10vh) rotate(0deg);opacity:1}
   100%{transform:translateY(110vh) rotate(1080deg);opacity:0}
 }
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:380px){
+  .pita-base{font-size:6.5rem}
+  .ingredient-btn{min-height:66px}
+  .ingredient-btn .emoji{font-size:1.7rem}
+  .order-item{width:36px;height:36px;font-size:1.2rem}
+  .customer-face{font-size:3.2rem}
+  .timer-ring{width:86px;height:86px}
+}
+
+/* ── Rules Modal ── */
+.rules-overlay{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:20px;animation:rulesFadeIn 0.3s ease}
+@keyframes rulesFadeIn{0%{opacity:0}100%{opacity:1}}
+.rules-card-modal{background:rgba(255,255,255,0.12);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.2);border-radius:24px;padding:28px;max-width:420px;width:100%;max-height:80vh;overflow-y:auto;color:white;position:relative}
+.rules-card-modal h2{font-family:'Fredoka One',cursive;font-size:1.6rem;margin-bottom:16px;text-align:center}
+.rules-card-modal ul{list-style:none;padding:0}
+.rules-card-modal li{padding:8px 0;font-size:0.95rem;line-height:1.5;border-bottom:1px solid rgba(255,255,255,0.08)}
+.rules-card-modal li:last-child{border-bottom:none}
+.rules-close{position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.15);border:none;color:white;width:36px;height:36px;border-radius:50%;font-size:1.2rem;cursor:pointer;transition:all 0.2s}
+.rules-close:hover{background:rgba(255,255,255,0.25);transform:scale(1.1)}
+.rules-got-it{display:block;width:100%;margin-top:20px;padding:14px;border:none;border-radius:16px;font-family:'Fredoka One',cursive;font-size:1.1rem;cursor:pointer;background:linear-gradient(135deg,#667eea,#764ba2);color:white;transition:all 0.2s}
+.rules-got-it:hover{transform:scale(1.03);box-shadow:0 6px 20px rgba(102,126,234,0.4)}
+.start-rules-btn{background:rgba(255,255,255,0.10);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);border-radius:16px;padding:10px 24px;font-size:0.9rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;transition:all 0.25s;margin-top:6px}
+.start-rules-btn:hover{background:rgba(255,255,255,0.18);color:white;transform:scale(1.05)}
+
 </style>
 </head>
 <body>
@@ -445,6 +502,16 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 <div class="particle-container" id="particleContainer"></div>
 <div class="flame-border" id="flameBorder"></div>
 
+<!-- Rules Modal -->
+<div class="rules-overlay" id="rulesOverlay" style="display:none" onclick="if(event.target===this)closeRulesModal()">
+  <div class="rules-card-modal">
+    <button class="rules-close" onclick="closeRulesModal()">&times;</button>
+    <h2 id="rulesTitle">הוראות משחק</h2>
+    <ul id="rulesList"></ul>
+    <button class="rules-got-it" id="rulesGotIt" onclick="closeRulesModal()">הבנתי!</button>
+  </div>
+</div>
+
 <!-- START SCREEN -->
 <div class="screen" id="startScreen">
   <div class="start-wrap">
@@ -452,6 +519,7 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
     <div class="start-title" data-he="מלך הפלאפל" data-en="Falafel King">מלך הפלאפל</div>
     <div class="start-subtitle" data-he="הכינו את הפיתה המושלמת!" data-en="Build the perfect pita!">הכינו את הפיתה המושלמת!</div>
     <button class="play-btn" id="playBtn" data-he="יאללה!" data-en="Let's Go!">יאללה!</button>
+    <button class="start-rules-btn" onclick="openRulesModal()" data-he="📖 הוראות" data-en="📖 Rules">📖 הוראות</button>
     <div class="high-score-display" id="highScoreStart"></div>
   </div>
 </div>
@@ -459,7 +527,7 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 <!-- TOP BAR -->
 <div class="top-bar" id="topBar" style="display:none">
   <div style="display:flex;align-items:center;gap:8px">
-    <button class="back-btn" id="backBtn" title="Back">🏠</button>
+    <button class="lang-btn" id="langBtn" onclick="toggleLang()">EN</button>
     <div class="lives" id="livesDisplay"></div>
   </div>
   <div style="text-align:center">
@@ -468,7 +536,7 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
   </div>
   <div style="display:flex;align-items:center;gap:6px">
     <span class="streak-badge" id="streakBadge"></span>
-    <button class="lang-btn" id="langBtn" onclick="toggleLang()">EN</button>
+    <a href="../" class="back-btn" id="backBtn" title="Home">🏠</a>
   </div>
 </div>
 
@@ -480,13 +548,17 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
       <svg viewBox="0 0 80 80"><circle class="timer-bg" cx="40" cy="40" r="36"/><circle class="timer-fg" id="timerCircle" cx="40" cy="40" r="36"/></svg>
       <div class="customer-face" id="customerFace">😊</div>
     </div>
-    <div class="speech-bubble" id="speechBubble"></div>
+    <div class="customer-name" id="customerName"></div>
+    <div class="order-strip" id="orderStrip"></div>
     <div class="special-tag" id="specialTag" style="display:none"></div>
   </div>
+  <!-- Kitchen counter divider -->
+  <div class="kitchen-counter"></div>
   <!-- Pita -->
   <div class="pita-zone">
     <div class="pita-wrap">
       <div class="pita-glow"></div>
+      <div class="pita-plate"></div>
       <div class="pita-ingredients" id="pitaIngredients"></div>
       <div class="pita-base">🥙</div>
     </div>
@@ -529,20 +601,21 @@ const INGREDIENTS = [
   { id:'salad',    emoji:'🥗', he:'סלט',      en:'Salad' },
   { id:'pickles',  emoji:'🥒', he:'חמוצים',   en:'Pickles' },
   { id:'hot',      emoji:'🌶️', he:'חריף',     en:'Hot Sauce' },
-  { id:'fries',    emoji:'🍟', he:'צ\'יפס',   en:'Fries' },
+  { id:'fries',    emoji:'🍟', he:"צ'יפס",    en:'Fries' },
   { id:'cabbage',  emoji:'🥬', he:'כרוב',     en:'Cabbage' },
   { id:'onion',    emoji:'🧅', he:'בצל',      en:'Onion' },
   { id:'amba',     emoji:'🥭', he:'אמבה',     en:'Amba' }
 ];
 
 const CUSTOMERS = ['😊','😄','🤩','😋','🤤','😎','🧔','👩','👨','👧','👦','👵','🧑‍🍳','😁','🥳','🤠','😺'];
+const CUSTOMER_NAMES_HE = ['דני','שרה','יוסי','נועה','עומר','מיכל','אלון','רונה','תמר','גיל','ליאור','הדס','איתן','שקד'];
+const CUSTOMER_NAMES_EN = ['Danny','Sarah','Yossi','Noa','Omer','Michal','Alon','Rona','Tamar','Gil','Lior','Hadas','Eitan','Shaked'];
 const SPECIALS = [
   { id:'extra_hot',      he:'🌶️ אקסטרה חריף!',    en:'🌶️ Extra Hot!',    color:'#ef4444', bgColor:'rgba(239,68,68,0.2)' },
   { id:'double_falafel', he:'🧆🧆 כפול פלאפל!',    en:'🧆🧆 Double Falafel!', color:'#f59e0b', bgColor:'rgba(245,158,11,0.2)' },
   { id:'speed',          he:'⚡ מהיר מהיר!',        en:'⚡ Rush Order!',    color:'#8b5cf6', bgColor:'rgba(139,92,246,0.2)' },
 ];
 
-// Customer face expressions based on timer
 const FACE_HAPPY = ['😊','😄','🤩','😋','🤤','😎','😁','🥳','🤠'];
 const FACE_IMPATIENT = ['😐','🤨','😑','🙄','😤'];
 const FACE_ANGRY = ['😠','😡','🤬','👿'];
@@ -555,10 +628,10 @@ let state = {
   ordersCompleted: 0, currentOrder: [], currentIndex: 0,
   special: null, timerTotal: 0, timerLeft: 0,
   isPlaying: false, isPaused: false,
-  customerBaseFace: '😊'
+  customerBaseFace: '😊', customerNameIdx: 0
 };
 let timerInterval = null;
-const TIMER_TICK = 50; // ms
+const TIMER_TICK = 50;
 
 // ===================== DOM =====================
 const $ = id => document.getElementById(id);
@@ -566,10 +639,11 @@ const startScreen = $('startScreen');
 const gameArea = $('gameArea');
 const topBar = $('topBar');
 const gameOverScreen = $('gameOverScreen');
-const speechBubble = $('speechBubble');
+const orderStrip = $('orderStrip');
 const pitaIngredients = $('pitaIngredients');
 const ingredientsGrid = $('ingredientsGrid');
 const customerFace = $('customerFace');
+const customerName = $('customerName');
 const timerCircle = $('timerCircle');
 const specialTag = $('specialTag');
 const scoreDisplay = $('scoreDisplay');
@@ -614,7 +688,52 @@ function toggleLang() {
   lang = lang === 'he' ? 'en' : 'he';
   localStorage.setItem('fk-lang', lang);
   applyLang();
-  if (state.isPlaying) updateLevelDisplay();
+  updateRulesLang();
+  if (state.isPlaying) {
+    updateLevelDisplay();
+    // Update customer name
+    const names = lang === 'he' ? CUSTOMER_NAMES_HE : CUSTOMER_NAMES_EN;
+    customerName.textContent = names[state.customerNameIdx % names.length];
+  }
+}
+
+// ========== RULES MODAL ==========
+const FALAFEL_RULES = {
+  he: [
+    '🧆 לקוחות מזמינים פלאפל עם תוספות',
+    '👆 לחצו על הרכיבים בסדר הנכון!',
+    '✅ רכיב נכון = נכנס לפיתה | ❌ טעות = מאבדים זמן',
+    '⏱️ סיימו לפני שהזמן נגמר!',
+    '📈 כל 3 הזמנות = עולים רמה (יותר רכיבים, פחות זמן)',
+    '❤️ 3 חיים. פספוס = מאבדים לב',
+    '🔥 רצף מושלם = כפיל נקודות!'
+  ],
+  en: [
+    '🧆 Customers order falafel with toppings',
+    '👆 Tap the ingredients in the right order!',
+    '✅ Correct = goes in the pita | ❌ Wrong = lose time',
+    '⏱️ Finish before time runs out!',
+    '📈 Every 3 orders = level up (more ingredients, less time)',
+    '❤️ 3 lives. Miss = lose a heart',
+    '🔥 Perfect streak = score multiplier!'
+  ]
+};
+function openRulesModal() {
+  updateRulesLang();
+  document.getElementById('rulesOverlay').style.display = 'flex';
+}
+function closeRulesModal() {
+  document.getElementById('rulesOverlay').style.display = 'none';
+}
+function updateRulesLang() {
+  const isHe = lang === 'he';
+  document.getElementById('rulesTitle').textContent = isHe ? 'הוראות משחק' : 'Game Rules';
+  document.getElementById('rulesGotIt').textContent = isHe ? 'הבנתי!' : 'Got it!';
+  const list = document.getElementById('rulesList');
+  const rules = isHe ? FALAFEL_RULES.he : FALAFEL_RULES.en;
+  list.innerHTML = rules.map(r => `<li>${r}</li>`).join('');
+  list.closest('.rules-card-modal').style.direction = isHe ? 'rtl' : 'ltr';
+  list.closest('.rules-card-modal').style.textAlign = isHe ? 'right' : 'left';
 }
 
 function updateIngredientLabels() {
@@ -641,9 +760,6 @@ function init() {
   createBgParticles();
   $('playBtn').addEventListener('click', startGame);
   $('restartBtn').addEventListener('click', startGame);
-  $('backBtn').addEventListener('click', () => {
-    window.location.href = '../';
-  });
 }
 
 function buildIngredientsGrid() {
@@ -659,19 +775,32 @@ function buildIngredientsGrid() {
   });
 }
 
-// ===================== HIGHLIGHT NEEDED INGREDIENT =====================
+// ===================== HIGHLIGHT + BOUNCE ARROW =====================
 function highlightNeededIngredient() {
-  // Remove all needed highlights
   document.querySelectorAll('.ingredient-btn').forEach(btn => btn.classList.remove('needed'));
+  // Remove existing arrows
+  document.querySelectorAll('.bounce-arrow').forEach(a => a.remove());
   if (!state.isPlaying || state.currentIndex >= state.currentOrder.length) return;
   const needed = state.currentOrder[state.currentIndex];
   const btn = document.querySelector(`.ingredient-btn[data-ingredient-id="${needed.id}"]`);
-  if (btn) btn.classList.add('needed');
+  if (btn) {
+    btn.classList.add('needed');
+    // Add bouncing arrow
+    const arrow = document.createElement('div');
+    arrow.className = 'bounce-arrow';
+    arrow.textContent = '👇';
+    arrow.style.position = 'absolute';
+    arrow.style.top = '-20px';
+    arrow.style.left = '50%';
+    arrow.style.transform = 'translateX(-50%)';
+    btn.style.position = 'relative';
+    btn.appendChild(arrow);
+  }
 }
 
 // ===================== GAME FLOW =====================
 function startGame() {
-  state = { score:0, lives:3, level:1, streak:0, bestStreak:0, ordersCompleted:0, currentOrder:[], currentIndex:0, special:null, timerTotal:0, timerLeft:0, isPlaying:true, isPaused:false, customerBaseFace:'😊' };
+  state = { score:0, lives:3, level:1, streak:0, bestStreak:0, ordersCompleted:0, currentOrder:[], currentIndex:0, special:null, timerTotal:0, timerLeft:0, isPlaying:true, isPaused:false, customerBaseFace:'😊', customerNameIdx:0 };
   startScreen.classList.add('hidden');
   gameOverScreen.classList.add('hidden');
   gameArea.classList.remove('hidden');
@@ -702,7 +831,6 @@ function endGame() {
   } else {
     statsEl.innerHTML = `Orders: ${state.ordersCompleted}<br>Level: ${state.level}<br>Best Streak: ${state.bestStreak}<br>High Score: ${highScore}`;
   }
-  // Star rating based on orders completed
   const stars = Math.min(5, Math.floor(state.ordersCompleted / 2) + (state.ordersCompleted > 0 ? 1 : 0));
   document.querySelectorAll('#starRating .star').forEach((s, i) => {
     s.classList.remove('earned');
@@ -710,7 +838,6 @@ function endGame() {
       setTimeout(() => s.classList.add('earned'), 200 + i * 200);
     }
   });
-  // Game over emoji based on performance
   const goEmoji = document.querySelector('.game-over-emoji');
   if (state.ordersCompleted >= 10) goEmoji.textContent = '🌟';
   else if (state.ordersCompleted >= 5) goEmoji.textContent = '😊';
@@ -744,18 +871,15 @@ function generateOrder() {
   const len = getOrderLength();
   const order = [];
   const pool = [...INGREDIENTS];
-  // Determine special
   let special = null;
   if (state.level >= 3 && Math.random() < 0.3) {
     const idx = Math.floor(Math.random() * SPECIALS.length);
     special = SPECIALS[idx];
   }
-  // Build order
   for (let i = 0; i < len; i++) {
     const pick = pool[Math.floor(Math.random() * pool.length)];
     order.push(pick);
   }
-  // Apply specials
   if (special) {
     if (special.id === 'extra_hot') {
       order.push(INGREDIENTS.find(i => i.id === 'hot'));
@@ -775,15 +899,17 @@ function nextOrder() {
   state.currentOrder = items;
   state.currentIndex = 0;
   state.special = special;
-  // Customer face
+  // Customer face + name
   state.customerBaseFace = CUSTOMERS[Math.floor(Math.random() * CUSTOMERS.length)];
+  state.customerNameIdx = Math.floor(Math.random() * CUSTOMER_NAMES_HE.length);
   customerFace.textContent = state.customerBaseFace;
   customerFace.style.animation = 'none';
   void customerFace.offsetHeight;
   customerFace.style.animation = 'customerBounce 0.5s cubic-bezier(0.175,0.885,0.32,1.275)';
-  // Speech bubble
-  renderOrderBubble();
-  // Highlight needed
+  const names = lang === 'he' ? CUSTOMER_NAMES_HE : CUSTOMER_NAMES_EN;
+  customerName.textContent = names[state.customerNameIdx % names.length];
+  // Order strip
+  renderOrderStrip();
   highlightNeededIngredient();
   // Special tag
   if (special) {
@@ -802,8 +928,8 @@ function nextOrder() {
   startTimer();
 }
 
-function renderOrderBubble() {
-  speechBubble.innerHTML = '';
+function renderOrderStrip() {
+  orderStrip.innerHTML = '';
   state.currentOrder.forEach((ing, i) => {
     const div = document.createElement('div');
     div.className = 'order-item';
@@ -811,7 +937,7 @@ function renderOrderBubble() {
     if (i === state.currentIndex) div.classList.add('current');
     div.textContent = ing.emoji;
     div.id = `order-item-${i}`;
-    speechBubble.appendChild(div);
+    orderStrip.appendChild(div);
   });
 }
 
@@ -827,11 +953,9 @@ function startTimer() {
     state.timerLeft -= TIMER_TICK;
     const pct = state.timerLeft / state.timerTotal;
     timerCircle.style.strokeDashoffset = circumference * (1 - pct);
-    // Color
     timerCircle.classList.remove('warning', 'danger');
     if (pct < 0.25) timerCircle.classList.add('danger');
     else if (pct < 0.5) timerCircle.classList.add('warning');
-    // Update customer face expression based on time
     updateCustomerExpression(pct);
     if (state.timerLeft <= 0) {
       clearInterval(timerInterval);
@@ -841,11 +965,9 @@ function startTimer() {
 }
 
 function updateCustomerExpression(pct) {
-  // Only update every ~500ms worth of ticks to avoid constant DOM writes
   if (Math.floor(state.timerLeft / 500) !== Math.floor((state.timerLeft + TIMER_TICK) / 500)) return;
   if (pct > 0.5) {
-    // Happy - keep base face
-    // no change needed
+    // keep base face
   } else if (pct > 0.25) {
     customerFace.textContent = FACE_IMPATIENT[Math.floor(Math.random() * FACE_IMPATIENT.length)];
   } else {
@@ -856,7 +978,7 @@ function updateCustomerExpression(pct) {
 function onTimerExpired() {
   state.lives--;
   state.streak = 0;
-  updateLives(true); // true = animate heart break
+  updateLives(true);
   updateStreak();
   showLifeLost();
   if (state.lives <= 0) {
@@ -878,46 +1000,37 @@ function onIngredientTap(id, btnEl) {
 }
 
 function onCorrectIngredient(btnEl) {
-  // Flash button
   btnEl.classList.remove('correct-flash');
   void btnEl.offsetHeight;
   btnEl.classList.add('correct-flash');
   setTimeout(() => btnEl.classList.remove('correct-flash'), 450);
-  // Add to pita
   const ing = state.currentOrder[state.currentIndex];
   const div = document.createElement('div');
   div.className = 'pita-ingredient';
   div.textContent = ing.emoji;
   pitaIngredients.appendChild(div);
-  // Update order bubble
   const orderItem = document.getElementById(`order-item-${state.currentIndex}`);
   if (orderItem) {
     orderItem.classList.remove('current');
     orderItem.classList.add('completed');
   }
   state.currentIndex++;
-  // Next item highlight
   const nextItem = document.getElementById(`order-item-${state.currentIndex}`);
   if (nextItem) nextItem.classList.add('current');
-  // Highlight needed ingredient button
   highlightNeededIngredient();
-  // Check if order complete
   if (state.currentIndex >= state.currentOrder.length) {
     onOrderComplete();
   }
 }
 
 function onWrongIngredient(btnEl) {
-  // Flash button
   btnEl.classList.remove('wrong-flash');
   void btnEl.offsetHeight;
   btnEl.classList.add('wrong-flash');
   setTimeout(() => btnEl.classList.remove('wrong-flash'), 450);
-  // Time penalty
   const penalty = 1500;
   state.timerLeft = Math.max(0, state.timerLeft - penalty);
   showTimePenalty();
-  // Break streak
   state.streak = 0;
   updateStreak();
 }
@@ -927,7 +1040,6 @@ function onOrderComplete() {
   state.ordersCompleted++;
   state.streak++;
   if (state.streak > state.bestStreak) state.bestStreak = state.streak;
-  // Score: base + speed bonus + streak multiplier
   const timeBonus = Math.floor((state.timerLeft / state.timerTotal) * 50);
   const base = 100 + (state.level * 10);
   const streakMult = Math.min(1 + (state.streak - 1) * 0.25, 3);
@@ -936,26 +1048,21 @@ function onOrderComplete() {
   state.score += total;
   updateScore();
   updateStreak();
-  // Level up every 3 orders
   if (state.ordersCompleted % 3 === 0) {
     state.level++;
     updateLevelDisplay();
   }
-  // Effects
   showOrderComplete(total);
   spawnFalafelParticles();
-  // Flying stars on perfect (fast) completion
   if (state.timerLeft / state.timerTotal > 0.5) {
     spawnFlyingStars();
   }
-  // Next order
   setTimeout(nextOrder, 1200);
 }
 
 // ===================== UI UPDATES =====================
 function updateScore() {
   scoreDisplay.textContent = state.score;
-  // Pop animation
   scoreDisplay.style.transform = 'scale(1.3)';
   setTimeout(() => scoreDisplay.style.transform = 'scale(1)', 200);
 }
@@ -964,7 +1071,7 @@ function updateLives(animateBreak) {
   let html = '';
   for (let i = 0; i < 3; i++) {
     const isAlive = i < state.lives;
-    const isBreaking = animateBreak && i === state.lives; // the one that just broke
+    const isBreaking = animateBreak && i === state.lives;
     const cls = isBreaking ? 'heart breaking' : 'heart';
     html += `<span class="${cls}">${isAlive ? '❤️' : (isBreaking ? '💔' : '🖤')}</span>`;
   }
@@ -983,14 +1090,12 @@ function updateStreak() {
     streakBadge.textContent = `🔥 x${state.streak}`;
     streakBadge.classList.add('active');
     streakBadge.style.display = 'inline-block';
-    // Re-trigger animation
     streakBadge.classList.remove('active');
     void streakBadge.offsetHeight;
     streakBadge.classList.add('active');
   } else {
     streakBadge.style.display = 'none';
   }
-  // Flame border for streak >= 3
   if (state.streak >= 3) {
     flameBorder.classList.add('active');
   } else {
@@ -1000,12 +1105,10 @@ function updateStreak() {
 
 // ===================== EFFECTS =====================
 function showOrderComplete(points) {
-  // Flash
   const flash = document.createElement('div');
   flash.className = 'order-complete-flash';
   document.body.appendChild(flash);
   setTimeout(() => flash.remove(), 700);
-  // Bonus text
   const bonus = document.createElement('div');
   bonus.className = 'bonus-text';
   bonus.textContent = `+${points}`;
@@ -1014,13 +1117,11 @@ function showOrderComplete(points) {
 }
 
 function showLifeLost() {
-  // Screen shake
   const ga = $('gameArea');
   ga.classList.remove('screen-shake');
   void ga.offsetHeight;
   ga.classList.add('screen-shake');
   setTimeout(() => ga.classList.remove('screen-shake'), 500);
-  // Heart icon
   const overlay = document.createElement('div');
   overlay.className = 'life-lost';
   overlay.innerHTML = '<div class="life-lost-icon">💔</div>';

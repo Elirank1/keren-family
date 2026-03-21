@@ -51,31 +51,24 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
   animation:bgRotate 40s linear infinite;pointer-events:none;
 }
 @keyframes bgRotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
-
-/* Animated radial overlay */
 .bg-main::after{
   content:'';position:fixed;inset:0;
   background:radial-gradient(ellipse at 50% 0%,rgba(132,94,194,0.08) 0%,transparent 60%);
   pointer-events:none;z-index:0;
   animation:overlayPulse 8s ease-in-out infinite alternate;
 }
-@keyframes overlayPulse{
-  0%{opacity:0.5;transform:scale(1)}
-  100%{opacity:1;transform:scale(1.1)}
-}
+@keyframes overlayPulse{0%{opacity:0.5;transform:scale(1)}100%{opacity:1;transform:scale(1.1)}}
 
 /* ============ PARTICLES ============ */
 #particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
 .particle{position:absolute;pointer-events:none;animation:particleFloat linear infinite;opacity:0}
 @keyframes particleFloat{
   0%{transform:translateY(105vh) rotate(0deg) scale(0.8);opacity:0}
-  5%{opacity:0.09}
-  50%{opacity:0.12}
-  95%{opacity:0.06}
+  5%{opacity:0.09}50%{opacity:0.12}95%{opacity:0.06}
   100%{transform:translateY(-10vh) rotate(360deg) scale(1.2);opacity:0}
 }
 
-/* ============ GLASS SYSTEM ============ */
+/* ============ GLASS SYSTEM (UI panels only) ============ */
 .glass{
   background:rgba(255,255,255,0.05);
   backdrop-filter:blur(var(--glass-blur));-webkit-backdrop-filter:blur(var(--glass-blur));
@@ -108,14 +101,9 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 .title-gradient{
   background:linear-gradient(135deg,#fff 0%,#c4b5fd 30%,#fbbf24 60%,#fff 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  background-size:200% 200%;
-  animation:shimmer 4s ease-in-out infinite;
+  background-size:200% 200%;animation:shimmer 4s ease-in-out infinite;
 }
-@keyframes shimmer{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
+@keyframes shimmer{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
 /* ============ SCREENS ============ */
 .screen{display:none;animation:screenIn 0.5s cubic-bezier(0.16,1,0.3,1)}
@@ -162,24 +150,24 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 .rules-card ul{list-style:none;font-size:0.92rem;font-weight:600;color:rgba(255,255,255,0.55);line-height:2}
 .rules-card ul li::before{content:'🔹';margin-left:6px}
 
-/* ============ PROGRESS DOTS ============ */
+/* ============ PROGRESS DOTS — larger, more spaced ============ */
 .progress-dots{
-  display:flex;justify-content:center;gap:8px;margin-bottom:16px;
+  display:flex;justify-content:center;gap:12px;margin-bottom:16px;
 }
 .progress-dot{
-  width:10px;height:10px;border-radius:50%;
-  background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.08);
+  width:14px;height:14px;border-radius:50%;
+  background:rgba(255,255,255,0.12);border:2px solid rgba(255,255,255,0.08);
   transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);
 }
-.progress-dot.completed{background:var(--clr-green);border-color:var(--clr-green);box-shadow:0 0 8px rgba(107,203,119,0.4)}
+.progress-dot.completed{background:var(--clr-green);border-color:var(--clr-green);box-shadow:0 0 10px rgba(107,203,119,0.5)}
 .progress-dot.current{
   background:var(--clr-gold);border-color:var(--clr-gold);
-  box-shadow:0 0 12px rgba(255,217,61,0.5),0 0 24px rgba(255,217,61,0.2);
-  transform:scale(1.3);
+  box-shadow:0 0 14px rgba(255,217,61,0.6),0 0 28px rgba(255,217,61,0.25);
+  transform:scale(1.4);
   animation:dotPulse 1.5s ease-in-out infinite;
 }
-.progress-dot.wrong-dot{background:var(--clr-red);border-color:var(--clr-red);box-shadow:0 0 8px rgba(255,107,107,0.4)}
-@keyframes dotPulse{0%,100%{box-shadow:0 0 12px rgba(255,217,61,0.5)}50%{box-shadow:0 0 20px rgba(255,217,61,0.8)}}
+.progress-dot.wrong-dot{background:var(--clr-red);border-color:var(--clr-red);box-shadow:0 0 10px rgba(255,107,107,0.5)}
+@keyframes dotPulse{0%,100%{box-shadow:0 0 14px rgba(255,217,61,0.6)}50%{box-shadow:0 0 22px rgba(255,217,61,0.9)}}
 
 /* ============ GAME HUD ============ */
 .hud{
@@ -192,21 +180,21 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 .hud-value.score{color:var(--clr-gold)}
 .hud-value.round{color:var(--clr-purple-light)}
 
-/* ============ SVG CIRCULAR TIMER ============ */
+/* ============ SVG CIRCULAR TIMER — LARGER 120px ============ */
 .timer-ring-container{
-  display:flex;justify-content:center;align-items:center;margin-bottom:16px;
+  display:flex;justify-content:center;align-items:center;
   position:relative;
 }
-.timer-ring-svg{width:80px;height:80px;transform:rotate(-90deg)}
-.timer-ring-bg{fill:none;stroke:rgba(255,255,255,0.06);stroke-width:5}
+.timer-ring-svg{width:120px;height:120px;transform:rotate(-90deg);filter:drop-shadow(0 0 12px rgba(107,203,119,0.3))}
+.timer-ring-bg{fill:none;stroke:rgba(255,255,255,0.06);stroke-width:4}
 .timer-ring-progress{
-  fill:none;stroke:var(--clr-green);stroke-width:5;
+  fill:none;stroke:var(--clr-green);stroke-width:4.5;
   stroke-linecap:round;
   transition:stroke-dashoffset 0.15s linear, stroke 0.5s ease;
 }
 .timer-ring-text{
   position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  font-family:'Fredoka One',cursive;font-size:1.4rem;color:var(--clr-green);
+  font-family:'Fredoka One',cursive;font-size:2rem;color:var(--clr-green);
   transition:color 0.5s ease;
 }
 .timer-ring-container.warning .timer-ring-progress{stroke:var(--clr-gold)}
@@ -218,27 +206,28 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 }
 @keyframes timerPulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.2)}}
 
-/* ============ CATEGORY BADGE ============ */
-.category-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:10px 20px;border-radius:20px;font-weight:800;font-size:0.9rem;
-  margin-bottom:16px;transition:all 0.4s ease;
-  box-shadow:0 4px 20px rgba(0,0,0,0.2);
+/* ============ CATEGORY BANNER — full width across clue area ============ */
+.category-banner{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  padding:12px 24px;border-radius:20px;font-family:'Fredoka One',cursive;font-weight:800;font-size:1rem;
+  margin-bottom:14px;transition:all 0.4s ease;width:100%;
+  letter-spacing:0.02em;
 }
-.category-badge.cat-cities{background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);color:#93c5fd}
-.category-badge.cat-food{background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);color:#fcd34d}
-.category-badge.cat-landmarks{background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);color:#86efac}
-.category-badge.cat-people{background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.3);color:#d8b4fe}
-.category-badge.cat-slang{background:rgba(236,72,153,0.15);border:1px solid rgba(236,72,153,0.3);color:#f9a8d4}
-.category-badge.cat-nature{background:rgba(20,184,166,0.15);border:1px solid rgba(20,184,166,0.3);color:#5eead4}
+.category-banner.cat-cities{background:linear-gradient(135deg,rgba(59,130,246,0.25),rgba(59,130,246,0.1));border:1px solid rgba(59,130,246,0.35);color:#93c5fd}
+.category-banner.cat-food{background:linear-gradient(135deg,rgba(245,158,11,0.25),rgba(245,158,11,0.1));border:1px solid rgba(245,158,11,0.35);color:#fcd34d}
+.category-banner.cat-landmarks{background:linear-gradient(135deg,rgba(34,197,94,0.25),rgba(34,197,94,0.1));border:1px solid rgba(34,197,94,0.35);color:#86efac}
+.category-banner.cat-people{background:linear-gradient(135deg,rgba(168,85,247,0.25),rgba(168,85,247,0.1));border:1px solid rgba(168,85,247,0.35);color:#d8b4fe}
+.category-banner.cat-slang{background:linear-gradient(135deg,rgba(236,72,153,0.25),rgba(236,72,153,0.1));border:1px solid rgba(236,72,153,0.35);color:#f9a8d4}
+.category-banner.cat-nature{background:linear-gradient(135deg,rgba(20,184,166,0.25),rgba(20,184,166,0.1));border:1px solid rgba(20,184,166,0.35);color:#5eead4}
 
-/* ============ CLUE CARDS ============ */
-.clue-area{min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:16px;gap:10px;width:100%}
+/* ============ CLUE CARDS — bigger, full width, with number badges ============ */
+.clue-area{min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:12px;gap:10px;width:100%}
 .clue-card{
-  width:100%;padding:20px 24px;border-radius:24px;
-  font-weight:700;font-size:1.15rem;text-align:center;line-height:1.5;
+  width:100%;padding:16px 20px 16px 20px;border-radius:20px;
+  font-weight:700;font-size:1.1rem;line-height:1.5;
   transform-origin:center;position:relative;overflow:hidden;
   box-shadow:0 4px 24px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.08);
+  display:flex;align-items:center;gap:14px;
 }
 .clue-card::before{
   content:'';position:absolute;inset:0;
@@ -255,17 +244,25 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 @keyframes clueFlip{0%{transform:perspective(800px) rotateY(-90deg);opacity:0}100%{transform:perspective(800px) rotateY(0deg);opacity:1}}
 @keyframes fadeUp{0%{transform:translateY(30px) scale(0.95);opacity:0}100%{transform:translateY(0) scale(1);opacity:1}}
 
-.clue-number{
-  font-size:0.7rem;color:rgba(255,255,255,0.5);margin-bottom:6px;
-  font-weight:900;text-transform:uppercase;letter-spacing:0.1em;
+/* Number badge */
+.clue-badge{
+  flex-shrink:0;width:40px;height:40px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Fredoka One',cursive;font-size:1.3rem;font-weight:900;
+  background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.15);
+  color:rgba(255,255,255,0.8);
 }
-.clue-text{font-size:1.2rem;font-weight:800;letter-spacing:0.01em}
+.clue-text{font-size:1.15rem;font-weight:800;letter-spacing:0.01em;flex:1}
 
 /* Clue card color per index */
 .clue-card.clue-1{background:rgba(132,94,194,0.15);border:1px solid rgba(132,94,194,0.25)}
+.clue-card.clue-1 .clue-badge{background:rgba(132,94,194,0.3);border-color:rgba(132,94,194,0.5);color:#d8b4fe}
 .clue-card.clue-2{background:rgba(255,107,107,0.12);border:1px solid rgba(255,107,107,0.2)}
+.clue-card.clue-2 .clue-badge{background:rgba(255,107,107,0.25);border-color:rgba(255,107,107,0.4);color:#fca5a5}
 .clue-card.clue-3{background:rgba(255,217,61,0.1);border:1px solid rgba(255,217,61,0.18)}
+.clue-card.clue-3 .clue-badge{background:rgba(255,217,61,0.2);border-color:rgba(255,217,61,0.35);color:#fde68a}
 .clue-card.clue-4{background:rgba(107,203,119,0.1);border:1px solid rgba(107,203,119,0.18)}
+.clue-card.clue-4 .clue-badge{background:rgba(107,203,119,0.2);border-color:rgba(107,203,119,0.35);color:#86efac}
 
 /* ============ NEXT CLUE BUTTON ============ */
 .next-clue-btn{
@@ -284,42 +281,53 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 .next-clue-btn:active{transform:scale(0.95)}
 .next-clue-btn:disabled{opacity:0.3;cursor:default;transform:none!important}
 
-/* ============ ANSWER BUTTONS ============ */
-.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+/* ============ ANSWER BUTTONS — FULL WIDTH with A/B/C/D labels ============ */
+.answers{display:flex;flex-direction:column;gap:10px;margin-top:14px}
 .answer-btn{
-  padding:18px 14px;border:2px solid rgba(255,255,255,0.1);border-radius:24px;
+  padding:16px 18px;border:2px solid rgba(255,255,255,0.1);border-radius:20px;
   background:rgba(255,255,255,0.04);
   backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
   font-weight:800;font-size:1.05rem;color:#fff;cursor:pointer;
   transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);
-  text-align:center;min-height:64px;line-height:1.3;word-break:break-word;
-  position:relative;overflow:hidden;
+  text-align:right;min-height:64px;line-height:1.3;word-break:break-word;
+  position:relative;overflow:hidden;width:100%;
   box-shadow:0 4px 20px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.06);
+  display:flex;align-items:center;gap:14px;
 }
+.answer-label{
+  flex-shrink:0;width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Fredoka One',cursive;font-size:0.95rem;
+  background:rgba(132,94,194,0.2);border:2px solid rgba(132,94,194,0.35);
+  color:var(--clr-purple-light);
+}
+.answer-text{flex:1}
 .answer-btn::before{
   content:'';position:absolute;inset:0;
   background:radial-gradient(circle at 50% 50%,rgba(255,255,255,0.06) 0%,transparent 70%);
   opacity:0;transition:opacity 0.3s;
 }
 .answer-btn:hover{
-  transform:translateY(-2px) scale(1.02);
+  transform:translateY(-2px) scale(1.01);
   border-color:rgba(255,255,255,0.25);
   box-shadow:0 8px 32px rgba(0,0,0,0.2),0 0 30px rgba(132,94,194,0.15),inset 0 1px 0 rgba(255,255,255,0.1);
 }
 .answer-btn:hover::before{opacity:1}
-.answer-btn:active{transform:scale(0.96)}
+.answer-btn:active{transform:scale(0.97)}
 
 .answer-btn.correct{
   background:rgba(107,203,119,0.25);border-color:#6BCB77;
   box-shadow:0 0 40px rgba(107,203,119,0.3),0 4px 20px rgba(107,203,119,0.2);
   animation:correctPulse 0.6s ease;
 }
-.answer-btn.correct::after{content:'✅';position:absolute;top:6px;right:8px;font-size:1rem}
+.answer-btn.correct .answer-label{background:rgba(107,203,119,0.4);border-color:#6BCB77;color:#fff}
+.answer-btn.correct::after{content:'✅';position:absolute;top:50%;right:16px;transform:translateY(-50%);font-size:1.2rem}
 .answer-btn.wrong{
   background:rgba(255,107,107,0.2);border-color:#FF6B6B;
   animation:shakeWrong 0.5s ease;
 }
-.answer-btn.wrong::after{content:'❌';position:absolute;top:6px;right:8px;font-size:1rem}
+.answer-btn.wrong .answer-label{background:rgba(255,107,107,0.4);border-color:#FF6B6B;color:#fff}
+.answer-btn.wrong::after{content:'❌';position:absolute;top:50%;right:16px;transform:translateY(-50%);font-size:1.2rem}
 .answer-btn.reveal{
   border-color:rgba(107,203,119,0.6);background:rgba(107,203,119,0.15);
   box-shadow:0 0 20px rgba(107,203,119,0.2);
@@ -327,19 +335,45 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 .answer-btn:disabled{cursor:default;transform:none!important}
 
 @keyframes correctPulse{
-  0%{transform:scale(1)}
-  30%{transform:scale(1.06);box-shadow:0 0 50px rgba(107,203,119,0.4)}
-  60%{transform:scale(0.98)}
-  100%{transform:scale(1)}
+  0%{transform:scale(1)}30%{transform:scale(1.04);box-shadow:0 0 50px rgba(107,203,119,0.4)}60%{transform:scale(0.98)}100%{transform:scale(1)}
 }
 @keyframes shakeWrong{
-  0%,100%{transform:translateX(0)}
-  15%{transform:translateX(-8px) rotate(-1deg)}
-  30%{transform:translateX(8px) rotate(1deg)}
-  45%{transform:translateX(-6px) rotate(-0.5deg)}
-  60%{transform:translateX(6px) rotate(0.5deg)}
-  75%{transform:translateX(-3px)}
-  90%{transform:translateX(3px)}
+  0%,100%{transform:translateX(0)}15%{transform:translateX(-8px)}30%{transform:translateX(8px)}45%{transform:translateX(-6px)}60%{transform:translateX(6px)}75%{transform:translateX(-3px)}90%{transform:translateX(3px)}
+}
+
+/* ============ ROUND TRANSITION OVERLAY ============ */
+.round-transition{
+  position:fixed;inset:0;z-index:300;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:rgba(10,10,26,0.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  opacity:0;pointer-events:none;transition:opacity 0.3s;
+}
+.round-transition.show{opacity:1;pointer-events:auto}
+.round-transition .round-num{
+  font-family:'Fredoka One',cursive;font-size:clamp(3rem,12vw,5rem);
+  background:linear-gradient(135deg,#c4b5fd,#fbbf24);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:roundZoomIn 0.6s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.round-transition .round-label{
+  font-family:'Nunito',sans-serif;font-weight:800;font-size:1.1rem;color:rgba(255,255,255,0.4);margin-top:4px;
+}
+@keyframes roundZoomIn{0%{transform:scale(3);opacity:0;filter:blur(10px)}50%{transform:scale(0.9);opacity:1;filter:blur(0)}100%{transform:scale(1)}}
+
+/* ============ EXCITEMENT MESSAGES ============ */
+.excitement-msg{
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);
+  font-family:'Fredoka One',cursive;font-size:2rem;
+  text-shadow:0 4px 30px rgba(255,217,61,0.5),0 0 60px rgba(255,217,61,0.2);
+  z-index:200;pointer-events:none;transition:none;
+  color:var(--clr-gold);
+}
+.excitement-msg.show{animation:excitementPop 1.8s cubic-bezier(0.16,1,0.3,1) forwards}
+@keyframes excitementPop{
+  0%{transform:translate(-50%,-50%) scale(0) rotate(-10deg);opacity:0}
+  15%{transform:translate(-50%,-50%) scale(1.4) rotate(3deg);opacity:1}
+  30%{transform:translate(-50%,-50%) scale(1) rotate(0deg);opacity:1}
+  100%{transform:translate(-50%,-120%) scale(0.7);opacity:0}
 }
 
 /* ============ POINTS POPUP ============ */
@@ -379,7 +413,6 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 }
 @keyframes recordPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.8;transform:scale(1.05)}}
 
-/* Category breakdown */
 .category-breakdown{margin:20px 0;display:flex;flex-direction:column;gap:8px}
 .cat-row{
   display:flex;align-items:center;gap:10px;
@@ -422,33 +455,68 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 /* ============ CONFETTI ============ */
 .confetti-piece{position:fixed;width:10px;height:10px;top:-20px;z-index:300;pointer-events:none;animation:confettiFall linear forwards}
 @keyframes confettiFall{
-  0%{opacity:1;transform:translateY(0) rotate(0deg) scale(1)}
-  50%{opacity:1}
+  0%{opacity:1;transform:translateY(0) rotate(0deg) scale(1)}50%{opacity:1}
   100%{opacity:0;transform:translateY(100vh) rotate(720deg) scale(0.5)}
 }
 
 /* ============ RESPONSIVE ============ */
 @media(max-width:380px){
   .hero h1{font-size:2.2rem}
-  .answer-btn{font-size:0.92rem;padding:14px 10px;min-height:56px}
+  .answer-btn{font-size:0.95rem;padding:14px 14px;min-height:56px}
+  .answer-label{width:30px;height:30px;font-size:0.8rem}
   .hud-value{font-size:1.15rem}
-  .clue-text{font-size:1.05rem}
-  .timer-ring-svg{width:70px;height:70px}
-  .timer-ring-text{font-size:1.2rem}
+  .clue-text{font-size:1rem}
+  .timer-ring-svg{width:100px;height:100px}
+  .timer-ring-text{font-size:1.6rem}
   .results-card .big-score{font-size:4rem}
+  .clue-badge{width:34px;height:34px;font-size:1.1rem}
 }
 @media(min-width:600px){
-  .answer-btn{font-size:1.1rem;padding:20px 16px;min-height:72px}
-  .clue-text{font-size:1.3rem}
+  .answer-btn{font-size:1.1rem;padding:18px 20px;min-height:72px}
+  .clue-text{font-size:1.25rem}
 }
+
+/* ── Rules Modal ── */
+.rules-overlay{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:20px;animation:rulesFadeIn 0.3s ease}
+@keyframes rulesFadeIn{0%{opacity:0}100%{opacity:1}}
+.rules-card-modal{background:rgba(255,255,255,0.12);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.2);border-radius:24px;padding:28px;max-width:420px;width:100%;max-height:80vh;overflow-y:auto;color:white;position:relative}
+.rules-card-modal h2{font-family:'Fredoka One',cursive;font-size:1.6rem;margin-bottom:16px;text-align:center}
+.rules-card-modal ul{list-style:none;padding:0}
+.rules-card-modal li{padding:8px 0;font-size:0.95rem;line-height:1.5;border-bottom:1px solid rgba(255,255,255,0.08)}
+.rules-card-modal li:last-child{border-bottom:none}
+.rules-close{position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.15);border:none;color:white;width:36px;height:36px;border-radius:50%;font-size:1.2rem;cursor:pointer;transition:all 0.2s}
+.rules-close:hover{background:rgba(255,255,255,0.25);transform:scale(1.1)}
+.rules-got-it{display:block;width:100%;margin-top:20px;padding:14px;border:none;border-radius:16px;font-family:'Fredoka One',cursive;font-size:1.1rem;cursor:pointer;background:linear-gradient(135deg,#667eea,#764ba2);color:white;transition:all 0.2s}
+.rules-got-it:hover{transform:scale(1.03);box-shadow:0 6px 20px rgba(102,126,234,0.4)}
+.start-rules-btn{background:rgba(255,255,255,0.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.7);border-radius:16px;padding:10px 24px;font-size:0.9rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;transition:all 0.25s;margin-top:8px}
+.start-rules-btn:hover{background:rgba(255,255,255,0.15);color:white;transform:scale(1.05)}
+
 </style>
 </head>
 <body>
+
+<!-- Rules Modal -->
+<div class="rules-overlay" id="rulesOverlay" style="display:none" onclick="if(event.target===this)closeRulesModal()">
+  <div class="rules-card-modal">
+    <button class="rules-close" onclick="closeRulesModal()">&times;</button>
+    <h2 id="rulesModalTitle">הוראות משחק</h2>
+    <ul id="rulesModalList"></ul>
+    <button class="rules-got-it" id="rulesGotIt" onclick="closeRulesModal()">הבנתי!</button>
+  </div>
+</div>
+
 <div class="bg-main">
 <div id="particles"></div>
 
 <!-- Points popup -->
 <div class="points-popup" id="pointsPopup"></div>
+<!-- Excitement message -->
+<div class="excitement-msg" id="excitementMsg"></div>
+<!-- Round transition -->
+<div class="round-transition" id="roundTransition">
+  <div class="round-num" id="roundTransNum"></div>
+  <div class="round-label" id="roundTransLabel"></div>
+</div>
 
 <div class="container">
   <!-- Top bar -->
@@ -472,16 +540,7 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
     </div>
 
     <button class="start-btn" onclick="startGame()" data-he="יאללה, מתחילים!" data-en="Let's Go!">יאללה, מתחילים!</button>
-
-    <div class="rules-card glass">
-      <h3 data-he="📋 חוקי המשחק" data-en="📋 Game Rules">📋 חוקי המשחק</h3>
-      <ul>
-        <li data-he="10 סיבובים, 25 שניות כל סיבוב" data-en="10 rounds, 25 seconds each">10 סיבובים, 25 שניות כל סיבוב</li>
-        <li data-he="4 רמזים מופיעים אחד אחרי השני" data-en="4 clues appear one by one">4 רמזים מופיעים אחד אחרי השני</li>
-        <li data-he="ענו מוקדם יותר = יותר נקודות!" data-en="Answer earlier = more points!">ענו מוקדם יותר = יותר נקודות!</li>
-        <li data-he="רמז 1 = 40 נק׳ | רמז 4 = 10 נק׳" data-en="Clue 1 = 40pts | Clue 4 = 10pts">רמז 1 = 40 נק׳ | רמז 4 = 10 נק׳</li>
-      </ul>
-    </div>
+    <button class="start-rules-btn" onclick="openRulesModal()" data-he="📖 הוראות משחק" data-en="📖 Game Rules">📖 הוראות משחק</button>
   </div>
 
   <!-- ========== GAME SCREEN ========== -->
@@ -510,7 +569,7 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
       </div>
     </div>
 
-    <div id="categoryBadge" class="category-badge"></div>
+    <div id="categoryBadge" class="category-banner"></div>
 
     <div class="clue-area" id="clueArea"></div>
 
@@ -545,560 +604,56 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 
 <script>
 // ============================================================
-// QUESTIONS DATABASE — 45 questions across 6 categories
+// QUESTIONS DATABASE
 // ============================================================
 const QUESTIONS = [
-  // ===== CITIES =====
-  {
-    category: "cities",
-    answer: { he: "תל אביב", en: "Tel Aviv" },
-    clues: {
-      he: ["עיר ללא הפסקה", "שדרות רוטשילד", "בועות סבון בפארק", "חופי הים התיכון"],
-      en: ["The city that never stops", "Rothschild Boulevard", "Soap bubbles in the park", "Mediterranean beaches"]
-    },
-    options: {
-      he: ["ירושלים", "תל אביב", "חיפה", "באר שבע"],
-      en: ["Jerusalem", "Tel Aviv", "Haifa", "Be'er Sheva"]
-    }
-  },
-  {
-    category: "cities",
-    answer: { he: "ירושלים", en: "Jerusalem" },
-    clues: {
-      he: ["עיר הקודש", "הכותל המערבי", "שוק מחנה יהודה", "בירת ישראל"],
-      en: ["The Holy City", "The Western Wall", "Mahane Yehuda Market", "Capital of Israel"]
-    },
-    options: {
-      he: ["תל אביב", "חיפה", "ירושלים", "צפת"],
-      en: ["Tel Aviv", "Haifa", "Jerusalem", "Tzfat"]
-    }
-  },
-  {
-    category: "cities",
-    answer: { he: "חיפה", en: "Haifa" },
-    clues: {
-      he: ["הגנים הבהאיים", "הר הכרמל", "עיר הנמל", "דו קיום יהודי-ערבי"],
-      en: ["The Bahai Gardens", "Mount Carmel", "Port city", "Jewish-Arab coexistence"]
-    },
-    options: {
-      he: ["אשדוד", "חיפה", "עכו", "נתניה"],
-      en: ["Ashdod", "Haifa", "Acre", "Netanya"]
-    }
-  },
-  {
-    category: "cities",
-    answer: { he: "אילת", en: "Eilat" },
-    clues: {
-      he: ["דולפינים", "ים סוף", "חם כל השנה", "דרום ישראל"],
-      en: ["Dolphins", "Red Sea", "Hot all year", "Southern Israel"]
-    },
-    options: {
-      he: ["אילת", "אשקלון", "מצפה רמון", "ערד"],
-      en: ["Eilat", "Ashkelon", "Mitzpe Ramon", "Arad"]
-    }
-  },
-  {
-    category: "cities",
-    answer: { he: "צפת", en: "Tzfat" },
-    clues: {
-      he: ["קבלה ומיסטיקה", "העיר העתיקה כחולה", "גלריות אמנות", "הרי הגליל"],
-      en: ["Kabbalah and mysticism", "The blue old city", "Art galleries", "Galilee mountains"]
-    },
-    options: {
-      he: ["טבריה", "צפת", "כרמיאל", "נצרת"],
-      en: ["Tiberias", "Tzfat", "Karmiel", "Nazareth"]
-    }
-  },
-  {
-    category: "cities",
-    answer: { he: "באר שבע", en: "Be'er Sheva" },
-    clues: {
-      he: ["בירת הנגב", "שבע בארות", "אוניברסיטת בן גוריון", "שוק הבדואים"],
-      en: ["Capital of the Negev", "Seven wells", "Ben Gurion University", "Bedouin market"]
-    },
-    options: {
-      he: ["ערד", "באר שבע", "דימונה", "אילת"],
-      en: ["Arad", "Be'er Sheva", "Dimona", "Eilat"]
-    }
-  },
-  {
-    category: "cities",
-    answer: { he: "עכו", en: "Acre" },
-    clues: {
-      he: ["עיר צלבנית עתיקה", "נמל עתיק", "חומות ומנהרות", "שוק עותמאני"],
-      en: ["Ancient Crusader city", "Ancient port", "Walls and tunnels", "Ottoman market"]
-    },
-    options: {
-      he: ["חיפה", "יפו", "עכו", "קיסריה"],
-      en: ["Haifa", "Jaffa", "Acre", "Caesarea"]
-    }
-  },
-  // ===== FOOD =====
-  {
-    category: "food",
-    answer: { he: "פלאפל", en: "Falafel" },
-    clues: {
-      he: ["כדורים חומים מטוגנים", "טחינה מלמעלה", "עשוי מחומוס", "בתוך פיתה"],
-      en: ["Fried brown balls", "Tahini on top", "Made from chickpeas", "In a pita"]
-    },
-    options: {
-      he: ["שווארמה", "פלאפל", "סביח", "חומוס"],
-      en: ["Shawarma", "Falafel", "Sabich", "Hummus"]
-    }
-  },
-  {
-    category: "food",
-    answer: { he: "חומוס", en: "Hummus" },
-    clues: {
-      he: ["ממרח מפורסם", "גרגרי חומוס", "עם שמן זית", "מנגבים עם פיתה"],
-      en: ["Famous spread", "Chickpeas", "With olive oil", "Dipped with pita"]
-    },
-    options: {
-      he: ["טחינה", "לבנה", "חומוס", "בבא גנוש"],
-      en: ["Tahini", "Labneh", "Hummus", "Baba Ganoush"]
-    }
-  },
-  {
-    category: "food",
-    answer: { he: "שקשוקה", en: "Shakshuka" },
-    clues: {
-      he: ["ביצים ברוטב", "עגבניות מבושלות", "ארוחת בוקר ישראלית", "מגישים במחבת"],
-      en: ["Eggs in sauce", "Cooked tomatoes", "Israeli breakfast", "Served in a skillet"]
-    },
-    options: {
-      he: ["חביתה", "שקשוקה", "ביצה עלומה", "מטבוחה"],
-      en: ["Omelette", "Shakshuka", "Poached egg", "Matbucha"]
-    }
-  },
-  {
-    category: "food",
-    answer: { he: "שווארמה", en: "Shawarma" },
-    clues: {
-      he: ["בשר על שיפוד מסתובב", "בלאפה או בפיתה", "חמוצים וצ׳יפס", "אוכל רחוב מספר 1"],
-      en: ["Meat on a rotating spit", "In laffa or pita", "Pickles and fries", "Street food number 1"]
-    },
-    options: {
-      he: ["קבב", "שניצל", "שווארמה", "המבורגר"],
-      en: ["Kebab", "Schnitzel", "Shawarma", "Hamburger"]
-    }
-  },
-  {
-    category: "food",
-    answer: { he: "סביח", en: "Sabich" },
-    clues: {
-      he: ["חציל מטוגן", "ביצה קשה", "אמבה חריפה", "אוכל עיראקי-ישראלי"],
-      en: ["Fried eggplant", "Hard boiled egg", "Spicy amba", "Iraqi-Israeli food"]
-    },
-    options: {
-      he: ["פלאפל", "סביח", "שווארמה", "ג׳חנון"],
-      en: ["Falafel", "Sabich", "Shawarma", "Jachnun"]
-    }
-  },
-  {
-    category: "food",
-    answer: { he: "בורקס", en: "Bourekas" },
-    clues: {
-      he: ["מאפה מבצק עלים", "מילוי גבינה או תפוחי אדמה", "מגישים עם ביצה קשה", "מאפייה ישראלית קלאסית"],
-      en: ["Puff pastry snack", "Cheese or potato filling", "Served with hard boiled egg", "Classic Israeli bakery"]
-    },
-    options: {
-      he: ["בורקס", "רוגלך", "מלאווח", "פיצה"],
-      en: ["Bourekas", "Rugelach", "Malawach", "Pizza"]
-    }
-  },
-  {
-    category: "food",
-    answer: { he: "מלאווח", en: "Malawach" },
-    clues: {
-      he: ["בצק שכבות שטוח", "מטבח תימני", "מגישים עם עגבנייה מגורדת", "ארוחת שבת מפורסמת"],
-      en: ["Flat layered dough", "Yemenite cuisine", "Served with grated tomato", "Famous Shabbat meal"]
-    },
-    options: {
-      he: ["ג׳חנון", "לחוח", "מלאווח", "לאפה"],
-      en: ["Jachnun", "Lahoh", "Malawach", "Laffa"]
-    }
-  },
-  // ===== LANDMARKS =====
-  {
-    category: "landmarks",
-    answer: { he: "ים המלח", en: "Dead Sea" },
-    clues: {
-      he: ["הנקודה הנמוכה בעולם", "אי אפשר לטבוע", "בוץ על הפנים", "ירדן בצד השני"],
-      en: ["Lowest point on Earth", "You can't sink", "Mud on your face", "Jordan on the other side"]
-    },
-    options: {
-      he: ["ים המלח", "כנרת", "ים סוף", "ים התיכון"],
-      en: ["Dead Sea", "Sea of Galilee", "Red Sea", "Mediterranean"]
-    }
-  },
-  {
-    category: "landmarks",
-    answer: { he: "מצדה", en: "Masada" },
-    clues: {
-      he: ["מצודה על הר במדבר", "הורדוס בנה אותה", "זריחה מהפסגה", "מצור רומאי"],
-      en: ["Desert mountain fortress", "Built by Herod", "Sunrise from the top", "Roman siege"]
-    },
-    options: {
-      he: ["מצדה", "גמלא", "עין גדי", "קומראן"],
-      en: ["Masada", "Gamla", "Ein Gedi", "Qumran"]
-    }
-  },
-  {
-    category: "landmarks",
-    answer: { he: "הכנרת", en: "Sea of Galilee" },
-    clues: {
-      he: ["אגם מים מתוקים", "צפון ישראל", "מקור מים חשוב", "חופים וקיאקים"],
-      en: ["Freshwater lake", "Northern Israel", "Important water source", "Beaches and kayaks"]
-    },
-    options: {
-      he: ["ים המלח", "הכנרת", "ים סוף", "נהר הירדן"],
-      en: ["Dead Sea", "Sea of Galilee", "Red Sea", "Jordan River"]
-    }
-  },
-  {
-    category: "landmarks",
-    answer: { he: "מכתש רמון", en: "Ramon Crater" },
-    clues: {
-      he: ["בור ענק בנגב", "שמורת טבע ייחודית", "כוכבים בלילה", "מצפה רמון על השפה"],
-      en: ["Giant crater in the Negev", "Unique nature reserve", "Stars at night", "Mitzpe Ramon on the edge"]
-    },
-    options: {
-      he: ["מכתש גדול", "מכתש רמון", "עין גדי", "תמנע"],
-      en: ["Big Crater", "Ramon Crater", "Ein Gedi", "Timna"]
-    }
-  },
-  {
-    category: "landmarks",
-    answer: { he: "רמת הגולן", en: "Golan Heights" },
-    clues: {
-      he: ["רמה בצפון מזרח", "בקר ופרות", "מפלי מים", "גבול סוריה"],
-      en: ["Plateau in the northeast", "Cattle and cows", "Waterfalls", "Syrian border"]
-    },
-    options: {
-      he: ["הגליל", "רמת הגולן", "הכרמל", "הנגב"],
-      en: ["The Galilee", "Golan Heights", "Carmel", "The Negev"]
-    }
-  },
-  {
-    category: "landmarks",
-    answer: { he: "עין גדי", en: "Ein Gedi" },
-    clues: {
-      he: ["נאות מדבר", "מפלים במדבר", "יעלים", "ליד ים המלח"],
-      en: ["Desert oasis", "Waterfalls in the desert", "Ibex", "Near the Dead Sea"]
-    },
-    options: {
-      he: ["עין גדי", "עין בוקק", "נחל דוד", "ערד"],
-      en: ["Ein Gedi", "Ein Bokek", "Nahal David", "Arad"]
-    }
-  },
-  {
-    category: "landmarks",
-    answer: { he: "פארק תמנע", en: "Timna Park" },
-    clues: {
-      he: ["עמודי שלמה", "מכרות נחושת עתיקים", "סלעים צבעוניים", "צפון אילת"],
-      en: ["Solomon's Pillars", "Ancient copper mines", "Colorful rocks", "North of Eilat"]
-    },
-    options: {
-      he: ["מכתש רמון", "פארק תמנע", "הר שלמה", "עין נטפים"],
-      en: ["Ramon Crater", "Timna Park", "Mount Solomon", "Ein Netafim"]
-    }
-  },
-  {
-    category: "landmarks",
-    answer: { he: "קיסריה", en: "Caesarea" },
-    clues: {
-      he: ["תיאטרון רומאי", "נמל עתיק", "הורדוס בנה", "מרוץ בין חורבות"],
-      en: ["Roman theater", "Ancient port", "Herod built it", "Running among ruins"]
-    },
-    options: {
-      he: ["עכו", "קיסריה", "בית שאן", "יפו"],
-      en: ["Acre", "Caesarea", "Beit She'an", "Jaffa"]
-    }
-  },
-  // ===== PEOPLE =====
-  {
-    category: "people",
-    answer: { he: "דוד בן גוריון", en: "David Ben Gurion" },
-    clues: {
-      he: ["ראש הממשלה הראשון", "הכריז על העצמאות", "שדה בוקר", "שיער לבן פרוע"],
-      en: ["First Prime Minister", "Declared independence", "Sde Boker", "Wild white hair"]
-    },
-    options: {
-      he: ["דוד בן גוריון", "גולדה מאיר", "זאב ז׳בוטינסקי", "חיים ויצמן"],
-      en: ["David Ben Gurion", "Golda Meir", "Ze'ev Jabotinsky", "Chaim Weizmann"]
-    }
-  },
-  {
-    category: "people",
-    answer: { he: "גולדה מאיר", en: "Golda Meir" },
-    clues: {
-      he: ["אישה ברזל", "ראש ממשלה רביעית", "מלחמת יום הכיפורים", "גדלה במילווקי"],
-      en: ["Iron Lady", "Fourth Prime Minister", "Yom Kippur War", "Grew up in Milwaukee"]
-    },
-    options: {
-      he: ["גולדה מאיר", "רחל המשוררת", "חנה סנש", "ציפי לבני"],
-      en: ["Golda Meir", "Rachel the Poet", "Hannah Senesh", "Tzipi Livni"]
-    }
-  },
-  {
-    category: "people",
-    answer: { he: "משה דיין", en: "Moshe Dayan" },
-    clues: {
-      he: ["רטיית עין", "מלחמת ששת הימים", "שר ביטחון", "ארכיאולוג חובב"],
-      en: ["Eye patch", "Six Day War", "Defense Minister", "Amateur archaeologist"]
-    },
-    options: {
-      he: ["יצחק רבין", "משה דיין", "אריאל שרון", "אהוד ברק"],
-      en: ["Yitzhak Rabin", "Moshe Dayan", "Ariel Sharon", "Ehud Barak"]
-    }
-  },
-  {
-    category: "people",
-    answer: { he: "יצחק רבין", en: "Yitzhak Rabin" },
-    clues: {
-      he: ["הסכמי אוסלו", "נרצח בכיכר", "שיר השלום", "לחיצת יד עם ערפאת"],
-      en: ["Oslo Accords", "Assassinated in a square", "Song of Peace", "Handshake with Arafat"]
-    },
-    options: {
-      he: ["שמעון פרס", "יצחק רבין", "מנחם בגין", "בנימין נתניהו"],
-      en: ["Shimon Peres", "Yitzhak Rabin", "Menachem Begin", "Benjamin Netanyahu"]
-    }
-  },
-  {
-    category: "people",
-    answer: { he: "תיאודור הרצל", en: "Theodor Herzl" },
-    clues: {
-      he: ["חוזה המדינה", "כתב את אלטנוילנד", "מהווינה לציון", "זקן שחור מפורסם"],
-      en: ["Visionary of the State", "Wrote Altneuland", "From Vienna to Zion", "Famous black beard"]
-    },
-    options: {
-      he: ["תיאודור הרצל", "חיים ויצמן", "זאב ז׳בוטינסקי", "אליעזר בן יהודה"],
-      en: ["Theodor Herzl", "Chaim Weizmann", "Ze'ev Jabotinsky", "Eliezer Ben Yehuda"]
-    }
-  },
-  {
-    category: "people",
-    answer: { he: "אליעזר בן יהודה", en: "Eliezer Ben Yehuda" },
-    clues: {
-      he: ["מחייה השפה העברית", "מילון עברי ראשון", "דיבר רק עברית בבית", "הפך שפה עתיקה לחיה"],
-      en: ["Reviver of Hebrew language", "First Hebrew dictionary", "Spoke only Hebrew at home", "Made an ancient language live"]
-    },
-    options: {
-      he: ["חיים נחמן ביאליק", "אליעזר בן יהודה", "שמואל יוסף עגנון", "אחד העם"],
-      en: ["Bialik", "Eliezer Ben Yehuda", "S.Y. Agnon", "Ahad Ha'am"]
-    }
-  },
-  {
-    category: "people",
-    answer: { he: "נטע ברזילי", en: "Netta Barzilai" },
-    clues: {
-      he: ["אירוויזיון 2018", "שיר TOY", "צלילי תרנגולת", "הביאה את התחרות ללישבון"],
-      en: ["Eurovision 2018", "Song: TOY", "Chicken sounds", "Brought the contest to Lisbon"]
-    },
-    options: {
-      he: ["דנה אינטרנשיונל", "נטע ברזילי", "עדן גולן", "שירי מימון"],
-      en: ["Dana International", "Netta Barzilai", "Eden Golan", "Shiri Maimon"]
-    }
-  },
-  // ===== SLANG =====
-  {
-    category: "slang",
-    answer: { he: "סבבה", en: "Sababa" },
-    clues: {
-      he: ["הכל טוב", "מילה מפורסמת בעולם", "מקור ערבי", "תשובה חיובית"],
-      en: ["Everything is good", "Famous word worldwide", "Arabic origin", "Positive response"]
-    },
-    options: {
-      he: ["יאללה", "סבבה", "אחלה", "בסדר"],
-      en: ["Yalla", "Sababa", "Achla", "Beseder"]
-    }
-  },
-  {
-    category: "slang",
-    answer: { he: "יאללה", en: "Yalla" },
-    clues: {
-      he: ["בוא נלך", "מהר מהר", "כולם אומרים את זה", "מילה ערבית שכולם משתמשים"],
-      en: ["Let's go", "Hurry up", "Everyone says it", "Arabic word everyone uses"]
-    },
-    options: {
-      he: ["קדימה", "יאללה", "נו", "סבבה"],
-      en: ["Kadima", "Yalla", "Nu", "Sababa"]
-    }
-  },
-  {
-    category: "slang",
-    answer: { he: "צברית / צבר", en: "Sabra" },
-    clues: {
-      he: ["קוצני מבחוץ מתוק מבפנים", "ישראלי יליד הארץ", "פרי קקטוס", "סטריאוטיפ ישראלי"],
-      en: ["Prickly outside, sweet inside", "Native-born Israeli", "Cactus fruit", "Israeli stereotype"]
-    },
-    options: {
-      he: ["חוצפן", "צברית / צבר", "דוגרי", "פרחה"],
-      en: ["Chutzpan", "Sabra", "Dugri", "Frekha"]
-    }
-  },
-  {
-    category: "slang",
-    answer: { he: "בלאגן", en: "Balagan" },
-    clues: {
-      he: ["אי סדר ובלבול", "מקור רוסי", "מתאר את ישראל", "ההפך מסדר"],
-      en: ["Disorder and chaos", "Russian origin", "Describes Israel", "The opposite of order"]
-    },
-    options: {
-      he: ["בלאגן", "פאדיחה", "סבבה", "כיף"],
-      en: ["Balagan", "Fadiha", "Sababa", "Kef"]
-    }
-  },
-  {
-    category: "slang",
-    answer: { he: "חוצפה", en: "Chutzpah" },
-    clues: {
-      he: ["עזות מצח", "תכונה ישראלית", "אומץ חסר בושה", "ידועה בכל העולם"],
-      en: ["Audacity", "Israeli trait", "Shameless courage", "Known worldwide"]
-    },
-    options: {
-      he: ["גאווה", "חוצפה", "אומץ", "דוגרי"],
-      en: ["Pride", "Chutzpah", "Courage", "Dugri"]
-    }
-  },
-  {
-    category: "slang",
-    answer: { he: "דוגרי", en: "Dugri" },
-    clues: {
-      he: ["דיבור ישיר וכנה", "בלי לעטוף", "מקור ערבי-טורקי", "אומר את האמת בפרצוף"],
-      en: ["Straight talk, honest", "No sugarcoating", "Arabic-Turkish origin", "Truth to your face"]
-    },
-    options: {
-      he: ["סבבה", "דוגרי", "חוצפה", "תכלס"],
-      en: ["Sababa", "Dugri", "Chutzpah", "Tachles"]
-    }
-  },
-  {
-    category: "slang",
-    answer: { he: "תכלס", en: "Tachles" },
-    clues: {
-      he: ["בואו לעניין", "בלי בלבלובים", "מה באמת קורה", "ביידיש: מטרה"],
-      en: ["Get to the point", "No nonsense", "What's really going on", "Yiddish: purpose"]
-    },
-    options: {
-      he: ["תכלס", "דוגרי", "נו", "יאללה"],
-      en: ["Tachles", "Dugri", "Nu", "Yalla"]
-    }
-  },
-  // ===== NATURE & CULTURE =====
-  {
-    category: "nature",
-    answer: { he: "הנגב", en: "The Negev" },
-    clues: {
-      he: ["מדבר בדרום", "יותר מחצי שטח ישראל", "בן גוריון חלם עליו", "גמלים וכוכבים"],
-      en: ["Desert in the south", "More than half of Israel", "Ben Gurion dreamed of it", "Camels and stars"]
-    },
-    options: {
-      he: ["הנגב", "הערבה", "מדבר יהודה", "סיני"],
-      en: ["The Negev", "The Arava", "Judean Desert", "Sinai"]
-    }
-  },
-  {
-    category: "nature",
-    answer: { he: "קיבוץ", en: "Kibbutz" },
-    clues: {
-      he: ["חיים קהילתיים", "חדר אוכל משותף", "חקלאות שיתופית", "חלום סוציאליסטי"],
-      en: ["Communal living", "Shared dining hall", "Cooperative farming", "Socialist dream"]
-    },
-    options: {
-      he: ["מושב", "קיבוץ", "ישוב", "כפר"],
-      en: ["Moshav", "Kibbutz", "Yishuv", "Village"]
-    }
-  },
-  {
-    category: "nature",
-    answer: { he: "צה״ל", en: "IDF" },
-    clues: {
-      he: ["צבא ההגנה לישראל", "גיוס חובה", "חיילים וחיילות", "הכי מוכר בישראל"],
-      en: ["Israel Defense Forces", "Mandatory service", "Soldiers, men and women", "Most recognized in Israel"]
-    },
-    options: {
-      he: ["צה״ל", "מוסד", "שב״כ", "משטרה"],
-      en: ["IDF", "Mossad", "Shin Bet", "Police"]
-    }
-  },
-  {
-    category: "nature",
-    answer: { he: "דוכיפת", en: "Hoopoe" },
-    clues: {
-      he: ["ציפור לאומית", "כתר על הראש", "כתומה ושחורה", "נבחרה בהצבעה"],
-      en: ["National bird", "Crown on its head", "Orange and black", "Chosen by vote"]
-    },
-    options: {
-      he: ["דוכיפת", "שלדג", "עגור", "נשר"],
-      en: ["Hoopoe", "Kingfisher", "Crane", "Vulture"]
-    }
-  },
-  {
-    category: "nature",
-    answer: { he: "שבת", en: "Shabbat" },
-    clues: {
-      he: ["יום מנוחה שבועי", "נרות ויין", "חלה טרייה", "הכל סגור"],
-      en: ["Weekly day of rest", "Candles and wine", "Fresh challah", "Everything is closed"]
-    },
-    options: {
-      he: ["יום כיפור", "שבת", "פסח", "ראש השנה"],
-      en: ["Yom Kippur", "Shabbat", "Passover", "Rosh Hashanah"]
-    }
-  },
-  {
-    category: "nature",
-    answer: { he: "כנרת", en: "Kinneret" },
-    clues: {
-      he: ["כולם עוקבים אחרי הקו האדום", "מאגר מים לאומי", "שירה של רחל", "צורת כינור"],
-      en: ["Everyone follows the red line", "National water reservoir", "Rachel's poem", "Shaped like a harp"]
-    },
-    options: {
-      he: ["ים המלח", "כנרת", "ים סוף", "נהר הירדן"],
-      en: ["Dead Sea", "Kinneret", "Red Sea", "Jordan River"]
-    }
-  },
-  {
-    category: "nature",
-    answer: { he: "פורים", en: "Purim" },
-    clues: {
-      he: ["תחפושות", "אוזני המן", "מגילת אסתר", "עד דלא ידע"],
-      en: ["Costumes", "Hamantaschen", "Book of Esther", "Celebration until you can't tell"]
-    },
-    options: {
-      he: ["פורים", "חנוכה", "סוכות", "פסח"],
-      en: ["Purim", "Hanukkah", "Sukkot", "Passover"]
-    }
-  },
-  {
-    category: "nature",
-    answer: { he: "חנוכה", en: "Hanukkah" },
-    clues: {
-      he: ["חנוכייה עם 8 נרות", "סופגניות", "סביבון", "נס פך השמן"],
-      en: ["Menorah with 8 candles", "Donuts (Sufganiyot)", "Dreidel", "Miracle of the oil"]
-    },
-    options: {
-      he: ["פורים", "חנוכה", "סוכות", "שבועות"],
-      en: ["Purim", "Hanukkah", "Sukkot", "Shavuot"]
-    }
-  },
-  {
-    category: "nature",
-    answer: { he: "יום העצמאות", en: "Independence Day" },
-    clues: {
-      he: ["מנגל בפארק", "דגלים כחול לבן", "מטס חיל האוויר", "חגיגה של מדינה"],
-      en: ["BBQ in the park", "Blue and white flags", "Air Force flyover", "National celebration"]
-    },
-    options: {
-      he: ["יום הזיכרון", "יום העצמאות", "יום ירושלים", "ט׳ו בשבט"],
-      en: ["Memorial Day", "Independence Day", "Jerusalem Day", "Tu BiShvat"]
-    }
-  }
+  {category:"cities",answer:{he:"תל אביב",en:"Tel Aviv"},clues:{he:["עיר ללא הפסקה","שדרות רוטשילד","בועות סבון בפארק","חופי הים התיכון"],en:["The city that never stops","Rothschild Boulevard","Soap bubbles in the park","Mediterranean beaches"]},options:{he:["ירושלים","תל אביב","חיפה","באר שבע"],en:["Jerusalem","Tel Aviv","Haifa","Be'er Sheva"]}},
+  {category:"cities",answer:{he:"ירושלים",en:"Jerusalem"},clues:{he:["עיר הקודש","הכותל המערבי","שוק מחנה יהודה","בירת ישראל"],en:["The Holy City","The Western Wall","Mahane Yehuda Market","Capital of Israel"]},options:{he:["תל אביב","חיפה","ירושלים","צפת"],en:["Tel Aviv","Haifa","Jerusalem","Tzfat"]}},
+  {category:"cities",answer:{he:"חיפה",en:"Haifa"},clues:{he:["הגנים הבהאיים","הר הכרמל","עיר הנמל","דו קיום יהודי-ערבי"],en:["The Bahai Gardens","Mount Carmel","Port city","Jewish-Arab coexistence"]},options:{he:["אשדוד","חיפה","עכו","נתניה"],en:["Ashdod","Haifa","Acre","Netanya"]}},
+  {category:"cities",answer:{he:"אילת",en:"Eilat"},clues:{he:["דולפינים","ים סוף","חם כל השנה","דרום ישראל"],en:["Dolphins","Red Sea","Hot all year","Southern Israel"]},options:{he:["אילת","אשקלון","מצפה רמון","ערד"],en:["Eilat","Ashkelon","Mitzpe Ramon","Arad"]}},
+  {category:"cities",answer:{he:"צפת",en:"Tzfat"},clues:{he:["קבלה ומיסטיקה","העיר העתיקה כחולה","גלריות אמנות","הרי הגליל"],en:["Kabbalah and mysticism","The blue old city","Art galleries","Galilee mountains"]},options:{he:["טבריה","צפת","כרמיאל","נצרת"],en:["Tiberias","Tzfat","Karmiel","Nazareth"]}},
+  {category:"cities",answer:{he:"באר שבע",en:"Be'er Sheva"},clues:{he:["בירת הנגב","שבע בארות","אוניברסיטת בן גוריון","שוק הבדואים"],en:["Capital of the Negev","Seven wells","Ben Gurion University","Bedouin market"]},options:{he:["ערד","באר שבע","דימונה","אילת"],en:["Arad","Be'er Sheva","Dimona","Eilat"]}},
+  {category:"cities",answer:{he:"עכו",en:"Acre"},clues:{he:["עיר צלבנית עתיקה","נמל עתיק","חומות ומנהרות","שוק עותמאני"],en:["Ancient Crusader city","Ancient port","Walls and tunnels","Ottoman market"]},options:{he:["חיפה","יפו","עכו","קיסריה"],en:["Haifa","Jaffa","Acre","Caesarea"]}},
+  {category:"food",answer:{he:"פלאפל",en:"Falafel"},clues:{he:["כדורים חומים מטוגנים","טחינה מלמעלה","עשוי מחומוס","בתוך פיתה"],en:["Fried brown balls","Tahini on top","Made from chickpeas","In a pita"]},options:{he:["שווארמה","פלאפל","סביח","חומוס"],en:["Shawarma","Falafel","Sabich","Hummus"]}},
+  {category:"food",answer:{he:"חומוס",en:"Hummus"},clues:{he:["ממרח מפורסם","גרגרי חומוס","עם שמן זית","מנגבים עם פיתה"],en:["Famous spread","Chickpeas","With olive oil","Dipped with pita"]},options:{he:["טחינה","לבנה","חומוס","בבא גנוש"],en:["Tahini","Labneh","Hummus","Baba Ganoush"]}},
+  {category:"food",answer:{he:"שקשוקה",en:"Shakshuka"},clues:{he:["ביצים ברוטב","עגבניות מבושלות","ארוחת בוקר ישראלית","מגישים במחבת"],en:["Eggs in sauce","Cooked tomatoes","Israeli breakfast","Served in a skillet"]},options:{he:["חביתה","שקשוקה","ביצה עלומה","מטבוחה"],en:["Omelette","Shakshuka","Poached egg","Matbucha"]}},
+  {category:"food",answer:{he:"שווארמה",en:"Shawarma"},clues:{he:["בשר על שיפוד מסתובב","בלאפה או בפיתה","חמוצים וצ׳יפס","אוכל רחוב מספר 1"],en:["Meat on a rotating spit","In laffa or pita","Pickles and fries","Street food number 1"]},options:{he:["קבב","שניצל","שווארמה","המבורגר"],en:["Kebab","Schnitzel","Shawarma","Hamburger"]}},
+  {category:"food",answer:{he:"סביח",en:"Sabich"},clues:{he:["חציל מטוגן","ביצה קשה","אמבה חריפה","אוכל עיראקי-ישראלי"],en:["Fried eggplant","Hard boiled egg","Spicy amba","Iraqi-Israeli food"]},options:{he:["פלאפל","סביח","שווארמה","ג׳חנון"],en:["Falafel","Sabich","Shawarma","Jachnun"]}},
+  {category:"food",answer:{he:"בורקס",en:"Bourekas"},clues:{he:["מאפה מבצק עלים","מילוי גבינה או תפוחי אדמה","מגישים עם ביצה קשה","מאפייה ישראלית קלאסית"],en:["Puff pastry snack","Cheese or potato filling","Served with hard boiled egg","Classic Israeli bakery"]},options:{he:["בורקס","רוגלך","מלאווח","פיצה"],en:["Bourekas","Rugelach","Malawach","Pizza"]}},
+  {category:"food",answer:{he:"מלאווח",en:"Malawach"},clues:{he:["בצק שכבות שטוח","מטבח תימני","מגישים עם עגבנייה מגורדת","ארוחת שבת מפורסמת"],en:["Flat layered dough","Yemenite cuisine","Served with grated tomato","Famous Shabbat meal"]},options:{he:["ג׳חנון","לחוח","מלאווח","לאפה"],en:["Jachnun","Lahoh","Malawach","Laffa"]}},
+  {category:"landmarks",answer:{he:"ים המלח",en:"Dead Sea"},clues:{he:["הנקודה הנמוכה בעולם","אי אפשר לטבוע","בוץ על הפנים","ירדן בצד השני"],en:["Lowest point on Earth","You can't sink","Mud on your face","Jordan on the other side"]},options:{he:["ים המלח","כנרת","ים סוף","ים התיכון"],en:["Dead Sea","Sea of Galilee","Red Sea","Mediterranean"]}},
+  {category:"landmarks",answer:{he:"מצדה",en:"Masada"},clues:{he:["מצודה על הר במדבר","הורדוס בנה אותה","זריחה מהפסגה","מצור רומאי"],en:["Desert mountain fortress","Built by Herod","Sunrise from the top","Roman siege"]},options:{he:["מצדה","גמלא","עין גדי","קומראן"],en:["Masada","Gamla","Ein Gedi","Qumran"]}},
+  {category:"landmarks",answer:{he:"הכנרת",en:"Sea of Galilee"},clues:{he:["אגם מים מתוקים","צפון ישראל","מקור מים חשוב","חופים וקיאקים"],en:["Freshwater lake","Northern Israel","Important water source","Beaches and kayaks"]},options:{he:["ים המלח","הכנרת","ים סוף","נהר הירדן"],en:["Dead Sea","Sea of Galilee","Red Sea","Jordan River"]}},
+  {category:"landmarks",answer:{he:"מכתש רמון",en:"Ramon Crater"},clues:{he:["בור ענק בנגב","שמורת טבע ייחודית","כוכבים בלילה","מצפה רמון על השפה"],en:["Giant crater in the Negev","Unique nature reserve","Stars at night","Mitzpe Ramon on the edge"]},options:{he:["מכתש גדול","מכתש רמון","עין גדי","תמנע"],en:["Big Crater","Ramon Crater","Ein Gedi","Timna"]}},
+  {category:"landmarks",answer:{he:"רמת הגולן",en:"Golan Heights"},clues:{he:["רמה בצפון מזרח","בקר ופרות","מפלי מים","גבול סוריה"],en:["Plateau in the northeast","Cattle and cows","Waterfalls","Syrian border"]},options:{he:["הגליל","רמת הגולן","הכרמל","הנגב"],en:["The Galilee","Golan Heights","Carmel","The Negev"]}},
+  {category:"landmarks",answer:{he:"עין גדי",en:"Ein Gedi"},clues:{he:["נאות מדבר","מפלים במדבר","יעלים","ליד ים המלח"],en:["Desert oasis","Waterfalls in the desert","Ibex","Near the Dead Sea"]},options:{he:["עין גדי","עין בוקק","נחל דוד","ערד"],en:["Ein Gedi","Ein Bokek","Nahal David","Arad"]}},
+  {category:"landmarks",answer:{he:"פארק תמנע",en:"Timna Park"},clues:{he:["עמודי שלמה","מכרות נחושת עתיקים","סלעים צבעוניים","צפון אילת"],en:["Solomon's Pillars","Ancient copper mines","Colorful rocks","North of Eilat"]},options:{he:["מכתש רמון","פארק תמנע","הר שלמה","עין נטפים"],en:["Ramon Crater","Timna Park","Mount Solomon","Ein Netafim"]}},
+  {category:"landmarks",answer:{he:"קיסריה",en:"Caesarea"},clues:{he:["תיאטרון רומאי","נמל עתיק","הורדוס בנה","מרוץ בין חורבות"],en:["Roman theater","Ancient port","Herod built it","Running among ruins"]},options:{he:["עכו","קיסריה","בית שאן","יפו"],en:["Acre","Caesarea","Beit She'an","Jaffa"]}},
+  {category:"people",answer:{he:"דוד בן גוריון",en:"David Ben Gurion"},clues:{he:["ראש הממשלה הראשון","הכריז על העצמאות","שדה בוקר","שיער לבן פרוע"],en:["First Prime Minister","Declared independence","Sde Boker","Wild white hair"]},options:{he:["דוד בן גוריון","גולדה מאיר","זאב ז׳בוטינסקי","חיים ויצמן"],en:["David Ben Gurion","Golda Meir","Ze'ev Jabotinsky","Chaim Weizmann"]}},
+  {category:"people",answer:{he:"גולדה מאיר",en:"Golda Meir"},clues:{he:["אישה ברזל","ראש ממשלה רביעית","מלחמת יום הכיפורים","גדלה במילווקי"],en:["Iron Lady","Fourth Prime Minister","Yom Kippur War","Grew up in Milwaukee"]},options:{he:["גולדה מאיר","רחל המשוררת","חנה סנש","ציפי לבני"],en:["Golda Meir","Rachel the Poet","Hannah Senesh","Tzipi Livni"]}},
+  {category:"people",answer:{he:"משה דיין",en:"Moshe Dayan"},clues:{he:["רטיית עין","מלחמת ששת הימים","שר ביטחון","ארכיאולוג חובב"],en:["Eye patch","Six Day War","Defense Minister","Amateur archaeologist"]},options:{he:["יצחק רבין","משה דיין","אריאל שרון","אהוד ברק"],en:["Yitzhak Rabin","Moshe Dayan","Ariel Sharon","Ehud Barak"]}},
+  {category:"people",answer:{he:"יצחק רבין",en:"Yitzhak Rabin"},clues:{he:["הסכמי אוסלו","נרצח בכיכר","שיר השלום","לחיצת יד עם ערפאת"],en:["Oslo Accords","Assassinated in a square","Song of Peace","Handshake with Arafat"]},options:{he:["שמעון פרס","יצחק רבין","מנחם בגין","בנימין נתניהו"],en:["Shimon Peres","Yitzhak Rabin","Menachem Begin","Benjamin Netanyahu"]}},
+  {category:"people",answer:{he:"תיאודור הרצל",en:"Theodor Herzl"},clues:{he:["חוזה המדינה","כתב את אלטנוילנד","מהווינה לציון","זקן שחור מפורסם"],en:["Visionary of the State","Wrote Altneuland","From Vienna to Zion","Famous black beard"]},options:{he:["תיאודור הרצל","חיים ויצמן","זאב ז׳בוטינסקי","אליעזר בן יהודה"],en:["Theodor Herzl","Chaim Weizmann","Ze'ev Jabotinsky","Eliezer Ben Yehuda"]}},
+  {category:"people",answer:{he:"אליעזר בן יהודה",en:"Eliezer Ben Yehuda"},clues:{he:["מחייה השפה העברית","מילון עברי ראשון","דיבר רק עברית בבית","הפך שפה עתיקה לחיה"],en:["Reviver of Hebrew language","First Hebrew dictionary","Spoke only Hebrew at home","Made an ancient language live"]},options:{he:["חיים נחמן ביאליק","אליעזר בן יהודה","שמואל יוסף עגנון","אחד העם"],en:["Bialik","Eliezer Ben Yehuda","S.Y. Agnon","Ahad Ha'am"]}},
+  {category:"people",answer:{he:"נטע ברזילי",en:"Netta Barzilai"},clues:{he:["אירוויזיון 2018","שיר TOY","צלילי תרנגולת","הביאה את התחרות ללישבון"],en:["Eurovision 2018","Song: TOY","Chicken sounds","Brought the contest to Lisbon"]},options:{he:["דנה אינטרנשיונל","נטע ברזילי","עדן גולן","שירי מימון"],en:["Dana International","Netta Barzilai","Eden Golan","Shiri Maimon"]}},
+  {category:"slang",answer:{he:"סבבה",en:"Sababa"},clues:{he:["הכל טוב","מילה מפורסמת בעולם","מקור ערבי","תשובה חיובית"],en:["Everything is good","Famous word worldwide","Arabic origin","Positive response"]},options:{he:["יאללה","סבבה","אחלה","בסדר"],en:["Yalla","Sababa","Achla","Beseder"]}},
+  {category:"slang",answer:{he:"יאללה",en:"Yalla"},clues:{he:["בוא נלך","מהר מהר","כולם אומרים את זה","מילה ערבית שכולם משתמשים"],en:["Let's go","Hurry up","Everyone says it","Arabic word everyone uses"]},options:{he:["קדימה","יאללה","נו","סבבה"],en:["Kadima","Yalla","Nu","Sababa"]}},
+  {category:"slang",answer:{he:"צברית / צבר",en:"Sabra"},clues:{he:["קוצני מבחוץ מתוק מבפנים","ישראלי יליד הארץ","פרי קקטוס","סטריאוטיפ ישראלי"],en:["Prickly outside, sweet inside","Native-born Israeli","Cactus fruit","Israeli stereotype"]},options:{he:["חוצפן","צברית / צבר","דוגרי","פרחה"],en:["Chutzpan","Sabra","Dugri","Frekha"]}},
+  {category:"slang",answer:{he:"בלאגן",en:"Balagan"},clues:{he:["אי סדר ובלבול","מקור רוסי","מתאר את ישראל","ההפך מסדר"],en:["Disorder and chaos","Russian origin","Describes Israel","The opposite of order"]},options:{he:["בלאגן","פאדיחה","סבבה","כיף"],en:["Balagan","Fadiha","Sababa","Kef"]}},
+  {category:"slang",answer:{he:"חוצפה",en:"Chutzpah"},clues:{he:["עזות מצח","תכונה ישראלית","אומץ חסר בושה","ידועה בכל העולם"],en:["Audacity","Israeli trait","Shameless courage","Known worldwide"]},options:{he:["גאווה","חוצפה","אומץ","דוגרי"],en:["Pride","Chutzpah","Courage","Dugri"]}},
+  {category:"slang",answer:{he:"דוגרי",en:"Dugri"},clues:{he:["דיבור ישיר וכנה","בלי לעטוף","מקור ערבי-טורקי","אומר את האמת בפרצוף"],en:["Straight talk, honest","No sugarcoating","Arabic-Turkish origin","Truth to your face"]},options:{he:["סבבה","דוגרי","חוצפה","תכלס"],en:["Sababa","Dugri","Chutzpah","Tachles"]}},
+  {category:"slang",answer:{he:"תכלס",en:"Tachles"},clues:{he:["בואו לעניין","בלי בלבלובים","מה באמת קורה","ביידיש: מטרה"],en:["Get to the point","No nonsense","What's really going on","Yiddish: purpose"]},options:{he:["תכלס","דוגרי","נו","יאללה"],en:["Tachles","Dugri","Nu","Yalla"]}},
+  {category:"nature",answer:{he:"הנגב",en:"The Negev"},clues:{he:["מדבר בדרום","יותר מחצי שטח ישראל","בן גוריון חלם עליו","גמלים וכוכבים"],en:["Desert in the south","More than half of Israel","Ben Gurion dreamed of it","Camels and stars"]},options:{he:["הנגב","הערבה","מדבר יהודה","סיני"],en:["The Negev","The Arava","Judean Desert","Sinai"]}},
+  {category:"nature",answer:{he:"קיבוץ",en:"Kibbutz"},clues:{he:["חיים קהילתיים","חדר אוכל משותף","חקלאות שיתופית","חלום סוציאליסטי"],en:["Communal living","Shared dining hall","Cooperative farming","Socialist dream"]},options:{he:["מושב","קיבוץ","ישוב","כפר"],en:["Moshav","Kibbutz","Yishuv","Village"]}},
+  {category:"nature",answer:{he:"צה״ל",en:"IDF"},clues:{he:["צבא ההגנה לישראל","גיוס חובה","חיילים וחיילות","הכי מוכר בישראל"],en:["Israel Defense Forces","Mandatory service","Soldiers, men and women","Most recognized in Israel"]},options:{he:["צה״ל","מוסד","שב״כ","משטרה"],en:["IDF","Mossad","Shin Bet","Police"]}},
+  {category:"nature",answer:{he:"דוכיפת",en:"Hoopoe"},clues:{he:["ציפור לאומית","כתר על הראש","כתומה ושחורה","נבחרה בהצבעה"],en:["National bird","Crown on its head","Orange and black","Chosen by vote"]},options:{he:["דוכיפת","שלדג","עגור","נשר"],en:["Hoopoe","Kingfisher","Crane","Vulture"]}},
+  {category:"nature",answer:{he:"שבת",en:"Shabbat"},clues:{he:["יום מנוחה שבועי","נרות ויין","חלה טרייה","הכל סגור"],en:["Weekly day of rest","Candles and wine","Fresh challah","Everything is closed"]},options:{he:["יום כיפור","שבת","פסח","ראש השנה"],en:["Yom Kippur","Shabbat","Passover","Rosh Hashanah"]}},
+  {category:"nature",answer:{he:"כנרת",en:"Kinneret"},clues:{he:["כולם עוקבים אחרי הקו האדום","מאגר מים לאומי","שירה של רחל","צורת כינור"],en:["Everyone follows the red line","National water reservoir","Rachel's poem","Shaped like a harp"]},options:{he:["ים המלח","כנרת","ים סוף","נהר הירדן"],en:["Dead Sea","Kinneret","Red Sea","Jordan River"]}},
+  {category:"nature",answer:{he:"פורים",en:"Purim"},clues:{he:["תחפושות","אוזני המן","מגילת אסתר","עד דלא ידע"],en:["Costumes","Hamantaschen","Book of Esther","Celebration until you can't tell"]},options:{he:["פורים","חנוכה","סוכות","פסח"],en:["Purim","Hanukkah","Sukkot","Passover"]}},
+  {category:"nature",answer:{he:"חנוכה",en:"Hanukkah"},clues:{he:["חנוכייה עם 8 נרות","סופגניות","סביבון","נס פך השמן"],en:["Menorah with 8 candles","Donuts (Sufganiyot)","Dreidel","Miracle of the oil"]},options:{he:["פורים","חנוכה","סוכות","שבועות"],en:["Purim","Hanukkah","Sukkot","Shavuot"]}},
+  {category:"nature",answer:{he:"יום העצמאות",en:"Independence Day"},clues:{he:["מנגל בפארק","דגלים כחול לבן","מטס חיל האוויר","חגיגה של מדינה"],en:["BBQ in the park","Blue and white flags","Air Force flyover","National celebration"]},options:{he:["יום הזיכרון","יום העצמאות","יום ירושלים","ט׳ו בשבט"],en:["Memorial Day","Independence Day","Jerusalem Day","Tu BiShvat"]}}
 ];
 
-// ============================================================
-// CATEGORY CONFIG
-// ============================================================
 const CATEGORIES = {
   cities:    { emoji: "🏙️", he: "ערים", en: "Cities", color: "var(--cat-cities)", cssClass: "cat-cities" },
   food:      { emoji: "🍽️", he: "אוכל", en: "Food", color: "var(--cat-food)", cssClass: "cat-food" },
@@ -1108,9 +663,13 @@ const CATEGORIES = {
   nature:    { emoji: "🎭", he: "תרבות וטבע", en: "Culture & Nature", color: "var(--cat-nature)", cssClass: "cat-nature" }
 };
 
-// ============================================================
-// GAME STATE
-// ============================================================
+const ANSWER_LABELS = ['A','B','C','D'];
+const CLUE_ANIMATIONS = ['slide-in-right','slide-in-left','flip-in','fade-up'];
+
+// Excitement messages for correct answers with few clues
+const EXCITEMENT_HE = {1: '🔥 מטורף!', 2: '⚡ מדהים!'};
+const EXCITEMENT_EN = {1: '🔥 INCREDIBLE!', 2: '⚡ AMAZING!'};
+
 let lang = 'he';
 let currentRound = 0;
 let score = 0;
@@ -1123,12 +682,6 @@ let gameQuestions = [];
 let roundResults = [];
 let highScore = parseInt(localStorage.getItem('trivia-israel-highscore') || '0');
 
-// Clue animation types for variety
-const CLUE_ANIMATIONS = ['slide-in-right','slide-in-left','flip-in','fade-up'];
-
-// ============================================================
-// LANGUAGE
-// ============================================================
 function toggleLang() {
   lang = lang === 'he' ? 'en' : 'he';
   document.documentElement.lang = lang === 'he' ? 'he' : 'en';
@@ -1137,19 +690,51 @@ function toggleLang() {
   document.querySelectorAll('[data-he]').forEach(el => {
     el.textContent = el.getAttribute(`data-${lang}`);
   });
+  updateRulesLang();
 }
 
-// ============================================================
-// SCREENS
-// ============================================================
+// ========== RULES MODAL ==========
+const TRIVIA_RULES = {
+  he: [
+    '🇮🇱 10 סיבובים של ניחושים על ארץ ישראל',
+    '🔍 בכל סיבוב מופיעים 4 רמזים, אחד אחרי השני',
+    '⚡ ככל שמנחשים מוקדם יותר = יותר נקודות!',
+    '💰 רמז 1 = 40 נק\' | רמז 2 = 30 | רמז 3 = 20 | רמז 4 = 10',
+    '⏱️ 25 שניות לכל שאלה',
+    '📚 נושאים: ערים, אוכל, מקומות, אישים, סלנג, תרבות'
+  ],
+  en: [
+    '🇮🇱 10 rounds of guessing about Israel',
+    '🔍 Each round reveals 4 clues, one by one',
+    '⚡ Guess earlier = more points!',
+    '💰 Clue 1 = 40 pts | Clue 2 = 30 | Clue 3 = 20 | Clue 4 = 10',
+    '⏱️ 25 seconds per question',
+    '📚 Topics: cities, food, places, people, slang, culture'
+  ]
+};
+function openRulesModal() {
+  updateRulesLang();
+  document.getElementById('rulesOverlay').style.display = 'flex';
+}
+function closeRulesModal() {
+  document.getElementById('rulesOverlay').style.display = 'none';
+}
+function updateRulesLang() {
+  const isHe = lang === 'he';
+  document.getElementById('rulesModalTitle').textContent = isHe ? 'הוראות משחק' : 'Game Rules';
+  document.getElementById('rulesGotIt').textContent = isHe ? 'הבנתי!' : 'Got it!';
+  const list = document.getElementById('rulesModalList');
+  const rules = isHe ? TRIVIA_RULES.he : TRIVIA_RULES.en;
+  list.innerHTML = rules.map(r => `<li>${r}</li>`).join('');
+  list.closest('.rules-card-modal').style.direction = isHe ? 'rtl' : 'ltr';
+  list.closest('.rules-card-modal').style.textAlign = isHe ? 'right' : 'left';
+}
+
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-// ============================================================
-// PARTICLES
-// ============================================================
 function initParticles() {
   const container = document.getElementById('particles');
   const emojis = ['🇮🇱','✡️','🕎','🫒','🌴','🐫','✡️','🕎','🫒','🌴','☀️','💎','📜','🌸'];
@@ -1165,9 +750,6 @@ function initParticles() {
   }
 }
 
-// ============================================================
-// HIGH SCORE
-// ============================================================
 function updateHighScoreDisplay() {
   const box = document.getElementById('highScoreBox');
   if (highScore > 0) {
@@ -1178,9 +760,6 @@ function updateHighScoreDisplay() {
   }
 }
 
-// ============================================================
-// PROGRESS DOTS
-// ============================================================
 function initProgressDots() {
   const container = document.getElementById('progressDots');
   container.innerHTML = '';
@@ -1198,7 +777,6 @@ function updateProgressDots() {
     if (!dot) continue;
     dot.className = 'progress-dot';
     if (i < currentRound) {
-      // Past rounds
       const result = roundResults[i];
       dot.classList.add(result && result.correct ? 'completed' : 'wrong-dot');
     } else if (i === currentRound) {
@@ -1207,9 +785,23 @@ function updateProgressDots() {
   }
 }
 
-// ============================================================
-// START GAME
-// ============================================================
+// Round transition screen
+function showRoundTransition(cb) {
+  const overlay = document.getElementById('roundTransition');
+  const numEl = document.getElementById('roundTransNum');
+  const labelEl = document.getElementById('roundTransLabel');
+  numEl.textContent = `${currentRound + 1}`;
+  labelEl.textContent = lang === 'he' ? `סיבוב ${currentRound + 1} מתוך 10` : `Round ${currentRound + 1} of 10`;
+  numEl.style.animation = 'none';
+  void numEl.offsetWidth;
+  numEl.style.animation = '';
+  overlay.classList.add('show');
+  setTimeout(() => {
+    overlay.classList.remove('show');
+    cb();
+  }, 1500);
+}
+
 function startGame() {
   score = 0;
   currentRound = 0;
@@ -1218,12 +810,9 @@ function startGame() {
   gameQuestions = shuffled.slice(0, 10);
   showScreen('gameScreen');
   initProgressDots();
-  startRound();
+  showRoundTransition(() => startRound());
 }
 
-// ============================================================
-// START ROUND
-// ============================================================
 function startRound() {
   if (currentRound >= 10) {
     endGame();
@@ -1234,47 +823,39 @@ function startRound() {
   cluesShown = 0;
   timeLeft = 25;
 
-  // HUD
   document.getElementById('hudRound').textContent = `${currentRound + 1}/10`;
   document.getElementById('hudScore').textContent = score;
 
-  // Timer ring
   updateTimerRing(25);
 
-  // Category badge
+  // Category banner
   const cat = CATEGORIES[q.category];
   const badge = document.getElementById('categoryBadge');
-  badge.className = 'category-badge ' + cat.cssClass;
+  badge.className = 'category-banner ' + cat.cssClass;
   badge.textContent = `${cat.emoji} ${cat[lang]}`;
 
-  // Clear clues
   document.getElementById('clueArea').innerHTML = '';
 
-  // Next clue button
   const ncBtn = document.getElementById('nextClueBtn');
   ncBtn.disabled = false;
   ncBtn.style.display = 'block';
 
-  // Answers
+  // Answers with A/B/C/D labels
   const answersArea = document.getElementById('answersArea');
   answersArea.innerHTML = '';
   const opts = q.options[lang];
   const correctAnswer = q.answer[lang];
-  opts.forEach(opt => {
+  opts.forEach((opt, idx) => {
     const btn = document.createElement('button');
     btn.className = 'answer-btn';
-    btn.textContent = opt;
+    btn.innerHTML = `<span class="answer-label">${ANSWER_LABELS[idx]}</span><span class="answer-text">${opt}</span>`;
     btn.onclick = () => handleAnswer(btn, opt === correctAnswer, q);
     answersArea.appendChild(btn);
   });
 
-  // Update progress
   updateProgressDots();
-
-  // Show first clue immediately
   showNextClue();
 
-  // Auto-advance clues every 5 seconds
   clearInterval(clueInterval);
   clueInterval = setInterval(() => {
     if (!answered && cluesShown < 4) {
@@ -1284,7 +865,6 @@ function startRound() {
     }
   }, 5000);
 
-  // Timer
   clearInterval(timerInterval);
   timerInterval = setInterval(() => {
     if (answered) return;
@@ -1299,9 +879,6 @@ function startRound() {
   }, 100);
 }
 
-// ============================================================
-// SHOW NEXT CLUE
-// ============================================================
 function showNextClue() {
   if (answered || cluesShown >= 4) return;
   const q = gameQuestions[currentRound];
@@ -1311,8 +888,8 @@ function showNextClue() {
   const card = document.createElement('div');
   const animClass = CLUE_ANIMATIONS[cluesShown % CLUE_ANIMATIONS.length];
   card.className = `clue-card clue-${cluesShown + 1} ${animClass}`;
-  const numLabel = lang === 'he' ? `רמז ${cluesShown + 1}` : `Clue ${cluesShown + 1}`;
-  card.innerHTML = `<div class="clue-number">${numLabel}</div><div class="clue-text">${clueText}</div>`;
+  const badgeNums = ['1️⃣','2️⃣','3️⃣','4️⃣'];
+  card.innerHTML = `<div class="clue-badge">${badgeNums[cluesShown]}</div><div class="clue-text">${clueText}</div>`;
   clueArea.appendChild(card);
 
   cluesShown++;
@@ -1324,9 +901,6 @@ function showNextClue() {
   }
 }
 
-// ============================================================
-// TIMER DISPLAY (SVG Ring)
-// ============================================================
 function updateTimerRing(time) {
   const pct = (time / 25) * 100;
   const progress = document.getElementById('timerRingProgress');
@@ -1348,9 +922,6 @@ function updateTimerDisplay() {
   updateTimerRing(timeLeft);
 }
 
-// ============================================================
-// HANDLE ANSWER
-// ============================================================
 function handleAnswer(btn, isCorrect, q) {
   if (answered) return;
   answered = true;
@@ -1368,15 +939,20 @@ function handleAnswer(btn, isCorrect, q) {
     showPointsPopup(`+${pts}`);
     spawnConfetti();
     roundResults.push({ q, correct: true, pts, clues: cluesShown });
+
+    // Excitement message for quick answers
+    const exciteMap = lang === 'he' ? EXCITEMENT_HE : EXCITEMENT_EN;
+    if (exciteMap[cluesShown]) {
+      showExcitement(exciteMap[cluesShown]);
+    }
   } else {
     btn.classList.add('wrong');
     allBtns.forEach(b => {
-      if (b.textContent === q.answer[lang]) b.classList.add('reveal');
+      if (b.querySelector('.answer-text') && b.querySelector('.answer-text').textContent === q.answer[lang]) b.classList.add('reveal');
     });
     roundResults.push({ q, correct: false, pts: 0, clues: cluesShown });
   }
 
-  // Show all remaining clues
   while (cluesShown < 4) {
     showNextClue();
   }
@@ -1384,19 +960,20 @@ function handleAnswer(btn, isCorrect, q) {
 
   setTimeout(() => {
     currentRound++;
-    startRound();
+    if (currentRound < 10) {
+      showRoundTransition(() => startRound());
+    } else {
+      startRound(); // will call endGame
+    }
   }, 2000);
 }
 
-// ============================================================
-// TIMEOUT
-// ============================================================
 function handleTimeout(q) {
   answered = true;
   const allBtns = document.querySelectorAll('.answer-btn');
   allBtns.forEach(b => {
     b.disabled = true;
-    if (b.textContent === q.answer[lang]) b.classList.add('reveal');
+    if (b.querySelector('.answer-text') && b.querySelector('.answer-text').textContent === q.answer[lang]) b.classList.add('reveal');
   });
   roundResults.push({ q, correct: false, pts: 0, clues: cluesShown });
 
@@ -1407,13 +984,14 @@ function handleTimeout(q) {
 
   setTimeout(() => {
     currentRound++;
-    startRound();
+    if (currentRound < 10) {
+      showRoundTransition(() => startRound());
+    } else {
+      startRound();
+    }
   }, 2200);
 }
 
-// ============================================================
-// SCORING
-// ============================================================
 function getPoints() {
   if (cluesShown <= 1) return 40;
   if (cluesShown === 2) return 30;
@@ -1421,9 +999,6 @@ function getPoints() {
   return 10;
 }
 
-// ============================================================
-// POINTS POPUP
-// ============================================================
 function showPointsPopup(text) {
   const el = document.getElementById('pointsPopup');
   el.textContent = text;
@@ -1432,9 +1007,14 @@ function showPointsPopup(text) {
   el.classList.add('show');
 }
 
-// ============================================================
-// CONFETTI
-// ============================================================
+function showExcitement(text) {
+  const el = document.getElementById('excitementMsg');
+  el.textContent = text;
+  el.classList.remove('show');
+  void el.offsetWidth;
+  el.classList.add('show');
+}
+
 function spawnConfetti() {
   const colors = ['#FFD93D','#FF6B6B','#6BCB77','#845EC2','#00C9A7','#FFC75F','#FF9671','#3b82f6','#ec4899'];
   for (let i = 0; i < 40; i++) {
@@ -1452,19 +1032,14 @@ function spawnConfetti() {
   }
 }
 
-// ============================================================
-// END GAME
-// ============================================================
 function endGame() {
   clearInterval(timerInterval);
   clearInterval(clueInterval);
   showScreen('resultsScreen');
 
-  // Animate score counting up
   const finalScoreEl = document.getElementById('finalScore');
   animateCounter(finalScoreEl, 0, score, 1200);
 
-  // Stars with animation
   const starCount = score >= 350 ? 3 : score >= 200 ? 2 : score >= 100 ? 1 : 0;
   const starsEl = document.getElementById('resultStars');
   starsEl.innerHTML = '';
@@ -1478,7 +1053,6 @@ function endGame() {
     starsEl.appendChild(span);
   }
 
-  // Message
   const msgEl = document.getElementById('resultMsg');
   if (lang === 'he') {
     if (score >= 350) msgEl.textContent = '🔥 ישראלי אמיתי!';
@@ -1494,7 +1068,6 @@ function endGame() {
     else msgEl.textContent = '📚 Time to learn about Israel!';
   }
 
-  // High score
   const recordEl = document.getElementById('newRecord');
   if (score > highScore) {
     highScore = score;
@@ -1507,10 +1080,8 @@ function endGame() {
     recordEl.style.display = 'none';
   }
 
-  // Category breakdown
   buildCategoryBreakdown();
 
-  // Per-question details
   const details = document.getElementById('resultsDetails');
   details.innerHTML = '';
   roundResults.forEach((r, i) => {
@@ -1520,7 +1091,6 @@ function endGame() {
     const label = `${r.correct ? '✅' : '❌'} ${cat.emoji} ${r.q.answer[lang]}`;
     const pts = r.correct ? `+${r.pts}` : '0';
     row.innerHTML = `<span>${label}</span><span class="pts">${pts}</span>`;
-    row.style.animationDelay = (i * 0.08) + 's';
     row.style.animation = 'screenIn 0.4s cubic-bezier(0.16,1,0.3,1) backwards';
     row.style.animationDelay = (i * 0.06) + 's';
     details.appendChild(row);
@@ -1529,23 +1099,17 @@ function endGame() {
   updateHighScoreDisplay();
 }
 
-// ============================================================
-// CATEGORY BREAKDOWN
-// ============================================================
 function buildCategoryBreakdown() {
   const breakdown = document.getElementById('categoryBreakdown');
   breakdown.innerHTML = '';
-
-  // Tally scores per category
   const catScores = {};
   const catMax = {};
   roundResults.forEach(r => {
     const cat = r.q.category;
     if (!catScores[cat]) { catScores[cat] = 0; catMax[cat] = 0; }
     catScores[cat] += r.pts;
-    catMax[cat] += 40; // max possible per question
+    catMax[cat] += 40;
   });
-
   Object.keys(catScores).forEach(cat => {
     const info = CATEGORIES[cat];
     const pct = catMax[cat] > 0 ? (catScores[cat] / catMax[cat]) * 100 : 0;
@@ -1558,8 +1122,6 @@ function buildCategoryBreakdown() {
       <span class="cat-row-score">${catScores[cat]}</span>
     `;
     breakdown.appendChild(row);
-
-    // Animate bar fill
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         row.querySelector('.cat-row-fill').style.width = pct + '%';
@@ -1568,24 +1130,18 @@ function buildCategoryBreakdown() {
   });
 }
 
-// ============================================================
-// ANIMATE COUNTER
-// ============================================================
 function animateCounter(el, start, end, duration) {
   const startTime = performance.now();
   function tick(now) {
     const elapsed = now - startTime;
     const progress = Math.min(elapsed / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+    const eased = 1 - Math.pow(1 - progress, 3);
     el.textContent = Math.round(start + (end - start) * eased);
     if (progress < 1) requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
 }
 
-// ============================================================
-// INIT
-// ============================================================
 document.addEventListener('DOMContentLoaded', () => {
   initParticles();
   updateHighScoreDisplay();

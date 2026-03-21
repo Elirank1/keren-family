@@ -15,27 +15,32 @@
 body{font-family:'Nunito',sans-serif;min-height:100vh;min-height:100dvh;overflow-x:hidden;user-select:none;-webkit-user-select:none;background:#0a0020;color:white}
 h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 
-/* ===== GAME SHOW BACKGROUND ===== */
-.bg-main{position:fixed;inset:0;background:#0a0020;z-index:0;overflow:hidden}
+/* ===== DEEP NEON ARCADE BACKGROUND ===== */
+.bg-main{position:fixed;inset:0;background:#05001a;z-index:0;overflow:hidden}
 .bg-main::before{content:'';position:absolute;inset:0;background:
-  radial-gradient(ellipse 80% 60% at 50% 0%,rgba(120,0,255,0.25) 0%,transparent 70%),
-  radial-gradient(ellipse 60% 50% at 20% 80%,rgba(255,0,100,0.15) 0%,transparent 60%),
-  radial-gradient(ellipse 60% 50% at 80% 70%,rgba(0,200,255,0.12) 0%,transparent 60%);
+  radial-gradient(ellipse 80% 60% at 50% 0%,rgba(120,0,255,0.3) 0%,transparent 70%),
+  radial-gradient(ellipse 60% 50% at 20% 80%,rgba(255,0,100,0.2) 0%,transparent 60%),
+  radial-gradient(ellipse 60% 50% at 80% 70%,rgba(0,200,255,0.15) 0%,transparent 60%);
   pointer-events:none}
 .bg-main::after{content:'';position:absolute;inset:0;background:
-  radial-gradient(circle at 50% 50%,transparent 40%,rgba(10,0,32,0.6) 100%);
+  radial-gradient(circle at 50% 50%,transparent 40%,rgba(5,0,26,0.7) 100%);
   pointer-events:none}
+
+/* CRT Scanlines overlay */
+.scanlines{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.08) 2px,rgba(0,0,0,0.08) 4px);
+  mix-blend-mode:multiply}
 
 /* Animated neon pulse layers */
 .neon-pulse{position:fixed;inset:0;z-index:0;pointer-events:none}
-.neon-pulse .glow1{position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(139,92,246,0.15);filter:blur(100px);top:10%;left:10%;animation:neonDrift1 8s ease-in-out infinite alternate}
-.neon-pulse .glow2{position:absolute;width:400px;height:400px;border-radius:50%;background:rgba(244,114,182,0.1);filter:blur(120px);bottom:10%;right:5%;animation:neonDrift2 10s ease-in-out infinite alternate}
-.neon-pulse .glow3{position:absolute;width:250px;height:250px;border-radius:50%;background:rgba(34,211,238,0.1);filter:blur(80px);top:50%;left:60%;animation:neonDrift3 7s ease-in-out infinite alternate}
+.neon-pulse .glow1{position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(139,92,246,0.18);filter:blur(100px);top:10%;left:10%;animation:neonDrift1 8s ease-in-out infinite alternate}
+.neon-pulse .glow2{position:absolute;width:400px;height:400px;border-radius:50%;background:rgba(244,114,182,0.12);filter:blur(120px);bottom:10%;right:5%;animation:neonDrift2 10s ease-in-out infinite alternate}
+.neon-pulse .glow3{position:absolute;width:250px;height:250px;border-radius:50%;background:rgba(34,211,238,0.12);filter:blur(80px);top:50%;left:60%;animation:neonDrift3 7s ease-in-out infinite alternate}
 @keyframes neonDrift1{0%{transform:translate(0,0) scale(1)}100%{transform:translate(60px,40px) scale(1.3)}}
 @keyframes neonDrift2{0%{transform:translate(0,0) scale(1)}100%{transform:translate(-50px,-30px) scale(1.2)}}
 @keyframes neonDrift3{0%{transform:translate(0,0) scale(0.8)}100%{transform:translate(-40px,50px) scale(1.1)}}
 
-/* Floating particles container */
+/* Floating particles */
 .particles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .particle{position:absolute;font-size:1.2rem;opacity:0;animation:particleFloat linear infinite}
 @keyframes particleFloat{0%{transform:translateY(105vh) rotate(0deg);opacity:0}10%{opacity:0.6}90%{opacity:0.6}100%{transform:translateY(-10vh) rotate(360deg);opacity:0}}
@@ -54,14 +59,14 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
   100%{box-shadow:inset 0 0 80px rgba(255,0,0,0.3),inset 0 0 160px rgba(255,0,0,0.1)}
 }
 
-.app{position:relative;z-index:3;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;padding:16px;padding-bottom:env(safe-area-inset-bottom,16px)}
+.app{position:relative;z-index:3;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;padding:12px;padding-bottom:env(safe-area-inset-bottom,16px)}
 
-/* ===== GLASS ===== */
+/* ===== GLASS — UI panels only ===== */
 .glass{background:rgba(255,255,255,0.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:24px}
 .glass-strong{background:rgba(255,255,255,0.1);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.15);border-radius:24px}
 
-/* ===== NAV — Glass circles ===== */
-.top-bar{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:500px;margin-bottom:12px;gap:8px}
+/* ===== NAV ===== */
+.top-bar{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:500px;margin-bottom:10px;gap:8px}
 .back-btn,.lang-btn{
   width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);
   font-weight:800;font-size:1.1rem;cursor:pointer;transition:all 0.2s;color:white;
@@ -100,69 +105,105 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 .high-score-box .value{font-family:'Fredoka One',cursive;font-size:2rem;background:linear-gradient(135deg,#fbbf24,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 8px rgba(251,191,36,0.3))}
 
 /* ===== GAME SCREEN ===== */
-.game-header{display:flex;justify-content:space-between;align-items:center;width:100%;padding:8px 4px;margin-bottom:8px}
+.game-header{display:flex;justify-content:space-between;align-items:center;width:100%;padding:8px 4px;margin-bottom:4px}
 .round-info{font-weight:800;font-size:0.85rem;color:rgba(255,255,255,0.6)}
 
-/* Animated score counter */
 .score-display{font-family:'Fredoka One',cursive;font-size:1.5rem;color:#fbbf24;transition:all 0.3s;position:relative;filter:drop-shadow(0 0 10px rgba(251,191,36,0.4))}
 .score-display.pop{animation:scorePop 0.5s cubic-bezier(0.175,0.885,0.32,1.275)}
 @keyframes scorePop{0%{transform:scale(1)}30%{transform:scale(1.6);color:#f472b6;filter:drop-shadow(0 0 20px rgba(244,114,182,0.6))}100%{transform:scale(1);color:#fbbf24;filter:drop-shadow(0 0 10px rgba(251,191,36,0.4))}}
 
-/* Flying points animation */
 .flying-points{position:fixed;pointer-events:none;z-index:200;font-family:'Fredoka One',cursive;font-size:1.3rem;color:#fbbf24;text-shadow:0 0 10px rgba(251,191,36,0.6);animation:flyToScore 0.8s cubic-bezier(0.2,0.8,0.2,1) forwards}
 @keyframes flyToScore{
   0%{opacity:1;transform:translate(0,0) scale(1.2)}
   100%{opacity:0;transform:translate(var(--fly-x),var(--fly-y)) scale(0.5)}
 }
 
-/* ===== STREAK BAR ===== */
-.streak-bar{width:100%;height:40px;border-radius:20px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-family:'Fredoka One',cursive;font-size:0.95rem;transition:all 0.3s;overflow:hidden;position:relative}
+/* ===== STREAK BAR — with CSS fire ===== */
+.streak-bar{width:100%;height:44px;border-radius:22px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;font-family:'Fredoka One',cursive;font-size:0.95rem;transition:all 0.3s;overflow:hidden;position:relative}
 .streak-bar.idle{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.3)}
 .streak-bar.warm{background:linear-gradient(90deg,#f59e0b,#ef4444);color:white;animation:streakGlow 1s ease-in-out infinite;box-shadow:0 0 20px rgba(245,158,11,0.3)}
-.streak-bar.fire{background:linear-gradient(90deg,#ef4444,#f472b6,#ef4444);background-size:200% 100%;color:white;animation:streakFire 0.8s linear infinite;box-shadow:0 0 30px rgba(239,68,68,0.4)}
-.streak-bar.legendary{background:linear-gradient(90deg,#8b5cf6,#22d3ee,#fbbf24,#f472b6,#8b5cf6);background-size:300% 100%;color:white;animation:streakLegendary 1.5s linear infinite;box-shadow:0 0 40px rgba(139,92,246,0.5)}
+.streak-bar.fire{color:white;position:relative;box-shadow:0 0 40px rgba(239,68,68,0.5)}
+.streak-bar.fire::before{content:'';position:absolute;inset:-4px;border-radius:26px;
+  background:linear-gradient(90deg,#ff4500,#ff8c00,#ff4500,#ff0000,#ff4500);background-size:400% 100%;
+  animation:fireSlide 0.6s linear infinite;z-index:-2;filter:blur(6px);opacity:0.8}
+.streak-bar.fire::after{content:'';position:absolute;inset:0;border-radius:22px;
+  background:linear-gradient(0deg,rgba(255,69,0,0.9) 0%,rgba(255,140,0,0.7) 30%,rgba(255,200,0,0.5) 60%,rgba(255,255,200,0.3) 80%,transparent 100%);
+  background-size:100% 200%;animation:fireFlicker 0.4s ease-in-out infinite alternate;z-index:-1}
+@keyframes fireSlide{0%{background-position:0% 50%}100%{background-position:400% 50%}}
+@keyframes fireFlicker{0%{background-position:0% 100%;opacity:0.7}100%{background-position:0% 60%;opacity:1}}
+.streak-bar.legendary{color:white;position:relative;box-shadow:0 0 50px rgba(139,92,246,0.5)}
+.streak-bar.legendary::before{content:'';position:absolute;inset:-6px;border-radius:28px;
+  background:linear-gradient(90deg,#8b5cf6,#22d3ee,#fbbf24,#f472b6,#8b5cf6);background-size:400% 100%;
+  animation:legendarySlide 1.5s linear infinite;z-index:-2;filter:blur(8px);opacity:0.9}
+.streak-bar.legendary::after{content:'';position:absolute;inset:0;border-radius:22px;
+  background:linear-gradient(135deg,rgba(139,92,246,0.6),rgba(34,211,238,0.4),rgba(251,191,36,0.4),rgba(244,114,182,0.4));
+  background-size:300% 300%;animation:legendaryShift 2s ease infinite;z-index:-1}
+@keyframes legendarySlide{0%{background-position:0% 50%}100%{background-position:400% 50%}}
+@keyframes legendaryShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 .streak-deflate{animation:streakDeflate 0.5s ease-out}
 @keyframes streakDeflate{0%{transform:scaleX(1)}30%{transform:scaleX(1.1) scaleY(0.8)}100%{transform:scaleX(1) scaleY(1)}}
 @keyframes streakGlow{0%,100%{box-shadow:0 0 15px rgba(245,158,11,0.3)}50%{box-shadow:0 0 30px rgba(239,68,68,0.5)}}
-@keyframes streakFire{0%{background-position:0% 50%}100%{background-position:200% 50%}}
-@keyframes streakLegendary{0%{background-position:0% 50%}100%{background-position:300% 50%}}
 
-/* ===== SLOT MACHINE — Metallic frame ===== */
-.slot-machine{width:100%;padding:20px 16px;margin-bottom:12px;position:relative;
-  background:linear-gradient(180deg,rgba(255,255,255,0.08) 0%,rgba(255,255,255,0.03) 100%);
-  border:1px solid rgba(255,255,255,0.12);border-radius:28px;
-  box-shadow:0 10px 40px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.1)}
-.slot-display{display:flex;align-items:center;justify-content:center;gap:12px}
+/* ===== SLOT MACHINE — Chrome metallic frame with lever ===== */
+.slot-machine-wrap{width:100%;position:relative;margin-bottom:8px}
+.slot-machine{width:100%;padding:20px 16px;position:relative;
+  background:linear-gradient(180deg,rgba(200,200,220,0.12) 0%,rgba(150,150,170,0.06) 50%,rgba(200,200,220,0.1) 100%);
+  border:2px solid rgba(200,200,220,0.25);border-radius:28px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.5),inset 0 2px 0 rgba(255,255,255,0.15),inset 0 -2px 0 rgba(0,0,0,0.2),
+  0 0 0 4px rgba(100,100,120,0.15),0 0 0 6px rgba(200,200,220,0.08)}
+
+/* Lever on the side */
+.slot-lever{position:absolute;top:50%;right:-28px;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;z-index:5}
+[dir="rtl"] .slot-lever{right:auto;left:-28px}
+.lever-rod{width:8px;height:50px;background:linear-gradient(90deg,#888,#ccc,#888);border-radius:4px;box-shadow:1px 1px 4px rgba(0,0,0,0.3)}
+.lever-ball{width:24px;height:24px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff4444,#cc0000,#880000);box-shadow:0 3px 8px rgba(0,0,0,0.4),inset 0 2px 4px rgba(255,255,255,0.3);margin-bottom:4px}
+.lever-base{width:16px;height:8px;background:linear-gradient(90deg,#666,#aaa,#666);border-radius:0 0 4px 4px}
+
+.slot-display{display:flex;align-items:center;justify-content:center;gap:8px}
 
 .slot-wheel-container{
-  width:100px;height:120px;border-radius:16px;overflow:hidden;position:relative;
+  width:100px;height:130px;border-radius:16px;overflow:hidden;position:relative;
   background:linear-gradient(180deg,#0d0025 0%,#1a0040 50%,#0d0025 100%);
-  border:3px solid transparent;
-  background-clip:padding-box;
+  /* Metallic chrome frame */
+  border:3px solid rgba(200,200,220,0.4);
   box-shadow:
-    0 0 0 3px rgba(180,180,200,0.25),
     inset 0 0 30px rgba(0,0,0,0.8),
+    0 0 0 1px rgba(255,255,255,0.08),
+    0 0 0 5px rgba(100,100,130,0.2),
+    0 0 0 6px rgba(200,200,220,0.15),
     0 8px 25px rgba(0,0,0,0.5),
-    inset 0 2px 4px rgba(255,255,255,0.05);
+    inset 0 2px 4px rgba(255,255,255,0.08);
 }
-/* Metallic frame effect via pseudo elements */
 .slot-wheel-container::before,.slot-wheel-container::after{content:'';position:absolute;left:0;right:0;height:35px;z-index:2;pointer-events:none}
 .slot-wheel-container::before{top:0;background:linear-gradient(to bottom,rgba(10,0,32,1) 0%,rgba(10,0,32,0.8) 30%,transparent 100%)}
 .slot-wheel-container::after{bottom:0;background:linear-gradient(to top,rgba(10,0,32,1) 0%,rgba(10,0,32,0.8) 30%,transparent 100%)}
 
-/* Landing glow on wheel */
-.slot-wheel-container.landed{box-shadow:0 0 0 3px rgba(251,191,36,0.6),inset 0 0 30px rgba(251,191,36,0.1),0 0 30px rgba(251,191,36,0.3);transition:box-shadow 0.3s}
+/* Landing DING flash */
+.slot-wheel-container.landed{
+  border-color:rgba(251,191,36,0.7);
+  box-shadow:0 0 0 3px rgba(251,191,36,0.5),inset 0 0 30px rgba(251,191,36,0.15),0 0 40px rgba(251,191,36,0.35),0 0 0 6px rgba(251,191,36,0.15);
+  transition:all 0.15s}
+.slot-wheel-container.ding-flash{animation:dingFlash 0.3s ease-out}
+@keyframes dingFlash{
+  0%{box-shadow:0 0 0 3px rgba(255,255,255,0.9),inset 0 0 40px rgba(255,255,255,0.3),0 0 60px rgba(255,255,255,0.5);border-color:#fff}
+  100%{box-shadow:0 0 0 3px rgba(251,191,36,0.6),inset 0 0 30px rgba(251,191,36,0.1),0 0 30px rgba(251,191,36,0.3);border-color:rgba(251,191,36,0.7)}
+}
 
 .slot-wheel{position:absolute;width:100%;transition:transform 0.1s linear;will-change:transform}
-.slot-number{height:120px;display:flex;align-items:center;justify-content:center;font-family:'Fredoka One',cursive;font-size:3.5rem;font-weight:900;color:rgba(255,255,255,0.7);text-shadow:0 0 15px rgba(255,255,255,0.15)}
-.slot-number.target{color:#fbbf24;text-shadow:0 0 25px rgba(251,191,36,0.6),0 0 50px rgba(251,191,36,0.2);font-size:3.8rem}
+.slot-number{height:130px;display:flex;align-items:center;justify-content:center;font-family:'Fredoka One',cursive;font-size:5rem;font-weight:900;color:rgba(255,255,255,0.65);text-shadow:0 0 15px rgba(255,255,255,0.15)}
+.slot-number.target{color:#fbbf24;text-shadow:0 0 30px rgba(251,191,36,0.7),0 0 60px rgba(251,191,36,0.3);font-size:5.5rem}
 
-.slot-x{font-family:'Fredoka One',cursive;font-size:2.8rem;color:#f472b6;text-shadow:0 0 20px rgba(244,114,182,0.5);filter:drop-shadow(0 0 10px rgba(244,114,182,0.3))}
-.slot-equals{font-family:'Fredoka One',cursive;font-size:2.2rem;color:#22d3ee;text-shadow:0 0 15px rgba(34,211,238,0.5)}
+/* Dramatic animated X between wheels */
+.slot-x{font-family:'Fredoka One',cursive;font-size:3.2rem;color:#f472b6;
+  text-shadow:0 0 25px rgba(244,114,182,0.6),0 0 50px rgba(244,114,182,0.3);
+  filter:drop-shadow(0 0 15px rgba(244,114,182,0.4));
+  animation:xPulse 1.5s ease-in-out infinite}
+@keyframes xPulse{0%,100%{transform:scale(1);opacity:0.9}50%{transform:scale(1.25) rotate(10deg);opacity:1}}
+.slot-equals{font-family:'Fredoka One',cursive;font-size:2.5rem;color:#22d3ee;text-shadow:0 0 15px rgba(34,211,238,0.5)}
 
-.answer-slot{width:130px;height:120px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-family:'Fredoka One',cursive;font-size:3rem;
-  background:rgba(0,0,0,0.4);
-  border:2px dashed rgba(255,255,255,0.2);
+.answer-slot{width:130px;height:130px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-family:'Fredoka One',cursive;font-size:3.2rem;
+  background:rgba(0,0,0,0.5);
+  border:3px dashed rgba(255,255,255,0.2);
   color:#22d3ee;min-width:0;overflow:hidden;text-overflow:clip;transition:all 0.2s;
   box-shadow:inset 0 0 20px rgba(0,0,0,0.3)}
 .answer-slot.correct{border-color:#22c55e;border-style:solid;background:rgba(34,197,94,0.15);color:#22c55e;animation:correctPulse 0.5s ease;box-shadow:0 0 30px rgba(34,197,94,0.3),inset 0 0 20px rgba(34,197,94,0.1)}
@@ -170,48 +211,44 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 @keyframes correctPulse{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
 @keyframes wrongShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-10px)}40%{transform:translateX(10px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
 
-.bonus-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);font-family:'Fredoka One',cursive;font-size:0.8rem;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1a0533;padding:5px 16px;border-radius:14px;white-space:nowrap;animation:bonusPulse 0.5s ease-in-out infinite alternate;z-index:5;box-shadow:0 4px 15px rgba(251,191,36,0.5)}
+.bonus-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-family:'Fredoka One',cursive;font-size:0.8rem;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1a0533;padding:5px 16px;border-radius:14px;white-space:nowrap;animation:bonusPulse 0.5s ease-in-out infinite alternate;z-index:5;box-shadow:0 4px 15px rgba(251,191,36,0.5)}
 @keyframes bonusPulse{0%{transform:translateX(-50%) scale(1);box-shadow:0 4px 15px rgba(251,191,36,0.5)}100%{transform:translateX(-50%) scale(1.1);box-shadow:0 4px 25px rgba(251,191,36,0.7)}}
-
-/* Bonus round golden overlay */
 .bonus-flash{position:fixed;inset:0;z-index:150;pointer-events:none;background:radial-gradient(circle,rgba(251,191,36,0.2),transparent 70%);animation:bonusFlash 0.6s ease-out forwards;opacity:0}
 @keyframes bonusFlash{0%{opacity:0.8}100%{opacity:0}}
 
 /* ===== TIMER BAR ===== */
-.timer-bar-wrap{width:100%;height:8px;border-radius:4px;background:rgba(255,255,255,0.08);margin-bottom:12px;overflow:hidden;box-shadow:inset 0 1px 3px rgba(0,0,0,0.3)}
+.timer-bar-wrap{width:100%;height:8px;border-radius:4px;background:rgba(255,255,255,0.08);margin-bottom:8px;overflow:hidden;box-shadow:inset 0 1px 3px rgba(0,0,0,0.3)}
 .timer-bar{height:100%;border-radius:4px;transition:width 0.1s linear,background 0.3s;background:linear-gradient(90deg,#22c55e,#4ade80);box-shadow:0 0 10px rgba(34,197,94,0.3)}
 .timer-bar.warn{background:linear-gradient(90deg,#f59e0b,#ef4444);box-shadow:0 0 15px rgba(239,68,68,0.4)}
 
-/* ===== NUMBER PAD — Glass buttons ===== */
-.numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:380px;margin:0 auto}
+/* ===== NUMBER PAD — ROUND 3D buttons ===== */
+.numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:340px;margin:0 auto}
 .num-btn{
-  height:68px;border-radius:20px;border:none;font-family:'Fredoka One',cursive;font-size:1.7rem;
-  color:white;cursor:pointer;transition:all 0.12s;position:relative;overflow:hidden;
-  -webkit-tap-highlight-color:transparent;
+  width:72px;height:72px;border-radius:50%;border:none;font-family:'Fredoka One',cursive;font-size:1.8rem;
+  color:white;cursor:pointer;transition:all 0.1s;position:relative;overflow:hidden;
+  -webkit-tap-highlight-color:transparent;justify-self:center;
 }
-.num-btn:active{transform:scale(0.88);filter:brightness(0.8)}
+.num-btn:active{transform:translateY(3px);box-shadow:0 1px 4px rgba(0,0,0,0.3)!important;filter:brightness(0.85)}
 .num-btn.digit{
-  background:linear-gradient(180deg,rgba(139,92,246,0.35) 0%,rgba(100,60,200,0.2) 100%);
-  border:1px solid rgba(139,92,246,0.35);
-  box-shadow:0 4px 15px rgba(139,92,246,0.15),inset 0 1px 0 rgba(255,255,255,0.1);
+  background:linear-gradient(180deg,rgba(139,92,246,0.5) 0%,rgba(100,60,200,0.35) 100%);
+  border:2px solid rgba(139,92,246,0.4);
+  box-shadow:0 5px 0 rgba(80,40,160,0.5),0 8px 20px rgba(139,92,246,0.2),inset 0 1px 0 rgba(255,255,255,0.15);
 }
-.num-btn.digit:hover{background:linear-gradient(180deg,rgba(139,92,246,0.5) 0%,rgba(100,60,200,0.3) 100%);box-shadow:0 4px 20px rgba(139,92,246,0.3)}
+.num-btn.digit:hover{background:linear-gradient(180deg,rgba(139,92,246,0.65) 0%,rgba(100,60,200,0.45) 100%);box-shadow:0 5px 0 rgba(80,40,160,0.5),0 8px 25px rgba(139,92,246,0.35)}
 .num-btn.submit{
   background:linear-gradient(180deg,#22c55e 0%,#16a34a 100%);
-  font-size:1.8rem;
-  box-shadow:0 4px 20px rgba(34,197,94,0.3),inset 0 1px 0 rgba(255,255,255,0.15);
-  border:1px solid rgba(34,197,94,0.5);
+  font-size:2rem;
+  box-shadow:0 5px 0 rgba(10,100,50,0.6),0 8px 20px rgba(34,197,94,0.3),inset 0 1px 0 rgba(255,255,255,0.2);
+  border:2px solid rgba(34,197,94,0.5);
 }
-.num-btn.submit:hover{background:linear-gradient(180deg,#4ade80 0%,#22c55e 100%);box-shadow:0 6px 25px rgba(34,197,94,0.4)}
 .num-btn.clear{
-  background:linear-gradient(180deg,rgba(239,68,68,0.35) 0%,rgba(200,50,50,0.2) 100%);
-  border:1px solid rgba(239,68,68,0.35);font-size:1.1rem;font-family:'Nunito',sans-serif;font-weight:800;
-  box-shadow:0 4px 15px rgba(239,68,68,0.1),inset 0 1px 0 rgba(255,255,255,0.08);
+  background:linear-gradient(180deg,rgba(239,68,68,0.45) 0%,rgba(200,50,50,0.3) 100%);
+  border:2px solid rgba(239,68,68,0.4);font-size:1rem;font-family:'Nunito',sans-serif;font-weight:800;
+  box-shadow:0 5px 0 rgba(150,30,30,0.5),0 8px 15px rgba(239,68,68,0.15),inset 0 1px 0 rgba(255,255,255,0.08);
 }
-.num-btn.clear:hover{background:linear-gradient(180deg,rgba(239,68,68,0.5) 0%,rgba(200,50,50,0.3) 100%)}
 .num-btn.zero{grid-column:2/3}
 
-/* Ripple on press */
+/* Ripple */
 .num-btn .ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,0.3);transform:scale(0);animation:rippleEffect 0.4s ease-out forwards;pointer-events:none}
 @keyframes rippleEffect{0%{transform:scale(0);opacity:1}100%{transform:scale(3);opacity:0}}
 
@@ -224,25 +261,31 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 .feedback-text{font-family:'Fredoka One',cursive;font-size:1.8rem;text-shadow:0 0 20px currentColor}
 .feedback-points{font-family:'Fredoka One',cursive;font-size:1.2rem;color:#fbbf24;margin-top:6px;text-shadow:0 0 15px rgba(251,191,36,0.5)}
 
-/* Star rating per answer */
 .star-rating{position:absolute;top:-40px;left:50%;transform:translateX(-50%);font-size:1.5rem;animation:ratingFade 1s ease-out forwards;white-space:nowrap;z-index:10}
 @keyframes ratingFade{0%{opacity:0;transform:translateX(-50%) translateY(10px) scale(0.5)}20%{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}80%{opacity:1}100%{opacity:0;transform:translateX(-50%) translateY(-20px)}}
 
-/* Stars particles */
 .star-particle{position:fixed;pointer-events:none;z-index:101;font-size:1.5rem;animation:starBurst 0.8s ease-out forwards}
 @keyframes starBurst{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
 
-/* ===== COUNTDOWN ===== */
-.countdown-overlay{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:200;background:rgba(10,0,32,0.92);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);opacity:0;transition:opacity 0.3s}
+/* ===== COUNTDOWN — FULLSCREEN dramatic zoom ===== */
+.countdown-overlay{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:200;background:rgba(5,0,26,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);opacity:0;transition:opacity 0.3s}
 .countdown-overlay.show{opacity:1}
-.countdown-number{font-family:'Fredoka One',cursive;font-size:10rem;color:white;line-height:1;animation:countZoom 0.6s cubic-bezier(0.175,0.885,0.32,1.275)}
+.countdown-number{font-family:'Fredoka One',cursive;font-size:clamp(10rem,40vw,18rem);color:white;line-height:1;animation:countZoomDramatic 0.7s cubic-bezier(0.175,0.885,0.32,1.275)}
 .countdown-sub{font-family:'Nunito',sans-serif;font-weight:800;font-size:1.2rem;color:rgba(255,255,255,0.4);margin-top:8px}
-@keyframes countZoom{0%{transform:scale(3);opacity:0;filter:blur(10px)}60%{transform:scale(0.9);opacity:1;filter:blur(0)}100%{transform:scale(1);opacity:1;filter:blur(0)}}
-.countdown-number.go-text{font-size:5rem;background:linear-gradient(135deg,#22c55e,#4ade80);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 30px rgba(34,197,94,0.5))}
-/* Countdown number colors */
-.countdown-number[data-num="3"]{color:#ef4444;text-shadow:0 0 60px rgba(239,68,68,0.5)}
-.countdown-number[data-num="2"]{color:#f59e0b;text-shadow:0 0 60px rgba(245,158,11,0.5)}
-.countdown-number[data-num="1"]{color:#22c55e;text-shadow:0 0 60px rgba(34,197,94,0.5)}
+@keyframes countZoomDramatic{
+  0%{transform:scale(5);opacity:0;filter:blur(20px)}
+  50%{transform:scale(0.85);opacity:1;filter:blur(0)}
+  70%{transform:scale(1.1)}
+  100%{transform:scale(1);opacity:1;filter:blur(0)}
+}
+.countdown-number.go-text{font-size:clamp(5rem,20vw,8rem);background:linear-gradient(135deg,#22c55e,#4ade80);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 40px rgba(34,197,94,0.6))}
+.countdown-number[data-num="3"]{color:#ef4444;text-shadow:0 0 80px rgba(239,68,68,0.6),0 0 160px rgba(239,68,68,0.3)}
+.countdown-number[data-num="2"]{color:#f59e0b;text-shadow:0 0 80px rgba(245,158,11,0.6),0 0 160px rgba(245,158,11,0.3)}
+.countdown-number[data-num="1"]{color:#22c55e;text-shadow:0 0 80px rgba(34,197,94,0.6),0 0 160px rgba(34,197,94,0.3)}
+
+/* Countdown ring burst */
+.countdown-ring{position:absolute;width:300px;height:300px;border-radius:50%;border:4px solid currentColor;opacity:0;animation:ringBurst 0.7s ease-out forwards}
+@keyframes ringBurst{0%{transform:scale(0.3);opacity:0.8}100%{transform:scale(2.5);opacity:0}}
 
 /* ===== RESULTS SCREEN ===== */
 .results-container{width:100%;text-align:center}
@@ -275,13 +318,11 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 .result-btn.secondary{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15)}
 .result-btn.secondary:hover{background:rgba(255,255,255,0.18)}
 
-/* Stars display */
 .stars-row{display:flex;gap:6px;justify-content:center;margin:12px 0}
 .star{font-size:2.2rem;transition:all 0.3s}
 .star.earned{animation:starEarn 0.4s cubic-bezier(0.175,0.885,0.32,1.275) both}
 @keyframes starEarn{from{transform:scale(0) rotate(-180deg)}to{transform:scale(1) rotate(0deg)}}
 
-/* ===== CONFETTI ===== */
 .confetti-container{position:fixed;inset:0;z-index:250;pointer-events:none;overflow:hidden}
 .confetti-piece{position:absolute;width:10px;height:10px;top:-20px;animation:confettiFall linear forwards}
 @keyframes confettiFall{
@@ -290,10 +331,8 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
   100%{transform:translateY(100vh) rotate(720deg) scale(0.5);opacity:0}
 }
 
-/* Encourage msg */
-.encourage-msg{font-weight:800;font-size:0.85rem;color:rgba(255,255,255,0.4);text-align:center;min-height:24px;margin-bottom:8px;transition:all 0.3s}
+.encourage-msg{font-weight:800;font-size:0.85rem;color:rgba(255,255,255,0.4);text-align:center;min-height:20px;margin-bottom:4px;transition:all 0.3s}
 
-/* ===== BONUS SCREEN FLASH ===== */
 .bonus-screen-overlay{position:fixed;inset:0;z-index:90;pointer-events:none;display:flex;align-items:center;justify-content:center;opacity:0}
 .bonus-screen-overlay.show{opacity:1;animation:bonusScreenFlash 1.5s ease-out forwards}
 .bonus-text{font-family:'Fredoka One',cursive;font-size:3rem;color:#fbbf24;text-shadow:0 0 40px rgba(251,191,36,0.6),0 0 80px rgba(251,191,36,0.3);animation:bonusTextPulse 0.3s ease-in-out infinite alternate}
@@ -303,21 +342,50 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 /* ===== RESPONSIVE ===== */
 @media(max-width:380px){
   .menu-title{font-size:2.5rem}
-  .slot-wheel-container{width:80px;height:100px}
-  .slot-number{height:100px;font-size:2.8rem}
-  .slot-number.target{font-size:3rem}
-  .answer-slot{width:100px;height:100px;font-size:2.4rem}
-  .slot-x{font-size:2.2rem}
-  .num-btn{height:60px;font-size:1.4rem}
-  .slot-display{gap:8px}
+  .slot-wheel-container{width:80px;height:110px}
+  .slot-number{height:110px;font-size:4rem}
+  .slot-number.target{font-size:4.5rem}
+  .answer-slot{width:100px;height:110px;font-size:2.6rem}
+  .slot-x{font-size:2.5rem}
+  .num-btn{width:64px;height:64px;font-size:1.5rem}
+  .slot-display{gap:5px}
+  .slot-lever{display:none}
 }
 @media(min-width:500px){
-  .num-btn{height:76px;font-size:1.9rem}
+  .num-btn{width:80px;height:80px;font-size:2rem}
 }
+
+/* ── Rules Modal ── */
+.rules-overlay{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:20px;animation:rulesFadeIn 0.3s ease}
+@keyframes rulesFadeIn{0%{opacity:0}100%{opacity:1}}
+.rules-card-modal{background:rgba(255,255,255,0.12);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.2);border-radius:24px;padding:28px;max-width:420px;width:100%;max-height:80vh;overflow-y:auto;color:white;position:relative}
+.rules-card-modal h2{font-family:'Fredoka One',cursive;font-size:1.6rem;margin-bottom:16px;text-align:center}
+.rules-card-modal ul{list-style:none;padding:0}
+.rules-card-modal li{padding:8px 0;font-size:0.95rem;line-height:1.5;border-bottom:1px solid rgba(255,255,255,0.08)}
+.rules-card-modal li:last-child{border-bottom:none}
+.rules-close{position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.15);border:none;color:white;width:36px;height:36px;border-radius:50%;font-size:1.2rem;cursor:pointer;transition:all 0.2s}
+.rules-close:hover{background:rgba(255,255,255,0.25);transform:scale(1.1)}
+.rules-got-it{display:block;width:100%;margin-top:20px;padding:14px;border:none;border-radius:16px;font-family:'Fredoka One',cursive;font-size:1.1rem;cursor:pointer;background:linear-gradient(135deg,#667eea,#764ba2);color:white;transition:all 0.2s}
+.rules-got-it:hover{transform:scale(1.03);box-shadow:0 6px 20px rgba(102,126,234,0.4)}
+.menu-rules-btn{background:rgba(255,255,255,0.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.7);border-radius:16px;padding:10px 24px;font-size:0.9rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;transition:all 0.25s;margin-top:8px}
+.menu-rules-btn:hover{background:rgba(255,255,255,0.15);color:white;transform:scale(1.05)}
+
 </style>
 </head>
 <body>
+
+<!-- Rules Modal -->
+<div class="rules-overlay" id="rulesOverlay" style="display:none" onclick="if(event.target===this)closeRulesModal()">
+  <div class="rules-card-modal">
+    <button class="rules-close" onclick="closeRulesModal()">&times;</button>
+    <h2 id="rulesTitle">הוראות משחק</h2>
+    <ul id="rulesList"></ul>
+    <button class="rules-got-it" id="rulesGotIt" onclick="closeRulesModal()">הבנתי!</button>
+  </div>
+</div>
+
 <div class="bg-main"></div>
+<div class="scanlines"></div>
 <div class="neon-pulse">
   <div class="glow1"></div>
   <div class="glow2"></div>
@@ -329,8 +397,8 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 
   <!-- TOP BAR -->
   <div class="top-bar">
-    <a href="https://elirank1.github.io/keren-family/" class="back-btn" id="backBtn">🏠</a>
     <button class="lang-btn" id="langBtn" onclick="toggleLang()">EN</button>
+    <a href="https://elirank1.github.io/keren-family/" class="back-btn" id="backBtn">🏠</a>
   </div>
 
   <!-- MENU SCREEN -->
@@ -362,6 +430,7 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
         <span class="diff-range" data-he="1-15 + לחץ זמן" data-en="1-15 + time pressure">1-15 + לחץ זמן</span>
       </button>
     </div>
+    <button class="menu-rules-btn" onclick="openRulesModal()" data-he="📖 הוראות" data-en="📖 Rules">📖 הוראות</button>
   </div>
 
   <!-- GAME SCREEN -->
@@ -372,21 +441,28 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
     </div>
 
     <div class="streak-bar idle" id="streakBar">
-      <span id="streakText" data-he="התחל רצף!" data-en="Start a streak!">התחל רצף!</span>
+      <span id="streakText" data-he="התחל רצף!" data-en="Start a streak!" style="position:relative;z-index:2">התחל רצף!</span>
     </div>
 
-    <div class="slot-machine" id="slotMachine">
-      <div class="bonus-badge" id="bonusBadge" style="display:none" data-he="בונוס ×3! 🔥" data-en="BONUS ×3! 🔥">בונוס ×3! 🔥</div>
-      <div class="slot-display">
-        <div class="slot-wheel-container" id="wheelContainer1">
-          <div class="slot-wheel" id="wheel1"></div>
+    <div class="slot-machine-wrap">
+      <div class="slot-machine" id="slotMachine">
+        <div class="bonus-badge" id="bonusBadge" style="display:none" data-he="בונוס ×3! 🔥" data-en="BONUS ×3! 🔥">בונוס ×3! 🔥</div>
+        <div class="slot-display">
+          <div class="slot-wheel-container" id="wheelContainer1">
+            <div class="slot-wheel" id="wheel1"></div>
+          </div>
+          <div class="slot-x">&times;</div>
+          <div class="slot-wheel-container" id="wheelContainer2">
+            <div class="slot-wheel" id="wheel2"></div>
+          </div>
+          <div class="slot-equals">=</div>
+          <div class="answer-slot" id="answerSlot">?</div>
         </div>
-        <div class="slot-x">&times;</div>
-        <div class="slot-wheel-container" id="wheelContainer2">
-          <div class="slot-wheel" id="wheel2"></div>
-        </div>
-        <div class="slot-equals">=</div>
-        <div class="answer-slot" id="answerSlot">?</div>
+      </div>
+      <div class="slot-lever">
+        <div class="lever-ball"></div>
+        <div class="lever-rod"></div>
+        <div class="lever-base"></div>
       </div>
     </div>
 
@@ -530,7 +606,6 @@ document.addEventListener('DOMContentLoaded', () => {
   buildWheels();
   initParticles();
 
-  // Keyboard support
   document.addEventListener('keydown', (e) => {
     if (currentScreen !== 'gameScreen' || !canAnswer) return;
     if (e.key >= '0' && e.key <= '9') pressNum(parseInt(e.key));
@@ -538,7 +613,6 @@ document.addEventListener('DOMContentLoaded', () => {
     else if (e.key === 'Enter') submitAnswer();
   });
 
-  // Add ripple to numpad buttons
   document.querySelectorAll('.num-btn').forEach(btn => {
     btn.addEventListener('pointerdown', (e) => {
       const ripple = document.createElement('span');
@@ -554,11 +628,49 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// ========== RULES MODAL ==========
+const KIFKEFEL_RULES = {
+  he: [
+    '🎰 שני גלגלים מסתובבים ונוחתים על מספרים',
+    '⚡ הכפילו אותם כמה שיותר מהר!',
+    '⭐⭐⭐ פחות מ-2 שניות | ⭐⭐ פחות מ-4 | ⭐ פחות מ-7',
+    '🔥 רצף של 5 תשובות נכונות = ON FIRE!',
+    '💎 כל שאלה 5 = סיבוב בונוס ×3!',
+    '🏆 15 סיבובים. מי ישיג את השיא?'
+  ],
+  en: [
+    '🎰 Two wheels spin and land on numbers',
+    '⚡ Multiply them as fast as you can!',
+    '⭐⭐⭐ Under 2 sec | ⭐⭐ Under 4 | ⭐ Under 7',
+    '🔥 5 correct in a row = ON FIRE!',
+    '💎 Every 5th question = Bonus Round ×3!',
+    '🏆 15 rounds. Can you beat the high score?'
+  ]
+};
+function openRulesModal() {
+  updateRulesLang();
+  document.getElementById('rulesOverlay').style.display = 'flex';
+}
+function closeRulesModal() {
+  document.getElementById('rulesOverlay').style.display = 'none';
+}
+function updateRulesLang() {
+  const isHe = lang === 'he';
+  document.getElementById('rulesTitle').textContent = isHe ? 'הוראות משחק' : 'Game Rules';
+  document.getElementById('rulesGotIt').textContent = isHe ? 'הבנתי!' : 'Got it!';
+  const list = document.getElementById('rulesList');
+  const rules = isHe ? KIFKEFEL_RULES.he : KIFKEFEL_RULES.en;
+  list.innerHTML = rules.map(r => `<li>${r}</li>`).join('');
+  list.closest('.rules-card-modal').style.direction = isHe ? 'rtl' : 'ltr';
+  list.closest('.rules-card-modal').style.textAlign = isHe ? 'right' : 'left';
+}
+
 // ========== LANGUAGE ==========
 function toggleLang() {
   lang = lang === 'he' ? 'en' : 'he';
   localStorage.setItem('kifkefel-lang', lang);
   applyLang();
+  updateRulesLang();
 }
 
 function applyLang() {
@@ -566,7 +678,6 @@ function applyLang() {
   document.documentElement.lang = isHe ? 'he' : 'en';
   document.documentElement.dir = isHe ? 'rtl' : 'ltr';
   document.getElementById('langBtn').textContent = isHe ? 'EN' : 'עב';
-
   document.querySelectorAll('[data-he][data-en]').forEach(el => {
     el.textContent = isHe ? el.dataset.he : el.dataset.en;
   });
@@ -647,7 +758,7 @@ function startGame(diff) {
   });
 }
 
-// ========== COUNTDOWN — Dramatic 3-2-1 ==========
+// ========== COUNTDOWN ==========
 function doCountdown(cb) {
   const overlay = document.getElementById('countdownOverlay');
   const numEl = document.getElementById('countdownNum');
@@ -706,7 +817,6 @@ function nextRound() {
   num2 = Math.floor(Math.random() * cfg.max) + 1;
   correctResult = num1 * num2;
 
-  // Update UI
   document.getElementById('roundInfo').textContent =
     (lang === 'he' ? `סיבוב ${round} מתוך ${TOTAL_ROUNDS}` : `Round ${round} of ${TOTAL_ROUNDS}`);
   document.getElementById('answerSlot').textContent = '?';
@@ -716,16 +826,13 @@ function nextRound() {
   const bonusBadge = document.getElementById('bonusBadge');
   bonusBadge.style.display = isBonus ? 'block' : 'none';
 
-  // Bonus round flash
   if (isBonus) {
     showBonusFlash();
   }
 
-  // Remove landed state
-  document.getElementById('wheelContainer1').classList.remove('landed');
-  document.getElementById('wheelContainer2').classList.remove('landed');
+  document.getElementById('wheelContainer1').classList.remove('landed','ding-flash');
+  document.getElementById('wheelContainer2').classList.remove('landed','ding-flash');
 
-  // Timer
   const timerWrap = document.getElementById('timerWrap');
   if (cfg.timeLimit > 0 || isBonus) {
     timerWrap.style.display = 'block';
@@ -735,13 +842,15 @@ function nextRound() {
     timerWrap.style.display = 'none';
   }
 
-  // Spin wheels
   spinWheels(num1, num2, () => {
     canAnswer = true;
     roundStartTime = Date.now();
-    // Landing glow
-    document.getElementById('wheelContainer1').classList.add('landed');
-    document.getElementById('wheelContainer2').classList.add('landed');
+    // DING flash effect
+    const wc1 = document.getElementById('wheelContainer1');
+    const wc2 = document.getElementById('wheelContainer2');
+    wc1.classList.add('landed','ding-flash');
+    wc2.classList.add('landed','ding-flash');
+    setTimeout(() => { wc1.classList.remove('ding-flash'); wc2.classList.remove('ding-flash'); }, 300);
     const limit = isBonus ? 3 : cfg.timeLimit;
     if (limit > 0) startTimer(limit);
   });
@@ -754,8 +863,6 @@ function showBonusFlash() {
   text.textContent = lang === 'he' ? 'בונוס ×3!' : 'BONUS ×3!';
   overlay.classList.add('show');
   setTimeout(() => overlay.classList.remove('show'), 1500);
-
-  // Golden flash
   const flash = document.createElement('div');
   flash.className = 'bonus-flash';
   document.body.appendChild(flash);
@@ -767,7 +874,7 @@ function spinWheels(target1, target2, cb) {
   isSpinning = true;
   const w1 = document.getElementById('wheel1');
   const w2 = document.getElementById('wheel2');
-  const containerH = w1.parentElement.offsetHeight || 120;
+  const containerH = w1.parentElement.offsetHeight || 130;
 
   rebuildWheel(w1, target1, 50, containerH);
   rebuildWheel(w2, target2, 52, containerH);
@@ -912,7 +1019,6 @@ function handleAnswer(timedOut) {
 
     showFeedback(false, 0, 0, elapsed);
 
-    // Streak break deflate animation
     if (previousStreak >= 3) {
       const bar = document.getElementById('streakBar');
       bar.classList.add('streak-deflate');
@@ -950,7 +1056,7 @@ function showStarRating(stars) {
   if (stars > 0) {
     const rating = document.createElement('div');
     rating.className = 'star-rating';
-    rating.textContent = '★'.repeat(stars) + '☆'.repeat(3 - stars);
+    rating.textContent = '\u2605'.repeat(stars) + '\u2606'.repeat(3 - stars);
     rating.style.color = stars === 3 ? '#fbbf24' : stars === 2 ? '#f59e0b' : '#d97706';
     slot.parentElement.style.position = 'relative';
     slot.parentElement.appendChild(rating);
@@ -1000,7 +1106,7 @@ function showFeedback(correct, stars, points, time) {
   const pointsEl = document.getElementById('feedbackPoints');
 
   if (correct) {
-    starsEl.textContent = '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
+    starsEl.textContent = '\u2B50'.repeat(stars) + '\u2606'.repeat(3 - stars);
     const msgs = lang === 'he' ? encourageCorrectHe : encourageCorrectEn;
     textEl.textContent = msgs[Math.floor(Math.random() * msgs.length)];
     textEl.style.color = '#22c55e';
@@ -1021,7 +1127,7 @@ function showFeedback(correct, stars, points, time) {
   } else if (correct) {
     msgEl.textContent = '';
   } else {
-    msgEl.textContent = `${num1} × ${num2} = ${correctResult}`;
+    msgEl.textContent = `${num1} \u00D7 ${num2} = ${correctResult}`;
     msgEl.style.color = 'rgba(255,255,255,0.5)';
   }
 
@@ -1031,7 +1137,7 @@ function showFeedback(correct, stars, points, time) {
 
 // ========== STARS PARTICLES ==========
 function spawnStars() {
-  const symbols = ['⭐','✨','💫','🌟'];
+  const symbols = ['\u2B50','\u2728','\uD83D\uDCAB','\uD83C\uDF1F'];
   for (let i = 0; i < 8; i++) {
     const s = document.createElement('div');
     s.className = 'star-particle';
@@ -1049,7 +1155,7 @@ function spawnStars() {
 // ========== SCORE DISPLAY ==========
 function updateScoreDisplay() {
   const el = document.getElementById('scoreDisplay');
-  el.textContent = '🏆 ' + score;
+  el.textContent = '\uD83C\uDFC6 ' + score;
   el.classList.remove('pop');
   void el.offsetWidth;
   el.classList.add('pop');
@@ -1062,15 +1168,15 @@ function updateStreakBar() {
 
   if (streak >= 10) {
     bar.className = 'streak-bar legendary';
-    const fires = '🔥'.repeat(Math.min(streak - 7, 6));
-    text.textContent = lang === 'he' ? `⚡ אגדי! ${streak} רצף ${fires}` : `⚡ LEGENDARY ${streak} streak ${fires}`;
+    const fires = '\uD83D\uDD25'.repeat(Math.min(streak - 7, 6));
+    text.textContent = lang === 'he' ? `\u26A1 אגדי! ${streak} רצף ${fires}` : `\u26A1 LEGENDARY ${streak} streak ${fires}`;
   } else if (streak >= 5) {
     bar.className = 'streak-bar fire';
-    const fires = '🔥'.repeat(streak - 4);
+    const fires = '\uD83D\uDD25'.repeat(streak - 4);
     text.textContent = lang === 'he' ? `${fires} בוער! ${streak} רצף` : `${fires} ON FIRE! ${streak} streak`;
   } else if (streak >= 3) {
     bar.className = 'streak-bar warm';
-    text.textContent = lang === 'he' ? `🔥 ${streak} ברצף! 💪` : `🔥 ${streak} in a row! 💪`;
+    text.textContent = lang === 'he' ? `\uD83D\uDD25 ${streak} ברצף! \uD83D\uDCAA` : `\uD83D\uDD25 ${streak} in a row! \uD83D\uDCAA`;
   } else {
     bar.className = 'streak-bar idle';
     if (streak > 0) {
@@ -1107,18 +1213,17 @@ function endGame() {
   saveHighScore(score);
   saveWeakMap();
 
-  const avgTime = correctCount > 0 ? (totalTime / correctCount).toFixed(1) : '—';
+  const avgTime = correctCount > 0 ? (totalTime / correctCount).toFixed(1) : '\u2014';
   const totalStarsEarned = roundResults.reduce((a, r) => a + r.stars, 0);
 
-  const emoji = correctCount >= 13 ? '🏆' : correctCount >= 10 ? '🌟' : correctCount >= 7 ? '👏' : '💪';
+  const emoji = correctCount >= 13 ? '\uD83C\uDFC6' : correctCount >= 10 ? '\uD83C\uDF1F' : correctCount >= 7 ? '\uD83D\uDC4F' : '\uD83D\uDCAA';
   document.getElementById('resultsEmoji').textContent = emoji;
 
   document.getElementById('finalScore').textContent = score;
   document.getElementById('statCorrect').textContent = `${correctCount}/${TOTAL_ROUNDS}`;
-  document.getElementById('statSpeed').textContent = avgTime === '—' ? '—' : `${avgTime}s`;
+  document.getElementById('statSpeed').textContent = avgTime === '\u2014' ? '\u2014' : `${avgTime}s`;
   document.getElementById('statStreak').textContent = maxStreak;
 
-  // Stars
   const starsRow = document.getElementById('totalStars');
   starsRow.innerHTML = '';
   const maxPossibleStars = TOTAL_ROUNDS * 3;
@@ -1126,12 +1231,11 @@ function endGame() {
   for (let i = 0; i < 5; i++) {
     const span = document.createElement('span');
     span.className = 'star' + (i < filledStars ? ' earned' : '');
-    span.textContent = i < filledStars ? '⭐' : '☆';
+    span.textContent = i < filledStars ? '\u2B50' : '\u2606';
     span.style.animationDelay = (i * 0.15) + 's';
     starsRow.appendChild(span);
   }
 
-  // Weak tables
   const stored = loadWeakMap();
   const weakItems = [];
   for (const k in stored) {
@@ -1150,14 +1254,13 @@ function endGame() {
     weakItems.slice(0, 6).forEach(w => {
       const div = document.createElement('div');
       div.className = 'weak-item';
-      div.textContent = w.key.replace('x', ' × ');
+      div.textContent = w.key.replace('x', ' \u00D7 ');
       weakList.appendChild(div);
     });
   } else {
     weakSection.style.display = 'none';
   }
 
-  // Title
   const resultsTitle = document.getElementById('resultsTitle');
   if (correctCount >= 14) {
     resultsTitle.dataset.he = 'מושלם!';
@@ -1177,10 +1280,8 @@ function endGame() {
   showScreen('resultsScreen');
   loadHighScore();
 
-  // Reset edge glow
   document.getElementById('edgeGlow').className = 'edge-glow';
 
-  // Confetti for good scores
   if (correctCount >= 10) {
     setTimeout(() => spawnConfetti(), 300);
   }
