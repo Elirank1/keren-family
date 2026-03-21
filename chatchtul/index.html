@@ -6,54 +6,54 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#0f0628">
+<meta name="theme-color" content="#1a0a3e">
 <title>חתחתול 🐱 Chatchtul</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐱</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 /* ===== RESET & BASE ===== */
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family:'Nunito',sans-serif;min-height:100vh;min-height:100dvh;overflow-x:hidden;user-select:none;-webkit-user-select:none;background:#0a0118;color:white}
+body{font-family:'Nunito',sans-serif;min-height:100vh;min-height:100dvh;overflow-x:hidden;user-select:none;-webkit-user-select:none;background:#110826;color:#f0e6ff}
 h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 
-/* ===== BACKGROUND — Deep purple/midnight blue with animated radial overlay ===== */
+/* ===== BACKGROUND — Warm cozy purple/midnight ===== */
 .bg-main{
-  background:linear-gradient(160deg,#0f0628 0%,#1a0a4a 25%,#0d1b3e 50%,#1a0533 75%,#0a0118 100%);
+  background:linear-gradient(155deg,#1a0a3e 0%,#2d1266 30%,#1a0a3e 50%,#120835 75%,#0d0620 100%);
   position:relative;overflow:hidden;min-height:100vh;min-height:100dvh;
 }
 .bg-main::before{
   content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
   background:
-    radial-gradient(circle at 25% 25%,rgba(99,66,198,0.12) 0%,transparent 45%),
-    radial-gradient(circle at 75% 60%,rgba(231,76,107,0.08) 0%,transparent 45%),
-    radial-gradient(circle at 50% 85%,rgba(255,217,61,0.06) 0%,transparent 40%);
-  animation:bgRotate 40s linear infinite;pointer-events:none;
+    radial-gradient(circle at 20% 30%,rgba(147,88,255,0.10) 0%,transparent 40%),
+    radial-gradient(circle at 80% 50%,rgba(255,120,180,0.07) 0%,transparent 40%),
+    radial-gradient(circle at 50% 80%,rgba(255,200,80,0.05) 0%,transparent 35%);
+  animation:bgRotate 50s linear infinite;pointer-events:none;
 }
 @keyframes bgRotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 
-/* ===== FLOATING PARTICLES ===== */
+/* ===== FLOATING PARTICLES — subtle cat/rat emojis ===== */
 .particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
 .particle{
-  position:absolute;font-size:1.2rem;opacity:0;
+  position:absolute;font-size:1.1rem;opacity:0;
   animation:particleFloat linear infinite;
 }
 @keyframes particleFloat{
   0%{transform:translateY(110vh) rotate(0deg);opacity:0}
-  10%{opacity:0.25}
-  90%{opacity:0.25}
+  10%{opacity:0.15}
+  90%{opacity:0.15}
   100%{transform:translateY(-10vh) rotate(360deg);opacity:0}
 }
 
 /* ===== GLASS MORPHISM ===== */
 .glass{
-  background:rgba(255,255,255,0.05);
+  background:rgba(255,255,255,0.04);
   backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.07);
 }
 .glass-strong{
-  background:rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.06);
   backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
-  border:1px solid rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.10);
   box-shadow:0 8px 32px rgba(0,0,0,0.3);
 }
 
@@ -65,8 +65,8 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 .back-btn{
   display:flex;align-items:center;justify-content:center;
   width:44px;height:44px;border-radius:50%;border:none;
-  background:rgba(255,255,255,0.08);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,0.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.10);
   color:white;cursor:pointer;font-size:1.1rem;
   transition:all 0.3s;text-decoration:none;
   box-shadow:0 4px 15px rgba(0,0,0,0.2);
@@ -74,8 +74,8 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 .back-btn:hover{transform:scale(1.1);background:rgba(255,255,255,0.12)}
 .lang-btn{
   width:44px;height:44px;border-radius:50%;border:none;
-  background:rgba(255,255,255,0.08);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,0.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.10);
   color:white;cursor:pointer;font-weight:900;font-size:0.75rem;
   font-family:'Nunito',sans-serif;transition:all 0.3s;
   box-shadow:0 4px 15px rgba(0,0,0,0.2);
@@ -87,9 +87,9 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 
 /* ===== TITLE ===== */
 .title-gradient{
-  background:linear-gradient(135deg,#fff 0%,#d4b8ff 30%,#ffb8d4 60%,#ffd6a0 80%,#fff 100%);
+  background:linear-gradient(135deg,#fff 0%,#c9a0ff 25%,#ffadd2 50%,#ffd480 75%,#fff 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  filter:drop-shadow(0 4px 20px rgba(132,94,194,0.4));
+  filter:drop-shadow(0 3px 16px rgba(147,88,255,0.4));
   letter-spacing:-0.02em;
 }
 
@@ -97,32 +97,35 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 .screen{display:none;flex-direction:column;align-items:center;gap:16px}
 .screen.active{display:flex}
 
-/* ===== CARD SYSTEM ===== */
+/* ===========================================================
+   CARD SYSTEM — Illustrated Rat-a-Tat Cat style
+   =========================================================== */
 .card-slot{
-  width:76px;height:106px;border-radius:16px;position:relative;
+  width:80px;height:112px;border-radius:12px;position:relative;
   cursor:pointer;transition:all 0.3s cubic-bezier(0.175,0.885,0.32,1.275);
   perspective:800px;flex-shrink:0;
 }
-.card-slot:hover{transform:translateY(-6px)}
-.card-slot:active{transform:scale(0.93)}
+.card-slot:hover{transform:translateY(-5px)}
+.card-slot:active{transform:scale(0.94)}
 .card-slot.selected{
-  box-shadow:0 0 0 3px rgba(255,217,61,0.9),0 0 25px rgba(255,217,61,0.4),0 0 50px rgba(255,217,61,0.15);
+  box-shadow:0 0 0 3px rgba(255,217,61,0.9),0 0 20px rgba(255,217,61,0.35);
 }
 .card-slot.glow-hint{animation:glowHint 1.5s ease-in-out infinite}
 @keyframes glowHint{
-  0%,100%{box-shadow:0 0 8px rgba(255,217,61,0.15),0 0 20px rgba(255,217,61,0.05)}
-  50%{box-shadow:0 0 15px rgba(255,217,61,0.5),0 0 35px rgba(255,217,61,0.2)}
+  0%,100%{box-shadow:0 0 6px rgba(255,217,61,0.1)}
+  50%{box-shadow:0 0 18px rgba(255,217,61,0.45),0 0 30px rgba(255,217,61,0.15)}
 }
 
 /* Computer cards — smaller */
-.comp-area .card-slot{width:62px;height:86px}
-.comp-area .card-back::before{font-size:1rem}
-.comp-area .card-back::after{inset:4px;border-radius:8px}
+.comp-area .card-slot{width:60px;height:85px}
+.comp-area .card-back .paw-center{font-size:0.9rem}
+.comp-area .card-front .card-corner{font-size:0.65rem}
+.comp-area .card-front .card-emoji-main{font-size:1.4rem}
+.comp-area .card-front .card-dots{gap:2px}
+.comp-area .card-front .card-dots span{width:4px;height:4px}
 
 /* Player cards — larger */
-.player-area-cards .card-slot{width:80px;height:112px}
-.player-area-cards .card-front .card-emoji{font-size:2rem}
-.player-area-cards .card-front .card-value{font-size:1.4rem}
+.player-area-cards .card-slot{width:82px;height:114px}
 
 .card-inner{
   width:100%;height:100%;position:relative;
@@ -132,90 +135,136 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 .card-inner.flipped{transform:rotateY(180deg)}
 
 .card-face{
-  position:absolute;width:100%;height:100%;border-radius:16px;
+  position:absolute;width:100%;height:100%;border-radius:12px;
   backface-visibility:hidden;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;overflow:hidden;
+  align-items:center;justify-content:center;overflow:hidden;
 }
 
-/* ===== CARD BACK — Rich purple with paw print CSS pattern ===== */
+/* ===== CARD BACK — Navy/purple with paw print pattern ===== */
 .card-back{
-  background:linear-gradient(145deg,#5b2d8e,#7b42b8,#5b2d8e);
-  border:2px solid rgba(255,255,255,0.12);
-  box-shadow:inset 0 2px 15px rgba(0,0,0,0.3),0 4px 20px rgba(0,0,0,0.3);
+  background:linear-gradient(145deg,#3a1a6e,#4b2494,#3a1a6e);
+  border:2px solid rgba(255,255,255,0.10);
+  box-shadow:inset 0 2px 12px rgba(0,0,0,0.3),0 4px 16px rgba(0,0,0,0.25);
   overflow:hidden;
 }
+/* Repeating paw-dot pattern via radial-gradient */
 .card-back::before{
-  content:'🐾';position:absolute;font-size:1.5rem;opacity:0.15;
-  text-shadow:0 0 10px rgba(255,255,255,0.1);
-}
-.card-back::after{
-  content:'';position:absolute;inset:5px;border-radius:12px;
-  border:1.5px solid rgba(255,255,255,0.08);
+  content:'';position:absolute;inset:6px;border-radius:8px;
+  border:1.5px solid rgba(255,255,255,0.06);
   background:
-    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.04) 2px, transparent 2px),
-    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 2px, transparent 2px),
-    radial-gradient(circle at 80% 30%, rgba(255,255,255,0.04) 2px, transparent 2px),
-    radial-gradient(circle at 30% 70%, rgba(255,255,255,0.03) 2px, transparent 2px),
-    radial-gradient(circle at 70% 80%, rgba(255,255,255,0.04) 2px, transparent 2px);
+    radial-gradient(circle 3px at 25% 20%, rgba(255,255,255,0.06) 50%, transparent 51%),
+    radial-gradient(circle 2px at 35% 15%, rgba(255,255,255,0.05) 50%, transparent 51%),
+    radial-gradient(circle 2px at 15% 15%, rgba(255,255,255,0.05) 50%, transparent 51%),
+    radial-gradient(circle 3px at 75% 45%, rgba(255,255,255,0.06) 50%, transparent 51%),
+    radial-gradient(circle 2px at 85% 40%, rgba(255,255,255,0.05) 50%, transparent 51%),
+    radial-gradient(circle 2px at 65% 40%, rgba(255,255,255,0.05) 50%, transparent 51%),
+    radial-gradient(circle 3px at 30% 60%, rgba(255,255,255,0.06) 50%, transparent 51%),
+    radial-gradient(circle 2px at 40% 55%, rgba(255,255,255,0.05) 50%, transparent 51%),
+    radial-gradient(circle 2px at 20% 55%, rgba(255,255,255,0.05) 50%, transparent 51%),
+    radial-gradient(circle 3px at 70% 80%, rgba(255,255,255,0.06) 50%, transparent 51%),
+    radial-gradient(circle 2px at 80% 75%, rgba(255,255,255,0.05) 50%, transparent 51%),
+    radial-gradient(circle 2px at 60% 75%, rgba(255,255,255,0.05) 50%, transparent 51%),
+    radial-gradient(circle 3px at 50% 95%, rgba(255,255,255,0.06) 50%, transparent 51%);
+  pointer-events:none;
+}
+.paw-center{
+  font-size:1.3rem;opacity:0.12;position:relative;z-index:1;
+  text-shadow:0 0 8px rgba(255,255,255,0.08);
 }
 
-/* ===== CARD FRONT ===== */
+/* ===== CARD FRONT — White/cream card with colored top strip ===== */
 .card-front{
   transform:rotateY(180deg);
-  border:2px solid rgba(255,255,255,0.2);
-  box-shadow:0 6px 25px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.15);
+  background:#faf5ee;
+  border:2px solid rgba(0,0,0,0.08);
+  box-shadow:0 4px 18px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.6);
+  color:#333;
+  position:relative;
 }
-.card-front .card-emoji{font-size:1.8rem;line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3))}
-.card-front .card-value{
-  font-size:1.3rem;font-family:'Fredoka One',cursive;
-  margin-top:2px;text-shadow:0 2px 6px rgba(0,0,0,0.4);
-  letter-spacing:0.02em;
+/* Colored top strip */
+.card-top-strip{
+  position:absolute;top:0;left:0;right:0;height:22px;
+  border-radius:10px 10px 0 0;
 }
-.card-front .card-label{
-  font-size:0.55rem;font-weight:800;text-transform:uppercase;
-  letter-spacing:0.08em;opacity:0.7;margin-top:1px;
+.comp-area .card-top-strip{height:16px;border-radius:8px 8px 0 0}
+
+/* Corner numbers */
+.card-corner{
+  position:absolute;font-family:'Fredoka One',cursive;font-size:0.8rem;
+  font-weight:900;line-height:1;z-index:2;
+}
+.card-corner-tl{top:4px;left:6px}
+.card-corner-br{bottom:4px;right:6px;transform:rotate(180deg)}
+[dir="rtl"] .card-corner-tl{top:4px;right:6px;left:auto}
+[dir="rtl"] .card-corner-br{bottom:4px;left:6px;right:auto;transform:rotate(180deg)}
+
+/* Main emoji */
+.card-emoji-main{
+  font-size:1.9rem;line-height:1;margin-top:6px;
+  filter:drop-shadow(0 2px 3px rgba(0,0,0,0.15));
+  position:relative;z-index:1;
+}
+
+/* Value dots below emoji */
+.card-dots{
+  display:flex;gap:3px;margin-top:4px;flex-wrap:wrap;justify-content:center;max-width:60px;
+}
+.card-dots span{
+  width:5px;height:5px;border-radius:50%;opacity:0.6;
+}
+
+/* Card type label */
+.card-type-label{
+  font-size:0.5rem;font-weight:900;text-transform:uppercase;
+  letter-spacing:0.1em;opacity:0.5;margin-top:2px;
+  font-family:'Fredoka One',cursive;
 }
 
 /* ===== CARD COLORS BY VALUE ===== */
-/* Low cards (0-2): Green gradient, cute cat */
-.card-cat{
-  background:linear-gradient(145deg,#1db954,#0d9e3f,#1db954);
-  border-color:rgba(29,185,84,0.4);
-}
-.card-cat::before{
-  content:'MEOW';position:absolute;bottom:3px;
-  font-size:0.45rem;font-weight:900;letter-spacing:0.15em;
-  color:rgba(255,255,255,0.2);font-family:'Fredoka One',cursive;
-}
+/* Low cards (0-2): Cats — pastel green/teal strip */
+.card-cat .card-top-strip{background:linear-gradient(90deg,#78d7a0,#4ec6a0)}
+.card-cat .card-corner{color:#2d8f6f}
+.card-cat .card-dots span{background:#4ec6a0}
+.card-cat .card-type-label{color:#2d8f6f}
 
-/* Mid cards (3-5): Yellow/amber gradient */
-.card-mid{
-  background:linear-gradient(145deg,#f0a030,#d4880c,#f0a030);
-  border-color:rgba(240,160,48,0.4);
-}
+/* Mid cards (3-5): Neutral — amber/yellow strip */
+.card-mid .card-top-strip{background:linear-gradient(90deg,#ffc857,#f0a030)}
+.card-mid .card-corner{color:#b07818}
+.card-mid .card-dots span{background:#f0a030}
+.card-mid .card-type-label{color:#b07818}
 
-/* High cards (6-8): Red gradient, sneaky rat */
-.card-rat{
-  background:linear-gradient(145deg,#e84040,#c52020,#e84040);
-  border-color:rgba(232,64,64,0.4);
-}
+/* High cards (6-8): Rats — orange/red strip */
+.card-rat .card-top-strip{background:linear-gradient(90deg,#ff7b54,#e84040)}
+.card-rat .card-corner{color:#c02020}
+.card-rat .card-dots span{background:#e84040}
+.card-rat .card-type-label{color:#c02020}
 
-/* Card 9: Dark crimson, evil rat */
+/* Card 9: Boss rat — dark red strip */
+.card-super-rat .card-top-strip{background:linear-gradient(90deg,#a01030,#6b0020)}
+.card-super-rat .card-corner{color:#8b0000}
+.card-super-rat .card-dots span{background:#8b0000}
+.card-super-rat .card-type-label{color:#8b0000}
 .card-super-rat{
-  background:linear-gradient(145deg,#8b0000,#5c0000,#8b0000);
-  border-color:rgba(139,0,0,0.6);
-  box-shadow:0 6px 25px rgba(139,0,0,0.5),inset 0 0 20px rgba(0,0,0,0.3);
+  box-shadow:0 4px 18px rgba(139,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.6);
 }
 
-/* Special cards: Blue/purple gradient with power icon */
-.card-special{
-  background:linear-gradient(145deg,#4a6cf7,#7c3aed,#4a6cf7);
-  border-color:rgba(124,58,237,0.4);
+/* Special cards: Blue/purple strip + star icon */
+.card-special .card-top-strip{background:linear-gradient(90deg,#7c5cf7,#4a6cf7)}
+.card-special .card-corner{color:#4a5ce0}
+.card-special .card-dots span{background:#7c5cf7}
+.card-special .card-type-label{color:#4a5ce0}
+
+/* ===== PILE CARD FRONTS (discard) - colored background style ===== */
+.pile-card-face{
+  border-radius:14px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;color:white;
+  width:100%;height:100%;position:relative;
 }
-.card-special::before{
-  content:'✦';position:absolute;top:4px;right:6px;
-  font-size:0.5rem;color:rgba(255,255,255,0.25);
-}
+.pile-cat{background:linear-gradient(145deg,#4ec6a0,#2d9070)}
+.pile-mid{background:linear-gradient(145deg,#f0a030,#d08010)}
+.pile-rat{background:linear-gradient(145deg,#e84040,#c52020)}
+.pile-super-rat{background:linear-gradient(145deg,#8b0000,#5c0000)}
+.pile-special{background:linear-gradient(145deg,#6b5cf7,#4a4ce0)}
 
 /* ===== PEEK TIMER RING ===== */
 .peek-timer{position:absolute;top:-6px;right:-6px;width:28px;height:28px;z-index:5;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3))}
@@ -223,58 +272,65 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 .peek-timer .bg{stroke:rgba(255,255,255,0.15)}
 .peek-timer .progress{stroke:#ffd93d;stroke-dasharray:62.83;stroke-dashoffset:0;transition:stroke-dashoffset 0.1s linear;stroke-linecap:round}
 .card-slot.peeking{
-  box-shadow:0 0 20px rgba(255,217,61,0.5),0 0 40px rgba(255,217,61,0.2);
+  box-shadow:0 0 16px rgba(255,217,61,0.45),0 0 35px rgba(255,217,61,0.15);
   animation:peekGlow 0.8s ease-in-out infinite;
 }
 @keyframes peekGlow{
-  0%,100%{box-shadow:0 0 20px rgba(255,217,61,0.5),0 0 40px rgba(255,217,61,0.2)}
-  50%{box-shadow:0 0 30px rgba(255,217,61,0.7),0 0 60px rgba(255,217,61,0.3)}
+  0%,100%{box-shadow:0 0 16px rgba(255,217,61,0.45)}
+  50%{box-shadow:0 0 28px rgba(255,217,61,0.65),0 0 50px rgba(255,217,61,0.2)}
 }
 
 /* ===== PLAYER AREAS ===== */
 .player-area{
-  width:100%;padding:14px 12px;border-radius:22px;text-align:center;
+  width:100%;padding:12px 10px;border-radius:20px;text-align:center;
   transition:border-color 0.3s;
 }
 .player-label{
-  font-family:'Fredoka One',cursive;font-size:0.95rem;margin-bottom:10px;
+  font-family:'Fredoka One',cursive;font-size:0.9rem;margin-bottom:8px;
   display:flex;align-items:center;justify-content:center;gap:6px;
 }
 .cards-row{display:flex;justify-content:center;gap:10px}
 
-.comp-area{border-color:rgba(231,76,60,0.15)!important}
-.comp-area .cards-row{gap:8px}
-.player-area-cards{border-color:rgba(46,204,113,0.15)!important}
-.player-area-cards .cards-row{gap:12px}
+.comp-area{border-color:rgba(231,76,60,0.12)!important}
+.comp-area .cards-row{gap:7px}
+.player-area-cards{border-color:rgba(78,198,160,0.12)!important}
+.player-area-cards .cards-row{gap:10px}
 
-/* ===== CENTER AREA — Draw & Discard with glow ===== */
+/* ===== CENTER AREA — Draw & Discard ===== */
 .center-area{
   display:flex;align-items:center;justify-content:center;gap:28px;
-  padding:14px 0;width:100%;
+  padding:12px 0;width:100%;
 }
 .pile{
-  display:flex;flex-direction:column;align-items:center;gap:6px;
+  display:flex;flex-direction:column;align-items:center;gap:5px;
   cursor:pointer;transition:all 0.25s;
 }
-.pile:hover{transform:scale(1.08)}
+.pile:hover{transform:scale(1.07)}
 .pile:active{transform:scale(0.95)}
 .pile-card{
-  width:68px;height:95px;border-radius:14px;
+  width:68px;height:95px;border-radius:12px;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   position:relative;overflow:hidden;transition:box-shadow 0.3s;
 }
-.pile-label{font-size:0.7rem;font-weight:700;color:rgba(255,255,255,0.4);letter-spacing:0.03em}
-.draw-count{position:absolute;bottom:5px;font-size:0.6rem;font-weight:900;color:rgba(255,255,255,0.5)}
+.pile-label{font-size:0.68rem;font-weight:700;color:rgba(255,255,255,0.35);letter-spacing:0.03em}
+.draw-count{
+  position:absolute;top:-6px;right:-6px;
+  background:#ffd93d;color:#333;
+  font-size:0.55rem;font-weight:900;font-family:'Fredoka One',cursive;
+  width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,0.25);
+  border:2px solid #1a0a3e;
+}
 
-/* Glow effects on piles */
 .pile:hover .pile-card{
-  box-shadow:0 0 20px rgba(132,94,194,0.4),0 0 40px rgba(132,94,194,0.15);
+  box-shadow:0 0 18px rgba(147,88,255,0.35);
 }
 #drawPile .pile-card{
-  box-shadow:0 4px 20px rgba(91,45,142,0.4);
+  box-shadow:0 3px 16px rgba(75,36,148,0.4);
 }
 #discardPile .pile-card{
-  box-shadow:0 4px 20px rgba(0,0,0,0.3);
+  box-shadow:0 3px 16px rgba(0,0,0,0.25);
 }
 
 /* ===== VS DIVIDER ===== */
@@ -282,52 +338,52 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
   display:flex;align-items:center;justify-content:center;gap:12px;
   width:100%;padding:2px 0;opacity:0.3;
 }
-.vs-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent)}
-.vs-text{font-family:'Fredoka One',cursive;font-size:0.7rem;color:rgba(255,255,255,0.4)}
+.vs-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent)}
+.vs-text{font-family:'Fredoka One',cursive;font-size:0.7rem;color:rgba(255,255,255,0.3)}
 
 /* ===== ACTION BUTTONS ===== */
 .action-bar{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;width:100%;padding:4px 0}
 .action-btn{
-  padding:12px 22px;border-radius:18px;border:none;color:white;
+  padding:12px 22px;border-radius:16px;border:none;color:white;
   font-family:'Nunito',sans-serif;font-weight:800;font-size:0.85rem;
-  cursor:pointer;transition:all 0.25s;min-height:50px;min-width:56px;
+  cursor:pointer;transition:all 0.25s;min-height:48px;min-width:56px;
   display:flex;align-items:center;justify-content:center;gap:6px;
   position:relative;overflow:hidden;
 }
 .action-btn::after{
   content:'';position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(255,255,255,0.1) 0%,transparent 50%);
-  border-radius:18px;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,0.12) 0%,transparent 50%);
+  border-radius:16px;pointer-events:none;
 }
 .action-btn:hover{transform:translateY(-3px)}
 .action-btn:active{transform:scale(0.95)}
-.action-btn:disabled{opacity:0.25;cursor:not-allowed;transform:none!important}
-.action-btn.primary{background:linear-gradient(145deg,#e74c3c,#c0392b);box-shadow:0 4px 20px rgba(231,76,60,0.35)}
-.action-btn.secondary{background:linear-gradient(145deg,#6b3fa0,#8b5fbf);box-shadow:0 4px 20px rgba(107,63,160,0.35)}
-.action-btn.gold{background:linear-gradient(145deg,#f39c12,#e67e22);box-shadow:0 4px 20px rgba(243,156,18,0.35)}
-.action-btn.green{background:linear-gradient(145deg,#1db954,#17a44a);box-shadow:0 4px 20px rgba(29,185,84,0.35)}
+.action-btn:disabled{opacity:0.2;cursor:not-allowed;transform:none!important}
+.action-btn.primary{background:linear-gradient(145deg,#e74c3c,#c0392b);box-shadow:0 4px 18px rgba(231,76,60,0.3)}
+.action-btn.secondary{background:linear-gradient(145deg,#6b3fa0,#8b5fbf);box-shadow:0 4px 18px rgba(107,63,160,0.3)}
+.action-btn.gold{background:linear-gradient(145deg,#f39c12,#e67e22);box-shadow:0 4px 18px rgba(243,156,18,0.3)}
+.action-btn.green{background:linear-gradient(145deg,#27ae60,#1e8a4e);box-shadow:0 4px 18px rgba(39,174,96,0.3)}
 
 /* ===== CHATCHTUL BUTTON — dramatic pulsing ===== */
 .chatchtul-btn{
   background:linear-gradient(145deg,#ff4757,#c0392b,#e74c3c)!important;
-  box-shadow:0 6px 30px rgba(231,76,60,0.5)!important;
+  box-shadow:0 6px 25px rgba(231,76,60,0.45)!important;
   font-size:1.05rem!important;padding:14px 28px!important;
-  border:2px solid rgba(255,255,255,0.15)!important;
-  letter-spacing:0.03em;
+  border:2px solid rgba(255,255,255,0.12)!important;
+  letter-spacing:0.03em;border-radius:20px!important;
 }
 .chatchtul-btn.ready{animation:chatchtulPulse 2s ease-in-out infinite}
 @keyframes chatchtulPulse{
   0%,100%{
-    box-shadow:0 6px 30px rgba(231,76,60,0.5),0 0 0 0 rgba(231,76,60,0.4);
+    box-shadow:0 6px 25px rgba(231,76,60,0.45),0 0 0 0 rgba(231,76,60,0.35);
     transform:scale(1);
   }
   50%{
-    box-shadow:0 8px 40px rgba(231,76,60,0.7),0 0 0 12px rgba(231,76,60,0);
+    box-shadow:0 8px 35px rgba(231,76,60,0.6),0 0 0 10px rgba(231,76,60,0);
     transform:scale(1.03);
   }
 }
 
-/* Shockwave effect on chatchtul call */
+/* Shockwave + screen flash on chatchtul call */
 .shockwave{
   position:fixed;top:50%;left:50%;width:10px;height:10px;
   border-radius:50%;border:3px solid rgba(255,71,87,0.8);
@@ -339,15 +395,15 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
   100%{width:100vmax;height:100vmax;opacity:0;border-width:1px}
 }
 .screen-flash{
-  position:fixed;inset:0;background:rgba(255,71,87,0.15);z-index:998;
+  position:fixed;inset:0;background:rgba(255,71,87,0.12);z-index:998;
   pointer-events:none;animation:flashFade 0.5s ease-out forwards;
 }
 @keyframes flashFade{0%{opacity:1}100%{opacity:0}}
 
 /* ===== STATUS MESSAGE ===== */
 .status-msg{
-  text-align:center;font-weight:700;font-size:0.9rem;
-  color:rgba(255,255,255,0.6);min-height:26px;padding:6px 16px;
+  text-align:center;font-weight:700;font-size:0.85rem;
+  color:rgba(255,255,255,0.5);min-height:24px;padding:5px 14px;
   line-height:1.3;letter-spacing:0.01em;
 }
 
@@ -359,81 +415,100 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 }
 .drawn-card-display.show{transform:translate(-50%,-50%) scale(1);pointer-events:auto}
 .drawn-card-big{
-  width:130px;height:182px;border-radius:22px;
+  width:140px;height:195px;border-radius:16px;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  border:3px solid rgba(255,255,255,0.25);
-  box-shadow:0 25px 80px rgba(0,0,0,0.6),0 0 40px rgba(132,94,194,0.2);
+  background:#faf5ee;color:#333;position:relative;overflow:hidden;
+  border:3px solid rgba(0,0,0,0.08);
+  box-shadow:0 25px 80px rgba(0,0,0,0.5),0 0 30px rgba(147,88,255,0.15);
 }
-.drawn-card-big .card-emoji{font-size:3.8rem;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3))}
-.drawn-card-big .card-value{font-size:2rem;font-family:'Fredoka One',cursive;margin-top:4px;text-shadow:0 2px 8px rgba(0,0,0,0.4)}
-.drawn-card-big .card-name{font-size:0.85rem;font-weight:800;margin-top:2px;opacity:0.8}
-.drawn-card-big .card-label{font-size:0.55rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;opacity:0.5;margin-top:2px}
+.drawn-card-big .drawn-strip{
+  position:absolute;top:0;left:0;right:0;height:30px;border-radius:13px 13px 0 0;
+}
+.drawn-card-big .card-emoji{font-size:3.5rem;margin-top:10px;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.15))}
+.drawn-card-big .card-value{font-size:2.2rem;font-family:'Fredoka One',cursive;margin-top:2px}
+.drawn-card-big .card-name{font-size:0.85rem;font-weight:800;margin-top:2px;opacity:0.7}
+.drawn-card-big .card-label{font-size:0.5rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;opacity:0.4;margin-top:2px}
+/* Colored big-card variants */
+.drawn-big-cat .drawn-strip{background:linear-gradient(90deg,#78d7a0,#4ec6a0)}
+.drawn-big-cat .card-value,.drawn-big-cat .card-name{color:#2d8f6f}
+.drawn-big-mid .drawn-strip{background:linear-gradient(90deg,#ffc857,#f0a030)}
+.drawn-big-mid .card-value,.drawn-big-mid .card-name{color:#b07818}
+.drawn-big-rat .drawn-strip{background:linear-gradient(90deg,#ff7b54,#e84040)}
+.drawn-big-rat .card-value,.drawn-big-rat .card-name{color:#c02020}
+.drawn-big-super-rat .drawn-strip{background:linear-gradient(90deg,#a01030,#6b0020)}
+.drawn-big-super-rat .card-value,.drawn-big-super-rat .card-name{color:#8b0000}
+.drawn-big-special .drawn-strip{background:linear-gradient(90deg,#7c5cf7,#4a6cf7)}
+.drawn-big-special .card-value,.drawn-big-special .card-name{color:#4a5ce0}
+
 .drawn-overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:99;
+  position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:99;
   opacity:0;transition:opacity 0.3s;pointer-events:none;
-  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
 }
 .drawn-overlay.show{opacity:1;pointer-events:auto}
 
-/* ===== SWAP ANIMATION — arc trajectory ===== */
+/* ===== SWAP ANIMATION ===== */
 .card-slot.swapping{animation:swapArc 0.7s cubic-bezier(0.4,0,0.2,1)}
 @keyframes swapArc{
   0%{transform:translateY(0) scale(1) rotate(0deg);opacity:1}
-  25%{transform:translateY(-50px) scale(1.15) rotate(-5deg);opacity:0.8}
-  50%{transform:translateY(-30px) translateX(20px) scale(1.1) rotate(3deg);opacity:0.6}
-  75%{transform:translateY(20px) scale(0.95) rotate(-2deg);opacity:0.8}
+  25%{transform:translateY(-45px) scale(1.12) rotate(-4deg);opacity:0.85}
+  50%{transform:translateY(-25px) translateX(18px) scale(1.08) rotate(3deg);opacity:0.7}
+  75%{transform:translateY(15px) scale(0.96) rotate(-2deg);opacity:0.85}
   100%{transform:translateY(0) scale(1) rotate(0deg);opacity:1}
 }
 
 /* ===== SCORE OVERLAY / END SCREEN ===== */
 .score-overlay{
   position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;
-  background:rgba(0,0,0,0.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  background:rgba(0,0,0,0.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
 }
 .score-overlay.show{display:flex}
 .score-panel{
-  width:92%;max-width:420px;border-radius:28px;padding:28px 22px;
+  width:92%;max-width:420px;border-radius:24px;padding:24px 20px;
   text-align:center;animation:scoreSlideIn 0.7s cubic-bezier(0.175,0.885,0.32,1.275);
-  background:rgba(255,255,255,0.07);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
-  border:1px solid rgba(255,255,255,0.1);box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  background:rgba(255,255,255,0.06);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
+  border:1px solid rgba(255,255,255,0.08);box-shadow:0 20px 60px rgba(0,0,0,0.5);
 }
 @keyframes scoreSlideIn{
   0%{transform:translateY(60px) scale(0.8);opacity:0}
   60%{transform:translateY(-10px) scale(1.02)}
   100%{transform:translateY(0) scale(1);opacity:1}
 }
-.score-title{font-size:2.4rem;font-family:'Fredoka One',cursive;margin-bottom:4px}
-.score-subtitle{font-size:0.9rem;color:rgba(255,255,255,0.4);margin-bottom:16px}
-.score-cards-reveal{display:flex;justify-content:center;gap:8px;margin:10px 0}
+.score-title{font-size:2.2rem;font-family:'Fredoka One',cursive;margin-bottom:4px}
+.score-subtitle{font-size:0.85rem;color:rgba(255,255,255,0.35);margin-bottom:14px}
+.score-cards-reveal{display:flex;justify-content:center;gap:8px;margin:8px 0}
 .score-card-mini{
-  width:56px;height:78px;border-radius:12px;
+  width:52px;height:72px;border-radius:10px;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  border:2px solid rgba(255,255,255,0.15);font-size:0.7rem;font-weight:800;
-  box-shadow:0 4px 15px rgba(0,0,0,0.3);
+  background:#faf5ee;color:#333;position:relative;overflow:hidden;
+  border:2px solid rgba(0,0,0,0.06);
+  box-shadow:0 3px 12px rgba(0,0,0,0.2);
   animation:cardRevealPop 0.4s cubic-bezier(0.175,0.885,0.32,1.275) backwards;
+}
+.score-card-mini .mini-strip{
+  position:absolute;top:0;left:0;right:0;height:12px;border-radius:8px 8px 0 0;
 }
 .score-card-mini:nth-child(1){animation-delay:0.1s}
 .score-card-mini:nth-child(2){animation-delay:0.25s}
 .score-card-mini:nth-child(3){animation-delay:0.4s}
 .score-card-mini:nth-child(4){animation-delay:0.55s}
 @keyframes cardRevealPop{0%{transform:scale(0) rotate(-10deg);opacity:0}100%{transform:scale(1) rotate(0deg);opacity:1}}
-.score-card-mini .card-emoji{font-size:1.4rem}
-.score-card-mini .card-value{font-size:1rem;font-family:'Fredoka One',cursive}
-.score-total{font-size:1.6rem;font-family:'Fredoka One',cursive;margin:4px 0}
-.score-row{margin-bottom:16px}
-.score-row-label{font-size:0.8rem;color:rgba(255,255,255,0.4);font-weight:700;letter-spacing:0.03em}
-.result-emoji{font-size:4.5rem;margin:8px 0;animation:resultBounce 0.6s cubic-bezier(0.175,0.885,0.32,1.275)}
+.score-card-mini .card-emoji{font-size:1.2rem;margin-top:4px}
+.score-card-mini .card-value{font-size:0.9rem;font-family:'Fredoka One',cursive}
+.score-total{font-size:1.5rem;font-family:'Fredoka One',cursive;margin:3px 0}
+.score-row{margin-bottom:14px}
+.score-row-label{font-size:0.75rem;color:rgba(255,255,255,0.35);font-weight:700;letter-spacing:0.03em}
+.result-emoji{font-size:4rem;margin:6px 0;animation:resultBounce 0.6s cubic-bezier(0.175,0.885,0.32,1.275)}
 @keyframes resultBounce{0%{transform:scale(0)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
 
-/* Stats glass card */
 .stats-card{
   display:flex;justify-content:center;gap:24px;
-  padding:10px 20px;border-radius:14px;margin:10px 0 4px;
-  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);
+  padding:8px 18px;border-radius:12px;margin:8px 0 4px;
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.05);
 }
 .stats-card .stat{text-align:center}
-.stats-card .stat-num{font-family:'Fredoka One',cursive;font-size:1.1rem}
-.stats-card .stat-label{font-size:0.65rem;color:rgba(255,255,255,0.4);font-weight:700}
+.stats-card .stat-num{font-family:'Fredoka One',cursive;font-size:1rem}
+.stats-card .stat-label{font-size:0.6rem;color:rgba(255,255,255,0.35);font-weight:700}
 
 /* ===== CONFETTI ===== */
 .confetti-piece{
@@ -446,64 +521,62 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 }
 
 /* ===== RECORD BAR ===== */
-.record-bar{display:flex;justify-content:center;gap:16px;font-size:0.75rem;font-weight:700;color:rgba(255,255,255,0.35)}
+.record-bar{display:flex;justify-content:center;gap:16px;font-size:0.75rem;font-weight:700;color:rgba(255,255,255,0.3)}
 .record-bar span{display:flex;align-items:center;gap:4px}
 
 /* ===== MENU SCREEN ===== */
-.menu-art{font-size:5.5rem;margin:12px 0;animation:menuFloat 4s ease-in-out infinite}
+.menu-art{font-size:5rem;margin:10px 0;animation:menuFloat 4s ease-in-out infinite}
 @keyframes menuFloat{
   0%,100%{transform:translateY(0) rotate(-2deg)}
-  50%{transform:translateY(-14px) rotate(2deg)}
+  50%{transform:translateY(-12px) rotate(2deg)}
 }
 
-/* ===== RULES POPUP ===== */
-.rules-popup{
-  position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;
-  background:rgba(0,0,0,0.75);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-}
-.rules-popup.show{display:flex}
-.rules-content{
-  width:90%;max-width:420px;max-height:80vh;border-radius:24px;
-  padding:24px 20px;overflow-y:auto;
-  animation:scoreSlideIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
-}
-.rules-content h3{font-size:1.1rem;margin:14px 0 6px;color:#ffd93d}
-.rules-content p,.rules-content li{font-size:0.82rem;line-height:1.6;color:rgba(255,255,255,0.65)}
-.rules-content ul{padding-right:16px;padding-left:16px}
+/* ===== RULES MODAL ===== */
+.rules-overlay{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:20px;animation:rulesFadeIn 0.3s ease}
+@keyframes rulesFadeIn{0%{opacity:0}100%{opacity:1}}
+.rules-card-modal{background:rgba(255,255,255,0.12);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.2);border-radius:24px;padding:28px;max-width:420px;width:100%;max-height:80vh;overflow-y:auto;color:white;position:relative}
+.rules-card-modal h2{font-family:'Fredoka One',cursive;font-size:1.6rem;margin-bottom:16px;text-align:center}
+.rules-card-modal ul{list-style:none;padding:0}
+.rules-card-modal li{padding:8px 0;font-size:0.95rem;line-height:1.5;border-bottom:1px solid rgba(255,255,255,0.08)}
+.rules-card-modal li:last-child{border-bottom:none}
+.rules-close{position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.15);border:none;color:white;width:36px;height:36px;border-radius:50%;font-size:1.2rem;cursor:pointer;transition:all 0.2s}
+.rules-close:hover{background:rgba(255,255,255,0.25);transform:scale(1.1)}
+.rules-got-it{display:block;width:100%;margin-top:20px;padding:14px;border:none;border-radius:16px;font-family:'Fredoka One',cursive;font-size:1.1rem;cursor:pointer;background:linear-gradient(135deg,#667eea,#764ba2);color:white;transition:all 0.2s}
+.rules-got-it:hover{transform:scale(1.03);box-shadow:0 6px 20px rgba(102,126,234,0.4)}
 
 /* ===== DIFFICULTY ===== */
 .diff-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .diff-btn{
-  padding:12px 24px;border-radius:16px;
-  border:2px solid rgba(255,255,255,0.1);
-  background:rgba(255,255,255,0.04);color:white;
+  padding:11px 22px;border-radius:14px;
+  border:2px solid rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.03);color:white;
   font-family:'Nunito',sans-serif;font-weight:800;font-size:0.85rem;
-  cursor:pointer;transition:all 0.25s;min-height:50px;
+  cursor:pointer;transition:all 0.25s;min-height:46px;
 }
-.diff-btn:hover{transform:translateY(-2px);border-color:rgba(255,255,255,0.25);background:rgba(255,255,255,0.06)}
-.diff-btn.selected{border-color:#ffd93d;background:rgba(255,217,61,0.1);color:#ffd93d;box-shadow:0 0 20px rgba(255,217,61,0.1)}
+.diff-btn:hover{transform:translateY(-2px);border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.05)}
+.diff-btn.selected{border-color:#ffd93d;background:rgba(255,217,61,0.08);color:#ffd93d;box-shadow:0 0 16px rgba(255,217,61,0.08)}
 
-/* ===== TURN INDICATOR — glass panel with glow ===== */
+/* ===== TURN INDICATOR ===== */
 .turn-indicator{
-  font-size:0.75rem;font-weight:800;padding:5px 14px;border-radius:12px;
+  font-size:0.72rem;font-weight:800;padding:4px 12px;border-radius:10px;
   display:inline-flex;align-items:center;gap:5px;
   backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   border:1px solid transparent;transition:all 0.3s;
 }
 .turn-player{
-  background:rgba(29,185,84,0.15);color:#4ade80;
-  border-color:rgba(29,185,84,0.2);
-  box-shadow:0 0 15px rgba(29,185,84,0.1);
+  background:rgba(78,198,160,0.15);color:#78d7a0;
+  border-color:rgba(78,198,160,0.2);
+  box-shadow:0 0 12px rgba(78,198,160,0.08);
   animation:turnGlow 2s ease-in-out infinite;
 }
 @keyframes turnGlow{
-  0%,100%{box-shadow:0 0 15px rgba(29,185,84,0.1)}
-  50%{box-shadow:0 0 25px rgba(29,185,84,0.2)}
+  0%,100%{box-shadow:0 0 12px rgba(78,198,160,0.08)}
+  50%{box-shadow:0 0 22px rgba(78,198,160,0.18)}
 }
 .turn-computer{
-  background:rgba(231,76,60,0.15);color:#f87171;
-  border-color:rgba(231,76,60,0.2);
-  box-shadow:0 0 15px rgba(231,76,60,0.1);
+  background:rgba(231,76,60,0.12);color:#f87171;
+  border-color:rgba(231,76,60,0.15);
+  box-shadow:0 0 12px rgba(231,76,60,0.08);
 }
 
 /* ===== THINKING DOTS ===== */
@@ -515,37 +588,40 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 /* ===== TOAST ===== */
 .toast{
   position:fixed;top:24px;left:50%;transform:translateX(-50%) translateY(-100px);
-  z-index:500;padding:12px 24px;border-radius:18px;
-  font-weight:800;font-size:0.85rem;
+  z-index:500;padding:11px 22px;border-radius:16px;
+  font-weight:800;font-size:0.82rem;
   transition:transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
   white-space:nowrap;pointer-events:none;
-  box-shadow:0 8px 30px rgba(0,0,0,0.4);
+  box-shadow:0 8px 28px rgba(0,0,0,0.35);
 }
 .toast.show{transform:translateX(-50%) translateY(0)}
 
 /* ===== SPECIAL CARD OVERLAY ===== */
 .special-overlay{
   position:fixed;inset:0;z-index:150;display:none;align-items:center;justify-content:center;
-  background:rgba(0,0,0,0.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
 }
 .special-overlay.show{display:flex}
 .special-panel{
-  width:85%;max-width:360px;border-radius:24px;padding:24px 20px;
+  width:85%;max-width:360px;border-radius:22px;padding:22px 18px;
   text-align:center;animation:scoreSlideIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
 }
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:380px){
-  .card-slot{width:64px;height:90px}
-  .player-area-cards .card-slot{width:68px;height:96px}
-  .comp-area .card-slot{width:54px;height:76px}
+  .card-slot{width:68px;height:96px}
+  .player-area-cards .card-slot{width:70px;height:98px}
+  .comp-area .card-slot{width:52px;height:74px}
   .pile-card{width:58px;height:82px}
   .cards-row{gap:6px}
-  .center-area{gap:20px}
+  .center-area{gap:18px}
+  .card-emoji-main{font-size:1.5rem}
+  .card-corner{font-size:0.65rem}
+  .comp-area .card-emoji-main{font-size:1.1rem}
 }
 @media(max-width:340px){
   .player-area-cards .card-slot{width:62px;height:88px}
-  .comp-area .card-slot{width:50px;height:70px}
+  .comp-area .card-slot{width:48px;height:68px}
 }
 </style>
 </head>
@@ -562,7 +638,7 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 <div class="drawn-overlay" id="drawnOverlay"></div>
 <div class="drawn-card-display" id="drawnCardDisplay">
   <div class="drawn-card-big" id="drawnCardBig"></div>
-  <div style="display:flex;gap:10px;margin-top:18px;justify-content:center;flex-wrap:wrap" id="drawnActions"></div>
+  <div style="display:flex;gap:10px;margin-top:16px;justify-content:center;flex-wrap:wrap" id="drawnActions"></div>
 </div>
 
 <!-- Special action overlay -->
@@ -575,12 +651,17 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
   <div class="score-panel" id="scorePanel"></div>
 </div>
 
-<!-- Rules popup -->
-<div class="rules-popup" id="rulesPopup" onclick="closeRules(event)">
-  <div class="rules-content glass-strong" id="rulesContent"></div>
+<!-- Rules Modal -->
+<div class="rules-overlay" id="rulesOverlay" style="display:none" onclick="if(event.target===this)closeRulesModal()">
+  <div class="rules-card-modal">
+    <button class="rules-close" onclick="closeRulesModal()">&times;</button>
+    <h2 id="rulesTitle">הוראות משחק</h2>
+    <ul id="rulesList"></ul>
+    <button class="rules-got-it" id="rulesGotIt" onclick="closeRulesModal()">הבנתי!</button>
+  </div>
 </div>
 
-<!-- Top bar — glass circles -->
+<!-- Top bar -->
 <div class="top-bar">
   <a href="../" class="back-btn" id="backBtn">🏠</a>
   <button class="lang-btn" onclick="toggleLang()" id="langBtn">EN</button>
@@ -592,7 +673,7 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 <div class="screen active" id="menuScreen">
   <div class="menu-art">🐱</div>
   <h1 class="title-gradient" style="font-size:2.6rem;line-height:1.1" data-he="חתחתול!" data-en="Chatchtul!">חתחתול!</h1>
-  <p style="color:rgba(255,255,255,0.35);font-size:0.85rem;font-weight:700;margin-top:-6px;letter-spacing:0.02em" data-he="הקלפים הנמוכים ביותר מנצחים" data-en="Lowest cards win">הקלפים הנמוכים ביותר מנצחים</p>
+  <p style="color:rgba(255,255,255,0.3);font-size:0.82rem;font-weight:700;margin-top:-6px;letter-spacing:0.02em" data-he="הקלפים הנמוכים ביותר מנצחים" data-en="Lowest cards win">הקלפים הנמוכים ביותר מנצחים</p>
 
   <div class="record-bar" id="recordBar">
     <span data-he="ניצחונות" data-en="Wins">ניצחונות</span>: <span id="recWins">0</span>
@@ -601,7 +682,7 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
   </div>
 
   <div style="margin-top:8px">
-    <p style="font-weight:700;font-size:0.85rem;color:rgba(255,255,255,0.4);margin-bottom:10px" data-he="בחר רמת קושי" data-en="Choose difficulty">בחר רמת קושי</p>
+    <p style="font-weight:700;font-size:0.82rem;color:rgba(255,255,255,0.35);margin-bottom:10px" data-he="בחר רמת קושי" data-en="Choose difficulty">בחר רמת קושי</p>
     <div class="diff-btns">
       <button class="diff-btn selected" data-diff="easy" onclick="setDiff('easy',this)" data-he="קל" data-en="Easy">קל</button>
       <button class="diff-btn" data-diff="medium" onclick="setDiff('medium',this)" data-he="בינוני" data-en="Medium">בינוני</button>
@@ -609,7 +690,7 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
     </div>
   </div>
 
-  <button class="action-btn green" style="font-size:1.1rem;padding:16px 44px;margin-top:10px" onclick="startGame()" data-he="🎮 התחל משחק" data-en="🎮 Start Game">🎮 התחל משחק</button>
+  <button class="action-btn green" style="font-size:1.05rem;padding:15px 40px;margin-top:10px" onclick="startGame()" data-he="🎮 התחל משחק" data-en="🎮 Start Game">🎮 התחל משחק</button>
   <button class="action-btn secondary" onclick="showRules()" data-he="📖 חוקי המשחק" data-en="📖 How to Play">📖 חוקי המשחק</button>
 </div>
 
@@ -632,15 +713,15 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
   <!-- Center: draw & discard -->
   <div class="center-area">
     <div class="pile" id="drawPile" onclick="drawFromDeck()">
-      <div class="pile-card card-back" style="border:2px solid rgba(255,255,255,0.1)">
-        <span style="font-size:1.6rem;opacity:0.2">🐾</span>
+      <div class="pile-card card-back" style="border:2px solid rgba(255,255,255,0.08)">
+        <span class="paw-center">🐾</span>
         <span class="draw-count" id="deckCount">40</span>
       </div>
       <span class="pile-label" data-he="חפיסה" data-en="Deck">חפיסה</span>
     </div>
     <div class="pile" id="discardPile" onclick="drawFromDiscard()">
-      <div class="pile-card glass" id="discardTop" style="border:2px solid rgba(255,255,255,0.1)">
-        <span style="font-size:1.2rem;opacity:0.3">-</span>
+      <div class="pile-card glass" id="discardTop" style="border:2px solid rgba(255,255,255,0.08)">
+        <span style="font-size:1.2rem;opacity:0.25">-</span>
       </div>
       <span class="pile-label" data-he="ערימת שליכה" data-en="Discard">ערימת שליכה</span>
     </div>
@@ -673,21 +754,21 @@ h1,h2,h3,.font-display{font-family:'Fredoka One',cursive}
 
 <script>
 // ============================================================
-// CHATCHTUL GAME - Complete Implementation
+// CHATCHTUL GAME - Complete Implementation (Redesigned Visuals)
 // ============================================================
 
 // --- Floating Particles ---
 (function initParticles() {
   const container = document.getElementById('particles');
-  const emojis = ['🐱','🐀','🐾','✨','🐱','🐾','✨','🐀','🐾','✨'];
-  for (let i = 0; i < 18; i++) {
+  const emojis = ['🐱','🐀','🐾','✨','😺','🐾','✨','🐁','🐾','⭐'];
+  for (let i = 0; i < 16; i++) {
     const p = document.createElement('div');
     p.className = 'particle';
     p.textContent = emojis[i % emojis.length];
     p.style.left = (Math.random() * 100) + '%';
-    p.style.fontSize = (0.6 + Math.random() * 1) + 'rem';
-    p.style.animationDuration = (12 + Math.random() * 20) + 's';
-    p.style.animationDelay = (Math.random() * 15) + 's';
+    p.style.fontSize = (0.6 + Math.random() * 0.9) + 'rem';
+    p.style.animationDuration = (14 + Math.random() * 22) + 's';
+    p.style.animationDelay = (Math.random() * 16) + 's';
     container.appendChild(p);
   }
 })();
@@ -814,6 +895,7 @@ function toggleLang() {
     el.textContent = el.getAttribute(lang === 'he' ? 'data-he' : 'data-en');
   });
   if (statusKey) setStatus(statusKey, statusReplacements);
+  updateRulesLang();
 }
 
 let statusKey = '', statusReplacements = {};
@@ -846,15 +928,21 @@ function makeCard(value) {
   return { value, special: false };
 }
 
+// Emoji arrays for variety
+const CAT_EMOJIS = ['😺','😸','😻','😺'];
+const MID_EMOJIS = ['🐶','🐰','🐸'];
+const RAT_EMOJIS = ['🐀','🐁','🐀'];
+
 function cardEmoji(card) {
   if (card.special) {
     if (card.value === CARD_TYPES.PEEK) return '👁️';
     if (card.value === CARD_TYPES.SWAP) return '🔄';
     if (card.value === CARD_TYPES.DRAW2) return '🃏';
   }
-  if (card.value <= 2) return '🐱';
-  if (card.value <= 5) return ['🐶','🐰','🐸'][card.value - 3] || '🐾';
-  if (card.value <= 8) return '🐀';
+  if (card.value <= 0) return '😻';
+  if (card.value <= 2) return CAT_EMOJIS[card.value] || '😺';
+  if (card.value <= 5) return MID_EMOJIS[card.value - 3] || '🐾';
+  if (card.value <= 8) return RAT_EMOJIS[card.value - 6] || '🐀';
   return '🐀';
 }
 
@@ -875,16 +963,36 @@ function cardColorClass(card) {
   return 'card-super-rat';
 }
 
-function cardSubLabel(card) {
-  if (card.special) {
-    if (card.value === CARD_TYPES.PEEK) return '👁️';
-    if (card.value === CARD_TYPES.SWAP) return '🔄';
-    if (card.value === CARD_TYPES.DRAW2) return '🃏';
-  }
-  if (card.value <= 2) return 'MEOW';
-  if (card.value <= 5) return '';
-  if (card.value === 9) return '💀';
-  return '';
+function bigCardClass(card) {
+  if (card.special) return 'drawn-big-special';
+  if (card.value <= 2) return 'drawn-big-cat';
+  if (card.value <= 5) return 'drawn-big-mid';
+  if (card.value <= 8) return 'drawn-big-rat';
+  return 'drawn-big-super-rat';
+}
+
+function pileColorClass(card) {
+  if (card.special) return 'pile-special';
+  if (card.value <= 2) return 'pile-cat';
+  if (card.value <= 5) return 'pile-mid';
+  if (card.value <= 8) return 'pile-rat';
+  return 'pile-super-rat';
+}
+
+function miniStripColor(card) {
+  if (card.special) return 'linear-gradient(90deg,#7c5cf7,#4a6cf7)';
+  if (card.value <= 2) return 'linear-gradient(90deg,#78d7a0,#4ec6a0)';
+  if (card.value <= 5) return 'linear-gradient(90deg,#ffc857,#f0a030)';
+  if (card.value <= 8) return 'linear-gradient(90deg,#ff7b54,#e84040)';
+  return 'linear-gradient(90deg,#a01030,#6b0020)';
+}
+
+function dotColor(card) {
+  if (card.special) return '#7c5cf7';
+  if (card.value <= 2) return '#4ec6a0';
+  if (card.value <= 5) return '#f0a030';
+  if (card.value <= 8) return '#e84040';
+  return '#8b0000';
 }
 
 function buildDeck() {
@@ -940,44 +1048,43 @@ function showScreen(id) {
   document.getElementById(id).classList.add('active');
 }
 
-// --- Rules ---
-function showRules() {
-  const rc = document.getElementById('rulesContent');
-  rc.innerHTML = `
-    <h2 style="font-size:1.5rem;text-align:center;margin-bottom:12px">${t('rulesTitle')}</h2>
-    <ul style="display:flex;flex-direction:column;gap:8px">
-      <li>${t('ruleGoal')}</li>
-      <li>${t('ruleCards')}</li>
-      <li>${t('rulePeek')}</li>
-      <li>${t('ruleTurn')}</li>
-      <li>${t('ruleSwapOrDiscard')}</li>
-      <li>${t('ruleSpecials')}</li>
-      <li>${t('ruleEnd')}</li>
-    </ul>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:16px">
-      <div style="text-align:center;padding:8px 12px;border-radius:12px;background:rgba(29,185,84,0.1);border:1px solid rgba(29,185,84,0.2)">
-        <div style="font-size:1.8rem">🐱</div>
-        <div style="font-size:0.7rem;font-weight:800;color:#4ade80">0-2</div>
-      </div>
-      <div style="text-align:center;padding:8px 12px;border-radius:12px;background:rgba(240,160,48,0.1);border:1px solid rgba(240,160,48,0.2)">
-        <div style="font-size:1.8rem">🐶🐰🐸</div>
-        <div style="font-size:0.7rem;font-weight:800;color:#f0a030">3-5</div>
-      </div>
-      <div style="text-align:center;padding:8px 12px;border-radius:12px;background:rgba(232,64,64,0.1);border:1px solid rgba(232,64,64,0.2)">
-        <div style="font-size:1.8rem">🐀</div>
-        <div style="font-size:0.7rem;font-weight:800;color:#f87171">6-9</div>
-      </div>
-      <div style="text-align:center;padding:8px 12px;border-radius:12px;background:rgba(74,108,247,0.1);border:1px solid rgba(74,108,247,0.2)">
-        <div style="font-size:1.8rem">👁️🔄🃏</div>
-        <div style="font-size:0.7rem;font-weight:800;color:#60a5fa">${lang==='he'?'מיוחד':'Special'}</div>
-      </div>
-    </div>
-    <button class="action-btn secondary" style="margin:16px auto 0;display:block" onclick="document.getElementById('rulesPopup').classList.remove('show')">${t('close')}</button>
-  `;
-  document.getElementById('rulesPopup').classList.add('show');
+// --- Rules Modal ---
+const CHATCHTUL_RULES = {
+  he: [
+    '🎴 לכל שחקן 4 קלפים הפוכים. המטרה: הניקוד הנמוך ביותר!',
+    '🐱 חתולים (0-2) = טוב! 🐀 עכברושים (6-9) = רע!',
+    '🔄 בתורכם: משכו קלף מהחפיסה או מערימת ההשלכה',
+    '🃏 החליפו אותו עם אחד מהקלפים שלכם, או השליכו',
+    '⭐ קלפים מיוחדים: 👁️ הצצה, 🔄 החלפה, 🃏 משיכת 2',
+    '🎉 כשאתם בטוחים שיש לכם את הניקוד הנמוך — קראו "חתחתול!"'
+  ],
+  en: [
+    '🎴 Each player has 4 face-down cards. Goal: lowest total score!',
+    '🐱 Cats (0-2) = good! 🐀 Rats (6-9) = bad!',
+    '🔄 On your turn: draw from deck or discard pile',
+    '🃏 Swap it with one of your cards, or discard it',
+    '⭐ Special cards: 👁️ Peek, 🔄 Swap, 🃏 Draw 2',
+    '🎉 When you think you have the lowest score — call "Chatchtul!"'
+  ]
+};
+function showRules() { openRulesModal(); }
+function openRulesModal() {
+  updateRulesLang();
+  document.getElementById('rulesOverlay').style.display = 'flex';
 }
-function closeRules(e) {
-  if (e.target === document.getElementById('rulesPopup')) document.getElementById('rulesPopup').classList.remove('show');
+function closeRulesModal() {
+  document.getElementById('rulesOverlay').style.display = 'none';
+}
+function updateRulesLang() {
+  const isHe = lang === 'he';
+  document.getElementById('rulesTitle').textContent = isHe ? 'הוראות משחק' : 'Game Rules';
+  document.getElementById('rulesGotIt').textContent = isHe ? 'הבנתי!' : 'Got it!';
+  const list = document.getElementById('rulesList');
+  const rules = isHe ? CHATCHTUL_RULES.he : CHATCHTUL_RULES.en;
+  list.innerHTML = rules.map(r => `<li>${r}</li>`).join('');
+  list.closest('.rules-card-modal').style.direction = isHe ? 'rtl' : 'ltr';
+  list.closest('.rules-card-modal').style.textAlign = isHe ? 'right' : 'left';
+}
 }
 
 // --- Toast ---
@@ -988,7 +1095,7 @@ function toast(msg, dur = 2000) {
   setTimeout(() => el.classList.remove('show'), dur);
 }
 
-// --- Render cards ---
+// --- Render cards (NEW illustrated style) ---
 function renderCard(container, card, faceUp, index, owner) {
   const slot = document.createElement('div');
   slot.className = 'card-slot';
@@ -998,17 +1105,52 @@ function renderCard(container, card, faceUp, index, owner) {
   const inner = document.createElement('div');
   inner.className = 'card-inner' + (faceUp ? ' flipped' : '');
 
+  // BACK face
   const back = document.createElement('div');
   back.className = 'card-face card-back';
+  back.innerHTML = '<span class="paw-center">🐾</span>';
 
+  // FRONT face — white card with colored strip, corner numbers, emoji, dots
   const front = document.createElement('div');
-  const sub = cardSubLabel(card);
   front.className = `card-face card-front ${cardColorClass(card)}`;
+
+  const val = card.special ? '' : card.value;
+  const emoji = cardEmoji(card);
+  const cornerNum = card.special ? '★' : card.value;
+
+  // Build dots (number of dots = card value, max 9)
+  let dotsHTML = '';
+  if (!card.special && card.value > 0) {
+    const dc = dotColor(card);
+    let dots = '';
+    const count = Math.min(card.value, 9);
+    for (let d = 0; d < count; d++) {
+      dots += `<span style="background:${dc}"></span>`;
+    }
+    dotsHTML = `<div class="card-dots">${dots}</div>`;
+  }
+
+  // Special card label
+  let specialLabel = '';
+  if (card.special) {
+    specialLabel = `<span class="card-type-label">${cardName(card)}</span>`;
+  }
+
+  // Card 9 skull indicator
+  let extraLabel = '';
+  if (!card.special && card.value === 9) {
+    extraLabel = '<span style="font-size:0.55rem;margin-top:1px;opacity:0.5">💀</span>';
+  }
+
   front.innerHTML = `
-    <span class="card-emoji">${cardEmoji(card)}</span>
-    <span class="card-value">${card.special ? '' : card.value}</span>
-    ${card.special ? `<span class="card-name" style="font-size:0.65rem;font-weight:800">${cardName(card)}</span>` : ''}
-    ${sub && !card.special ? `<span class="card-label">${sub}</span>` : ''}
+    <div class="card-top-strip"></div>
+    <span class="card-corner card-corner-tl">${cornerNum}</span>
+    <span class="card-corner card-corner-br">${cornerNum}</span>
+    <span class="card-emoji-main">${emoji}</span>
+    ${!card.special ? `<span style="font-family:'Fredoka One',cursive;font-size:0.95rem;margin-top:1px;line-height:1">${val}</span>` : ''}
+    ${specialLabel}
+    ${dotsHTML}
+    ${extraLabel}
   `;
 
   inner.appendChild(back);
@@ -1039,14 +1181,17 @@ function renderDiscardTop() {
   const el = document.getElementById('discardTop');
   if (discard.length === 0) {
     el.className = 'pile-card glass';
-    el.style.border = '2px solid rgba(255,255,255,0.1)';
-    el.innerHTML = `<span style="font-size:1.2rem;opacity:0.3">-</span>`;
+    el.style.border = '2px solid rgba(255,255,255,0.08)';
+    el.innerHTML = `<span style="font-size:1.2rem;opacity:0.25">-</span>`;
     return;
   }
   const card = discard[discard.length - 1];
-  el.className = `pile-card ${cardColorClass(card)}`;
-  el.style.border = '2px solid rgba(255,255,255,0.15)';
-  el.innerHTML = `<span style="font-size:1.4rem">${cardEmoji(card)}</span><span style="font-size:0.95rem;font-weight:800;font-family:'Fredoka One',cursive">${card.special ? cardName(card) : card.value}</span>`;
+  el.className = 'pile-card';
+  el.style.border = '2px solid rgba(255,255,255,0.12)';
+  el.innerHTML = `<div class="pile-card-face ${pileColorClass(card)}">
+    <span style="font-size:1.3rem">${cardEmoji(card)}</span>
+    <span style="font-size:0.9rem;font-weight:800;font-family:'Fredoka One',cursive">${card.special ? cardName(card) : card.value}</span>
+  </div>`;
 }
 
 function updateDeckCount() {
@@ -1063,7 +1208,6 @@ function peekCard(owner, index, duration = 3000) {
     inner.classList.add('flipped');
     slot.classList.add('peeking');
 
-    // Timer ring SVG
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.classList.add('peek-timer');
     svg.setAttribute('viewBox', '0 0 24 24');
@@ -1092,7 +1236,6 @@ function peekCard(owner, index, duration = 3000) {
   });
 }
 
-// Flip card permanently (for end game reveal)
 function flipCardPermanent(owner, index) {
   const cont = owner === 'player' ? document.getElementById('playerCards') : document.getElementById('compCards');
   const slot = cont.children[index];
@@ -1100,17 +1243,19 @@ function flipCardPermanent(owner, index) {
   slot.querySelector('.card-inner').classList.add('flipped');
 }
 
-// --- Show drawn card ---
+// --- Show drawn card (big card overlay) ---
 function showDrawnCard(card) {
   return new Promise(resolve => {
     const big = document.getElementById('drawnCardBig');
-    big.className = `drawn-card-big ${cardColorClass(card)}`;
-    const sub = cardSubLabel(card);
+    big.className = `drawn-card-big ${bigCardClass(card)}`;
+    const emoji = cardEmoji(card);
+    const val = card.special ? '' : card.value;
+    const name = cardName(card);
     big.innerHTML = `
-      <span class="card-emoji">${cardEmoji(card)}</span>
-      <span class="card-value">${card.special ? '' : card.value}</span>
-      <span class="card-name">${cardName(card)}</span>
-      ${sub && !card.special ? `<span class="card-label">${sub}</span>` : ''}
+      <div class="drawn-strip"></div>
+      <span class="card-emoji">${emoji}</span>
+      <span class="card-value">${val}</span>
+      ${card.special ? `<span class="card-name">${name}</span>` : ''}
     `;
 
     const actions = document.getElementById('drawnActions');
@@ -1140,7 +1285,6 @@ function startGame() {
   turnCount = 0;
   phase = 'dealing';
 
-  // Deal 4 to each, ensuring no specials in initial hands
   let dealing = true;
   while (dealing) {
     deck = shuffle(buildDeck());
@@ -1160,7 +1304,6 @@ function startGame() {
     if (ok) dealing = false;
   }
 
-  // Discard first card (ensure not special)
   let firstDiscard = deck.pop();
   while (firstDiscard.special) {
     deck.unshift(firstDiscard);
@@ -1175,17 +1318,14 @@ function startGame() {
   renderDiscardTop();
   updateDeckCount();
 
-  // Computer memorizes its own edge cards
   compMemory.comp[0] = compHand[0].value;
   compMemory.comp[3] = compHand[3].value;
 
-  // Memorize phase
   phase = 'memorize';
   enableChatchtul(false);
   document.getElementById('compTurn').style.display = 'none';
   document.getElementById('playerTurn').style.display = 'none';
 
-  // Show player's leftmost and rightmost
   const dur = 5000;
   setStatus('memorize', { s: '5' });
 
@@ -1294,7 +1434,7 @@ function handleNumberDraw(card) {
   setStatus('drawnNumber', { v: card.value });
 
   const actions = document.getElementById('drawnActions');
-  actions.innerHTML = `<button class="action-btn secondary" onclick="discardDrawn()" style="min-height:48px">${t('discardIt')}</button>`;
+  actions.innerHTML = `<button class="action-btn secondary" onclick="discardDrawn()" style="min-height:46px">${t('discardIt')}</button>`;
 
   highlightPlayerCards('swap');
 }
@@ -1304,7 +1444,7 @@ function handleNumberDrawFromDiscard(card) {
   setStatus('drawnNumber', { v: card.value });
 
   const actions = document.getElementById('drawnActions');
-  actions.innerHTML = `<button class="action-btn secondary" onclick="discardDrawn()" style="min-height:48px">${t('discardIt')}</button>`;
+  actions.innerHTML = `<button class="action-btn secondary" onclick="discardDrawn()" style="min-height:46px">${t('discardIt')}</button>`;
 
   highlightPlayerCards('swap');
 }
@@ -1316,12 +1456,12 @@ function handleSpecialDraw(card) {
   if (type === CARD_TYPES.PEEK) {
     setStatus('drawnSpecialPeek');
     const actions = document.getElementById('drawnActions');
-    actions.innerHTML = `<button class="action-btn secondary" onclick="discardDrawn()" style="min-height:48px">${t('discardIt')}</button>`;
+    actions.innerHTML = `<button class="action-btn secondary" onclick="discardDrawn()" style="min-height:46px">${t('discardIt')}</button>`;
     highlightPlayerCards('peek');
   } else if (type === CARD_TYPES.SWAP) {
     setStatus('drawnSpecialSwap');
     const actions = document.getElementById('drawnActions');
-    actions.innerHTML = `<button class="action-btn secondary" onclick="discardDrawn()" style="min-height:48px">${t('discardIt')}</button>`;
+    actions.innerHTML = `<button class="action-btn secondary" onclick="discardDrawn()" style="min-height:46px">${t('discardIt')}</button>`;
     highlightPlayerCards('swapSpecial');
   } else if (type === CARD_TYPES.DRAW2) {
     setStatus('drawnSpecialDraw2');
@@ -1449,25 +1589,29 @@ function handleDraw2() {
 
   const panel = document.getElementById('specialPanel');
   panel.innerHTML = `
-    <h3 style="font-size:1.2rem;margin-bottom:14px">${t('draw2pick')}</h3>
-    <div style="display:flex;justify-content:center;gap:18px">
-      <div id="d2c1" class="card-slot" style="width:95px;height:133px;cursor:pointer" onclick="pickDraw2(0)">
+    <h3 style="font-size:1.1rem;margin-bottom:12px">${t('draw2pick')}</h3>
+    <div style="display:flex;justify-content:center;gap:16px">
+      <div id="d2c1" class="card-slot" style="width:100px;height:140px;cursor:pointer" onclick="pickDraw2(0)">
         <div class="card-inner flipped">
-          <div class="card-face card-back"></div>
+          <div class="card-face card-back"><span class="paw-center">🐾</span></div>
           <div class="card-face card-front ${cardColorClass(c1)}">
-            <span class="card-emoji" style="font-size:2.4rem">${cardEmoji(c1)}</span>
-            <span class="card-value" style="font-size:1.4rem">${c1.special ? '' : c1.value}</span>
-            ${c1.special ? `<span class="card-name">${cardName(c1)}</span>` : ''}
+            <div class="card-top-strip"></div>
+            <span class="card-corner card-corner-tl" style="font-size:0.85rem">${c1.special ? '★' : c1.value}</span>
+            <span class="card-emoji-main" style="font-size:2.2rem">${cardEmoji(c1)}</span>
+            <span style="font-family:'Fredoka One',cursive;font-size:1.2rem">${c1.special ? '' : c1.value}</span>
+            ${c1.special ? `<span class="card-type-label">${cardName(c1)}</span>` : ''}
           </div>
         </div>
       </div>
-      <div id="d2c2" class="card-slot" style="width:95px;height:133px;cursor:pointer" onclick="pickDraw2(1)">
+      <div id="d2c2" class="card-slot" style="width:100px;height:140px;cursor:pointer" onclick="pickDraw2(1)">
         <div class="card-inner flipped">
-          <div class="card-face card-back"></div>
+          <div class="card-face card-back"><span class="paw-center">🐾</span></div>
           <div class="card-face card-front ${cardColorClass(c2)}">
-            <span class="card-emoji" style="font-size:2.4rem">${cardEmoji(c2)}</span>
-            <span class="card-value" style="font-size:1.4rem">${c2.special ? '' : c2.value}</span>
-            ${c2.special ? `<span class="card-name">${cardName(c2)}</span>` : ''}
+            <div class="card-top-strip"></div>
+            <span class="card-corner card-corner-tl" style="font-size:0.85rem">${c2.special ? '★' : c2.value}</span>
+            <span class="card-emoji-main" style="font-size:2.2rem">${cardEmoji(c2)}</span>
+            <span style="font-family:'Fredoka One',cursive;font-size:1.2rem">${c2.special ? '' : c2.value}</span>
+            ${c2.special ? `<span class="card-type-label">${cardName(c2)}</span>` : ''}
           </div>
         </div>
       </div>
@@ -1698,7 +1842,6 @@ function callChatchtul() {
   chatchtulCaller = 'player';
   lastTurnFor = 'computer';
 
-  // Visual shockwave
   const sw = document.createElement('div');
   sw.className = 'shockwave';
   document.body.appendChild(sw);
@@ -1722,7 +1865,6 @@ function callChatchtulComp() {
   chatchtulCaller = 'computer';
   lastTurnFor = 'player';
 
-  // Shockwave for computer call too
   const sw = document.createElement('div');
   sw.className = 'shockwave';
   document.body.appendChild(sw);
@@ -1743,7 +1885,6 @@ function revealAll() {
   document.getElementById('compTurn').style.display = 'none';
   document.getElementById('playerTurn').style.display = 'none';
 
-  // Flip all cards with staggered animation
   let delay = 0;
   for (let i = 0; i < 4; i++) {
     setTimeout(() => flipCardPermanent('player', i), delay);
@@ -1787,35 +1928,34 @@ function showScoreScreen() {
   localStorage.setItem('chatchtul-record', JSON.stringify(record));
   updateRecordUI();
 
-  // Confetti if player wins
   if (won) setTimeout(() => spawnConfetti(), 300);
 
   const panel = document.getElementById('scorePanel');
   panel.innerHTML = `
     <div class="result-emoji">${won ? '🎉' : tied ? '🤝' : '😿'}</div>
     <div class="score-title">${won ? t('youWin') : tied ? t('tie') : t('youLose')}</div>
-    ${!won && !tied ? `<p style="font-size:0.8rem;color:rgba(255,255,255,0.4);margin:4px 0">${lang === 'he' ? 'בפעם הבאה!' : 'Next time!'}</p>` : ''}
-    ${bonusText ? `<div style="font-size:0.8rem;color:#ffd93d;font-weight:700;margin:4px 0">${chatchtulCaller === 'player' ? t(pScore < cScore + 5 ? 'bonus' : 'penalty') : ''} ${bonusText}</div>` : ''}
+    ${!won && !tied ? `<p style="font-size:0.78rem;color:rgba(255,255,255,0.35);margin:3px 0">${lang === 'he' ? 'בפעם הבאה!' : 'Next time!'}</p>` : ''}
+    ${bonusText ? `<div style="font-size:0.78rem;color:#ffd93d;font-weight:700;margin:3px 0">${chatchtulCaller === 'player' ? t(pScore < cScore + 5 ? 'bonus' : 'penalty') : ''} ${bonusText}</div>` : ''}
 
-    <div class="score-row" style="margin-top:12px">
+    <div class="score-row" style="margin-top:10px">
       <div class="score-row-label">${t('yourScore')}</div>
       <div class="score-cards-reveal">
-        ${playerHand.map(c => `<div class="score-card-mini ${cardColorClass(c)}"><span class="card-emoji">${cardEmoji(c)}</span><span class="card-value">${c.special ? '0' : c.value}</span></div>`).join('')}
+        ${playerHand.map(c => `<div class="score-card-mini"><div class="mini-strip" style="background:${miniStripColor(c)}"></div><span class="card-emoji">${cardEmoji(c)}</span><span class="card-value">${c.special ? '0' : c.value}</span></div>`).join('')}
       </div>
-      <div class="score-total" style="color:${pScore <= cScore ? '#4ade80' : '#f87171'}">${pScore}</div>
+      <div class="score-total" style="color:${pScore <= cScore ? '#78d7a0' : '#f87171'}">${pScore}</div>
     </div>
 
     <div class="score-row">
       <div class="score-row-label">${t('compScore')}</div>
       <div class="score-cards-reveal">
-        ${compHand.map(c => `<div class="score-card-mini ${cardColorClass(c)}"><span class="card-emoji">${cardEmoji(c)}</span><span class="card-value">${c.special ? '0' : c.value}</span></div>`).join('')}
+        ${compHand.map(c => `<div class="score-card-mini"><div class="mini-strip" style="background:${miniStripColor(c)}"></div><span class="card-emoji">${cardEmoji(c)}</span><span class="card-value">${c.special ? '0' : c.value}</span></div>`).join('')}
       </div>
-      <div class="score-total" style="color:${cScore <= pScore ? '#4ade80' : '#f87171'}">${cScore}</div>
+      <div class="score-total" style="color:${cScore <= pScore ? '#78d7a0' : '#f87171'}">${cScore}</div>
     </div>
 
     <div class="stats-card">
       <div class="stat">
-        <div class="stat-num" style="color:#4ade80">${record.w}</div>
+        <div class="stat-num" style="color:#78d7a0">${record.w}</div>
         <div class="stat-label">${t('wins')}</div>
       </div>
       <div class="stat">
@@ -1824,9 +1964,9 @@ function showScoreScreen() {
       </div>
     </div>
 
-    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px">
-      <button class="action-btn green" onclick="document.getElementById('scoreOverlay').classList.remove('show');startGame()" style="min-height:48px">${t('playAgain')}</button>
-      <button class="action-btn secondary" onclick="document.getElementById('scoreOverlay').classList.remove('show');showScreen('menuScreen')" style="min-height:48px">${t('backToMenu')}</button>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px">
+      <button class="action-btn green" onclick="document.getElementById('scoreOverlay').classList.remove('show');startGame()" style="min-height:46px">${t('playAgain')}</button>
+      <button class="action-btn secondary" onclick="document.getElementById('scoreOverlay').classList.remove('show');showScreen('menuScreen')" style="min-height:46px">${t('backToMenu')}</button>
     </div>
   `;
 

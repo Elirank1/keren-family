@@ -6,238 +6,359 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#0f0326">
+<meta name="theme-color" content="#0a2e1a">
 <title>Taki | Keren Family</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🃏</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎴</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --red: #EF4444; --blue: #3B82F6; --green: #22C55E; --yellow: #EAB308;
-  --red-dark: #B91C1C; --blue-dark: #1D4ED8; --green-dark: #15803D; --yellow-dark: #A16207;
-  --red-light: #FCA5A5; --blue-light: #93C5FD; --green-light: #86EFAC; --yellow-light: #FDE047;
-  --red-glow: rgba(239,68,68,0.5); --blue-glow: rgba(59,130,246,0.5); --green-glow: rgba(34,197,94,0.5); --yellow-glow: rgba(234,179,8,0.5);
-  --card-w: 72px; --card-h: 104px; --card-r: 16px;
-  --glass-bg: rgba(255,255,255,0.08);
-  --glass-border: rgba(255,255,255,0.12);
-  --glass-blur: blur(20px);
+  --red: #DC2626; --blue: #2563EB; --green: #16A34A; --yellow: #CA8A04;
+  --red-dark: #991B1B; --blue-dark: #1E40AF; --green-dark: #15803D; --yellow-dark: #92400E;
+  --red-glow: rgba(220,38,38,0.5); --blue-glow: rgba(37,99,235,0.5); --green-glow: rgba(22,163,74,0.5); --yellow-glow: rgba(202,138,4,0.5);
+  --card-w: 70px; --card-h: 100px; --card-r: 14px;
+  --pile-w: 90px; --pile-h: 130px; --pile-r: 16px;
+  --felt: #0a2e1a; --felt-dark: #051a0e;
 }
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-body { font-family:'Nunito',sans-serif; min-height:100vh; min-height:100dvh; overflow:hidden; user-select:none; -webkit-user-select:none;
-  background:linear-gradient(135deg, #0f0326 0%, #1a0a3e 40%, #0d1b3e 70%, #0f0326 100%); color:#fff; position:relative; }
+body {
+  font-family:'Nunito',sans-serif; min-height:100vh; min-height:100dvh; overflow:hidden;
+  user-select:none; -webkit-user-select:none;
+  background: linear-gradient(160deg, #0d3320 0%, var(--felt) 30%, var(--felt-dark) 70%, #041208 100%);
+  color:#fff; position:relative;
+}
 h1,h2,h3,.font-display { font-family:'Fredoka One',cursive; }
 
-/* ── Animated BG overlay ── */
+/* Felt texture overlay */
 body::before {
   content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
-  background:radial-gradient(ellipse 600px 400px at 30% 20%, rgba(139,92,246,0.12) 0%, transparent 70%),
-             radial-gradient(ellipse 500px 500px at 70% 80%, rgba(59,130,246,0.08) 0%, transparent 70%);
-  animation:bgPulse 8s ease-in-out infinite alternate;
+  background: repeating-conic-gradient(rgba(255,255,255,0.008) 0% 25%, transparent 0% 50%) 0 0 / 4px 4px;
+  mix-blend-mode: overlay;
 }
-@keyframes bgPulse {
-  0% { opacity:0.6; }
-  100% { opacity:1; }
+body::after {
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background: radial-gradient(ellipse 80% 50% at 50% 40%, rgba(22,163,74,0.08), transparent);
 }
-
-/* ── Floating particles ── */
-.particles { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
-.particle {
-  position:absolute; font-size:1.2rem; opacity:0.06; animation:floatUp linear infinite;
-}
-@keyframes floatUp {
-  0% { transform:translateY(110vh) rotate(0deg); opacity:0; }
-  10% { opacity:0.06; }
-  90% { opacity:0.06; }
-  100% { transform:translateY(-10vh) rotate(360deg); opacity:0; }
-}
-
-/* ── Glass morphism utility ── */
-.glass { background:var(--glass-bg); backdrop-filter:var(--glass-blur); -webkit-backdrop-filter:var(--glass-blur);
-  border:1px solid var(--glass-border); }
 
 /* ── Top bar ── */
-.top-bar { position:fixed; top:0; left:0; right:0; z-index:200; display:flex; align-items:center; justify-content:space-between;
-  padding:10px 16px; }
-
+.top-bar { position:fixed; top:0; left:0; right:0; z-index:200; display:flex; align-items:center; justify-content:space-between; padding:10px 16px; }
 .top-bar-circle {
-  width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-  background:rgba(255,255,255,0.1); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,0.15); color:#fff; font-size:1.1rem; cursor:pointer;
+  width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  background:rgba(0,0,0,0.35); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.1); color:#fff; font-size:1rem; cursor:pointer;
   text-decoration:none; transition:all 0.25s; flex-shrink:0;
 }
-.top-bar-circle:hover { background:rgba(255,255,255,0.2); transform:scale(1.08); }
+.top-bar-circle:hover { background:rgba(0,0,0,0.5); transform:scale(1.08); }
 .top-bar-circle:active { transform:scale(0.94); }
 
-/* Status panel (glass, center top) */
+/* ── Status panel (glass pill, top center) ── */
 .status-panel {
   position:fixed; top:10px; left:50%; transform:translateX(-50%); z-index:200;
-  display:flex; align-items:center; gap:12px; padding:8px 20px; border-radius:24px;
-  background:rgba(0,0,0,0.45); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,0.1); white-space:nowrap;
+  display:flex; align-items:center; gap:10px; padding:7px 18px; border-radius:22px;
+  background:rgba(0,0,0,0.5); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,0.08); white-space:nowrap;
 }
-.status-turn { font-family:'Fredoka One',cursive; font-size:0.85rem; }
+.status-turn { font-family:'Fredoka One',cursive; font-size:0.8rem; }
 .status-badge {
-  font-size:0.65rem; font-weight:800; padding:3px 10px; border-radius:12px;
-  background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.08);
+  font-size:0.6rem; font-weight:800; padding:3px 9px; border-radius:10px;
+  background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.06);
   animation:badgePop 0.3s ease-out;
 }
 @keyframes badgePop { 0% { transform:scale(0.5); opacity:0; } 100% { transform:scale(1); opacity:1; } }
-.status-badge.taki-badge { background:rgba(234,179,8,0.25); border-color:rgba(234,179,8,0.3); color:#FDE047; }
-.status-badge.plus-badge { background:rgba(239,68,68,0.25); border-color:rgba(239,68,68,0.3); color:#FCA5A5; }
+.status-badge.taki-badge { background:rgba(202,138,4,0.25); border-color:rgba(202,138,4,0.3); color:#fbbf24; }
+.status-badge.plus-badge { background:rgba(220,38,38,0.25); border-color:rgba(220,38,38,0.3); color:#fca5a5; }
 
 /* ── Game area ── */
-.game-area { position:fixed; inset:0; display:flex; flex-direction:column; padding-top:56px; z-index:1; }
+.game-area { position:fixed; inset:0; display:flex; flex-direction:column; padding-top:54px; z-index:1; }
 
 /* ── Opponent zone ── */
-.opponent-zone { flex:0 0 auto; padding:8px 16px 4px; display:flex; align-items:center; gap:10px; min-height:84px; }
-.opp-info { text-align:center; min-width:48px; }
-.opp-label { font-size:0.65rem; font-weight:800; color:rgba(255,255,255,0.35); text-transform:uppercase; letter-spacing:1px; }
-.opp-count { font-size:1.8rem; font-weight:900; font-family:'Fredoka One',cursive;
-  background:linear-gradient(135deg,#c084fc,#818cf8); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-.opp-cards { display:flex; flex:1; justify-content:center; align-items:center; min-height:60px; position:relative; }
-.opp-card { width:42px; height:60px; border-radius:10px;
-  background:linear-gradient(145deg,#581c87,#3b0764);
-  border:2px solid rgba(168,85,247,0.2); box-shadow:0 2px 10px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
-  position:relative; flex-shrink:0; transition:all 0.3s; }
-.opp-card::after { content:'🃏'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:0.85rem; opacity:0.35; }
+.opponent-zone { flex:0 0 auto; padding:6px 16px 4px; display:flex; align-items:center; gap:10px; min-height:76px; }
+.opp-info { text-align:center; min-width:44px; }
+.opp-label { font-size:0.6rem; font-weight:800; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:1px; }
+.opp-count { font-size:1.6rem; font-weight:900; font-family:'Fredoka One',cursive; color:#86efac; }
+.opp-cards { display:flex; flex:1; justify-content:center; align-items:center; min-height:55px; position:relative; }
+
+/* ── CARD BACK (opponent cards + draw deck) ── */
+.card-back {
+  border-radius:10px; position:relative; flex-shrink:0;
+  background: linear-gradient(145deg, #1e3a5f 0%, #0f1f3d 50%, #0a1628 100%);
+  border:2.5px solid #2a4a7a;
+  box-shadow:0 2px 8px rgba(0,0,0,0.4);
+  overflow:hidden;
+}
+.card-back::before {
+  content:'TAKI'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  font-family:'Fredoka One',cursive; font-size:0.55rem; color:rgba(100,160,255,0.18);
+  letter-spacing:2px; transform:rotate(-30deg);
+}
+.card-back::after {
+  content:''; position:absolute; inset:3px; border-radius:7px;
+  border:1.5px solid rgba(100,160,255,0.12);
+  background: repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(100,160,255,0.03) 3px, rgba(100,160,255,0.03) 6px);
+}
+.opp-card-back { width:38px; height:54px; }
 
 /* ── Center zone ── */
-.center-zone { flex:1; display:flex; align-items:center; justify-content:center; gap:28px; padding:8px; position:relative; }
+.center-zone { flex:1; display:flex; align-items:center; justify-content:center; gap:24px; padding:8px; position:relative; }
 
-.pile-area { position:relative; width:calc(var(--card-w) + 30px); height:calc(var(--card-h) + 30px); }
-.pile-card { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
-.pile-card:nth-child(1) { transform:translate(-50%,-50%) rotate(-4deg); opacity:0.2; filter:blur(1px); }
-.pile-card:nth-child(2) { transform:translate(-50%,-50%) rotate(2.5deg); opacity:0.45; }
-.pile-card:nth-child(3) { transform:translate(-50%,-50%) rotate(-0.5deg); }
+.pile-area { position:relative; width:calc(var(--pile-w) + 24px); height:calc(var(--pile-h) + 24px); }
+.pile-card-wrap { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
+.pile-card-wrap:nth-child(2) { transform:translate(-50%,-50%) rotate(-5deg); opacity:0.25; filter:blur(0.5px); }
+.pile-card-wrap:nth-child(3) { transform:translate(-50%,-50%) rotate(3deg); opacity:0.5; }
+.pile-card-wrap:nth-child(4) { transform:translate(-50%,-50%) rotate(-1deg); }
 
-/* Pile glow ring — matches current color */
+/* Pile glow */
 .pile-glow {
   position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-  width:130px; height:160px; border-radius:24px; z-index:-1;
-  filter:blur(30px); opacity:0.5; transition:background 0.5s;
+  width:140px; height:170px; border-radius:24px; z-index:-1;
+  filter:blur(35px); opacity:0.45; transition:background 0.5s;
 }
 .pile-glow-red { background:var(--red-glow); }
 .pile-glow-blue { background:var(--blue-glow); }
 .pile-glow-green { background:var(--green-glow); }
 .pile-glow-yellow { background:var(--yellow-glow); }
-.pile-glow-wild { background:rgba(168,85,247,0.4); }
+.pile-glow-wild { background:rgba(168,85,247,0.35); }
 
-/* Card played animation */
+/* Card fly-in animation */
 @keyframes cardFlyIn {
-  0% { transform:translate(-50%,-50%) scale(0.3) rotate(25deg); opacity:0; }
-  60% { transform:translate(-50%,-50%) scale(1.08) rotate(-2deg); opacity:1; }
-  100% { transform:translate(-50%,-50%) scale(1) rotate(-0.5deg); opacity:1; }
+  0% { transform:translate(-50%,80px) scale(0.4) rotate(20deg); opacity:0; }
+  60% { transform:translate(-50%,-52%) scale(1.06) rotate(-2deg); opacity:1; }
+  100% { transform:translate(-50%,-50%) scale(1) rotate(-1deg); opacity:1; }
 }
-.pile-card-animate { animation:cardFlyIn 0.45s cubic-bezier(0.175,0.885,0.32,1.275) forwards; }
+.pile-card-animate { animation:cardFlyIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275) forwards; }
 
-/* Active color dot */
-.active-color-ring { position:absolute; top:-14px; right:-14px; width:30px; height:30px; border-radius:50%;
-  border:3px solid rgba(255,255,255,0.9); box-shadow:0 0 12px rgba(0,0,0,0.3), 0 0 20px var(--ring-glow, rgba(255,255,255,0.2)); z-index:5; }
+/* Active color indicator — glowing circle */
+.active-color-dot {
+  position:absolute; top:-10px; right:-10px; width:28px; height:28px; border-radius:50%;
+  border:3px solid #fff; z-index:5;
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.2), 0 0 14px var(--dot-glow, rgba(255,255,255,0.3));
+  transition: background 0.3s, box-shadow 0.3s;
+}
 
-/* Plus2 stack */
-.plus2-indicator { position:absolute; top:-20px; left:50%; transform:translateX(-50%);
-  background:rgba(239,68,68,0.9); color:#fff; font-size:0.75rem; font-weight:900;
-  padding:3px 12px; border-radius:12px; white-space:nowrap; font-family:'Fredoka One',cursive;
-  box-shadow:0 2px 10px rgba(239,68,68,0.4); }
+/* Plus2 stack indicator */
+.plus2-indicator {
+  position:absolute; top:-18px; left:50%; transform:translateX(-50%);
+  background:rgba(220,38,38,0.9); color:#fff; font-size:0.7rem; font-weight:900;
+  padding:2px 10px; border-radius:10px; white-space:nowrap; font-family:'Fredoka One',cursive;
+  box-shadow:0 2px 10px rgba(220,38,38,0.4);
+}
 
 /* Draw pile */
-.draw-pile { display:flex; flex-direction:column; align-items:center; gap:6px; cursor:pointer; transition:transform 0.2s; }
-.draw-pile:hover { transform:scale(1.06); }
+.draw-pile { display:flex; flex-direction:column; align-items:center; gap:5px; cursor:pointer; transition:transform 0.2s; }
+.draw-pile:hover { transform:scale(1.05); }
 .draw-pile:active { transform:scale(0.94); }
-.draw-deck { width:var(--card-w); height:var(--card-h); border-radius:var(--card-r); position:relative;
-  background:linear-gradient(145deg,#581c87,#3b0764);
-  border:2.5px solid rgba(168,85,247,0.25); box-shadow:0 6px 20px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
-  display:flex; align-items:center; justify-content:center; }
-.draw-deck::before { content:''; position:absolute; inset:5px; border-radius:11px; border:1.5px dashed rgba(255,255,255,0.1); }
-.draw-deck::after { content:''; position:absolute; top:-3px; left:2px; right:2px; bottom:3px; border-radius:var(--card-r);
-  background:linear-gradient(145deg,#581c87,#3b0764); border:2px solid rgba(168,85,247,0.15); z-index:-1; }
-.draw-count { font-size:0.6rem; font-weight:800; color:rgba(255,255,255,0.4); letter-spacing:0.5px; }
+.draw-deck {
+  width:var(--pile-w); height:var(--pile-h); border-radius:var(--pile-r); position:relative;
+  background: linear-gradient(145deg, #1e3a5f 0%, #0f1f3d 50%, #0a1628 100%);
+  border:3px solid #2a4a7a;
+  box-shadow:0 6px 20px rgba(0,0,0,0.5), 4px 0 0 -1px #1a2f50, 4px 3px 0 -1px #0f1f3d;
+  display:flex; align-items:center; justify-content:center; overflow:hidden;
+}
+.draw-deck::before {
+  content:'TAKI'; position:absolute;
+  font-family:'Fredoka One',cursive; font-size:0.9rem; color:rgba(100,160,255,0.2);
+  letter-spacing:3px; transform:rotate(-30deg);
+}
+.draw-deck::after {
+  content:''; position:absolute; inset:5px; border-radius:11px;
+  border:1.5px solid rgba(100,160,255,0.1);
+  background: repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(100,160,255,0.03) 4px, rgba(100,160,255,0.03) 8px);
+}
+.draw-count { font-size:0.55rem; font-weight:800; color:rgba(255,255,255,0.35); letter-spacing:0.5px; }
 
-/* Status message (bottom) */
-.status-bar { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); font-size:0.8rem; font-weight:800;
-  padding:8px 22px; border-radius:20px; white-space:nowrap; z-index:50;
-  background:rgba(0,0,0,0.55); backdrop-filter:blur(15px); -webkit-backdrop-filter:blur(15px);
-  border:1px solid rgba(255,255,255,0.08); transition:all 0.3s; }
+/* Status message (center bottom) */
+.status-bar {
+  position:absolute; bottom:6px; left:50%; transform:translateX(-50%); font-size:0.75rem; font-weight:800;
+  padding:7px 20px; border-radius:18px; white-space:nowrap; z-index:50;
+  background:rgba(0,0,0,0.55); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.06); transition:all 0.3s;
+}
 
-/* ── Player zone — fan layout ── */
-.player-zone { flex:0 0 auto; padding:4px 8px 16px; padding-bottom:max(16px, env(safe-area-inset-bottom)); }
-.hand-container { display:flex; justify-content:center; align-items:flex-end; min-height:130px; position:relative; padding:0 10px;
-  overflow-x:auto; overflow-y:visible; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+/* ── Player zone ── */
+.player-zone { flex:0 0 auto; padding:2px 6px 14px; padding-bottom:max(14px, env(safe-area-inset-bottom)); }
+.hand-container {
+  display:flex; justify-content:center; align-items:flex-end; min-height:125px; position:relative; padding:0 8px;
+  overflow-x:auto; overflow-y:visible; -webkit-overflow-scrolling:touch; scrollbar-width:none;
+}
 .hand-container::-webkit-scrollbar { display:none; }
 
-/* ── Card base ── */
-.card { width:var(--card-w); height:var(--card-h); border-radius:var(--card-r); position:relative;
+/* ===== REAL TAKI CARD DESIGN ===== */
+/* Cards are WHITE with a colored border, number in the card's color */
+
+.card {
+  width:var(--card-w); height:var(--card-h); border-radius:var(--card-r); position:relative;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
   font-family:'Fredoka One',cursive; cursor:pointer; flex-shrink:0;
-  transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s, margin 0.2s, filter 0.25s;
-  box-shadow:0 4px 12px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
-  border:2.5px solid rgba(255,255,255,0.2); }
-.card:hover { transform:translateY(-18px) scale(1.08) !important; box-shadow:0 12px 35px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.15); z-index:10; }
-.card:active { transform:translateY(-12px) scale(0.98) !important; }
-.card.playable-glow { box-shadow:0 4px 12px rgba(0,0,0,0.35), 0 0 18px var(--card-glow, rgba(255,255,255,0.2)), inset 0 1px 0 rgba(255,255,255,0.15); }
-.card.unplayable { opacity:0.35; cursor:default; filter:brightness(0.7) saturate(0.5); }
-.card.unplayable:hover { transform:none !important; box-shadow:0 4px 12px rgba(0,0,0,0.35); z-index:1; }
-
-/* Card colors — rich gradients */
-.card-red { background:linear-gradient(145deg, #f87171 0%, var(--red) 40%, var(--red-dark) 100%); --card-glow:var(--red-glow); }
-.card-blue { background:linear-gradient(145deg, #60a5fa 0%, var(--blue) 40%, var(--blue-dark) 100%); --card-glow:var(--blue-glow); }
-.card-green { background:linear-gradient(145deg, #4ade80 0%, var(--green) 40%, var(--green-dark) 100%); --card-glow:var(--green-glow); }
-.card-yellow { background:linear-gradient(145deg, #fde047 0%, var(--yellow) 40%, var(--yellow-dark) 100%); --card-glow:var(--yellow-glow); }
-.card-wild { background:linear-gradient(145deg,#f472b6,#a78bfa 35%,#60a5fa 65%,#4ade80); --card-glow:rgba(168,85,247,0.4); }
-
-.card-inner { position:absolute; inset:5px; border-radius:11px; border:2px solid rgba(255,255,255,0.18);
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px;
-  background:rgba(255,255,255,0.06); }
-.card-num { font-size:2rem; line-height:1; text-shadow:0 2px 6px rgba(0,0,0,0.35); color:#fff; font-weight:400; }
-.card-sym { font-size:0.6rem; font-weight:800; color:rgba(255,255,255,0.75); text-transform:uppercase; letter-spacing:0.8px; margin-top:2px; }
-.card-corner { position:absolute; font-size:0.6rem; font-weight:900; color:rgba(255,255,255,0.65); }
-.card-corner-tl { top:4px; left:6px; }
-.card-corner-br { bottom:4px; right:6px; transform:rotate(180deg); }
-
-/* Special card decorations */
-.card-taki-text {
-  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-  font-family:'Fredoka One',cursive; font-size:1.3rem; color:rgba(255,255,255,0.95);
-  transform:rotate(-25deg); text-shadow:0 2px 8px rgba(0,0,0,0.4);
-  letter-spacing:3px;
+  background:#fff;
+  transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s, margin 0.2s, filter 0.25s, opacity 0.25s;
+  box-shadow:0 3px 10px rgba(0,0,0,0.3);
 }
-.card-stop-icon { font-size:2.2rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
-.card-dir-icon { font-size:1.8rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
-.card-wild-icon { font-size:2rem; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
+.card.pile-size {
+  width:var(--pile-w); height:var(--pile-h); border-radius:var(--pile-r);
+}
 
-/* TAKI open glow */
-.taki-open-glow { animation:takiPulse 0.8s ease-in-out infinite alternate; }
-@keyframes takiPulse { 0% { box-shadow:0 0 15px rgba(255,255,255,0.15); } 100% { box-shadow:0 0 35px rgba(234,179,8,0.5), 0 0 70px rgba(234,179,8,0.15); } }
+/* Colored borders */
+.card-red { border:8px solid var(--red); }
+.card-blue { border:8px solid var(--blue); }
+.card-green { border:8px solid var(--green); }
+.card-yellow { border:8px solid var(--yellow); }
+.card-wild { border:6px solid transparent; background-clip:padding-box;
+  background-image:linear-gradient(#fff,#fff); background-origin:padding-box;
+  box-shadow:0 3px 10px rgba(0,0,0,0.3);
+  position:relative;
+}
+.card-wild::before {
+  content:''; position:absolute; inset:-6px; border-radius:var(--card-r);
+  background:linear-gradient(135deg, var(--red), var(--yellow) 33%, var(--green) 66%, var(--blue));
+  z-index:-1;
+}
+
+/* Hand card interactivity */
+.card.hand-card:hover { transform:translateY(-22px) scale(1.1) !important; box-shadow:0 14px 30px rgba(0,0,0,0.4); z-index:10; }
+.card.hand-card:active { transform:translateY(-14px) scale(0.97) !important; }
+.card.hand-card.playable-glow {
+  box-shadow:0 3px 10px rgba(0,0,0,0.3), 0 0 16px var(--card-glow, rgba(255,255,255,0.2));
+}
+.card.hand-card.playable-glow:hover {
+  box-shadow:0 14px 30px rgba(0,0,0,0.4), 0 0 24px var(--card-glow, rgba(255,255,255,0.3));
+}
+.card.hand-card.unplayable {
+  opacity:0.4; cursor:default; filter:saturate(0.3) brightness(0.85);
+  transform:translateY(8px) !important;
+}
+.card.hand-card.unplayable:hover { transform:translateY(8px) !important; box-shadow:0 3px 10px rgba(0,0,0,0.3); z-index:1; }
+
+.card-red.hand-card { --card-glow:var(--red-glow); }
+.card-blue.hand-card { --card-glow:var(--blue-glow); }
+.card-green.hand-card { --card-glow:var(--green-glow); }
+.card-yellow.hand-card { --card-glow:var(--yellow-glow); }
+.card-wild.hand-card { --card-glow:rgba(168,85,247,0.4); }
+
+/* Card inner content */
+.card-center-num {
+  font-size:2.2rem; line-height:1; font-weight:400; font-family:'Fredoka One',cursive;
+}
+.card.pile-size .card-center-num { font-size:2.8rem; }
+
+.card-corner {
+  position:absolute; font-size:0.55rem; font-weight:900; font-family:'Fredoka One',cursive;
+}
+.card.pile-size .card-corner { font-size:0.7rem; }
+.card-corner-tl { top:2px; left:4px; }
+.card-corner-br { bottom:2px; right:4px; transform:rotate(180deg); }
+
+/* Color theming for text on white cards */
+.card-red .card-center-num, .card-red .card-corner { color:var(--red); }
+.card-blue .card-center-num, .card-blue .card-corner { color:var(--blue); }
+.card-green .card-center-num, .card-green .card-corner { color:var(--green); }
+.card-yellow .card-center-num, .card-yellow .card-corner { color:var(--yellow); }
+
+/* ── TAKI card — diagonal text ── */
+.card-taki-text {
+  font-family:'Fredoka One',cursive; font-size:1.2rem; letter-spacing:3px;
+  transform:rotate(-30deg); text-shadow:1px 1px 0 rgba(0,0,0,0.08);
+  line-height:1;
+}
+.card.pile-size .card-taki-text { font-size:1.6rem; letter-spacing:4px; }
+.card-red .card-taki-text { color:var(--red); }
+.card-blue .card-taki-text { color:var(--blue); }
+.card-green .card-taki-text { color:var(--green); }
+.card-yellow .card-taki-text { color:var(--yellow); }
+
+/* ── SUPER TAKI — rainbow border, diagonal text ── */
+.card-super-taki .card-taki-text {
+  background:linear-gradient(135deg, var(--red), var(--yellow), var(--green), var(--blue));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  font-size:1rem;
+}
+.card.pile-size.card-super-taki .card-taki-text { font-size:1.3rem; }
+
+/* ── STOP card — octagon ── */
+.card-stop-shape {
+  width:32px; height:32px; position:relative; display:flex; align-items:center; justify-content:center;
+}
+.card.pile-size .card-stop-shape { width:42px; height:42px; }
+.card-stop-shape svg { width:100%; height:100%; }
+.card-red .card-stop-shape svg { fill:var(--red); }
+.card-blue .card-stop-shape svg { fill:var(--blue); }
+.card-green .card-stop-shape svg { fill:var(--green); }
+.card-yellow .card-stop-shape svg { fill:var(--yellow); }
+.card-stop-label {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  font-size:0.4rem; font-weight:900; color:#fff; font-family:'Fredoka One',cursive; letter-spacing:0.5px;
+}
+.card.pile-size .card-stop-label { font-size:0.5rem; }
+
+/* ── Change Direction — circular arrows ── */
+.card-dir-icon {
+  font-size:1.7rem; line-height:1;
+}
+.card.pile-size .card-dir-icon { font-size:2.2rem; }
+.card-red .card-dir-icon { color:var(--red); }
+.card-blue .card-dir-icon { color:var(--blue); }
+.card-green .card-dir-icon { color:var(--green); }
+.card-yellow .card-dir-icon { color:var(--yellow); }
+
+/* ── Plus 2 ── */
+.card-plus2-text {
+  font-size:1.8rem; font-weight:400; font-family:'Fredoka One',cursive; line-height:1;
+}
+.card.pile-size .card-plus2-text { font-size:2.4rem; }
+.card-red .card-plus2-text { color:var(--red); }
+.card-blue .card-plus2-text { color:var(--blue); }
+.card-green .card-plus2-text { color:var(--green); }
+.card-yellow .card-plus2-text { color:var(--yellow); }
+
+/* ── Change Color — 4-color diamond ── */
+.card-color-diamond {
+  width:32px; height:32px; position:relative; transform:rotate(45deg);
+  display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:2px;
+  border-radius:4px; overflow:hidden;
+}
+.card.pile-size .card-color-diamond { width:42px; height:42px; }
+.card-color-diamond div { border-radius:1px; }
+.ccd-red { background:var(--red); }
+.ccd-blue { background:var(--blue); }
+.ccd-green { background:var(--green); }
+.ccd-yellow { background:var(--yellow); }
+
+/* ── TAKI open glow — colored border around play area ── */
+.taki-open-glow {
+  animation:takiGlow 0.7s ease-in-out infinite alternate;
+}
+@keyframes takiGlow {
+  0% { box-shadow:inset 0 0 20px rgba(202,138,4,0.1), 0 0 20px rgba(202,138,4,0.1); }
+  100% { box-shadow:inset 0 0 40px rgba(202,138,4,0.2), 0 0 40px rgba(202,138,4,0.2); }
+}
 
 /* ── Close TAKI button ── */
-.close-taki-btn { position:fixed; bottom:170px; left:50%; transform:translateX(-50%); z-index:100;
-  background:linear-gradient(135deg,#EAB308,#EF4444); color:#fff; border:none; border-radius:24px;
-  padding:14px 32px; font-size:1rem; font-weight:800; font-family:'Fredoka One',cursive;
-  cursor:pointer; box-shadow:0 6px 25px rgba(239,68,68,0.35); animation:closeTakiBounce 1s ease-in-out infinite alternate;
-  letter-spacing:0.5px; }
-@keyframes closeTakiBounce { 0% { transform:translateX(-50%) scale(1); } 100% { transform:translateX(-50%) scale(1.06); } }
+.close-taki-btn {
+  position:fixed; bottom:162px; left:50%; transform:translateX(-50%); z-index:100;
+  background:linear-gradient(135deg,#CA8A04,#DC2626); color:#fff; border:none; border-radius:22px;
+  padding:12px 28px; font-size:0.95rem; font-weight:800; font-family:'Fredoka One',cursive;
+  cursor:pointer; box-shadow:0 5px 20px rgba(220,38,38,0.3); animation:closeTakiBounce 1s ease-in-out infinite alternate;
+  letter-spacing:0.5px;
+}
+@keyframes closeTakiBounce { 0% { transform:translateX(-50%) scale(1); } 100% { transform:translateX(-50%) scale(1.05); } }
 
-/* ── Color picker — diamond pattern ── */
-.color-picker-overlay { position:fixed; inset:0; z-index:300;
+/* ── Color picker ── */
+.color-picker-overlay {
+  position:fixed; inset:0; z-index:300;
   background:rgba(0,0,0,0.75); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
-  display:flex; align-items:center; justify-content:center; flex-direction:column; gap:24px;
-  opacity:0; pointer-events:none; transition:opacity 0.35s; }
+  display:flex; align-items:center; justify-content:center; flex-direction:column; gap:22px;
+  opacity:0; pointer-events:none; transition:opacity 0.35s;
+}
 .color-picker-overlay.active { opacity:1; pointer-events:auto; }
-.color-picker h2 { font-size:1.4rem; text-shadow:0 2px 10px rgba(0,0,0,0.5); }
-.color-diamond { position:relative; width:200px; height:200px; }
+.color-picker h2 { font-size:1.3rem; text-shadow:0 2px 10px rgba(0,0,0,0.5); }
+.color-diamond { position:relative; width:190px; height:190px; }
 .color-circle {
-  position:absolute; width:76px; height:76px; border-radius:50%;
-  border:4px solid rgba(255,255,255,0.25); cursor:pointer;
+  position:absolute; width:72px; height:72px; border-radius:50%;
+  border:4px solid rgba(255,255,255,0.3); cursor:pointer;
   transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1);
   display:flex; align-items:center; justify-content:center;
-  font-size:1.5rem; font-weight:900; font-family:'Fredoka One',cursive;
+  font-size:1.4rem; font-weight:900; font-family:'Fredoka One',cursive; color:#fff;
 }
-.color-circle::before {
-  content:''; position:absolute; inset:8px; border-radius:50%; opacity:0.4;
-  background:radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), transparent 60%);
-}
-.color-circle:hover { transform:scale(1.2); border-color:rgba(255,255,255,0.8); }
+.color-circle:hover { transform:scale(1.2); border-color:rgba(255,255,255,0.9); }
 .color-circle:active { transform:scale(0.92); }
-/* Diamond positions */
 .cc-top { top:0; left:50%; transform:translateX(-50%); }
 .cc-right { top:50%; right:0; transform:translateY(-50%); }
 .cc-bottom { bottom:0; left:50%; transform:translateX(-50%); }
@@ -248,38 +369,39 @@ body::before {
 .cc-left:hover { transform:translateY(-50%) scale(1.2); }
 
 /* ── Winner overlay ── */
-.winner-overlay { position:fixed; inset:0; z-index:400;
+.winner-overlay {
+  position:fixed; inset:0; z-index:400;
   background:rgba(0,0,0,0.85); backdrop-filter:blur(15px); -webkit-backdrop-filter:blur(15px);
   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px;
-  opacity:0; pointer-events:none; transition:opacity 0.5s; }
-.winner-overlay.active { opacity:1; pointer-events:auto; }
-
-.winner-card {
-  padding:40px 48px; border-radius:28px; text-align:center;
-  background:rgba(255,255,255,0.07); backdrop-filter:blur(30px); -webkit-backdrop-filter:blur(30px);
-  border:1px solid rgba(255,255,255,0.12); box-shadow:0 20px 60px rgba(0,0,0,0.4);
-  display:flex; flex-direction:column; align-items:center; gap:12px; max-width:340px;
+  opacity:0; pointer-events:none; transition:opacity 0.5s;
 }
-.winner-emoji { font-size:4.5rem; animation:winBounce 0.8s cubic-bezier(0.34,1.56,0.64,1); }
+.winner-overlay.active { opacity:1; pointer-events:auto; }
+.winner-card {
+  padding:36px 44px; border-radius:24px; text-align:center;
+  background:rgba(255,255,255,0.06); backdrop-filter:blur(30px); -webkit-backdrop-filter:blur(30px);
+  border:1px solid rgba(255,255,255,0.1); box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  display:flex; flex-direction:column; align-items:center; gap:10px; max-width:320px;
+}
+.winner-emoji { font-size:4rem; animation:winBounce 0.8s cubic-bezier(0.34,1.56,0.64,1); }
 @keyframes winBounce { 0% { transform:scale(0) rotate(-180deg); } 60% { transform:scale(1.25) rotate(8deg); } 100% { transform:scale(1) rotate(0); } }
-.winner-title { font-family:'Fredoka One',cursive; font-size:2.2rem;
+.winner-title { font-family:'Fredoka One',cursive; font-size:2rem;
   background:linear-gradient(135deg,#fde047,#f97316,#ef4444); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 .winner-title-lose { background:linear-gradient(135deg,#94a3b8,#64748b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-.winner-sub { font-size:1rem; color:rgba(255,255,255,0.55); font-weight:700; }
-.winner-score-big { font-family:'Fredoka One',cursive; font-size:3rem; animation:scoreCount 0.6s ease-out;
-  background:linear-gradient(135deg,#c084fc,#818cf8); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.winner-sub { font-size:0.9rem; color:rgba(255,255,255,0.5); font-weight:700; }
+.winner-score-big { font-family:'Fredoka One',cursive; font-size:2.8rem; animation:scoreCount 0.6s ease-out;
+  background:linear-gradient(135deg,#86efac,#4ade80); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 @keyframes scoreCount { 0% { transform:scale(0.3); opacity:0; } 100% { transform:scale(1); opacity:1; } }
-.winner-stats { font-size:0.75rem; color:rgba(255,255,255,0.35); font-weight:700; }
+.winner-stats { font-size:0.7rem; color:rgba(255,255,255,0.3); font-weight:700; }
 .winner-btn {
-  background:linear-gradient(135deg,#8B5CF6,#6D28D9); color:#fff; border:none; border-radius:24px;
-  padding:14px 40px; font-size:1.1rem; font-weight:800; font-family:'Fredoka One',cursive;
-  cursor:pointer; box-shadow:0 6px 25px rgba(139,92,246,0.35); transition:all 0.25s; letter-spacing:0.3px;
+  background:linear-gradient(135deg,#16A34A,#15803D); color:#fff; border:none; border-radius:22px;
+  padding:13px 36px; font-size:1.05rem; font-weight:800; font-family:'Fredoka One',cursive;
+  cursor:pointer; box-shadow:0 5px 20px rgba(22,163,74,0.35); transition:all 0.25s; letter-spacing:0.3px;
 }
-.winner-btn:hover { transform:scale(1.05); box-shadow:0 8px 30px rgba(139,92,246,0.5); }
+.winner-btn:hover { transform:scale(1.05); box-shadow:0 8px 30px rgba(22,163,74,0.5); }
 .winner-btn:active { transform:scale(0.95); }
 .winner-btn-secondary {
-  background:transparent; color:rgba(255,255,255,0.5); border:1.5px solid rgba(255,255,255,0.15); border-radius:20px;
-  padding:10px 28px; font-size:0.85rem; font-weight:800; font-family:'Nunito',sans-serif;
+  background:transparent; color:rgba(255,255,255,0.45); border:1.5px solid rgba(255,255,255,0.12); border-radius:18px;
+  padding:9px 24px; font-size:0.8rem; font-weight:800; font-family:'Nunito',sans-serif;
   cursor:pointer; transition:all 0.25s;
 }
 .winner-btn-secondary:hover { background:rgba(255,255,255,0.05); color:rgba(255,255,255,0.7); }
@@ -296,70 +418,121 @@ body::before {
 }
 
 /* ── Intro screen ── */
-.intro-screen { position:fixed; inset:0; z-index:600;
-  background:linear-gradient(135deg, #0f0326 0%, #1a0a3e 40%, #0d1b3e 70%, #0f0326 100%);
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; padding:24px; text-align:center; }
+.intro-screen {
+  position:fixed; inset:0; z-index:600;
+  background:linear-gradient(160deg, #0d3320 0%, var(--felt) 30%, var(--felt-dark) 70%, #041208 100%);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:24px; text-align:center;
+}
 .intro-screen.hidden { display:none; }
-.intro-logo { font-size:5.5rem; margin-bottom:4px; animation:introFloat 3s ease-in-out infinite alternate; filter:drop-shadow(0 10px 20px rgba(0,0,0,0.4)); }
-@keyframes introFloat { 0% { transform:translateY(0) rotate(-2deg); } 100% { transform:translateY(-12px) rotate(2deg); } }
-.intro-title { font-family:'Fredoka One',cursive; font-size:3.5rem;
-  background:linear-gradient(135deg,#EF4444 0%,#F59E0B 25%,#22C55E 50%,#3B82F6 75%,#8B5CF6 100%);
+
+/* Intro: fan of taki cards */
+.intro-fan { position:relative; width:260px; height:120px; margin-bottom:8px; }
+.intro-fan-card {
+  position:absolute; bottom:0; left:50%;
+  width:60px; height:86px; border-radius:12px;
+  background:#fff; transform-origin:center bottom;
+  box-shadow:0 4px 16px rgba(0,0,0,0.35);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Fredoka One',cursive; font-size:1.6rem;
+  animation:introFanFloat 3s ease-in-out infinite alternate;
+}
+@keyframes introFanFloat {
+  0% { transform:translateX(-50%) var(--fan-rot) translateY(0); }
+  100% { transform:translateX(-50%) var(--fan-rot) translateY(-6px); }
+}
+
+.intro-title {
+  font-family:'Fredoka One',cursive; font-size:3.5rem;
+  background:linear-gradient(135deg, var(--red) 0%, var(--yellow) 30%, var(--green) 60%, var(--blue) 100%);
   background-size:200% auto; animation:titleShimmer 3s linear infinite;
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
 @keyframes titleShimmer { 0% { background-position:0% center; } 100% { background-position:200% center; } }
-.intro-sub { font-size:1rem; color:rgba(255,255,255,0.45); font-weight:700; max-width:300px; line-height:1.5; }
+.intro-sub { font-size:0.95rem; color:rgba(255,255,255,0.4); font-weight:700; max-width:280px; line-height:1.5; }
 .intro-play-btn {
-  background:linear-gradient(135deg,#EF4444,#F59E0B); color:#fff; border:none; border-radius:28px;
-  padding:18px 56px; font-size:1.4rem; font-weight:800; font-family:'Fredoka One',cursive;
-  cursor:pointer; box-shadow:0 8px 30px rgba(239,68,68,0.35); margin-top:20px; transition:all 0.25s;
+  background:linear-gradient(135deg,var(--red),var(--yellow)); color:#fff; border:none; border-radius:26px;
+  padding:16px 50px; font-size:1.3rem; font-weight:800; font-family:'Fredoka One',cursive;
+  cursor:pointer; box-shadow:0 7px 28px rgba(220,38,38,0.3); margin-top:16px; transition:all 0.25s;
   letter-spacing:0.5px; position:relative; overflow:hidden;
 }
-.intro-play-btn::before { content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%;
+.intro-play-btn::before {
+  content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%;
   background:linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%);
-  animation:btnShine 3s ease-in-out infinite; }
-@keyframes btnShine { 0%,100% { transform:translateX(-100%) rotate(25deg); } 50% { transform:translateX(100%) rotate(25deg); } }
-.intro-play-btn:hover { transform:scale(1.06); box-shadow:0 10px 40px rgba(239,68,68,0.45); }
-.intro-play-btn:active { transform:scale(0.95); }
-.intro-stats { font-size:0.75rem; color:rgba(255,255,255,0.25); font-weight:700; margin-top:16px; letter-spacing:0.5px; }
-.intro-back { margin-top:8px; }
-.intro-back-btn {
-  width:44px; height:44px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center;
-  background:rgba(255,255,255,0.1); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,0.15); color:#fff; font-size:1.1rem; text-decoration:none; transition:all 0.25s;
+  animation:btnShine 3s ease-in-out infinite;
 }
-.intro-back-btn:hover { background:rgba(255,255,255,0.2); transform:scale(1.08); }
+@keyframes btnShine { 0%,100% { transform:translateX(-100%) rotate(25deg); } 50% { transform:translateX(100%) rotate(25deg); } }
+.intro-play-btn:hover { transform:scale(1.06); box-shadow:0 10px 40px rgba(220,38,38,0.4); }
+.intro-play-btn:active { transform:scale(0.95); }
+.intro-stats { font-size:0.7rem; color:rgba(255,255,255,0.2); font-weight:700; margin-top:14px; letter-spacing:0.5px; }
+.intro-back { margin-top:6px; }
+.intro-back-btn {
+  width:42px; height:42px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center;
+  background:rgba(0,0,0,0.3); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.1); color:#fff; font-size:1rem; text-decoration:none; transition:all 0.25s;
+}
+.intro-back-btn:hover { background:rgba(0,0,0,0.5); transform:scale(1.08); }
 
 /* ── Responsive ── */
 @media (max-width:380px) {
-  :root { --card-w:62px; --card-h:90px; --card-r:13px; }
-  .card-num { font-size:1.6rem; }
-  .opp-card { width:36px; height:52px; }
-  .color-circle { width:62px; height:62px; }
-  .color-diamond { width:160px; height:160px; }
-  .status-panel { padding:6px 14px; gap:8px; }
-  .status-turn { font-size:0.75rem; }
+  :root { --card-w:60px; --card-h:86px; --card-r:12px; --pile-w:78px; --pile-h:112px; --pile-r:14px; }
+  .card-center-num { font-size:1.8rem; }
+  .card.pile-size .card-center-num { font-size:2.3rem; }
+  .card-red,.card-blue,.card-green,.card-yellow { border-width:6px; }
+  .opp-card-back { width:32px; height:46px; }
+  .color-circle { width:60px; height:60px; }
+  .color-diamond { width:150px; height:150px; }
+  .status-panel { padding:5px 12px; gap:6px; }
+  .status-turn { font-size:0.7rem; }
+  .intro-fan { width:220px; height:100px; }
+  .intro-fan-card { width:50px; height:72px; font-size:1.3rem; }
 }
 @media (min-width:500px) {
-  :root { --card-w:84px; --card-h:120px; --card-r:16px; }
-  .card-num { font-size:2.3rem; }
+  :root { --card-w:80px; --card-h:114px; --card-r:15px; --pile-w:100px; --pile-h:144px; --pile-r:17px; }
+  .card-center-num { font-size:2.5rem; }
+  .card.pile-size .card-center-num { font-size:3.2rem; }
 }
 @media (min-width:700px) {
-  :root { --card-w:96px; --card-h:136px; --card-r:18px; }
-  .card-num { font-size:2.6rem; }
+  :root { --card-w:90px; --card-h:128px; --card-r:16px; --pile-w:110px; --pile-h:158px; --pile-r:18px; }
+  .card-center-num { font-size:2.8rem; }
+  .card.pile-size .card-center-num { font-size:3.6rem; }
 }
+
+/* ── Rules Modal ── */
+.rules-overlay{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:20px;animation:rulesFadeIn 0.3s ease}
+@keyframes rulesFadeIn{0%{opacity:0}100%{opacity:1}}
+.rules-card{background:rgba(255,255,255,0.12);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.2);border-radius:24px;padding:28px;max-width:420px;width:100%;max-height:80vh;overflow-y:auto;color:white;position:relative}
+.rules-card h2{font-family:'Fredoka One',cursive;font-size:1.6rem;margin-bottom:16px;text-align:center}
+.rules-card ul{list-style:none;padding:0}
+.rules-card li{padding:8px 0;font-size:0.95rem;line-height:1.5;border-bottom:1px solid rgba(255,255,255,0.08)}
+.rules-card li:last-child{border-bottom:none}
+.rules-close{position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.15);border:none;color:white;width:36px;height:36px;border-radius:50%;font-size:1.2rem;cursor:pointer;transition:all 0.2s}
+.rules-close:hover{background:rgba(255,255,255,0.25);transform:scale(1.1)}
+.rules-got-it{display:block;width:100%;margin-top:20px;padding:14px;border:none;border-radius:16px;font-family:'Fredoka One',cursive;font-size:1.1rem;cursor:pointer;background:linear-gradient(135deg,#667eea,#764ba2);color:white;transition:all 0.2s}
+.rules-got-it:hover{transform:scale(1.03);box-shadow:0 6px 20px rgba(102,126,234,0.4)}
+.intro-rules-btn{background:rgba(255,255,255,0.10);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:20px;padding:10px 28px;font-size:0.95rem;font-weight:700;font-family:'Nunito',sans-serif;cursor:pointer;transition:all 0.25s;margin-top:6px}
+.intro-rules-btn:hover{background:rgba(255,255,255,0.18);transform:scale(1.05)}
+
 </style>
 </head>
 <body>
 
-<!-- Floating card-suit particles -->
-<div class="particles" id="particles"></div>
+<!-- RULES MODAL -->
+<div class="rules-overlay" id="rulesOverlay" style="display:none" onclick="if(event.target===this)closeRulesModal()">
+  <div class="rules-card">
+    <button class="rules-close" onclick="closeRulesModal()">&times;</button>
+    <h2 id="rulesTitle">הוראות משחק</h2>
+    <ul id="rulesList"></ul>
+    <button class="rules-got-it" id="rulesGotIt" onclick="closeRulesModal()">הבנתי!</button>
+  </div>
+</div>
 
 <!-- INTRO SCREEN -->
 <div class="intro-screen" id="introScreen">
-  <div class="intro-logo">🃏</div>
+  <div class="intro-fan" id="introFan"></div>
   <h1 class="intro-title" data-he="טאקי" data-en="TAKI">טאקי</h1>
   <p class="intro-sub" data-he="משחק הקלפים הישראלי האהוב! שחקו נגד המחשב" data-en="The beloved Israeli card game! Play vs Computer">משחק הקלפים הישראלי האהוב! שחקו נגד המחשב</p>
   <button class="intro-play-btn" onclick="startGame()" data-he="🎮 שחק!" data-en="🎮 Play!">🎮 שחק!</button>
+  <button class="intro-rules-btn" onclick="openRulesModal()" data-he="📖 הוראות" data-en="📖 Rules">📖 הוראות</button>
   <div class="intro-stats" id="introStats"></div>
   <div class="intro-back">
     <a href="../" class="intro-back-btn">🏠</a>
@@ -367,13 +540,11 @@ body::before {
 </div>
 
 <!-- GAME UI -->
-<!-- Top bar: lang toggle (left) + home button (right) -->
 <div class="top-bar" id="topBar" style="display:none">
-  <div class="top-bar-circle" onclick="toggleLang()" id="langBtn" style="font-size:0.75rem;font-weight:800">EN</div>
+  <div class="top-bar-circle" onclick="toggleLang()" id="langBtn" style="font-size:0.7rem;font-weight:800">EN</div>
   <a href="../" class="top-bar-circle">🏠</a>
 </div>
 
-<!-- Status panel (glass, center) -->
 <div class="status-panel" id="statusPanel" style="display:none">
   <div class="status-turn" id="statusTurn"></div>
   <div id="statusBadges" style="display:flex;gap:6px"></div>
@@ -392,9 +563,7 @@ body::before {
   <!-- Center -->
   <div class="center-zone" id="centerZone">
     <div class="draw-pile" id="drawPile" onclick="playerDraw()">
-      <div class="draw-deck">
-        <span style="font-size:1.6rem;opacity:0.4">🃏</span>
-      </div>
+      <div class="draw-deck"></div>
       <div class="draw-count" id="drawCount"></div>
     </div>
     <div class="pile-area" id="pileArea"></div>
@@ -415,10 +584,10 @@ body::before {
   <div class="color-picker">
     <h2 data-he="בחר צבע" data-en="Choose Color">בחר צבע</h2>
     <div class="color-diamond">
-      <div class="color-circle cc-top" style="background:radial-gradient(circle at 35% 35%, #f87171, var(--red-dark));box-shadow:0 4px 20px var(--red-glow)" onclick="pickColor('red')">R</div>
-      <div class="color-circle cc-right" style="background:radial-gradient(circle at 35% 35%, #60a5fa, var(--blue-dark));box-shadow:0 4px 20px var(--blue-glow)" onclick="pickColor('blue')">B</div>
-      <div class="color-circle cc-bottom" style="background:radial-gradient(circle at 35% 35%, #4ade80, var(--green-dark));box-shadow:0 4px 20px var(--green-glow)" onclick="pickColor('green')">G</div>
-      <div class="color-circle cc-left" style="background:radial-gradient(circle at 35% 35%, #fde047, var(--yellow-dark));box-shadow:0 4px 20px var(--yellow-glow)" onclick="pickColor('yellow')">Y</div>
+      <div class="color-circle cc-top" style="background:var(--red);box-shadow:0 4px 20px var(--red-glow)" onclick="pickColor('red')">R</div>
+      <div class="color-circle cc-right" style="background:var(--blue);box-shadow:0 4px 20px var(--blue-glow)" onclick="pickColor('blue')">B</div>
+      <div class="color-circle cc-bottom" style="background:var(--green);box-shadow:0 4px 20px var(--green-glow)" onclick="pickColor('green')">G</div>
+      <div class="color-circle cc-left" style="background:var(--yellow);box-shadow:0 4px 20px var(--yellow-glow)" onclick="pickColor('yellow')">Y</div>
     </div>
   </div>
 </div>
@@ -438,27 +607,52 @@ body::before {
 </div>
 
 <script>
-// ─── PARTICLES ───
-(function initParticles() {
-  const suits = ['♠️','♥️','♦️','♣️','🃏'];
-  const container = document.getElementById('particles');
-  for (let i = 0; i < 18; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    p.textContent = suits[i % suits.length];
-    p.style.left = Math.random() * 100 + '%';
-    p.style.animationDuration = (18 + Math.random() * 25) + 's';
-    p.style.animationDelay = -(Math.random() * 30) + 's';
-    p.style.fontSize = (0.8 + Math.random() * 0.8) + 'rem';
-    container.appendChild(p);
-  }
+// ─── INTRO FAN OF CARDS ───
+(function initIntroFan() {
+  const fan = document.getElementById('introFan');
+  const cards = [
+    { border:'var(--red)', text:'7', color:'var(--red)' },
+    { border:'var(--blue)', text:'TAKI', color:'var(--blue)', isTaki:true },
+    { border:'var(--green)', text:'3', color:'var(--green)' },
+    { border:'var(--yellow)', text:'+2', color:'var(--yellow)' },
+    { border:'rainbow', text:'', isWild:true },
+    { border:'var(--red)', text:'9', color:'var(--red)' },
+  ];
+  const angles = [-25, -15, -5, 5, 15, 25];
+  cards.forEach((c, i) => {
+    const el = document.createElement('div');
+    el.className = 'intro-fan-card';
+    if (c.isWild) {
+      el.style.border = '5px solid transparent';
+      el.style.backgroundClip = 'padding-box';
+      el.style.backgroundImage = 'linear-gradient(#fff,#fff)';
+      el.style.backgroundOrigin = 'padding-box';
+      el.style.boxShadow = '0 4px 16px rgba(0,0,0,0.35)';
+      // Rainbow border via box-shadow trick
+      el.style.outline = 'none';
+      el.innerHTML = '<div style="width:22px;height:22px;transform:rotate(45deg);display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1px;border-radius:2px;overflow:hidden"><div style="background:var(--red)"></div><div style="background:var(--blue)"></div><div style="background:var(--yellow)"></div><div style="background:var(--green)"></div></div>';
+    } else {
+      el.style.border = `6px solid ${c.border}`;
+      el.style.color = c.color;
+      if (c.isTaki) {
+        el.innerHTML = `<span style="font-size:0.8rem;letter-spacing:2px;transform:rotate(-30deg);display:block">${c.text}</span>`;
+      } else {
+        el.textContent = c.text;
+      }
+    }
+    el.style.setProperty('--fan-rot', `rotate(${angles[i]}deg)`);
+    el.style.transform = `translateX(-50%) rotate(${angles[i]}deg)`;
+    el.style.animationDelay = `${i * 0.15}s`;
+    el.style.zIndex = i < 3 ? i : 6 - i;
+    fan.appendChild(el);
+  });
 })();
 
 // ─── CONFETTI ───
 function spawnConfetti() {
   const container = document.getElementById('confettiContainer');
   container.innerHTML = '';
-  const colors = ['#EF4444','#3B82F6','#22C55E','#EAB308','#8B5CF6','#EC4899','#F97316','#06B6D4'];
+  const colors = ['#DC2626','#2563EB','#16A34A','#CA8A04','#8B5CF6','#EC4899','#F97316','#06B6D4'];
   for (let i = 0; i < 80; i++) {
     const piece = document.createElement('div');
     piece.className = 'confetti-piece';
@@ -526,12 +720,46 @@ function toggleLang() {
   applyLang();
   if (gameActive) renderAll();
   updateIntroStats();
+  updateRulesLang();
+}
+
+// ─── RULES MODAL ───
+const TAKI_RULES = {
+  he: [
+    '🎴 שחקו קלפים שמתאימים בצבע או במספר לקלף שבערימה',
+    '🃏 אין לכם קלף מתאים? משכו מהחפיסה',
+    '⚡ קלפים מיוחדים: טאקי (שחקו את כל הקלפים מאותו צבע), סטופ (דלגו על התור של היריב), +2 (היריב מושך 2 קלפים), החלף צבע (בחרו צבע חדש)',
+    '🏆 הראשון שנפטר מכל הקלפים — מנצח!'
+  ],
+  en: [
+    '🎴 Play cards matching the pile by color or number',
+    '🃏 No matching card? Draw from the deck',
+    '⚡ Special cards: TAKI (play all same-color cards), STOP (skip opponent), +2 (opponent draws 2), Change Color (pick new color)',
+    '🏆 First to empty their hand wins!'
+  ]
+};
+function openRulesModal() {
+  updateRulesLang();
+  document.getElementById('rulesOverlay').style.display = 'flex';
+}
+function closeRulesModal() {
+  document.getElementById('rulesOverlay').style.display = 'none';
+}
+function updateRulesLang() {
+  const isHe = lang === 'he';
+  document.getElementById('rulesTitle').textContent = isHe ? 'הוראות משחק' : 'Game Rules';
+  document.getElementById('rulesGotIt').textContent = isHe ? 'הבנתי!' : 'Got it!';
+  const list = document.getElementById('rulesList');
+  const rules = isHe ? TAKI_RULES.he : TAKI_RULES.en;
+  list.innerHTML = rules.map(r => `<li>${r}</li>`).join('');
+  list.closest('.rules-card').style.direction = isHe ? 'rtl' : 'ltr';
+  list.closest('.rules-card').style.textAlign = isHe ? 'right' : 'left';
 }
 
 // ─── GAME STATE ───
 const COLORS = ['red','blue','green','yellow'];
 const NUMBERS = [1,2,3,4,5,6,7,8,9];
-const SPECIALS = ['taki','stop','change_dir','plus2']; // per color
+const SPECIALS = ['taki','stop','change_dir','plus2'];
 let deck=[], discard=[], playerCards=[], oppCards=[], currentColor='', currentValue='';
 let isPlayerTurn=true, gameActive=false, takiOpen=false, takiColor='';
 let plus2Stack=0, colorPickerCallback=null;
@@ -550,7 +778,6 @@ function createDeck() {
       d.push({ color, value:sp, type:'special' });
     }
   }
-  // 4 change-color, 2 super-taki
   for (let i=0; i<4; i++) d.push({ color:'wild', value:'change_color', type:'wild' });
   for (let i=0; i<2; i++) d.push({ color:'wild', value:'super_taki', type:'wild' });
   return d;
@@ -559,7 +786,7 @@ function shuffle(arr) { for (let i=arr.length-1; i>0; i--) { const j=Math.floor(
 
 function cardLabel(card) {
   if (card.type === 'number') return card.value;
-  const labels = { taki:'TAKI', stop:'⛔', change_dir:'🔄', plus2:'+2', change_color:'🌈', super_taki:'S.TAKI' };
+  const labels = { taki:'TAKI', stop:'STOP', change_dir:'DIR', plus2:'+2', change_color:'COLOR', super_taki:'S.TAKI' };
   return labels[card.value] || card.value;
 }
 function cardPoints(card) {
@@ -588,10 +815,8 @@ function startGame() {
   isPlayerTurn = true;
   gameActive = true;
 
-  // Deal 8 each
   for (let i=0; i<8; i++) { playerCards.push(deck.pop()); oppCards.push(deck.pop()); }
 
-  // Flip starter (ensure it's a number card)
   let starter;
   do { starter = deck.pop(); if (starter.type !== 'number') deck.unshift(starter); } while (starter.type !== 'number');
   discard.push(starter);
@@ -637,6 +862,11 @@ function canPlayPlus2(card) {
   return card.value === 'plus2';
 }
 
+// ─── SVG helpers ───
+function stopOctagonSVG() {
+  return '<svg viewBox="0 0 100 100"><polygon points="30,5 70,5 95,30 95,70 70,95 30,95 5,70 5,30"/></svg>';
+}
+
 // ─── RENDER ───
 function renderAll() {
   renderOpp();
@@ -652,12 +882,11 @@ function renderOpp() {
   count.textContent = oppCards.length;
   cont.innerHTML = '';
   const max = Math.min(oppCards.length, 15);
-  const overlap = Math.min(26, (cont.offsetWidth - 42) / Math.max(max - 1, 1));
+  const overlap = Math.min(22, (cont.offsetWidth - 38) / Math.max(max - 1, 1));
   for (let i=0; i<max; i++) {
     const el = document.createElement('div');
-    el.className = 'opp-card';
+    el.className = 'card-back opp-card-back';
     el.style.marginLeft = i === 0 ? '0' : `-${overlap}px`;
-    // Slight fan rotation
     const mid = (max - 1) / 2;
     const angle = (i - mid) * 1.5;
     el.style.transform = `rotate(${angle}deg)`;
@@ -669,35 +898,39 @@ function renderPile() {
   const area = document.getElementById('pileArea');
   area.innerHTML = '';
 
-  // Glow ring behind cards
+  // Glow
   const glow = document.createElement('div');
   glow.className = 'pile-glow pile-glow-' + (currentColor || 'wild');
   area.appendChild(glow);
 
   const show = discard.slice(-3);
   show.forEach((card, i) => {
-    const el = createCardEl(card, false);
-    el.classList.add('pile-card');
-    if (i === show.length - 1) el.classList.add('pile-card-animate');
+    const wrap = document.createElement('div');
+    wrap.className = 'pile-card-wrap';
+    const el = createCardEl(card, false, true);
     el.style.cursor = 'default';
-    el.onmouseenter = null;
-    area.appendChild(el);
+    wrap.appendChild(el);
+    if (i === show.length - 1) wrap.classList.add('pile-card-animate');
+    area.appendChild(wrap);
   });
-  // Active color indicator
+
+  // Active color dot
   if (currentColor && currentColor !== 'wild') {
-    const ring = document.createElement('div');
-    ring.className = 'active-color-ring';
-    ring.style.background = `var(--${currentColor})`;
-    ring.style.setProperty('--ring-glow', `var(--${currentColor}-glow)`);
-    area.appendChild(ring);
+    const dot = document.createElement('div');
+    dot.className = 'active-color-dot';
+    dot.style.background = `var(--${currentColor})`;
+    dot.style.setProperty('--dot-glow', `var(--${currentColor}-glow)`);
+    area.appendChild(dot);
   }
-  // Plus2 stack indicator
+
+  // Plus2 stack
   if (plus2Stack > 0) {
     const ind = document.createElement('div');
     ind.className = 'plus2-indicator';
     ind.textContent = `+${plus2Stack * 2}`;
     area.appendChild(ind);
   }
+
   // TAKI glow
   if (takiOpen) area.classList.add('taki-open-glow');
   else area.classList.remove('taki-open-glow');
@@ -713,15 +946,14 @@ function renderHand() {
     return (parseInt(a.value)||0) - (parseInt(b.value)||0);
   });
   const cardCount = sorted.length;
-  const maxWidth = window.innerWidth - 24;
+  const maxWidth = window.innerWidth - 20;
   const cardW = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--card-w'));
   const overlap = cardCount > 1 ? Math.min(0, (maxWidth - cardW * cardCount) / (cardCount - 1)) : 0;
-
-  // Fan rotation
   const maxAngle = Math.min(cardCount * 1.5, 20);
 
   sorted.forEach((card, i) => {
-    const el = createCardEl(card, true);
+    const el = createCardEl(card, true, false);
+    el.classList.add('hand-card');
     const playable = isPlayerTurn && gameActive && !takiOpen ? (plus2Stack > 0 ? canPlayPlus2(card) : canPlay(card))
       : (takiOpen ? canPlayInTaki(card) : false);
 
@@ -733,7 +965,6 @@ function renderHand() {
 
     if (overlap < 0) el.style.marginLeft = i === 0 ? '0' : `${overlap}px`;
 
-    // Fan rotation for hand
     if (cardCount > 1) {
       const mid = (cardCount - 1) / 2;
       const angle = (i - mid) * (maxAngle / cardCount);
@@ -766,27 +997,23 @@ function updateStatusPanel() {
     turn.style.color = '#c084fc';
   }
 
-  // TAKI badge
   if (takiOpen) {
     const b = document.createElement('div');
     b.className = 'status-badge taki-badge';
     b.textContent = 'TAKI';
     badges.appendChild(b);
   }
-  // Plus2 badge
   if (plus2Stack > 0) {
     const b = document.createElement('div');
     b.className = 'status-badge plus-badge';
     b.textContent = `+${plus2Stack * 2}`;
     badges.appendChild(b);
   }
-  // Card counts badge
   const cb = document.createElement('div');
   cb.className = 'status-badge';
   cb.textContent = `🃏 ${playerCards.length} vs ${oppCards.length}`;
   badges.appendChild(cb);
 
-  // Wins badge
   if (stats.wins > 0) {
     const wb = document.createElement('div');
     wb.className = 'status-badge';
@@ -795,52 +1022,53 @@ function updateStatusPanel() {
   }
 }
 
-function createCardEl(card, interactive) {
+// ─── CREATE CARD ELEMENT (authentic Taki design) ───
+function createCardEl(card, interactive, isPile) {
   const el = document.createElement('div');
-  el.className = `card card-${card.color}`;
+  const isWild = card.color === 'wild';
+  const isSuperTaki = card.value === 'super_taki';
 
-  // Special cards get unique inner content
+  el.className = `card card-${isWild ? 'wild' : card.color}`;
+  if (isPile) el.classList.add('pile-size');
+  if (isSuperTaki) el.classList.add('card-super-taki');
+
   if (card.value === 'taki' || card.value === 'super_taki') {
-    const isTaki = card.value === 'taki';
-    el.innerHTML = `
-      <div class="card-inner">
-        <div class="card-taki-text">${isTaki ? 'TAKI' : 'S.TAKI'}</div>
-      </div>
-    `;
+    // TAKI / Super TAKI — diagonal text
+    const label = isSuperTaki ? 'TAKI' : 'TAKI';
+    el.innerHTML = `<div class="card-taki-text">${label}</div>`;
   } else if (card.value === 'stop') {
+    // STOP — octagon shape
     el.innerHTML = `
-      <div class="card-inner">
-        <div class="card-stop-icon">⛔</div>
-        <div class="card-sym">${lang==='he'?'עצור':'STOP'}</div>
-      </div>
+      <div class="card-stop-shape">${stopOctagonSVG()}<span class="card-stop-label">STOP</span></div>
+      <span class="card-corner card-corner-tl">⛔</span>
+      <span class="card-corner card-corner-br">⛔</span>
     `;
   } else if (card.value === 'change_dir') {
+    // Change direction — circular arrows
     el.innerHTML = `
-      <div class="card-inner">
-        <div class="card-dir-icon">🔄</div>
-        <div class="card-sym">${lang==='he'?'כיוון':'DIR'}</div>
-      </div>
+      <div class="card-dir-icon">↻</div>
+      <span class="card-corner card-corner-tl">↻</span>
+      <span class="card-corner card-corner-br">↻</span>
     `;
   } else if (card.value === 'plus2') {
+    // Plus 2
     el.innerHTML = `
-      <div class="card-inner">
-        <div class="card-num">+2</div>
-      </div>
+      <div class="card-plus2-text">+2</div>
       <span class="card-corner card-corner-tl">+2</span>
       <span class="card-corner card-corner-br">+2</span>
     `;
   } else if (card.value === 'change_color') {
+    // Change color — 4-color diamond
     el.innerHTML = `
-      <div class="card-inner">
-        <div class="card-wild-icon">🌈</div>
+      <div class="card-color-diamond">
+        <div class="ccd-red"></div><div class="ccd-blue"></div>
+        <div class="ccd-yellow"></div><div class="ccd-green"></div>
       </div>
     `;
   } else {
     // Number card
     el.innerHTML = `
-      <div class="card-inner">
-        <div class="card-num">${card.value}</div>
-      </div>
+      <div class="card-center-num">${card.value}</div>
       <span class="card-corner card-corner-tl">${card.value}</span>
       <span class="card-corner card-corner-br">${card.value}</span>
     `;
@@ -856,11 +1084,9 @@ function setStatus(msg) {
 function playerPlayCard(card, el) {
   if (!gameActive || !isPlayerTurn) return;
 
-  // TAKI open mode
   if (takiOpen) {
     if (!canPlayInTaki(card)) return;
     if (card.color === 'wild') {
-      // wild in taki — just play it, taki stays open with same color
       playCard(card, 'player');
       removeFromHand(card, 'player');
       if (checkWin('player')) return;
@@ -870,13 +1096,11 @@ function playerPlayCard(card, el) {
     playCard(card, 'player');
     removeFromHand(card, 'player');
     if (checkWin('player')) return;
-    // If played another TAKI, taki stays open
     if (card.value === 'taki') { renderAll(); return; }
     renderAll();
     return;
   }
 
-  // Plus2 stack — must play plus2 or draw
   if (plus2Stack > 0) {
     if (card.value !== 'plus2') return;
     plus2Stack++;
@@ -891,7 +1115,6 @@ function playerPlayCard(card, el) {
 
   if (!canPlay(card)) return;
 
-  // Change color / Super TAKI
   if (card.value === 'change_color') {
     removeFromHand(card, 'player');
     showColorPicker(color => {
@@ -925,7 +1148,6 @@ function playerPlayCard(card, el) {
   removeFromHand(card, 'player');
   if (checkWin('player')) return;
 
-  // Handle specials
   if (card.value === 'taki') {
     takiOpen = true;
     takiColor = card.color;
@@ -937,7 +1159,6 @@ function playerPlayCard(card, el) {
   if (card.value === 'stop' || card.value === 'change_dir') {
     setStatus(t('oppSkipped'));
     renderAll();
-    // Player gets another turn (opponent skipped)
     setTimeout(() => { setStatus(t('yourTurn')); renderAll(); }, 1000);
     return;
   }
@@ -1005,7 +1226,6 @@ function removeFromHand(card, who) {
 
 function drawCard() {
   if (deck.length === 0) {
-    // Reshuffle discard into deck, keep top card
     const top = discard.pop();
     deck = shuffle(discard);
     discard = [top];
@@ -1019,7 +1239,6 @@ function aiTurn() {
   isPlayerTurn = false;
   setStatus(t('oppTurn'));
 
-  // Plus2 stack — AI tries to stack or draws
   if (plus2Stack > 0) {
     const p2 = oppCards.filter(c => c.value === 'plus2');
     if (p2.length > 0) {
@@ -1029,7 +1248,6 @@ function aiTurn() {
       removeFromHand(card, 'opp');
       renderAll();
       if (checkWin('opp')) return;
-      // Pass to player with stack
       isPlayerTurn = true;
       setTimeout(() => {
         setStatus(t('stackPlus2', { CARDS: plus2Stack * 2 }));
@@ -1048,10 +1266,8 @@ function aiTurn() {
     }
   }
 
-  // Find playable cards
   const playable = oppCards.filter(c => canPlay(c));
   if (playable.length === 0) {
-    // Draw
     oppCards.push(drawCard());
     renderAll();
     isPlayerTurn = true;
@@ -1059,13 +1275,10 @@ function aiTurn() {
     return;
   }
 
-  // AI strategy: prefer specials, then number matches
   const card = aiChooseCard(playable);
 
-  // Handle wild cards
   if (card.value === 'change_color' || card.value === 'super_taki') {
     removeFromHand(card, 'opp');
-    // Pick most common color in hand
     const chosen = aiPickColor();
     currentColor = chosen;
     currentValue = card.value;
@@ -1074,7 +1287,6 @@ function aiTurn() {
     if (checkWin('opp')) return;
 
     if (card.value === 'super_taki') {
-      // AI plays all cards of chosen color
       setTimeout(() => aiPlayTakiSequence(chosen), 600);
       return;
     }
@@ -1088,16 +1300,13 @@ function aiTurn() {
   renderAll();
   if (checkWin('opp')) return;
 
-  // Handle specials
   if (card.value === 'taki') {
-    // AI plays all matching color cards
     setTimeout(() => aiPlayTakiSequence(card.color), 600);
     return;
   }
   if (card.value === 'stop' || card.value === 'change_dir') {
     setStatus(t('skipped'));
     renderAll();
-    // AI gets another turn
     setTimeout(() => aiTurn(), 1000);
     return;
   }
@@ -1119,7 +1328,6 @@ function aiPlayTakiSequence(color) {
   if (!gameActive) return;
   const matching = oppCards.filter(c => c.color === color);
   if (matching.length === 0) {
-    // Close taki, pass turn
     isPlayerTurn = true;
     setTimeout(() => { setStatus(t('yourTurn')); renderAll(); }, 500);
     return;
@@ -1129,12 +1337,10 @@ function aiPlayTakiSequence(color) {
   removeFromHand(card, 'opp');
   renderAll();
   if (checkWin('opp')) return;
-  // If another TAKI, continue
   if (card.value === 'taki') {
     setTimeout(() => aiPlayTakiSequence(color), 500);
     return;
   }
-  // Continue playing matching color
   setTimeout(() => {
     const more = oppCards.filter(c => c.color === color);
     if (more.length > 0) {
@@ -1148,16 +1354,13 @@ function aiPlayTakiSequence(color) {
 }
 
 function aiChooseCard(playable) {
-  // Priority: plus2 > stop > change_dir > taki > number > wild
   const prio = ['plus2','stop','change_dir','taki'];
   for (const p of prio) {
     const found = playable.find(c => c.value === p && c.color !== 'wild');
     if (found) return found;
   }
-  // Prefer playing highest number
   const numbers = playable.filter(c => c.type === 'number').sort((a,b) => parseInt(b.value) - parseInt(a.value));
   if (numbers.length > 0) return numbers[0];
-  // Wild as last resort
   return playable[0];
 }
 
