@@ -2,6 +2,7 @@ import { db } from '@/db/db';
 import { repo } from '@/db/repo';
 import { createZip, safeName, type ZipEntry } from './zip';
 import { nowIso } from './ids';
+import { blobToArrayBuffer } from './blob';
 
 function extForMime(mime: string): string {
   if (mime.includes('mp4')) return 'm4a';
@@ -93,7 +94,7 @@ export async function buildExportZip(): Promise<Blob> {
     }
     usedNames.add(file);
 
-    const buf = new Uint8Array(await blobRec.blob.arrayBuffer());
+    const buf = new Uint8Array(await blobToArrayBuffer(blobRec.blob));
     entries.push({ name: file, data: buf });
     recordings.push({
       file,

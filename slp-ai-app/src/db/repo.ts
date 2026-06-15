@@ -1,5 +1,6 @@
 import { db } from './db';
 import { uid, nowIso } from '@/lib/ids';
+import { blobToArrayBuffer } from '@/lib/blob';
 import type {
   AppSettings,
   AttemptRating,
@@ -7,6 +8,7 @@ import type {
   ChildProfile,
   ClinicianSoundConfig,
   GeneratedMission,
+  LoadedAudio,
   ModelAudio,
   PracticeSentence,
   PracticeSession,
@@ -74,17 +76,26 @@ export const repo = {
   },
 
   // ---------- Audio blobs ----------
+  // Stored as ArrayBuffer to survive iOS Safari's IndexedDB Blob bug.
   async saveAudioBlob(
     blob: Blob,
     mimeType: string,
     kind: 'model' | 'attempt',
   ): Promise<string> {
     const id = uid('blob');
-    await db.audioBlobs.put({ id, blob, mimeType, kind, createdAt: nowIso() });
+    const data = await blobToArrayBuffer(blob);
+    await db.audioBlobs.put({ id, data, mimeType, kind, createdAt: nowIso() });
     return id;
   },
-  async getAudioBlob(id: string) {
-    return db.audioBlobs.get(id);
+  async getAudioBlob(id: string): Promise<LoadedAudio | undefined> {
+    const rec = await db.audioBlobs.get(id);
+    if (!rec) return undefined;
+    // New records carry `data`; legacy records carry a `blob` directly.
+    const blob = rec.data
+      ? new Blob([rec.data], { type: rec.mimeType })
+      : rec.blob;
+    if (!blob) return undefined;
+    return { id: rec.id, blob, mimeType: rec.mimeType, kind: rec.kind, createdAt: rec.createdAt };
   },
   async deleteAudioBlob(id: string): Promise<void> {
     await db.audioBlobs.delete(id);

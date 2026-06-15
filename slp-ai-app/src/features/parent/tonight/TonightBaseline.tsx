@@ -8,6 +8,7 @@ import { SoundBadge } from '@/components/SoundBadge';
 import {
   LAVI_BASELINE_RATINGS,
   NIV_BASELINE_RATINGS,
+  RatingLegend,
   RatingPicker,
 } from '@/components/RatingPicker';
 import { RecordingQueue } from './RecordingQueue';
@@ -177,6 +178,7 @@ function BaselineFollowUp({
           await repo.setAttemptRating(attemptId, r);
         }}
       />
+      <RatingLegend options={ratings} />
       <label className="w-full">
         <span className="sr-only">הערת הורה</span>
         <textarea

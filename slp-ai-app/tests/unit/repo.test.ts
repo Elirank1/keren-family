@@ -2,11 +2,35 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { db } from '@/db/db';
 import { repo } from '@/db/repo';
 import { ensureSeeded } from '@/db/seed';
+import { blobToArrayBuffer } from '@/lib/blob';
 
 beforeEach(async () => {
   await db.delete();
   await db.open();
   await ensureSeeded();
+});
+
+describe('audio persistence (ArrayBuffer storage)', () => {
+  it('round-trips recorded bytes through IndexedDB without loss', async () => {
+    const bytes = new Uint8Array([1, 2, 3, 4, 250, 0, 128, 77]);
+    const blob = new Blob([bytes], { type: 'audio/mp4' });
+    const id = await repo.saveAudioBlob(blob, 'audio/mp4', 'attempt');
+
+    const loaded = await repo.getAudioBlob(id);
+    expect(loaded).toBeTruthy();
+    expect(loaded!.mimeType).toBe('audio/mp4');
+    const out = new Uint8Array(await blobToArrayBuffer(loaded!.blob));
+    expect(Array.from(out)).toEqual(Array.from(bytes));
+  });
+
+  it('persists bytes, not a raw Blob, so iOS Safari can read it back', async () => {
+    const id = await repo.saveAudioBlob(new Blob(['x'], { type: 'audio/mp4' }), 'audio/mp4', 'model');
+    const raw = await db.audioBlobs.get(id);
+    // Stored as bytes (data present), never as a Blob (the field iOS corrupts).
+    expect(raw?.data).toBeTruthy();
+    expect(raw?.data instanceof Blob).toBe(false);
+    expect(raw?.blob).toBeUndefined();
+  });
 });
 
 describe('child attempts', () => {

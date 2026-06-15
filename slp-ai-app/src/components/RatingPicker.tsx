@@ -1,5 +1,39 @@
 import type { AttemptRating } from '@/lib/types';
 
+// Plain-language meaning of each rating, for parents. These describe how the
+// attempt SOUNDED to you — never an automatic correctness score.
+export const RATING_DESCRIPTION: Record<AttemptRating, string> = {
+  independent: 'הפיק את הצליל לבד',
+  after_model: 'הצליח אחרי שהראיתם דוגמה',
+  not_yet: 'עדיין מתאמן — זה בסדר גמור',
+  participated: 'השתתף בכיף',
+  imitated: 'חיקה אתכם',
+  skipped: 'לא התחשק היום — לגיטימי',
+};
+
+// A short legend explaining the rating options in plain Hebrew.
+export function RatingLegend({
+  options,
+}: {
+  options: { value: AttemptRating; label: string }[];
+}) {
+  return (
+    <div
+      className="w-full rounded-2xl bg-black/5 p-3 text-right text-xs leading-relaxed text-slate-600"
+      data-testid="rating-legend"
+    >
+      <p className="mb-1 font-bold">דירוג ידני — איך זה נשמע לכם, לא ציון אוטומטי:</p>
+      <ul className="flex flex-col gap-0.5">
+        {options.map((o) => (
+          <li key={o.value}>
+            <span className="font-bold">{o.label}</span> — {RATING_DESCRIPTION[o.value]}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 // Manual, age-appropriate self/parent ratings. These describe how an attempt
 // FELT — they are never an automatic correctness judgment.
 export const LAVI_RATINGS: { value: AttemptRating; label: string }[] = [

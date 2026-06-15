@@ -175,11 +175,26 @@ export interface RecordingAttempt {
 
 export interface AudioBlobRecord {
   id: string;
-  blob: Blob;
+  // Audio is persisted as an ArrayBuffer, NOT a Blob. iOS Safari/WebKit can
+  // store a Blob in IndexedDB whose read-back is empty/unreadable, silently
+  // losing recordings. We store bytes and rebuild a Blob on read.
+  data: ArrayBuffer;
   mimeType: string;
   createdAt: string;
   // 'model' = parent/clinician example; 'attempt' = child recording.
   kind: 'model' | 'attempt';
+  // Legacy records (written before the ArrayBuffer fix) held a Blob directly.
+  blob?: Blob;
+}
+
+// What getAudioBlob hands back: a ready-to-use Blob, regardless of how the
+// record was stored (new ArrayBuffer or legacy Blob).
+export interface LoadedAudio {
+  id: string;
+  blob: Blob;
+  mimeType: string;
+  kind: 'model' | 'attempt';
+  createdAt: string;
 }
 
 export interface ModelAudio {

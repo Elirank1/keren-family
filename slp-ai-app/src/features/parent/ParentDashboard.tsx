@@ -18,11 +18,12 @@ const RATING_LABEL: Record<AttemptRating, string> = {
 };
 
 const NAV = [
+  { to: '/parent/recordings', label: 'ההקלטות שלנו', icon: '🎧' },
   { to: '/parent/baseline/lavi', label: 'תמונת פתיחה — לביא', icon: '📸' },
   { to: '/parent/baseline/niv', label: 'תמונת פתיחה — ניב', icon: '📸' },
   { to: '/parent/model-audio', label: 'הקלטות דוגמה', icon: '🎙️' },
   { to: '/parent/content', label: 'עריכת תוכן', icon: '✏️' },
-  { to: '/parent/clinician', label: 'הגדרות קלינאית', icon: '🩺' },
+  { to: '/parent/clinician', label: 'אזור קלינאי.ת', icon: '🩺' },
   { to: '/parent/export', label: 'ייצוא נתונים', icon: '📤' },
 ];
 

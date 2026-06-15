@@ -250,5 +250,51 @@ test.describe('SLP-AI critical flows', () => {
     }
     // IndexedDB write/read should pass in a normal browser context.
     await expect(page.getByTestId('diag-indexeddb')).toHaveAttribute('data-status', 'ok');
+    // The audio write+read roundtrip (the iOS-bug catcher) should also pass.
+    await expect(page.getByTestId('diag-audio-storage')).toHaveAttribute('data-status', 'ok');
+  });
+
+  test('12. A recorded practice attempt persists mid-session and is reviewable + playable', async ({ page }) => {
+    await freshHome(page);
+    // Record one attempt inside a Lavi mission (do NOT finish the mission).
+    await page.getByTestId('select-lavi').click();
+    await page.getByTestId('lavi-sound-s').click();
+    await page.getByTestId('briefing-start').click();
+    await recordAndSave(page); // warmup isolated sound
+    await expect(page.getByTestId('rating-legend')).toBeVisible(); // plain-language ratings shown
+
+    // Leave mid-mission and open the recordings review.
+    await page.goto('/');
+    await openParent(page);
+    await page.getByTestId('nav-recordings').click();
+    await expect(page.getByTestId('recordings-list')).toBeVisible();
+    const rows = page.locator('[data-testid^="recording-play-"]');
+    expect(await rows.count()).toBeGreaterThanOrEqual(1);
+
+    // The attempt + its (incomplete) session are both persisted.
+    const attempts = await readStore<{ childId: string }>(page, 'attempts');
+    expect(attempts.filter((a) => a.childId === 'lavi').length).toBeGreaterThanOrEqual(1);
+    const sessions = await readStore<{ childId: string }>(page, 'sessions');
+    expect(sessions.some((s) => s.childId === 'lavi')).toBe(true);
+  });
+
+  test('13. A recording can be deleted from the review screen', async ({ page }) => {
+    await freshHome(page);
+    await page.getByTestId('select-niv').click();
+    await page.getByTestId('niv-sound-s').click();
+    await page.getByTestId('niv-greeting-start').click();
+    await page.locator('[data-testid^="niv-choice-"][data-correct="true"]').click();
+    await recordAndSave(page); // say_three attempt
+    await expect(page.getByTestId('rating-legend')).toBeVisible(); // wait for save to land
+
+    await page.goto('/');
+    await openParent(page);
+    await page.getByTestId('nav-recordings').click();
+    await page.getByTestId('recordings-child-niv').click();
+    const firstDelete = page.locator('[data-testid^="recording-delete-"]').first();
+    await expect(firstDelete).toBeVisible();
+    await firstDelete.click();
+    // After delete the niv list is empty (only one recording existed).
+    await expect(page.getByTestId('recordings-empty')).toBeVisible();
   });
 });

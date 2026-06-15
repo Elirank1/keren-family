@@ -15,6 +15,7 @@ import TonightPrep from '@/features/parent/tonight/TonightPrep';
 import TonightModelAudio from '@/features/parent/tonight/TonightModelAudio';
 import TonightBaseline from '@/features/parent/tonight/TonightBaseline';
 import Diagnostics from '@/features/parent/Diagnostics';
+import RecordingsReview from '@/features/parent/RecordingsReview';
 import ContentEditor from '@/features/parent/ContentEditor';
 import ClinicianPlaceholder from '@/features/parent/ClinicianPlaceholder';
 import ExportScreen from '@/features/parent/ExportScreen';
@@ -41,6 +42,7 @@ export const router = createHashRouter([
           { path: '/parent/tonight/model', element: <TonightModelAudio /> },
           { path: '/parent/tonight/baseline', element: <TonightBaseline /> },
           { path: '/parent/diagnostics', element: <Diagnostics /> },
+          { path: '/parent/recordings', element: <RecordingsReview /> },
           { path: '/parent/baseline/:childId', element: <BaselineScreen /> },
           { path: '/parent/model-audio', element: <ModelAudioManager /> },
           { path: '/parent/content', element: <ContentEditor /> },

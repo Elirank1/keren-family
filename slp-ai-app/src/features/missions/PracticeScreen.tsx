@@ -21,6 +21,7 @@ import { ModelPlayback } from '@/components/ModelPlayback';
 import {
   LAVI_RATINGS,
   NIV_RATINGS,
+  RatingLegend,
   RatingPicker,
 } from '@/components/RatingPicker';
 import { SoundBadge, soundDisplayName } from '@/components/SoundBadge';
@@ -56,24 +57,43 @@ export default function PracticeScreen() {
 
   // One session id per practice run; attempts reference it.
   const sessionIdRef = useRef<string>(uid('session'));
+  const startedAtRef = useRef<string>(nowIso());
   const attemptIdsRef = useRef<string[]>([]);
+  const sessionCreatedRef = useRef(false);
   const [stepIndex, setStepIndex] = useState(0);
 
-  const finish = useCallback(
-    async (mission: GeneratedMission) => {
+  // Persist the session as soon as the mission opens (no completedAt yet), so a
+  // run abandoned mid-way still has a real session row and its attempts are
+  // never orphaned. Updated incrementally as attempts are recorded.
+  const persistSession = useCallback(
+    async (mission: GeneratedMission, completed: boolean) => {
       await repo.saveSession({
         id: sessionIdRef.current,
         childId: mission.childId,
         sound: mission.sound,
         missionId: mission.id,
-        startedAt: nowIso(),
-        completedAt: nowIso(),
-        attemptIds: attemptIdsRef.current,
+        startedAt: startedAtRef.current,
+        completedAt: completed ? nowIso() : undefined,
+        attemptIds: [...attemptIdsRef.current],
         rewardId: mission.rewardId,
       });
+    },
+    [],
+  );
+
+  useEffect(() => {
+    if (data?.mission && !sessionCreatedRef.current) {
+      sessionCreatedRef.current = true;
+      void persistSession(data.mission, false);
+    }
+  }, [data, persistSession]);
+
+  const finish = useCallback(
+    async (mission: GeneratedMission) => {
+      await persistSession(mission, true);
       navigate(`/complete/${mission.childId}/${sessionIdRef.current}`);
     },
-    [navigate],
+    [navigate, persistSession],
   );
 
   const advance = useCallback(
@@ -125,6 +145,8 @@ export default function PracticeScreen() {
       sessionId: sessionIdRef.current,
     });
     attemptIdsRef.current.push(attempt.id);
+    // Keep the (incomplete) session row in sync so attempts are never orphaned.
+    await persistSession(mission, false);
     return attempt;
   };
 
@@ -351,6 +373,7 @@ function RecordRateBlock({
             onChange={handleRating}
             theme={ratingTheme}
           />
+          <RatingLegend options={ratingOptions} />
           <Button variant={ratingTheme} onClick={onAdvance} data-testid="continue-step">
             {ratingTheme === 'arena' ? 'עוברים לאתגר הבא' : 'הלאה'}
           </Button>

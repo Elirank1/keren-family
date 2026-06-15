@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Spinner } from '@/components/ui';
 import { detectRecorderSupport, pickMimeType, startRecording } from '@/lib/recorder';
-import { probeStorage } from './tonight/tonight';
+import { probeStorage, probeAudioRoundtrip } from './tonight/tonight';
 import { APP_VERSION } from '@/lib/version';
 
 type Status = 'ok' | 'warn' | 'fail' | 'unknown';
@@ -145,6 +145,16 @@ async function runChecks(): Promise<Check[]> {
     label: 'אחסון מקומי (IndexedDB)',
     status: storageOk ? 'ok' : 'fail',
     detail: storageOk ? 'כתיבה וקריאה הצליחו' : 'כתיבה נכשלה — ייתכן מצב פרטי',
+  });
+
+  // Audio bytes roundtrip — the check that catches the iOS "saved but empty"
+  // recording bug end to end (same path child recordings use).
+  const audioOk = await probeAudioRoundtrip();
+  checks.push({
+    key: 'audio-storage',
+    label: 'שמירת הקלטות (כתיבה+קריאה של קול)',
+    status: audioOk ? 'ok' : 'fail',
+    detail: audioOk ? 'הקלטה נשמרה ונקראה בהצלחה' : 'הקלטות עלולות לא להישמר במכשיר זה',
   });
 
   // Persistent storage

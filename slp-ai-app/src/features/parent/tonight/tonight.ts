@@ -3,6 +3,7 @@
 // No UI, no side effects beyond the explicit storage probe.
 import { repo } from '@/db/repo';
 import { db } from '@/db/db';
+import { blobToArrayBuffer } from '@/lib/blob';
 import { detectRecorderSupport } from '@/lib/recorder';
 import type { ChildId, PromptType, TargetSound } from '@/lib/types';
 
@@ -106,6 +107,25 @@ export async function probeStorage(): Promise<boolean> {
     return !!after;
   } catch {
     return false;
+  }
+}
+
+// Real audio write→read→verify roundtrip. This is the check that actually
+// catches the iOS Safari "Blob saved but reads back empty" failure mode, since
+// it stores bytes via the same path child recordings use and reads them back.
+export async function probeAudioRoundtrip(): Promise<boolean> {
+  let id: string | null = null;
+  try {
+    const bytes = new Uint8Array([7, 13, 42, 255, 0, 99]);
+    id = await repo.saveAudioBlob(new Blob([bytes], { type: 'audio/mp4' }), 'audio/mp4', 'attempt');
+    const loaded = await repo.getAudioBlob(id);
+    if (!loaded) return false;
+    const out = new Uint8Array(await blobToArrayBuffer(loaded.blob));
+    return out.length === bytes.length && out.every((b, i) => b === bytes[i]);
+  } catch {
+    return false;
+  } finally {
+    if (id) await repo.deleteAudioBlob(id).catch(() => {});
   }
 }
 
