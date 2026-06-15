@@ -114,10 +114,10 @@
       "purpose": "game_narration",
       "provider": "elevenlabs",
       "model": "eleven_multilingual_v2",
-      "promptHash": "9d61fe2df37d0e89",
-      "prompt": "משימת כוח האוויר מתחילה.",
+      "promptHash": "275918d85455950e",
+      "prompt": "Mission start! Let's go!",
       "file": "generated/audio/lavi_mission_start.mp3",
-      "created": "2026-06-15T12:32:58.701Z",
+      "created": "2026-06-15T14:47:48.507Z",
       "target": {
         "child": "lavi",
         "kind": "narration"
@@ -130,10 +130,10 @@
       "purpose": "game_narration",
       "provider": "elevenlabs",
       "model": "eleven_multilingual_v2",
-      "promptHash": "7a9f43210dcd6fe5",
-      "prompt": "הכוח נטען.",
+      "promptHash": "8bf5c633e8709aa4",
+      "prompt": "Power charging up!",
       "file": "generated/audio/lavi_power_charging.mp3",
-      "created": "2026-06-15T12:32:59.705Z",
+      "created": "2026-06-15T14:47:51.612Z",
       "target": {
         "child": "lavi",
         "kind": "narration"
@@ -146,10 +146,10 @@
       "purpose": "game_narration",
       "provider": "elevenlabs",
       "model": "eleven_multilingual_v2",
-      "promptHash": "cc6b7237b6ca6d16",
-      "prompt": "הגיע אתגר הבוס.",
+      "promptHash": "31863955db1bbcc2",
+      "prompt": "Boss challenge! You've got this!",
       "file": "generated/audio/lavi_boss.mp3",
-      "created": "2026-06-15T12:33:00.657Z",
+      "created": "2026-06-15T14:47:53.604Z",
       "target": {
         "child": "lavi",
         "kind": "narration"
@@ -162,10 +162,10 @@
       "purpose": "game_narration",
       "provider": "elevenlabs",
       "model": "eleven_multilingual_v2",
-      "promptHash": "9041d3bf8dc9db57",
-      "prompt": "המשימה הושלמה.",
+      "promptHash": "5a0f86b27c7beee0",
+      "prompt": "Mission complete! Great job!",
       "file": "generated/audio/lavi_mission_complete.mp3",
-      "created": "2026-06-15T12:33:01.537Z",
+      "created": "2026-06-15T14:47:55.662Z",
       "target": {
         "child": "lavi",
         "kind": "narration"
@@ -178,10 +178,10 @@
       "purpose": "game_narration",
       "provider": "elevenlabs",
       "model": "eleven_multilingual_v2",
-      "promptHash": "c0cec7bdc9d183fc",
-      "prompt": "בוא נמצא את החיה.",
+      "promptHash": "c1d9c536a58865ee",
+      "prompt": "Let's find the animal!",
       "file": "generated/audio/niv_find_animal.mp3",
-      "created": "2026-06-15T12:33:02.582Z",
+      "created": "2026-06-15T14:47:57.444Z",
       "target": {
         "child": "niv",
         "kind": "narration"
@@ -194,10 +194,10 @@
       "purpose": "game_narration",
       "provider": "elevenlabs",
       "model": "eleven_multilingual_v2",
-      "promptHash": "e9993b678cccfee5",
-      "prompt": "עכשיו אומרים יחד.",
+      "promptHash": "c0414eb6d1829e61",
+      "prompt": "Now say it with me!",
       "file": "generated/audio/niv_say_together.mp3",
-      "created": "2026-06-15T12:33:03.535Z",
+      "created": "2026-06-15T14:47:59.128Z",
       "target": {
         "child": "niv",
         "kind": "narration"
@@ -210,10 +210,10 @@
       "purpose": "game_narration",
       "provider": "elevenlabs",
       "model": "eleven_multilingual_v2",
-      "promptHash": "197c4323e0c4ad04",
-      "prompt": "אחת, שתיים, שלוש.",
+      "promptHash": "48dde116947fa02e",
+      "prompt": "One... two... three!",
       "file": "generated/audio/niv_count.mp3",
-      "created": "2026-06-15T12:33:04.465Z",
+      "created": "2026-06-15T14:48:01.347Z",
       "target": {
         "child": "niv",
         "kind": "narration"
@@ -226,10 +226,10 @@
       "purpose": "game_narration",
       "provider": "elevenlabs",
       "model": "eleven_multilingual_v2",
-      "promptHash": "1009876bc8946435",
-      "prompt": "אספנו כוכב צליל.",
+      "promptHash": "d26b793bf3937717",
+      "prompt": "We got a star! Yay!",
       "file": "generated/audio/niv_star.mp3",
-      "created": "2026-06-15T12:33:05.519Z",
+      "created": "2026-06-15T14:48:03.758Z",
       "target": {
         "child": "niv",
         "kind": "narration"
