@@ -60,6 +60,19 @@ export default function ParentDashboard() {
         המערכת מיועדת לתרגול ביתי ואינה מחליפה הערכה או הנחיה של קלינאית תקשורת.
       </p>
 
+      <Link
+        to="/parent/tonight"
+        data-testid="open-tonight"
+        className="flex items-center gap-4 rounded-3xl bg-gradient-to-l from-indigo-600 to-cyan-600 p-5 text-white shadow-md transition hover:brightness-110"
+      >
+        <span className="text-4xl" aria-hidden="true">🌙</span>
+        <span className="flex-1">
+          <span className="block text-xl font-black">הכנה לתרגול הערב</span>
+          <span className="block text-sm text-indigo-100">דוגמאות קול, תמונת פתיחה, ובדיקת מכשיר — בכמה דקות</span>
+        </span>
+        <span className="text-2xl" aria-hidden="true">←</span>
+      </Link>
+
       <div className="grid gap-4 sm:grid-cols-2">
         {data.children.map((child) => {
           const s = data.stats[child.id];

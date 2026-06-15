@@ -184,4 +184,71 @@ test.describe('SLP-AI critical flows', () => {
       await expect(page.getByTestId(`niv-sound-${sound}`)).toBeEnabled();
     }
   });
+
+  async function openParent(page: import('@playwright/test').Page) {
+    await page.getByTestId('open-parent').click();
+    await page.getByTestId('pin-input').fill('2468');
+    await page.getByTestId('pin-submit').click();
+  }
+
+  test('9. Tonight prep: model-audio queue records provisional model audio and auto-advances', async ({ page }) => {
+    await freshHome(page);
+    await openParent(page);
+    await page.getByTestId('open-tonight').click();
+
+    // Checklist starts empty for model audio.
+    await expect(page.getByTestId('check-model')).toHaveAttribute('data-ok', 'false');
+
+    await page.getByTestId('tonight-model').click();
+    await expect(page.getByTestId('model-provisional-note')).toBeVisible();
+    await page.getByTestId('model-pick-sh').click();
+
+    // First queue item (isolated sound), record → auto-advance to item 2.
+    await expect(page.getByTestId('queue-progress')).toContainText('פריט 1');
+    await recordAndSave(page);
+    await expect(page.getByTestId('queue-progress')).toContainText('פריט 2', { timeout: 5000 });
+
+    // Model audio is stored provisional (clinicianApproved=false).
+    const models = await readStore<{ clinicianApproved: boolean; sound: string }>(page, 'modelAudio');
+    expect(models.length).toBeGreaterThanOrEqual(1);
+    expect(models.every((m) => m.clinicianApproved === false)).toBe(true);
+
+    // Back on the hub the checklist now shows model audio ready.
+    await page.getByTestId('queue-pause').click();
+    await expect(page.getByTestId('check-model')).toHaveAttribute('data-ok', 'true');
+  });
+
+  test('10. Tonight prep: baseline queue stores a baseline attempt with a rating', async ({ page }) => {
+    await freshHome(page);
+    await openParent(page);
+    await page.getByTestId('open-tonight').click();
+    await page.getByTestId('tonight-baseline').click();
+    await expect(page.getByTestId('baseline-disclaimer')).toContainText('לא אבחון קליני');
+
+    await page.getByTestId('baseline-child-lavi').click();
+    await page.getByTestId('baseline-pick-ts').click();
+    await recordAndSave(page);
+    // Baseline waits for a rating before continuing.
+    await page.getByTestId('rating-independent').click();
+    await page.getByTestId('queue-continue').click();
+
+    const attempts = await readStore<{ baseline?: boolean; rating?: string; sound: string }>(page, 'attempts');
+    const baseline = attempts.filter((a) => a.baseline && a.sound === 'ts');
+    expect(baseline.length).toBeGreaterThanOrEqual(1);
+    expect(baseline.some((a) => a.rating === 'independent')).toBe(true);
+  });
+
+  test('11. Diagnostics screen runs preflight checks in plain Hebrew', async ({ page }) => {
+    await freshHome(page);
+    await openParent(page);
+    await page.getByTestId('open-tonight').click();
+    await page.getByTestId('tonight-diagnostics').click();
+
+    // Core checks render with a status.
+    for (const key of ['mediarecorder', 'indexeddb', 'audio', 'serviceworker', 'export', 'version']) {
+      await expect(page.getByTestId(`diag-${key}`)).toBeVisible();
+    }
+    // IndexedDB write/read should pass in a normal browser context.
+    await expect(page.getByTestId('diag-indexeddb')).toHaveAttribute('data-status', 'ok');
+  });
 });
