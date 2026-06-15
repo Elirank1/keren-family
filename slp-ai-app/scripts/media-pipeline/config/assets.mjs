@@ -9,17 +9,19 @@ export const VOICES = {
   narrator: 'XrExE9yKIg1WjnnlVkGX', // Matilda — upbeat, for neutral lines
 };
 
-// Narration lines (ElevenLabs TTS, eleven_multilingual_v2 for Hebrew).
-// purpose=game_narration — NEVER a clinical pronunciation model.
+// Narration lines (ElevenLabs TTS). GAME narration only — never a clinical
+// pronunciation model. English-first: the chosen voices are English-native, so
+// English gives clean playback and a little English exposure on the side. Lines
+// are sound-agnostic so the same clip fits every sound's mission beat.
 export const NARRATION = [
-  { id: 'lavi_mission_start', child: 'lavi', voice: 'lavi', text: 'משימת כוח האוויר מתחילה.' },
-  { id: 'lavi_power_charging', child: 'lavi', voice: 'lavi', text: 'הכוח נטען.' },
-  { id: 'lavi_boss', child: 'lavi', voice: 'lavi', text: 'הגיע אתגר הבוס.' },
-  { id: 'lavi_mission_complete', child: 'lavi', voice: 'lavi', text: 'המשימה הושלמה.' },
-  { id: 'niv_find_animal', child: 'niv', voice: 'niv', text: 'בוא נמצא את החיה.' },
-  { id: 'niv_say_together', child: 'niv', voice: 'niv', text: 'עכשיו אומרים יחד.' },
-  { id: 'niv_count', child: 'niv', voice: 'niv', text: 'אחת, שתיים, שלוש.' },
-  { id: 'niv_star', child: 'niv', voice: 'niv', text: 'אספנו כוכב צליל.' },
+  { id: 'lavi_mission_start', child: 'lavi', voice: 'lavi', text: "Mission start! Let's go!" },
+  { id: 'lavi_power_charging', child: 'lavi', voice: 'lavi', text: 'Power charging up!' },
+  { id: 'lavi_boss', child: 'lavi', voice: 'lavi', text: "Boss challenge! You've got this!" },
+  { id: 'lavi_mission_complete', child: 'lavi', voice: 'lavi', text: 'Mission complete! Great job!' },
+  { id: 'niv_find_animal', child: 'niv', voice: 'niv', text: "Let's find the animal!" },
+  { id: 'niv_say_together', child: 'niv', voice: 'niv', text: 'Now say it with me!' },
+  { id: 'niv_count', child: 'niv', voice: 'niv', text: 'One... two... three!' },
+  { id: 'niv_star', child: 'niv', voice: 'niv', text: 'We got a star! Yay!' },
 ];
 
 // ---- Gemini image generation ----
