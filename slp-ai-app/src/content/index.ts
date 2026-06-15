@@ -56,4 +56,5 @@ export function getMissionMeta(
 
 // Current seed data version. Bumping it does NOT overwrite parent edits;
 // see db/seed.ts for the merge policy.
-export const SEED_VERSION = 1;
+// v2: activate all four target sounds (s/sh/ts/ch) for existing installs.
+export const SEED_VERSION = 2;

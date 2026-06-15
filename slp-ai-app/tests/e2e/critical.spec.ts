@@ -34,7 +34,7 @@ test.describe('SLP-AI critical flows', () => {
   test('2. Niv simplified mission completes with no negative feedback', async ({ page }) => {
     await freshHome(page);
     await page.getByTestId('select-niv').click();
-    await page.getByTestId('niv-start').click();
+    await page.getByTestId('niv-sound-s').click();
     await page.getByTestId('niv-greeting-start').click();
 
     // Choose the correct word (its testid is the target word id from the title).
@@ -146,5 +146,42 @@ test.describe('SLP-AI critical flows', () => {
       expect(json).toHaveProperty(key);
     }
     expect(json.app).toBe('SLP-AI');
+  });
+
+  test('7. All four sounds are active and a /ʃ/ (sh) mission completes for Lavi', async ({ page }) => {
+    await freshHome(page);
+    await page.getByTestId('select-lavi').click();
+
+    // Every target sound is unlocked (enabled), not just /s/.
+    for (const sound of ['s', 'sh', 'ts', 'ch']) {
+      await expect(page.getByTestId(`lavi-sound-${sound}`)).toBeEnabled();
+    }
+
+    // Drive a non-/s/ sound end to end to prove activation is real.
+    await page.getByTestId('lavi-sound-sh').click();
+    await expect(page.getByTestId('briefing-start')).toBeVisible();
+    await page.getByTestId('briefing-start').click();
+    await recordAndSave(page);
+    await page.getByTestId('rating-independent').click();
+    await page.getByTestId('continue-step').click();
+    for (let i = 0; i < 10; i++) {
+      if (await page.getByTestId('real-world-mission').isVisible().catch(() => false)) break;
+      const skip = page.getByTestId('skip-step');
+      if (!(await skip.isVisible().catch(() => false))) break;
+      await skip.click();
+      await page.waitForTimeout(250);
+    }
+    await expect(page.getByTestId('real-world-mission')).toBeVisible();
+
+    const sessions = await readStore<{ childId: string; sound: string }>(page, 'sessions');
+    expect(sessions.some((s) => s.childId === 'lavi' && s.sound === 'sh')).toBe(true);
+  });
+
+  test('8. All four sounds are active for Niv', async ({ page }) => {
+    await freshHome(page);
+    await page.getByTestId('select-niv').click();
+    for (const sound of ['s', 'sh', 'ts', 'ch']) {
+      await expect(page.getByTestId(`niv-sound-${sound}`)).toBeEnabled();
+    }
   });
 });

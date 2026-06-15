@@ -26,9 +26,10 @@ function defaultClinicianConfig(
   return {
     childId,
     sound,
-    // Only /s/ is enabled for the first vertical slice; the rest are
-    // provisional and disabled until a parent/clinician turns them on.
-    enabled: sound === 's',
+    // All four target sounds are active for real family use. "Active" means
+    // playable, not clinically approved — clinical cues stay provisional
+    // (clinicianApproved: false) and parent/clinician editable.
+    enabled: true,
     currentStage: childId === 'niv' ? 'listening' : 'word',
     targetPositions: ['initial', 'medial', 'final'],
     verbalCue: SOUND_CUES[sound].verbal,
@@ -96,6 +97,30 @@ export async function ensureSeeded(): Promise<void> {
           (s) => !existingSentenceIds.has(s.id),
         );
         if (newSentences.length) await db.sentences.bulkPut(newSentences);
+
+        // v2: activate all four target sounds on devices seeded under v1 (which
+        // enabled only /s/). Add any missing config rows; enable existing ones
+        // while preserving every other parent/clinician-edited field.
+        const existingConfigs = await db.clinicianConfigs
+          .where('childId')
+          .anyOf(seedChildren.map((c) => c.id))
+          .toArray();
+        const haveConfig = new Set(existingConfigs.map((c) => `${c.childId}:${c.sound}`));
+        const upserts: ClinicianSoundConfig[] = [];
+        for (const child of seedChildren) {
+          for (const sound of child.targetSounds) {
+            const key = `${child.id}:${sound}`;
+            const current = existingConfigs.find(
+              (c) => c.childId === child.id && c.sound === sound,
+            );
+            if (!haveConfig.has(key)) {
+              upserts.push(defaultClinicianConfig(child.id, sound));
+            } else if (current && !current.enabled) {
+              upserts.push({ ...current, enabled: true, updatedAt: nowIso() });
+            }
+          }
+        }
+        if (upserts.length) await db.clinicianConfigs.bulkPut(upserts);
 
         await db.settings.update('singleton', { seededVersion: SEED_VERSION });
       }

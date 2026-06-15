@@ -8,17 +8,26 @@ import { Spinner } from '@/components/ui';
 import { BackHome } from '@/components/BackHome';
 import type { TargetSound } from '@/lib/types';
 
+// Soft per-sound tile colors (garden palette). Picture-first so a pre-reader
+// chooses by animal, never by text.
+const TILE_BG: Record<TargetSound, string> = {
+  s: 'bg-emerald-200',
+  sh: 'bg-sky-200',
+  ts: 'bg-amber-200',
+  ch: 'bg-rose-200',
+};
+
 export default function NivToday() {
   const navigate = useNavigate();
   const [busy, setBusy] = useState(false);
   const { data, loading } = useAsync(() => repo.getEnabledSounds('niv'), []);
 
   if (loading || !data) return <Spinner />;
-  // Niv plays only enabled sounds; for V0 that's /s/. Default to the first.
-  const sound: TargetSound = data[0] ?? 's';
-  const meta = getMissionMeta('niv', sound);
+  // Keep a stable, friendly order regardless of how configs come back.
+  const order: TargetSound[] = ['s', 'sh', 'ts', 'ch'];
+  const sounds = order.filter((s) => data.includes(s));
 
-  const start = async () => {
+  const start = async (sound: TargetSound) => {
     setBusy(true);
     const mission = await buildAndSaveMission('niv', sound);
     navigate(`/practice/niv/${mission.id}`);
@@ -27,27 +36,37 @@ export default function NivToday() {
   return (
     <main
       dir="rtl"
-      className="mx-auto flex min-h-screen max-w-xl flex-col items-center justify-center gap-8 bg-garden-bg px-5 py-8 text-slate-900"
+      className="mx-auto flex min-h-screen max-w-xl flex-col items-center gap-6 bg-garden-bg px-5 py-8 text-slate-900"
     >
       <div className="w-full">
         <BackHome theme="garden" />
       </div>
-      <div className="text-center">
-        <div className="text-[7rem] leading-none" aria-hidden="true">
-          {meta.animal}
+      <h1 className="text-3xl font-black">הגן של ניב</h1>
+      <p className="-mt-3 text-slate-500">בחרו חבר 🐾</p>
+
+      {sounds.length === 0 ? (
+        <p className="mt-6 text-center text-slate-500">אפשר להפעיל צליל באזור ההורים.</p>
+      ) : (
+        <div className="grid w-full grid-cols-2 gap-4">
+          {sounds.map((sound) => {
+            const meta = getMissionMeta('niv', sound);
+            return (
+              <button
+                key={sound}
+                onClick={() => start(sound)}
+                disabled={busy}
+                data-testid={`niv-sound-${sound}`}
+                aria-label={meta.animalName}
+                className={`flex flex-col items-center justify-center gap-2 rounded-[2rem] ${TILE_BG[sound]} p-6 shadow-md transition active:scale-95 disabled:opacity-50`}
+              >
+                <span className="text-7xl leading-none" aria-hidden="true">
+                  {meta.animal}
+                </span>
+                <span className="text-xl font-black text-slate-700">{meta.animalName}</span>
+              </button>
+            );
+          })}
         </div>
-        <h1 className="mt-2 text-3xl font-black">הגן של ניב</h1>
-      </div>
-      <button
-        onClick={start}
-        disabled={busy || data.length === 0}
-        data-testid="niv-start"
-        className="rounded-full bg-garden-accent px-12 py-8 text-3xl font-black text-white shadow-xl transition hover:brightness-105 disabled:opacity-50"
-      >
-        ▶️ בוא נשחק
-      </button>
-      {data.length === 0 && (
-        <p className="text-center text-slate-500">אפשר להפעיל צליל באזור ההורים.</p>
       )}
     </main>
   );

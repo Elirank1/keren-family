@@ -77,14 +77,15 @@ describe('child attempts', () => {
 });
 
 describe('seeding', () => {
-  it('enables only /s/ by default and seeds clinician configs per child×sound', async () => {
-    const laviEnabled = await repo.getEnabledSounds('lavi');
-    const nivEnabled = await repo.getEnabledSounds('niv');
-    expect(laviEnabled).toEqual(['s']);
-    expect(nivEnabled).toEqual(['s']);
+  it('activates all four sounds by default while keeping cues provisional', async () => {
+    const laviEnabled = (await repo.getEnabledSounds('lavi')).sort();
+    const nivEnabled = (await repo.getEnabledSounds('niv')).sort();
+    expect(laviEnabled).toEqual(['ch', 's', 'sh', 'ts']);
+    expect(nivEnabled).toEqual(['ch', 's', 'sh', 'ts']);
 
     const configs = await repo.getClinicianConfigs('lavi');
     expect(configs).toHaveLength(4);
+    // Active ≠ clinically approved: cues stay provisional until a clinician signs off.
     for (const c of configs) expect(c.clinicianApproved).toBe(false);
   });
 
