@@ -1,0 +1,47 @@
+[
+  {
+    "id": "s_sentence_1",
+    "sound": "s",
+    "text": "הסוס נוסע במסלול.",
+    "textWithNikud": "הַסּוּס נוֹסֵעַ בַּמַּסְלוּל.",
+    "ageBands": ["7-9"],
+    "difficulty": 2,
+    "clinicianApproved": false
+  },
+  {
+    "id": "s_sentence_2",
+    "sound": "s",
+    "text": "הנסיכה נוסעת למסיבה.",
+    "textWithNikud": "הַנְּסִיכָה נוֹסַעַת לַמְּסִיבָּה.",
+    "ageBands": ["7-9"],
+    "difficulty": 2,
+    "clinicianApproved": false
+  },
+  {
+    "id": "sh_sentence_1",
+    "sound": "sh",
+    "text": "השמש זורחת מעל השטיח.",
+    "textWithNikud": "הַשֶּׁמֶשׁ זוֹרַחַת מֵעַל הַשָּׁטִיחַ.",
+    "ageBands": ["7-9"],
+    "difficulty": 2,
+    "clinicianApproved": false
+  },
+  {
+    "id": "ts_sentence_1",
+    "sound": "ts",
+    "text": "הציפור מצאה צעצוע נוצץ.",
+    "textWithNikud": "הַצִּפּוֹר מָצְאָה צַעֲצוּעַ נוֹצֵץ.",
+    "ageBands": ["7-9"],
+    "difficulty": 3,
+    "clinicianApproved": false
+  },
+  {
+    "id": "ch_sentence_1",
+    "sound": "ch",
+    "text": "צ׳ארלי אכל צ׳יפס עם קטשופ.",
+    "textWithNikud": "צ׳אַרְלִי אָכַל צִ׳יפְּס עִם קֶטְשׁוּפּ.",
+    "ageBands": ["7-9"],
+    "difficulty": 3,
+    "clinicianApproved": false
+  }
+]

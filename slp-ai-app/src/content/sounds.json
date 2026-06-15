@@ -1,0 +1,39 @@
+[
+  {
+    "id": "s",
+    "ipa": "/s/",
+    "hebrewLabels": [
+      "ס",
+      "שׂ"
+    ],
+    "childName": "כוח האוויר",
+    "clinicianApproved": false
+  },
+  {
+    "id": "sh",
+    "ipa": "/ʃ/",
+    "hebrewLabels": [
+      "שׁ"
+    ],
+    "childName": "כוח השקט",
+    "clinicianApproved": false
+  },
+  {
+    "id": "ts",
+    "ipa": "/ts/",
+    "hebrewLabels": [
+      "צ"
+    ],
+    "childName": "כוח הניצוץ",
+    "clinicianApproved": false
+  },
+  {
+    "id": "ch",
+    "ipa": "/tʃ/",
+    "hebrewLabels": [
+      "צ׳"
+    ],
+    "childName": "כוח הפיצוץ",
+    "clinicianApproved": false
+  }
+]

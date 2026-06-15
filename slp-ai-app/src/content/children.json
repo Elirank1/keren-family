@@ -1,0 +1,24 @@
+[
+  {
+    "id": "lavi",
+    "displayName": "לביא",
+    "ageYears": 7.5,
+    "ageBand": "7-9",
+    "mode": "school_age_arena",
+    "readingLevel": "reader",
+    "defaultSessionMinutes": 6,
+    "clinicalStatus": "awaiting_assessment",
+    "targetSounds": ["s", "sh", "ts", "ch"]
+  },
+  {
+    "id": "niv",
+    "displayName": "ניב",
+    "ageYears": 3.5,
+    "ageBand": "3-4",
+    "mode": "preschool_animal_garden",
+    "readingLevel": "none",
+    "defaultSessionMinutes": 3,
+    "clinicalStatus": "play_and_monitor",
+    "targetSounds": ["s", "sh", "ts", "ch"]
+  }
+]

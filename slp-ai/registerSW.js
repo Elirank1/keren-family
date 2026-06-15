@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/keren-family/slp-ai/sw.js', { scope: '/keren-family/slp-ai/' })})}

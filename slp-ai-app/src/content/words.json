@@ -1,0 +1,1010 @@
+[
+  {
+    "id": "s_sus",
+    "text": "סוס",
+    "textWithNikud": "סוּס",
+    "sound": "s",
+    "positions": [
+      "initial",
+      "final"
+    ],
+    "syllables": 1,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 1,
+    "category": "animals",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "s_sir",
+    "text": "סיר",
+    "textWithNikud": "סִיר",
+    "sound": "s",
+    "positions": [
+      "initial"
+    ],
+    "syllables": 1,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 1,
+    "category": "home",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "s_saba",
+    "text": "סבא",
+    "textWithNikud": "סַבָּא",
+    "sound": "s",
+    "positions": [
+      "initial"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 1,
+    "category": "people",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "s_sabon",
+    "text": "סבון",
+    "textWithNikud": "סַבּוֹן",
+    "sound": "s",
+    "positions": [
+      "initial"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 1,
+    "category": "home",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "s_sal",
+    "text": "סל",
+    "textWithNikud": "סַל",
+    "sound": "s",
+    "positions": [
+      "initial"
+    ],
+    "syllables": 1,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 1,
+    "category": "home",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "s_kos",
+    "text": "כוס",
+    "textWithNikud": "כּוֹס",
+    "sound": "s",
+    "positions": [
+      "final"
+    ],
+    "syllables": 1,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 1,
+    "category": "home",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "s_safsal",
+    "text": "ספסל",
+    "textWithNikud": "סַפְסָל",
+    "sound": "s",
+    "positions": [
+      "initial",
+      "medial"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "outside",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "s_masrek",
+    "text": "מסרק",
+    "textWithNikud": "מַסְרֵק",
+    "sound": "s",
+    "positions": [
+      "medial"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "home",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "s_kufsa",
+    "text": "קופסה",
+    "textWithNikud": "קוּפְסָה",
+    "sound": "s",
+    "positions": [
+      "medial"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "home",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "s_misnenet",
+    "text": "מסננת",
+    "textWithNikud": "מִסְנֶנֶת",
+    "sound": "s",
+    "positions": [
+      "medial"
+    ],
+    "syllables": 3,
+    "ageBands": [
+      "7-9"
+    ],
+    "difficulty": 3,
+    "category": "home",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "s_panas",
+    "text": "פנס",
+    "textWithNikud": "פָּנָס",
+    "sound": "s",
+    "positions": [
+      "final"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "objects",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "s_maslul",
+    "text": "מסלול",
+    "textWithNikud": "מַסְלוּל",
+    "sound": "s",
+    "positions": [
+      "medial"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "games",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "s_misderon",
+    "text": "מסדרון",
+    "textWithNikud": "מִסְדְּרוֹן",
+    "sound": "s",
+    "positions": [
+      "medial"
+    ],
+    "syllables": 3,
+    "ageBands": [
+      "7-9"
+    ],
+    "difficulty": 3,
+    "category": "home",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "s_mesiba",
+    "text": "מסיבה",
+    "textWithNikud": "מְסִיבָּה",
+    "sound": "s",
+    "positions": [
+      "medial"
+    ],
+    "syllables": 3,
+    "ageBands": [
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "events",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "s_nesikha",
+    "text": "נסיכה",
+    "textWithNikud": "נְסִיכָה",
+    "sound": "s",
+    "positions": [
+      "medial"
+    ],
+    "syllables": 3,
+    "ageBands": [
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "fantasy",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "s_asita",
+    "text": "עשית",
+    "textWithNikud": "עָשִׂיתָ",
+    "sound": "s",
+    "positions": [
+      "medial"
+    ],
+    "syllables": 3,
+    "ageBands": [
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "actions",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "s_ose",
+    "text": "עושה",
+    "textWithNikud": "עוֹשֶׂה",
+    "sound": "s",
+    "positions": [
+      "medial"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "actions",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "s_asar",
+    "text": "עשר",
+    "textWithNikud": "עֶשֶׂר",
+    "sound": "s",
+    "positions": [
+      "medial"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "numbers",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "s_masait",
+    "text": "משאית",
+    "textWithNikud": "מַשָּׂאִית",
+    "sound": "s",
+    "positions": [
+      "medial"
+    ],
+    "syllables": 3,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "vehicles",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "sh_shemesh",
+    "text": "שמש",
+    "textWithNikud": "שֶׁמֶשׁ",
+    "sound": "sh",
+    "positions": [
+      "initial",
+      "final"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 1,
+    "category": "nature",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "sh_shir",
+    "text": "שיר",
+    "textWithNikud": "שִׁיר",
+    "sound": "sh",
+    "positions": [
+      "initial"
+    ],
+    "syllables": 1,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 1,
+    "category": "music",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "sh_shoko",
+    "text": "שוקו",
+    "textWithNikud": "שׁוֹקוֹ",
+    "sound": "sh",
+    "positions": [
+      "initial"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 1,
+    "category": "food",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "sh_dvash",
+    "text": "דבש",
+    "textWithNikud": "דְּבַשׁ",
+    "sound": "sh",
+    "positions": [
+      "final"
+    ],
+    "syllables": 1,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "food",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "sh_hadash",
+    "text": "חדש",
+    "textWithNikud": "חָדָשׁ",
+    "sound": "sh",
+    "positions": [
+      "final"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "descriptions",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "sh_shokolad",
+    "text": "שוקולד",
+    "textWithNikud": "שׁוֹקוֹלָד",
+    "sound": "sh",
+    "positions": [
+      "initial"
+    ],
+    "syllables": 3,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "food",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "sh_mivreshet",
+    "text": "מברשת",
+    "textWithNikud": "מִבְרֶשֶׁת",
+    "sound": "sh",
+    "positions": [
+      "medial"
+    ],
+    "syllables": 3,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "home",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "sh_mishkafaim",
+    "text": "משקפיים",
+    "textWithNikud": "מִשְׁקָפַיִם",
+    "sound": "sh",
+    "positions": [
+      "medial"
+    ],
+    "syllables": 3,
+    "ageBands": [
+      "7-9"
+    ],
+    "difficulty": 3,
+    "category": "objects",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "sh_hodesh",
+    "text": "חודש",
+    "textWithNikud": "חוֹדֶשׁ",
+    "sound": "sh",
+    "positions": [
+      "final"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "time",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "sh_shtiah",
+    "text": "שטיח",
+    "textWithNikud": "שָׁטִיחַ",
+    "sound": "sh",
+    "positions": [
+      "initial"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "home",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "sh_bikush",
+    "text": "ביקוש",
+    "textWithNikud": "בִּקּוּשׁ",
+    "sound": "sh",
+    "positions": [
+      "final"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "7-9"
+    ],
+    "difficulty": 3,
+    "category": "abstract",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "ts_tzav",
+    "text": "צב",
+    "textWithNikud": "צָב",
+    "sound": "ts",
+    "positions": [
+      "initial"
+    ],
+    "syllables": 1,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 1,
+    "category": "animals",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "ts_tzel",
+    "text": "צל",
+    "textWithNikud": "צֵל",
+    "sound": "ts",
+    "positions": [
+      "initial"
+    ],
+    "syllables": 1,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 1,
+    "category": "nature",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "ts_etz",
+    "text": "עץ",
+    "textWithNikud": "עֵץ",
+    "sound": "ts",
+    "positions": [
+      "final"
+    ],
+    "syllables": 1,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 1,
+    "category": "nature",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "ts_hetz",
+    "text": "חץ",
+    "textWithNikud": "חֵץ",
+    "sound": "ts",
+    "positions": [
+      "final"
+    ],
+    "syllables": 1,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 1,
+    "category": "games",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "ts_beytsa",
+    "text": "ביצה",
+    "textWithNikud": "בֵּיצָה",
+    "sound": "ts",
+    "positions": [
+      "medial"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "food",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "ts_tzipor",
+    "text": "ציפור",
+    "textWithNikud": "צִפּוֹר",
+    "sound": "ts",
+    "positions": [
+      "initial"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "animals",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "ts_tzalahat",
+    "text": "צלחת",
+    "textWithNikud": "צַלַּחַת",
+    "sound": "ts",
+    "positions": [
+      "initial"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "home",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "ts_tznon",
+    "text": "צנון",
+    "textWithNikud": "צְנוֹן",
+    "sound": "ts",
+    "positions": [
+      "initial"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "food",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "ts_tzaatzua",
+    "text": "צעצוע",
+    "textWithNikud": "צַעֲצוּעַ",
+    "sound": "ts",
+    "positions": [
+      "initial",
+      "medial"
+    ],
+    "syllables": 3,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 3,
+    "category": "toys",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "ts_matzlema",
+    "text": "מצלמה",
+    "textWithNikud": "מַצְלֵמָה",
+    "sound": "ts",
+    "positions": [
+      "medial"
+    ],
+    "syllables": 3,
+    "ageBands": [
+      "7-9"
+    ],
+    "difficulty": 3,
+    "category": "objects",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "ts_kotz",
+    "text": "קוץ",
+    "textWithNikud": "קוֹץ",
+    "sound": "ts",
+    "positions": [
+      "final"
+    ],
+    "syllables": 1,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "nature",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "ts_notzetz",
+    "text": "נוצץ",
+    "textWithNikud": "נוֹצֵץ",
+    "sound": "ts",
+    "positions": [
+      "medial",
+      "final"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "7-9"
+    ],
+    "difficulty": 3,
+    "category": "descriptions",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "ts_nitzan",
+    "text": "ניצן",
+    "textWithNikud": "נִצָּן",
+    "sound": "ts",
+    "positions": [
+      "medial"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "nature",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "ts_otzer",
+    "text": "עוצר",
+    "textWithNikud": "עוֹצֵר",
+    "sound": "ts",
+    "positions": [
+      "medial"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "actions",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "ch_chips",
+    "text": "צ׳יפס",
+    "textWithNikud": "צִ׳יפְּס",
+    "sound": "ch",
+    "positions": [
+      "initial"
+    ],
+    "syllables": 1,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 1,
+    "category": "food",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "ch_chita",
+    "text": "צ׳יטה",
+    "textWithNikud": "צִ׳יטָה",
+    "sound": "ch",
+    "positions": [
+      "initial"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 1,
+    "category": "animals",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "ch_chili",
+    "text": "צ׳ילי",
+    "textWithNikud": "צִ׳ילִי",
+    "sound": "ch",
+    "positions": [
+      "initial"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "food",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "ch_charlie",
+    "text": "צ׳ארלי",
+    "textWithNikud": "צ׳אַרְלִי",
+    "sound": "ch",
+    "positions": [
+      "initial"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "names",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "ch_ketchup",
+    "text": "קטשופ",
+    "textWithNikud": "קֶטְשׁוּפּ",
+    "sound": "ch",
+    "positions": [
+      "medial"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "food",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "ch_sandwich",
+    "text": "סנדוויץ׳",
+    "textWithNikud": "סֶנְדְוִויץ׳",
+    "sound": "ch",
+    "positions": [
+      "final"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "7-9"
+    ],
+    "difficulty": 3,
+    "category": "food",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  },
+  {
+    "id": "ch_chikchak",
+    "text": "צ׳יק־צ׳ק",
+    "textWithNikud": "צ׳יק־צ׳ק",
+    "sound": "ch",
+    "positions": [
+      "initial",
+      "medial"
+    ],
+    "syllables": 2,
+    "ageBands": [
+      "3-4",
+      "7-9"
+    ],
+    "difficulty": 2,
+    "category": "actions",
+    "clinicianApproved": false,
+    "imageAsset": null,
+    "modelAudioAsset": null,
+    "enabled": true
+  }
+]

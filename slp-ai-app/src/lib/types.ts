@@ -1,0 +1,217 @@
+// Domain types for SLP-AI. Kept framework-free so they can be shared by
+// the content engine, the DB layer and the UI.
+
+export type ChildId = 'lavi' | 'niv';
+
+export type TargetSound = 's' | 'sh' | 'ts' | 'ch';
+
+export type WordPosition = 'initial' | 'medial' | 'final';
+
+export type AgeBand = '3-4' | '7-9';
+
+export type ChildMode = 'school_age_arena' | 'preschool_animal_garden';
+
+export type ReadingLevel = 'none' | 'reader';
+
+export type ClinicalStatus =
+  | 'awaiting_assessment'
+  | 'play_and_monitor'
+  | 'clinician_configured';
+
+export type ClinicalStage =
+  | 'listening'
+  | 'isolated_sound'
+  | 'syllable'
+  | 'word'
+  | 'phrase'
+  | 'sentence'
+  | 'conversation';
+
+export type PromptType = 'isolated_sound' | 'word' | 'sentence';
+
+// NOTE (product boundary): these are *manual* self/parent ratings of how an
+// attempt felt. They are deliberately NOT an automatic correctness judgment.
+export type AttemptRating =
+  | 'independent'
+  | 'after_model'
+  | 'not_yet'
+  | 'participated'
+  | 'imitated'
+  | 'skipped';
+
+export interface ChildProfile {
+  id: ChildId;
+  displayName: string;
+  ageYears: number;
+  ageBand: AgeBand;
+  mode: ChildMode;
+  readingLevel: ReadingLevel;
+  defaultSessionMinutes: number;
+  clinicalStatus: ClinicalStatus;
+  targetSounds: TargetSound[];
+}
+
+export interface SoundDef {
+  id: TargetSound;
+  ipa: string;
+  hebrewLabels: string[];
+  childName: string;
+  clinicianApproved: boolean;
+}
+
+export interface PracticeWord {
+  id: string;
+  text: string;
+  textWithNikud?: string;
+  sound: TargetSound;
+  positions: WordPosition[];
+  syllables: number;
+  ageBands: AgeBand[];
+  difficulty: 1 | 2 | 3;
+  category: string;
+  imageAsset?: string | null;
+  modelAudioAsset?: string | null;
+  clinicianApproved: boolean;
+  // Parent toggle — disabled words are excluded from missions.
+  enabled?: boolean;
+}
+
+export interface PracticeSentence {
+  id: string;
+  sound: TargetSound;
+  text: string;
+  textWithNikud?: string;
+  ageBands: AgeBand[];
+  difficulty: 1 | 2 | 3;
+  clinicianApproved: boolean;
+}
+
+export interface ClinicianSoundConfig {
+  childId: ChildId;
+  sound: TargetSound;
+  enabled: boolean;
+  currentStage: ClinicalStage;
+  targetPositions: WordPosition[];
+  verbalCue: string;
+  visualCue: string;
+  maxRepetitions: number;
+  advancementRule: string;
+  avoidWords: string[];
+  notes: string;
+  clinicianApproved: boolean;
+  updatedAt: string;
+}
+
+export interface RewardDef {
+  id: string;
+  childId: ChildId;
+  sound: TargetSound | 'any';
+  title: string;
+  emoji: string;
+  description: string;
+}
+
+// ---- Mission engine ----
+
+export type MissionStepKind =
+  | 'briefing'
+  | 'warmup'
+  | 'word'
+  | 'sentence'
+  | 'listen_choose'
+  | 'say_three'
+  | 'completion';
+
+export interface MissionStep {
+  id: string;
+  kind: MissionStepKind;
+  promptType?: PromptType;
+  wordId?: string;
+  sentenceId?: string;
+  // For Niv's listen_choose: ids of distractor words.
+  choiceWordIds?: string[];
+  title?: string;
+}
+
+export interface GeneratedMission {
+  id: string;
+  childId: ChildId;
+  sound: TargetSound;
+  title: string;
+  estimatedMinutes: number;
+  steps: MissionStep[];
+  rewardId: string;
+  createdAt: string;
+}
+
+export interface MissionRequest {
+  childId: ChildId;
+  sound: TargetSound;
+  ageBand: AgeBand;
+  stage: ClinicalStage;
+  maxItems: number;
+  seed?: string;
+}
+
+// ---- Persistence ----
+
+export interface RecordingAttempt {
+  id: string;
+  childId: ChildId;
+  sound: TargetSound;
+  wordId?: string;
+  sentenceId?: string;
+  promptType: PromptType;
+  recordingBlobId: string;
+  mimeType: string;
+  durationMs: number;
+  rating?: AttemptRating;
+  parentNote?: string;
+  createdAt: string;
+  // Tags a baseline snapshot attempt so it is distinguishable from practice.
+  baseline?: boolean;
+  sessionId?: string;
+}
+
+export interface AudioBlobRecord {
+  id: string;
+  blob: Blob;
+  mimeType: string;
+  createdAt: string;
+  // 'model' = parent/clinician example; 'attempt' = child recording.
+  kind: 'model' | 'attempt';
+}
+
+export interface ModelAudio {
+  id: string;
+  sound: TargetSound;
+  promptType: PromptType;
+  wordId?: string;
+  sentenceId?: string;
+  blobId: string;
+  mimeType: string;
+  durationMs: number;
+  clinicianApproved: boolean;
+  createdAt: string;
+  label: string;
+}
+
+export interface PracticeSession {
+  id: string;
+  childId: ChildId | 'siblings';
+  sound: TargetSound;
+  missionId: string;
+  startedAt: string;
+  completedAt?: string;
+  attemptIds: string[];
+  rewardId?: string;
+  // For sibling sessions, references both children's attempts.
+  participantChildIds?: ChildId[];
+}
+
+export interface AppSettings {
+  id: 'singleton';
+  parentPin: string;
+  seededVersion: number;
+  reducedMotionOverride?: boolean;
+}

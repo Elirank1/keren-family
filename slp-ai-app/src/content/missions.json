@@ -1,0 +1,30 @@
+{
+  "lavi": {
+    "s": {
+      "title": "משימת כוח האוויר",
+      "bossSentenceIds": ["s_sentence_1", "s_sentence_2"],
+      "realWorldMission": "השתמש היום במילה \"מסיבה\" בשיחה אמיתית."
+    },
+    "sh": {
+      "title": "משימת כוח השקט",
+      "bossSentenceIds": ["sh_sentence_1"],
+      "realWorldMission": "ספר למישהו על משהו חדש שראית היום."
+    },
+    "ts": {
+      "title": "משימת כוח הניצוץ",
+      "bossSentenceIds": ["ts_sentence_1"],
+      "realWorldMission": "מצא ציפור או צעצוע אמיתי ותאר אותו."
+    },
+    "ch": {
+      "title": "משימת כוח הפיצוץ",
+      "bossSentenceIds": ["ch_sentence_1"],
+      "realWorldMission": "בקש צ׳יפס עם קטשופ בארוחה."
+    }
+  },
+  "niv": {
+    "s": { "title": "גן הצלילים של ניב", "animal": "🐢", "animalName": "צב", "encourage": "אספנו כוכב צליל!" },
+    "sh": { "title": "גן הצלילים של ניב", "animal": "🐑", "animalName": "כבשה", "encourage": "אספנו כוכב צליל!" },
+    "ts": { "title": "גן הצלילים של ניב", "animal": "🐦", "animalName": "ציפור", "encourage": "אספנו כוכב צליל!" },
+    "ch": { "title": "גן הצלילים של ניב", "animal": "🐆", "animalName": "צ׳יטה", "encourage": "אספנו כוכב צליל!" }
+  }
+}

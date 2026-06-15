@@ -1,0 +1,10 @@
+[
+  { "id": "lavi_s_badge", "childId": "lavi", "sound": "s", "title": "אות כוח האוויר", "emoji": "🌀", "description": "השלמת את משימת כוח האוויר." },
+  { "id": "lavi_sh_badge", "childId": "lavi", "sound": "sh", "title": "אות כוח השקט", "emoji": "🌊", "description": "השלמת את משימת כוח השקט." },
+  { "id": "lavi_ts_badge", "childId": "lavi", "sound": "ts", "title": "אות כוח הניצוץ", "emoji": "✨", "description": "השלמת את משימת כוח הניצוץ." },
+  { "id": "lavi_ch_badge", "childId": "lavi", "sound": "ch", "title": "אות כוח הפיצוץ", "emoji": "💥", "description": "השלמת את משימת כוח הפיצוץ." },
+  { "id": "niv_s_star", "childId": "niv", "sound": "s", "title": "כוכב צליל", "emoji": "⭐", "description": "אספנו כוכב צליל." },
+  { "id": "niv_sh_star", "childId": "niv", "sound": "sh", "title": "כוכב צליל", "emoji": "🌟", "description": "אספנו כוכב צליל." },
+  { "id": "niv_ts_star", "childId": "niv", "sound": "ts", "title": "כוכב צליל", "emoji": "💫", "description": "אספנו כוכב צליל." },
+  { "id": "niv_ch_star", "childId": "niv", "sound": "ch", "title": "כוכב צליל", "emoji": "🎇", "description": "אספנו כוכב צליל." }
+]
