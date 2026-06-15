@@ -108,3 +108,17 @@
 - Local suite before deploy: typecheck, lint, 23 unit, build, 6 e2e all green
   (e2e re-verified after the HashRouter switch).
 - Enrichment keys available locally: GEMINI_API_KEY, ELEVENLABS_API_KEY (no HeyGen).
+
+## 2026-06-15 — Enrichment loop status
+
+- ✅ ElevenLabs narration (8) + SFX (7) generated, wired (media.ts, MuteToggle,
+  playClip in Practice/Complete), committed, deployed to gh-pages, verified live
+  (manifest 200, all mp3 200, zero console errors at 390×844).
+- ⛔ Gemini image generation BLOCKED: project returns 403 PERMISSION_DENIED on
+  image `generateContent` ("Your project has been denied access"). Text models
+  list/work fine; the image-output capability is gated on this API project.
+  ACTION NEEDED (Eliran): enable image access for the Gemini API key's project
+  (AI Studio billing / image-model allowlist), then re-run
+  `node scripts/media-pipeline/generate-images.mjs`. App degrades gracefully
+  (emoji + CSS) so no live regression — enrichment deferred, not blocking.
+- ▶️ Proceeding with Remotion completion moments (no external API) meanwhile.

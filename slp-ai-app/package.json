@@ -15,10 +15,12 @@
     "e2e:install": "playwright install"
   },
   "dependencies": {
+    "@remotion/player": "^4.0.477",
     "dexie": "^4.0.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.28.0"
+    "react-router-dom": "^6.28.0",
+    "remotion": "^4.0.477"
   },
   "devDependencies": {
     "@playwright/test": "^1.49.1",

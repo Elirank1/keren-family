@@ -5,7 +5,16 @@ import { useAsync } from '@/lib/useAsync';
 import { seedRewards, getMissionMeta } from '@/content';
 import { Button, Spinner } from '@/components/ui';
 import { playClip } from '@/lib/media';
+import { Celebration } from '@/features/celebration/Celebration';
 import type { ChildId } from '@/lib/types';
+
+// Color identity per practiced sound (matches tailwind `sound` tokens).
+const SOUND_COLOR: Record<string, string> = {
+  s: '#22d3ee',
+  sh: '#a78bfa',
+  ts: '#f59e0b',
+  ch: '#fb7185',
+};
 
 export default function CompleteScreen() {
   const { childId, sessionId } = useParams<{ childId: ChildId; sessionId: string }>();
@@ -47,9 +56,8 @@ export default function CompleteScreen() {
         dir="rtl"
         className="mx-auto flex min-h-screen max-w-xl flex-col items-center justify-center gap-6 bg-arena-bg px-5 py-8 text-center text-white"
       >
-        <div className="text-7xl" aria-hidden="true">
-          {reward?.emoji ?? '🏅'}
-        </div>
+        <Celebration kind="arena" emoji={reward?.emoji ?? '🏅'} soundColor={SOUND_COLOR[sound] ?? '#22d3ee'} />
+
         <h1 className="text-3xl font-black">{reward?.title ?? 'משימה הושלמה'}</h1>
         <p className="text-slate-300">{reward?.description}</p>
         <div className="rounded-3xl bg-arena-surface p-5">
@@ -71,8 +79,8 @@ export default function CompleteScreen() {
       dir="rtl"
       className="mx-auto flex min-h-screen max-w-xl flex-col items-center justify-center gap-6 bg-garden-bg px-5 py-8 text-center text-slate-900"
     >
-      <div className="text-8xl" aria-hidden="true" data-testid="niv-star">
-        {reward?.emoji ?? '⭐'}
+      <div className="w-full" data-testid="niv-star">
+        <Celebration kind="garden" emoji={reward?.emoji ?? '⭐'} />
       </div>
       <h1 className="text-3xl font-black">{getMissionMeta('niv', sound).encourage}</h1>
       <div className="flex items-center gap-2 text-5xl" aria-hidden="true">
