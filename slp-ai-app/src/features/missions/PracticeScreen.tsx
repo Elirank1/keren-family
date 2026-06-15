@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { repo } from '@/db/repo';
 import { useAsync } from '@/lib/useAsync';
@@ -24,6 +24,8 @@ import {
   RatingPicker,
 } from '@/components/RatingPicker';
 import { SoundBadge, soundDisplayName } from '@/components/SoundBadge';
+import { MuteToggle } from '@/components/MuteToggle';
+import { playClip } from '@/lib/media';
 import { getMissionMeta } from '@/content';
 
 interface MissionData {
@@ -133,11 +135,12 @@ export default function PracticeScreen() {
         theme === 'arena' ? 'bg-arena-bg text-white' : 'bg-garden-bg text-slate-900'
       }`}
     >
-      <ProgressBar
-        steps={mission.steps}
-        index={stepIndex}
-        theme={theme}
-      />
+      <div className="flex items-center gap-3">
+        <div className="flex-1">
+          <ProgressBar steps={mission.steps} index={stepIndex} theme={theme} />
+        </div>
+        <MuteToggle theme={theme} />
+      </div>
       <StepView
         key={step.id}
         step={step}
@@ -251,7 +254,14 @@ function LaviBriefing({ mission, words, onAdvance }: StepViewProps) {
         ))}
       </div>
       <div className="mt-auto">
-        <Button variant="arena" onClick={onAdvance} data-testid="briefing-start">
+        <Button
+          variant="arena"
+          onClick={() => {
+            playClip('lavi_mission_start');
+            onAdvance();
+          }}
+          data-testid="briefing-start"
+        >
           מתחילים 🚀
         </Button>
       </div>
@@ -268,7 +278,10 @@ function NivGreeting({ mission, onAdvance }: StepViewProps) {
       </div>
       <h1 className="text-3xl font-black">הצליל שלנו: {soundDisplayName(mission.sound)}</h1>
       <button
-        onClick={onAdvance}
+        onClick={() => {
+          playClip('niv_find_animal');
+          onAdvance();
+        }}
         data-testid="niv-greeting-start"
         className="rounded-full bg-garden-accent px-12 py-8 text-3xl font-black text-white shadow-xl"
       >
@@ -390,6 +403,10 @@ function WordStep({ step, words, mission, onRecord, onAdvance }: StepViewProps) 
 
 function SentenceStep({ step, sentences, mission, onRecord, onAdvance }: StepViewProps) {
   const sentence = step.sentenceId ? sentences[step.sentenceId] : undefined;
+  // Boss arrival cue (game audio only).
+  useEffect(() => {
+    if (sentence) playClip('lavi_boss');
+  }, [sentence]);
   if (!sentence) {
     onAdvance();
     return null;
@@ -434,6 +451,7 @@ function ListenChooseStep({ step, words, mission, onAdvance }: StepViewProps) {
     setChosen(id);
     if (id === target.id) {
       // Positive-only: correct choice celebrates and advances.
+      playClip('sfx_spark');
       setTimeout(onAdvance, 900);
     }
   };
@@ -479,6 +497,10 @@ function ListenChooseStep({ step, words, mission, onAdvance }: StepViewProps) {
 
 function SayThreeStep({ step, words, mission, onRecord, onAdvance }: StepViewProps) {
   const word = step.wordId ? words[step.wordId] : undefined;
+  // "say it together" cue (game audio only).
+  useEffect(() => {
+    if (word) playClip('niv_say_together');
+  }, [word]);
   if (!word) {
     onAdvance();
     return null;

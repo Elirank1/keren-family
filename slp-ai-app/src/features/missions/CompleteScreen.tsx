@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { repo } from '@/db/repo';
 import { useAsync } from '@/lib/useAsync';
 import { seedRewards, getMissionMeta } from '@/content';
 import { Button, Spinner } from '@/components/ui';
+import { playClip } from '@/lib/media';
 import type { ChildId } from '@/lib/types';
 
 export default function CompleteScreen() {
@@ -13,6 +15,18 @@ export default function CompleteScreen() {
     if (!sessionId) return null;
     return repo.getSession(sessionId);
   }, [sessionId]);
+
+  // Celebration audio (game audio only) once the session loads.
+  useEffect(() => {
+    if (!data || !childId) return;
+    if (childId === 'lavi') {
+      playClip('lavi_mission_complete');
+      setTimeout(() => playClip('sfx_mission_complete'), 600);
+    } else {
+      playClip('niv_star');
+      setTimeout(() => playClip('sfx_star_collect'), 500);
+    }
+  }, [data, childId]);
 
   if (loading) return <Spinner />;
   if (!data || !childId) {

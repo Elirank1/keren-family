@@ -7,3 +7,8 @@ playwright-report
 test-results
 coverage
 .vite
+
+# Never commit secrets
+.env
+.env.*
+!.env.example
