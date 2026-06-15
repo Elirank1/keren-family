@@ -89,3 +89,22 @@
 - Safari MediaRecorder produces mp4/m4a; export maps MIME → extension accordingly.
 - Playwright run uses Chromium with fake media; real iPhone Safari mic capture
   still needs a manual pass (see README "First manual iPhone test").
+
+---
+
+## Phase 2 — Integrate & Deploy
+
+### Loop 0 + 1 (live)
+- **Live URL:** https://elirank1.github.io/keren-family/slp-ai/
+- **Repo:** github.com/Elirank1/keren-family · branch `main` · Pages from `gh-pages`
+- **Baseline tag:** `slp-ai-v0.1-stable`
+- **main commit:** be072f5 · **gh-pages commit:** 0843320
+- Integrated as `slp-ai-app/` (source) + built `slp-ai/` (served). Switched to
+  HashRouter + `DEPLOY_BASE=/keren-family/slp-ai/`; service worker scoped to the
+  subpath only. Launcher card added (לביא · ניב · מצב אחים).
+- Verified on the deployed URL (Playwright, 390×844): profile → Lavi `/s/` →
+  briefing, hash routing `#/practice/...`, zero console errors. App assets,
+  manifest, sw.js all 200. Existing games (taki, launcher) still 200 — untouched.
+- Local suite before deploy: typecheck, lint, 23 unit, build, 6 e2e all green
+  (e2e re-verified after the HashRouter switch).
+- Enrichment keys available locally: GEMINI_API_KEY, ELEVENLABS_API_KEY (no HeyGen).
