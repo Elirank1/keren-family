@@ -1,0 +1,239 @@
+{
+  "app": "SLP-AI",
+  "schemaVersion": 1,
+  "assets": {
+    "sfx_air_power": {
+      "status": "provisional",
+      "id": "sfx_air_power",
+      "type": "audio",
+      "purpose": "sound_effect",
+      "provider": "elevenlabs",
+      "model": "eleven_sound_generation",
+      "promptHash": "1d863caecc07b475",
+      "prompt": "a short whoosh of swirling air, magical wind power charging up, playful game sound",
+      "file": "generated/audio/sfx_air_power.mp3",
+      "created": "2026-06-15T12:32:20.005Z",
+      "target": {
+        "kind": "sfx"
+      }
+    },
+    "sfx_quiet_wave": {
+      "status": "provisional",
+      "id": "sfx_quiet_wave",
+      "type": "audio",
+      "purpose": "sound_effect",
+      "provider": "elevenlabs",
+      "model": "eleven_sound_generation",
+      "promptHash": "8f6b9d911cf8f7ff",
+      "prompt": "a soft gentle calming wave swoosh, soothing, short",
+      "file": "generated/audio/sfx_quiet_wave.mp3",
+      "created": "2026-06-15T12:32:25.006Z",
+      "target": {
+        "kind": "sfx"
+      }
+    },
+    "sfx_spark": {
+      "status": "provisional",
+      "id": "sfx_spark",
+      "type": "audio",
+      "purpose": "sound_effect",
+      "provider": "elevenlabs",
+      "model": "eleven_sound_generation",
+      "promptHash": "56b882250bdcd0fb",
+      "prompt": "a short bright sparkle chime, magical spark, crisp",
+      "file": "generated/audio/sfx_spark.mp3",
+      "created": "2026-06-15T12:32:26.613Z",
+      "target": {
+        "kind": "sfx"
+      }
+    },
+    "sfx_burst": {
+      "status": "provisional",
+      "id": "sfx_burst",
+      "type": "audio",
+      "purpose": "sound_effect",
+      "provider": "elevenlabs",
+      "model": "eleven_sound_generation",
+      "promptHash": "f2048e754580e003",
+      "prompt": "a short soft pop burst, playful cartoon pop, gentle",
+      "file": "generated/audio/sfx_burst.mp3",
+      "created": "2026-06-15T12:32:28.446Z",
+      "target": {
+        "kind": "sfx"
+      }
+    },
+    "sfx_star_collect": {
+      "status": "provisional",
+      "id": "sfx_star_collect",
+      "type": "audio",
+      "purpose": "sound_effect",
+      "provider": "elevenlabs",
+      "model": "eleven_sound_generation",
+      "promptHash": "96598eee46bbd39c",
+      "prompt": "a cheerful rising star collect chime, kids game reward, twinkle",
+      "file": "generated/audio/sfx_star_collect.mp3",
+      "created": "2026-06-15T12:32:29.986Z",
+      "target": {
+        "kind": "sfx"
+      }
+    },
+    "sfx_portal_open": {
+      "status": "provisional",
+      "id": "sfx_portal_open",
+      "type": "audio",
+      "purpose": "sound_effect",
+      "provider": "elevenlabs",
+      "model": "eleven_sound_generation",
+      "promptHash": "54a765cfe6781c53",
+      "prompt": "a magical portal opening shimmer, ascending sparkle, short",
+      "file": "generated/audio/sfx_portal_open.mp3",
+      "created": "2026-06-15T12:32:32.003Z",
+      "target": {
+        "kind": "sfx"
+      }
+    },
+    "sfx_mission_complete": {
+      "status": "provisional",
+      "id": "sfx_mission_complete",
+      "type": "audio",
+      "purpose": "sound_effect",
+      "provider": "elevenlabs",
+      "model": "eleven_sound_generation",
+      "promptHash": "bf6574b6fbc59e6e",
+      "prompt": "a triumphant short success fanfare for kids, bright and warm, celebratory",
+      "file": "generated/audio/sfx_mission_complete.mp3",
+      "created": "2026-06-15T12:32:33.638Z",
+      "target": {
+        "kind": "sfx"
+      }
+    },
+    "lavi_mission_start": {
+      "status": "provisional",
+      "id": "lavi_mission_start",
+      "type": "audio",
+      "purpose": "game_narration",
+      "provider": "elevenlabs",
+      "model": "eleven_multilingual_v2",
+      "promptHash": "9d61fe2df37d0e89",
+      "prompt": "משימת כוח האוויר מתחילה.",
+      "file": "generated/audio/lavi_mission_start.mp3",
+      "created": "2026-06-15T12:32:58.701Z",
+      "target": {
+        "child": "lavi",
+        "kind": "narration"
+      }
+    },
+    "lavi_power_charging": {
+      "status": "provisional",
+      "id": "lavi_power_charging",
+      "type": "audio",
+      "purpose": "game_narration",
+      "provider": "elevenlabs",
+      "model": "eleven_multilingual_v2",
+      "promptHash": "7a9f43210dcd6fe5",
+      "prompt": "הכוח נטען.",
+      "file": "generated/audio/lavi_power_charging.mp3",
+      "created": "2026-06-15T12:32:59.705Z",
+      "target": {
+        "child": "lavi",
+        "kind": "narration"
+      }
+    },
+    "lavi_boss": {
+      "status": "provisional",
+      "id": "lavi_boss",
+      "type": "audio",
+      "purpose": "game_narration",
+      "provider": "elevenlabs",
+      "model": "eleven_multilingual_v2",
+      "promptHash": "cc6b7237b6ca6d16",
+      "prompt": "הגיע אתגר הבוס.",
+      "file": "generated/audio/lavi_boss.mp3",
+      "created": "2026-06-15T12:33:00.657Z",
+      "target": {
+        "child": "lavi",
+        "kind": "narration"
+      }
+    },
+    "lavi_mission_complete": {
+      "status": "provisional",
+      "id": "lavi_mission_complete",
+      "type": "audio",
+      "purpose": "game_narration",
+      "provider": "elevenlabs",
+      "model": "eleven_multilingual_v2",
+      "promptHash": "9041d3bf8dc9db57",
+      "prompt": "המשימה הושלמה.",
+      "file": "generated/audio/lavi_mission_complete.mp3",
+      "created": "2026-06-15T12:33:01.537Z",
+      "target": {
+        "child": "lavi",
+        "kind": "narration"
+      }
+    },
+    "niv_find_animal": {
+      "status": "provisional",
+      "id": "niv_find_animal",
+      "type": "audio",
+      "purpose": "game_narration",
+      "provider": "elevenlabs",
+      "model": "eleven_multilingual_v2",
+      "promptHash": "c0cec7bdc9d183fc",
+      "prompt": "בוא נמצא את החיה.",
+      "file": "generated/audio/niv_find_animal.mp3",
+      "created": "2026-06-15T12:33:02.582Z",
+      "target": {
+        "child": "niv",
+        "kind": "narration"
+      }
+    },
+    "niv_say_together": {
+      "status": "provisional",
+      "id": "niv_say_together",
+      "type": "audio",
+      "purpose": "game_narration",
+      "provider": "elevenlabs",
+      "model": "eleven_multilingual_v2",
+      "promptHash": "e9993b678cccfee5",
+      "prompt": "עכשיו אומרים יחד.",
+      "file": "generated/audio/niv_say_together.mp3",
+      "created": "2026-06-15T12:33:03.535Z",
+      "target": {
+        "child": "niv",
+        "kind": "narration"
+      }
+    },
+    "niv_count": {
+      "status": "provisional",
+      "id": "niv_count",
+      "type": "audio",
+      "purpose": "game_narration",
+      "provider": "elevenlabs",
+      "model": "eleven_multilingual_v2",
+      "promptHash": "197c4323e0c4ad04",
+      "prompt": "אחת, שתיים, שלוש.",
+      "file": "generated/audio/niv_count.mp3",
+      "created": "2026-06-15T12:33:04.465Z",
+      "target": {
+        "child": "niv",
+        "kind": "narration"
+      }
+    },
+    "niv_star": {
+      "status": "provisional",
+      "id": "niv_star",
+      "type": "audio",
+      "purpose": "game_narration",
+      "provider": "elevenlabs",
+      "model": "eleven_multilingual_v2",
+      "promptHash": "1009876bc8946435",
+      "prompt": "אספנו כוכב צליל.",
+      "file": "generated/audio/niv_star.mp3",
+      "created": "2026-06-15T12:33:05.519Z",
+      "target": {
+        "child": "niv",
+        "kind": "narration"
+      }
+    }
+  }
+}
