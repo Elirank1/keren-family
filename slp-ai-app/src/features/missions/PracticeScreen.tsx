@@ -6,6 +6,7 @@ import { uid, nowIso } from '@/lib/ids';
 import type {
   AttemptRating,
   ChildId,
+  ContrastItem,
   GeneratedMission,
   MissionStep,
   PracticeSentence,
@@ -33,6 +34,7 @@ interface MissionData {
   mission: GeneratedMission;
   words: Record<string, PracticeWord>;
   sentences: Record<string, PracticeSentence>;
+  contrasts: Record<string, ContrastItem>;
 }
 
 export default function PracticeScreen() {
@@ -52,7 +54,14 @@ export default function PracticeScreen() {
       const s = await repo.getSentence(id);
       if (s) sentences[id] = s;
     }
-    return { mission, words, sentences };
+    const contrasts: Record<string, ContrastItem> = {};
+    const contrastIds = mission.steps.map((s) => s.contrastItemId).filter(Boolean) as string[];
+    if (contrastIds.length) {
+      for (const item of await repo.getContrastItems()) {
+        if (contrastIds.includes(item.id)) contrasts[item.id] = item;
+      }
+    }
+    return { mission, words, sentences, contrasts };
   }, [missionId]);
 
   // One session id per practice run; attempts reference it.
@@ -123,7 +132,7 @@ export default function PracticeScreen() {
     );
   }
 
-  const { mission, words, sentences } = data;
+  const { mission, words, sentences, contrasts } = data;
   const step = mission.steps[stepIndex];
   const theme = childId === 'lavi' ? 'arena' : 'garden';
 
@@ -170,6 +179,7 @@ export default function PracticeScreen() {
         mission={mission}
         words={words}
         sentences={sentences}
+        contrasts={contrasts}
         theme={theme}
         onRecord={recordAttempt}
         onAdvance={() => advance(mission)}
@@ -224,6 +234,7 @@ interface StepViewProps {
   mission: GeneratedMission;
   words: Record<string, PracticeWord>;
   sentences: Record<string, PracticeSentence>;
+  contrasts: Record<string, ContrastItem>;
   theme: 'arena' | 'garden';
   onRecord: (
     result: RecordingResult,
@@ -240,8 +251,8 @@ function StepView(props: StepViewProps) {
       return childId === 'lavi' ? <LaviBriefing {...props} /> : <NivGreeting {...props} />;
     case 'warmup':
       return <WarmupStep {...props} />;
-    case 'bombardment':
-      return <BombardmentStep {...props} />;
+    case 'focused_listening':
+      return <FocusedListeningStep {...props} />;
     case 'word':
       return <WordStep {...props} />;
     case 'sentence':
@@ -250,6 +261,8 @@ function StepView(props: StepViewProps) {
       return <ListenChooseStep {...props} />;
     case 'say_three':
       return <SayThreeStep {...props} />;
+    case 'contrast':
+      return <ContrastStep {...props} />;
     default:
       return null;
   }
@@ -521,11 +534,12 @@ function SentenceStep({ step, sentences, mission, onRecord, onAdvance }: StepVie
 
 // ---- Niv steps ----
 
-// Auditory bombardment: the child simply LISTENS to the target sound in several
+// Focused listening: the child simply LISTENS to the target sound in several
 // real words before being asked to produce it. No recording, no rating — this
-// is passive input. Plays clinician-recorded model audio when it exists; the
-// word cards always show so a parent can voice them if no model is recorded.
-function BombardmentStep({ step, words, mission, onAdvance }: StepViewProps) {
+// is passive input, kept as a NEUTRAL default rather than a method-specific
+// technique. Plays clinician-recorded model audio when it exists; the word
+// cards always show so a parent can voice them if no model is recorded.
+function FocusedListeningStep({ step, words, mission, onAdvance }: StepViewProps) {
   const ids = step.wordIds ?? [];
   const items = ids.map((id) => words[id]).filter(Boolean) as PracticeWord[];
   const [playing, setPlaying] = useState(false);
@@ -573,7 +587,7 @@ function BombardmentStep({ step, words, mission, onAdvance }: StepViewProps) {
         {items.map((w) => (
           <div
             key={w.id}
-            data-testid={`bombard-word-${w.id}`}
+            data-testid={`focused-listening-word-${w.id}`}
             className="flex flex-col items-center gap-1 rounded-3xl bg-white p-4 text-slate-900 shadow-sm"
           >
             <span className="text-5xl" aria-hidden="true">
@@ -586,14 +600,80 @@ function BombardmentStep({ step, words, mission, onAdvance }: StepViewProps) {
       <button
         onClick={playSequence}
         disabled={playing}
-        data-testid="bombard-play"
+        data-testid="focused-listening-play"
         className="rounded-full bg-garden-accent px-10 py-6 text-2xl font-black text-white shadow-xl disabled:opacity-60"
       >
         {playing ? '🔊 מקשיבים…' : '🔊 שמע'}
       </button>
-      <Button variant="garden" onClick={onAdvance} data-testid="bombard-continue">
+      <Button variant="garden" onClick={onAdvance} data-testid="focused-listening-continue">
         {heard ? '▶️ קדימה' : 'אפשר להמשיך'}
       </Button>
+    </section>
+  );
+}
+
+// Minimal-pair / contrast task. Only ever rendered when a clinician has both
+// enabled+approved the contrast item AND selected a minimal_pairs/integrated
+// mode. A perception "identify the target sound" task; positive-only feedback.
+function ContrastStep({ step, contrasts, mission, theme, onAdvance }: StepViewProps) {
+  const item = step.contrastItemId ? contrasts[step.contrastItemId] : undefined;
+  const [chosen, setChosen] = useState<string | null>(null);
+
+  if (!item) {
+    onAdvance();
+    return null;
+  }
+
+  // The target word is the one that carries the practiced sound.
+  const options = [
+    { key: 'target', text: item.targetWithNikud ?? item.targetWord, correct: true },
+    { key: 'contrast', text: item.contrastWithNikud ?? item.contrastWord, correct: false },
+  ];
+
+  const onPick = (key: string, correct: boolean) => {
+    setChosen(key);
+    if (correct) {
+      playClip(theme === 'arena' ? 'sfx_spark' : 'sfx_star_collect');
+      setTimeout(onAdvance, 900);
+    }
+  };
+
+  return (
+    <section className="flex flex-1 flex-col items-center justify-center gap-5 text-center" data-testid="contrast-step">
+      <h2 className="text-2xl font-black">
+        איפה שומעים את הצליל {soundDisplayName(mission.sound)}?
+      </h2>
+      <div className="grid w-full grid-cols-2 gap-3">
+        {options.map((o) => {
+          const picked = chosen === o.key;
+          return (
+            <button
+              key={o.key}
+              onClick={() => onPick(o.key, o.correct)}
+              data-testid={`contrast-choice-${o.key}`}
+              data-correct={o.correct}
+              className={`rounded-3xl border-4 bg-white p-6 text-3xl font-black text-slate-900 transition ${
+                picked && o.correct
+                  ? 'border-emerald-400 scale-105'
+                  : picked
+                    ? 'border-amber-300'
+                    : 'border-transparent'
+              }`}
+              lang="he"
+            >
+              {o.text}
+            </button>
+          );
+        })}
+      </div>
+      {chosen === 'contrast' && (
+        <p className="text-lg font-bold text-emerald-700" data-testid="contrast-try-again">
+          בוא ננסה יחד 💚
+        </p>
+      )}
+      <button onClick={onAdvance} data-testid="skip-step" className="text-sm font-bold underline opacity-70">
+        אפשר לדלג היום
+      </button>
     </section>
   );
 }

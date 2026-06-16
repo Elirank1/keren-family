@@ -10,19 +10,36 @@ export async function buildAndSaveMission(
   sound: TargetSound,
   seed?: string,
 ): Promise<GeneratedMission> {
-  const [child, words, sentences, config, weeklyFocus] = await Promise.all([
-    repo.getChild(childId),
-    repo.getWords(),
-    repo.getSentencesBySound(sound),
-    repo.getClinicianConfig(childId, sound),
-    repo.getWeeklyFocus(childId),
-  ]);
+  const [child, words, sentences, config, weeklyFocus, target, enabledContrastItems] =
+    await Promise.all([
+      repo.getChild(childId),
+      repo.getWords(),
+      repo.getSentencesBySound(sound),
+      repo.getClinicianConfig(childId, sound),
+      repo.getWeeklyFocus(childId),
+      repo.getClinicalTarget(childId, sound),
+      repo.getEnabledContrastItems(sound),
+    ]);
   if (!child) throw new Error(`Unknown child ${childId}`);
 
-  // The clinician's weekly focus position biases word selection — but only when
-  // it applies to the sound being practiced now.
-  const focusPosition =
-    weeklyFocus?.sound === sound ? weeklyFocus.position : undefined;
+  // Intervention mode is the clinician's choice; absent a profile it is 'unset'
+  // and the app runs only its neutral practice path.
+  const mode = target?.interventionMode ?? 'unset';
+  const focusRatio = target?.weeklyFocusRatio ?? 0.66;
+
+  // Positional concentration is only meaningful for production-oriented work, so
+  // restrict it to the neutral, motor, and integrated paths. A clinician who
+  // listed exactly one target position concentrates on it; "mixed" (several) or
+  // none falls back to the lighter weekly-focus reminder.
+  const positionFocusModes = mode === 'unset' || mode === 'motor_articulation' || mode === 'integrated';
+  const targetPositions = target?.targetWordPositions ?? [];
+  const focusPosition = !positionFocusModes
+    ? undefined
+    : targetPositions.length === 1
+      ? targetPositions[0]
+      : targetPositions.length === 0 && weeklyFocus?.sound === sound
+        ? weeklyFocus.position
+        : undefined;
 
   const laviMeta = childId === 'lavi' ? getMissionMeta('lavi', sound) : undefined;
   const nivMeta = childId === 'niv' ? getMissionMeta('niv', sound) : undefined;
@@ -50,6 +67,9 @@ export async function buildAndSaveMission(
     bossSentenceIds,
     rewardId,
     focusPosition,
+    focusRatio,
+    mode,
+    enabledContrastItems,
   });
 
   await repo.saveMission(mission);

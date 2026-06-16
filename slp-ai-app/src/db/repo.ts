@@ -6,7 +6,9 @@ import type {
   AttemptRating,
   ChildId,
   ChildProfile,
+  ClinicalTargetProfile,
   ClinicianSoundConfig,
+  ContrastItem,
   GeneratedMission,
   LoadedAudio,
   ModelAudio,
@@ -18,6 +20,29 @@ import type {
   TargetSound,
   WeeklyFocus,
 } from '@/lib/types';
+
+// A neutral, un-inferred default plan: mode 'unset' so the app runs only its
+// neutral practice path until a clinician configures the target.
+export function makeDefaultClinicalTarget(
+  childId: ChildId,
+  sound: TargetSound,
+): ClinicalTargetProfile {
+  return {
+    childId,
+    sound,
+    interventionMode: 'unset',
+    suspectedErrorType: 'unset',
+    stimulability: 'not_checked',
+    perceptionStatus: 'not_checked',
+    targetWordPositions: [],
+    currentPracticeLevel: 'unset',
+    weeklyFocusRatio: 0.66,
+    cueText: '',
+    notes: '',
+    clinicianApproved: false,
+    updatedAt: nowIso(),
+  };
+}
 
 // ---------- Reads ----------
 
@@ -75,6 +100,37 @@ export const repo = {
     const settings = await db.settings.get('singleton');
     const weeklyFocus = { ...(settings?.weeklyFocus ?? {}), [childId]: focus };
     await db.settings.update('singleton', { weeklyFocus });
+  },
+
+  // ---------- Clinical target profiles (intervention layer) ----------
+  // Absence of a row means 'unset' — the app never invents clinical judgments.
+  async getClinicalTarget(
+    childId: ChildId,
+    sound: TargetSound,
+  ): Promise<ClinicalTargetProfile | undefined> {
+    return db.clinicalTargets.get([childId, sound]);
+  },
+  async getClinicalTargets(childId: ChildId): Promise<ClinicalTargetProfile[]> {
+    return db.clinicalTargets.where('childId').equals(childId).toArray();
+  },
+  async setClinicalTarget(profile: ClinicalTargetProfile): Promise<void> {
+    await db.clinicalTargets.put({ ...profile, updatedAt: nowIso() });
+  },
+
+  // ---------- Contrast library (gated; disabled until a clinician opts in) ----
+  async getContrastItems(targetSound?: TargetSound): Promise<ContrastItem[]> {
+    if (targetSound) {
+      return db.contrastItems.where('targetSound').equals(targetSound).toArray();
+    }
+    return db.contrastItems.toArray();
+  },
+  async getEnabledContrastItems(targetSound: TargetSound): Promise<ContrastItem[]> {
+    const items = await db.contrastItems.where('targetSound').equals(targetSound).toArray();
+    // Double gate: only items a clinician has both enabled AND approved.
+    return items.filter((i) => i.enabled && i.clinicianApproved);
+  },
+  async setContrastItem(item: ContrastItem): Promise<void> {
+    await db.contrastItems.put(item);
   },
 
   // ---------- Words editing ----------

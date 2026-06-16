@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { repo } from '@/db/repo';
+import { repo, makeDefaultClinicalTarget } from '@/db/repo';
 import { useAsync } from '@/lib/useAsync';
 import { nowIso } from '@/lib/ids';
 import { Button, Spinner } from '@/components/ui';
@@ -8,7 +8,15 @@ import { SoundBadge } from '@/components/SoundBadge';
 import type {
   ChildId,
   ClinicalStage,
+  ClinicalTargetProfile,
   ClinicianSoundConfig,
+  ContrastItem,
+  ContrastKind,
+  InterventionMode,
+  PerceptionStatus,
+  PracticeLevel,
+  Stimulability,
+  SuspectedErrorType,
   TargetSound,
   WeeklyFocus,
   WordPosition,
@@ -40,6 +48,74 @@ const POSITION_LABEL: Record<WordPosition, string> = {
   final: 'סופית',
 };
 
+const MODE_LABEL: Record<InterventionMode, string> = {
+  unset: 'לא נבחר (תרגול ניטרלי)',
+  motor_articulation: 'מוטורי-ארטיקולטורי',
+  speech_perception: 'תפיסה שמיעתית',
+  minimal_pairs: 'זוגות מינימליים',
+  cycles: 'Cycles (מחזורים)',
+  integrated: 'משולב',
+  custom: 'מותאם אישית',
+};
+const ERROR_LABEL: Record<SuspectedErrorType, string> = {
+  unset: 'לא נבחר',
+  distortion: 'עיוות (distortion)',
+  substitution: 'החלפה (substitution)',
+  omission: 'השמטה (omission)',
+  phoneme_collapse: 'קריסת פונמות',
+  inconsistent: 'לא עקבי',
+  mixed: 'מעורב',
+};
+const STIM_LABEL: Record<Stimulability, string> = {
+  not_checked: 'לא נבדק',
+  independent: 'עצמאי',
+  after_model: 'אחרי דוגמה',
+  not_currently_stimulable: 'לא ניתן לעורר כרגע',
+};
+const PERCEPTION_LABEL: Record<PerceptionStatus, string> = {
+  not_checked: 'לא נבדק',
+  discriminates: 'מבחין',
+  inconsistent: 'לא עקבי',
+  does_not_discriminate: 'לא מבחין',
+};
+const LEVEL_LABEL: Record<PracticeLevel, string> = {
+  unset: 'לא נבחר',
+  listening: 'האזנה',
+  isolated_sound: 'צליל בודד',
+  syllable: 'הברה',
+  word: 'מילה',
+  phrase: 'צירוף',
+  sentence: 'משפט',
+  conversation: 'שיחה',
+};
+const CONTRAST_KIND_LABEL: Record<ContrastKind, string> = {
+  true_minimal_pair: 'זוג מינימלי אמיתי',
+  near_minimal_pair: 'כמעט-מינימלי (לא זוג אמיתי)',
+  listening_contrast: 'ניגוד להאזנה (לא זוג)',
+  nonword_contrast: 'ניגוד עם מילת-תפל (לא זוג)',
+};
+const MODES: InterventionMode[] = [
+  'unset',
+  'motor_articulation',
+  'speech_perception',
+  'minimal_pairs',
+  'cycles',
+  'integrated',
+  'custom',
+];
+const ERROR_TYPES: SuspectedErrorType[] = [
+  'unset',
+  'distortion',
+  'substitution',
+  'omission',
+  'phoneme_collapse',
+  'inconsistent',
+  'mixed',
+];
+const STIMS: Stimulability[] = ['not_checked', 'independent', 'after_model', 'not_currently_stimulable'];
+const PERCEPTIONS: PerceptionStatus[] = ['not_checked', 'discriminates', 'inconsistent', 'does_not_discriminate'];
+const LEVELS: PracticeLevel[] = ['unset', 'listening', 'isolated_sound', 'syllable', 'word', 'phrase', 'sentence', 'conversation'];
+
 export default function ClinicianArea() {
   const navigate = useNavigate();
   const [childId, setChildId] = useState<ChildId>('lavi');
@@ -47,11 +123,13 @@ export default function ClinicianArea() {
 
   const { data, loading, reload } = useAsync(
     async () => {
-      const [config, focus] = await Promise.all([
+      const [config, focus, target, contrasts] = await Promise.all([
         repo.getClinicianConfig(childId, sound),
         repo.getWeeklyFocus(childId),
+        repo.getClinicalTarget(childId, sound),
+        repo.getContrastItems(sound),
       ]);
-      return { config, focus };
+      return { config, focus, target, contrasts };
     },
     [childId, sound],
   );
@@ -120,6 +198,18 @@ export default function ClinicianArea() {
                 </button>
               ))}
             </div>
+            <ClinicalTargetCard
+              key={`target-${childId}-${sound}`}
+              childId={childId}
+              sound={sound}
+              target={data.target}
+              onSaved={reload}
+            />
+            <ContrastLibraryCard
+              key={`contrast-${sound}`}
+              sound={sound}
+              items={data.contrasts}
+            />
             {data.config ? (
               <ConfigForm key={`${childId}-${sound}`} config={data.config} onSaved={reload} />
             ) : (
@@ -177,7 +267,7 @@ function WeeklyFocusCard({
           </select>
         </label>
         <label className="flex flex-col gap-1 text-sm">
-          <span className="font-bold">מיקום בהברה</span>
+          <span className="font-bold">מיקום במילה</span>
           <select
             value={position}
             data-testid="focus-position"
@@ -207,6 +297,299 @@ function WeeklyFocusCard({
           <span className="text-xs text-slate-400">עודכן: {new Date(focus.updatedAt).toLocaleDateString('he-IL')}</span>
         )}
       </div>
+    </section>
+  );
+}
+
+function ClinicalTargetCard({
+  childId,
+  sound,
+  target,
+  onSaved,
+}: {
+  childId: ChildId;
+  sound: TargetSound;
+  target: ClinicalTargetProfile | undefined;
+  onSaved: () => void;
+}) {
+  const [draft, setDraft] = useState<ClinicalTargetProfile>(
+    target ?? makeDefaultClinicalTarget(childId, sound),
+  );
+  const [saved, setSaved] = useState(false);
+
+  const update = <K extends keyof ClinicalTargetProfile>(key: K, value: ClinicalTargetProfile[K]) => {
+    setDraft((d) => ({ ...d, [key]: value }));
+    setSaved(false);
+  };
+  const togglePosition = (pos: WordPosition) => {
+    setDraft((d) => ({
+      ...d,
+      targetWordPositions: d.targetWordPositions.includes(pos)
+        ? d.targetWordPositions.filter((p) => p !== pos)
+        : [...d.targetWordPositions, pos],
+    }));
+    setSaved(false);
+  };
+  const save = async () => {
+    await repo.setClinicalTarget(draft);
+    setSaved(true);
+    onSaved();
+  };
+
+  const needsContrast = draft.interventionMode === 'minimal_pairs' || draft.interventionMode === 'integrated';
+  const isCycles = draft.interventionMode === 'cycles';
+
+  return (
+    <section data-testid="clinical-target-card" className="flex flex-col gap-4 rounded-3xl border-2 border-teal-200 bg-white p-5 shadow-sm">
+      <div>
+        <h3 className="font-black">תכנית התערבות — אופי הקושי והגישה</h3>
+        <p className="text-sm text-slate-500">
+          האפליקציה לא בוחרת שיטה. עד שתבחרי מצב, התרגול נשאר ניטרלי. אף ערך כאן אינו מוסק אוטומטית.
+        </p>
+      </div>
+
+      <label className="flex flex-col gap-1">
+        <span className="font-bold">מצב התערבות</span>
+        <select
+          value={draft.interventionMode}
+          data-testid="target-mode"
+          onChange={(e) => update('interventionMode', e.target.value as InterventionMode)}
+          className="rounded-xl border border-slate-200 px-3 py-2"
+        >
+          {MODES.map((m) => <option key={m} value={m}>{MODE_LABEL[m]}</option>)}
+        </select>
+      </label>
+
+      {(needsContrast || isCycles) && (
+        <p className="rounded-xl bg-amber-50 px-3 py-2 text-sm text-amber-800" role="status" data-testid="target-gate-note">
+          {needsContrast
+            ? 'מצב זה ישתמש בפריטי ניגוד רק לאחר שתסמני „פעיל” + „מאושר” לפריטים למטה. אחרת התרגול נשאר ניטרלי.'
+            : 'מצב Cycles אינו מופעל לפי גיל. הקשבה ממוקדת ותרגול קצר יופיעו לפי בחירתך בלבד.'}
+        </p>
+      )}
+
+      <label className="flex flex-col gap-1">
+        <span className="font-bold">אופי השגיאה המשוער</span>
+        <select
+          value={draft.suspectedErrorType}
+          data-testid="target-error"
+          onChange={(e) => update('suspectedErrorType', e.target.value as SuspectedErrorType)}
+          className="rounded-xl border border-slate-200 px-3 py-2"
+        >
+          {ERROR_TYPES.map((t) => <option key={t} value={t}>{ERROR_LABEL[t]}</option>)}
+        </select>
+      </label>
+
+      <div className="flex flex-wrap gap-3">
+        <label className="flex flex-1 flex-col gap-1">
+          <span className="text-sm font-bold">מה הילד הפיק</span>
+          <input
+            value={draft.childProduction ?? ''}
+            data-testid="target-production"
+            onChange={(e) => update('childProduction', e.target.value)}
+            className="rounded-xl border border-slate-200 px-3 py-2"
+          />
+        </label>
+        <label className="flex flex-1 flex-col gap-1">
+          <span className="text-sm font-bold">המטרה</span>
+          <input
+            value={draft.intendedTarget ?? ''}
+            data-testid="target-intended"
+            onChange={(e) => update('intendedTarget', e.target.value)}
+            className="rounded-xl border border-slate-200 px-3 py-2"
+          />
+        </label>
+      </div>
+
+      <div className="flex flex-wrap gap-3">
+        <label className="flex flex-1 flex-col gap-1">
+          <span className="text-sm font-bold">יכולת עירור (stimulability)</span>
+          <select
+            value={draft.stimulability}
+            data-testid="target-stimulability"
+            onChange={(e) => update('stimulability', e.target.value as Stimulability)}
+            className="rounded-xl border border-slate-200 px-3 py-2"
+          >
+            {STIMS.map((s) => <option key={s} value={s}>{STIM_LABEL[s]}</option>)}
+          </select>
+        </label>
+        <label className="flex flex-1 flex-col gap-1">
+          <span className="text-sm font-bold">תפיסה שמיעתית</span>
+          <select
+            value={draft.perceptionStatus}
+            data-testid="target-perception"
+            onChange={(e) => update('perceptionStatus', e.target.value as PerceptionStatus)}
+            className="rounded-xl border border-slate-200 px-3 py-2"
+          >
+            {PERCEPTIONS.map((p) => <option key={p} value={p}>{PERCEPTION_LABEL[p]}</option>)}
+          </select>
+        </label>
+      </div>
+
+      <label className="flex flex-col gap-1">
+        <span className="font-bold">רמת תרגול נוכחית</span>
+        <select
+          value={draft.currentPracticeLevel}
+          data-testid="target-level"
+          onChange={(e) => update('currentPracticeLevel', e.target.value as PracticeLevel)}
+          className="rounded-xl border border-slate-200 px-3 py-2"
+        >
+          {LEVELS.map((l) => <option key={l} value={l}>{LEVEL_LABEL[l]}</option>)}
+        </select>
+      </label>
+
+      <div className="flex flex-col gap-1">
+        <span className="font-bold">מיקומים למיקוד (במילה)</span>
+        <div className="flex gap-2">
+          {POSITIONS.map((p) => (
+            <button
+              key={p}
+              type="button"
+              onClick={() => togglePosition(p)}
+              data-testid={`target-position-${p}`}
+              aria-pressed={draft.targetWordPositions.includes(p)}
+              className={`rounded-xl px-3 py-2 text-sm font-bold ${
+                draft.targetWordPositions.includes(p) ? 'bg-teal-700 text-white' : 'bg-slate-100 text-slate-700'
+              }`}
+            >
+              {POSITION_LABEL[p]}
+            </button>
+          ))}
+        </div>
+        <span className="text-xs text-slate-400">
+          מיקום אחד = ריכוז עליו. כמה מיקומים = מעורב (ללא ריכוז). ריק = ברירת מחדל.
+        </span>
+      </div>
+
+      <label className="flex flex-col gap-1">
+        <span className="font-bold">שיעור ריכוז על המיקוד: {Math.round(draft.weeklyFocusRatio * 100)}%</span>
+        <input
+          type="range"
+          min={0}
+          max={1}
+          step={0.05}
+          value={draft.weeklyFocusRatio}
+          data-testid="target-ratio"
+          onChange={(e) => update('weeklyFocusRatio', Number(e.target.value))}
+        />
+      </label>
+
+      <label className="flex flex-col gap-1">
+        <span className="font-bold">ניסוח רמז</span>
+        <input
+          value={draft.cueText}
+          data-testid="target-cue"
+          onChange={(e) => update('cueText', e.target.value)}
+          className="rounded-xl border border-slate-200 px-3 py-2"
+        />
+      </label>
+      <label className="flex flex-col gap-1">
+        <span className="font-bold">הערות</span>
+        <textarea
+          value={draft.notes}
+          data-testid="target-notes"
+          onChange={(e) => update('notes', e.target.value)}
+          rows={2}
+          className="rounded-xl border border-slate-200 px-3 py-2"
+        />
+      </label>
+
+      <div className="flex items-center gap-3">
+        <label className="flex items-center gap-2 text-sm">
+          <input
+            type="checkbox"
+            checked={draft.clinicianApproved}
+            data-testid="target-approve"
+            onChange={(e) => update('clinicianApproved', e.target.checked)}
+          />
+          מאושר קלינאית
+        </label>
+        <Button variant="primary" onClick={save} data-testid="target-save">שמירת תכנית</Button>
+        {saved && <span className="text-emerald-600" role="status">נשמר ✓</span>}
+      </div>
+    </section>
+  );
+}
+
+function ContrastLibraryCard({
+  sound,
+  items,
+}: {
+  sound: TargetSound;
+  items: ContrastItem[];
+}) {
+  // Local copy so each toggle is optimistic and does NOT flash a full-page
+  // reload spinner (which would also unmount the control mid-interaction).
+  const [rows, setRows] = useState<ContrastItem[]>(items);
+  const forSound = rows.filter((i) => i.targetSound === sound);
+
+  const toggle = async (item: ContrastItem, patch: Partial<ContrastItem>) => {
+    const next = { ...item, ...patch };
+    setRows((rs) => rs.map((r) => (r.id === item.id ? next : r)));
+    await repo.setContrastItem(next);
+  };
+
+  return (
+    <section data-testid="contrast-library" className="flex flex-col gap-3 rounded-3xl bg-white p-5 shadow-sm">
+      <h3 className="font-black">ספריית ניגודים (זוגות מינימליים)</h3>
+      <p className="text-sm text-slate-500">
+        מופיע בתרגול רק במצב „זוגות מינימליים” / „משולב”, ורק לפריטים שסומנו „פעיל” + „מאושר”.
+        סוג הפריט מצוין במדויק — מה שאינו זוג מינימלי אמיתי לא יוצג ככזה.
+      </p>
+      {forSound.length === 0 ? (
+        <p className="text-sm text-slate-400">אין פריטי ניגוד לצליל זה.</p>
+      ) : (
+        <ul className="flex flex-col gap-3">
+          {forSound.map((item) => (
+            <li key={item.id} data-testid={`contrast-item-${item.id}`} className="rounded-2xl border border-slate-200 p-3">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-lg font-black" lang="he">
+                  {item.targetWithNikud ?? item.targetWord} ↔ {item.contrastWithNikud ?? item.contrastWord}
+                </span>
+                <span
+                  className={`rounded-full px-2 py-0.5 text-xs font-bold ${
+                    item.kind === 'true_minimal_pair' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-600'
+                  }`}
+                >
+                  {CONTRAST_KIND_LABEL[item.kind]}
+                </span>
+              </div>
+              {!item.clinicallyReviewed && (
+                <p className="mt-1 text-xs text-amber-700">לא נבדק קלינית</p>
+              )}
+              <div className="mt-2 flex flex-wrap gap-4 text-sm">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={item.clinicallyReviewed}
+                    data-testid={`contrast-reviewed-${item.id}`}
+                    onChange={(e) => toggle(item, { clinicallyReviewed: e.target.checked })}
+                  />
+                  נבדק קלינית
+                </label>
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={item.clinicianApproved}
+                    data-testid={`contrast-approve-${item.id}`}
+                    onChange={(e) => toggle(item, { clinicianApproved: e.target.checked })}
+                  />
+                  מאושר
+                </label>
+                <label className="flex items-center gap-2 font-bold">
+                  <input
+                    type="checkbox"
+                    checked={item.enabled}
+                    data-testid={`contrast-enable-${item.id}`}
+                    onChange={(e) => toggle(item, { enabled: e.target.checked })}
+                  />
+                  פעיל בתרגול
+                </label>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
     </section>
   );
 }

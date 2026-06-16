@@ -5,7 +5,7 @@ import type { TargetSound, WordPosition } from '@/lib/types';
 
 // P2 — age-specific clinical UX.
 
-describe('Niv auditory bombardment', () => {
+describe('Niv focused listening', () => {
   it('inserts a passive listening step before listen_choose for every sound', () => {
     const sounds: TargetSound[] = ['s', 'sh', 'ts', 'ch'];
     for (const sound of sounds) {
@@ -22,22 +22,22 @@ describe('Niv auditory bombardment', () => {
         rewardId: `niv_${sound}_star`,
       });
       const kinds = mission.steps.map((s) => s.kind);
-      const bombIdx = kinds.indexOf('bombardment');
+      const listenIdx = kinds.indexOf('focused_listening');
       const chooseIdx = kinds.indexOf('listen_choose');
-      expect(bombIdx).toBeGreaterThanOrEqual(0);
+      expect(listenIdx).toBeGreaterThanOrEqual(0);
       // Listening comes before producing.
-      expect(bombIdx).toBeLessThan(chooseIdx);
+      expect(listenIdx).toBeLessThan(chooseIdx);
 
-      const bomb = mission.steps[bombIdx];
+      const listen = mission.steps[listenIdx];
       // Words to hear, all of the target sound, no recording references.
-      expect((bomb.wordIds?.length ?? 0)).toBeGreaterThanOrEqual(1);
-      for (const id of bomb.wordIds!) {
+      expect((listen.wordIds?.length ?? 0)).toBeGreaterThanOrEqual(1);
+      for (const id of listen.wordIds!) {
         expect(seedWords.find((w) => w.id === id)?.sound).toBe(sound);
       }
     }
   });
 
-  it('does not add bombardment to Lavi arena missions', () => {
+  it('does not add focused listening to Lavi arena missions', () => {
     const mission = generateMission({
       sound: 's',
       childId: 'lavi',
@@ -49,7 +49,7 @@ describe('Niv auditory bombardment', () => {
       avoidWords: [],
       rewardId: 'lavi_s_badge',
     });
-    expect(mission.steps.map((s) => s.kind)).not.toContain('bombardment');
+    expect(mission.steps.map((s) => s.kind)).not.toContain('focused_listening');
   });
 });
 

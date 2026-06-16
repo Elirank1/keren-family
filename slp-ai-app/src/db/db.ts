@@ -3,7 +3,9 @@ import type {
   AppSettings,
   AudioBlobRecord,
   ChildProfile,
+  ClinicalTargetProfile,
   ClinicianSoundConfig,
+  ContrastItem,
   GeneratedMission,
   ModelAudio,
   PracticeSentence,
@@ -29,6 +31,8 @@ export class SlpDb extends Dexie {
   clinicianConfigs!: Table<ClinicianSoundConfig, [string, string]>;
   settings!: Table<AppSettings, string>;
   rewards!: Table<RewardDef, string>;
+  clinicalTargets!: Table<ClinicalTargetProfile, [string, string]>;
+  contrastItems!: Table<ContrastItem, string>;
 
   constructor() {
     super('slp-ai');
@@ -46,6 +50,14 @@ export class SlpDb extends Dexie {
       clinicianConfigs: '[childId+sound], childId, sound',
       settings: 'id',
       rewards: 'id, childId, sound',
+    });
+    // v2 — clinician-selectable intervention layer (P3). New tables only; no
+    // changes to existing stores, so installed devices upgrade non-destructively.
+    // Defaults (mode 'unset', disabled contrast items) are written by the seed
+    // migration, never inferred.
+    this.version(2).stores({
+      clinicalTargets: '[childId+sound], childId, sound, interventionMode',
+      contrastItems: 'id, targetSound, contrastSound, kind, enabled',
     });
   }
 }

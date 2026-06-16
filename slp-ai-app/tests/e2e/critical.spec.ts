@@ -37,8 +37,8 @@ test.describe('SLP-AI critical flows', () => {
     await page.getByTestId('niv-sound-s').click();
     await page.getByTestId('niv-greeting-start').click();
 
-    // Auditory bombardment (passive listening) precedes producing.
-    await page.getByTestId('bombard-continue').click();
+    // Focused listening (passive) precedes producing.
+    await page.getByTestId('focused-listening-continue').click();
 
     // Choose the correct word (its testid is the target word id from the title).
     const choice = page.locator('[data-testid^="niv-choice-"][data-correct="true"]');
@@ -286,7 +286,7 @@ test.describe('SLP-AI critical flows', () => {
     await page.getByTestId('select-niv').click();
     await page.getByTestId('niv-sound-s').click();
     await page.getByTestId('niv-greeting-start').click();
-    await page.getByTestId('bombard-continue').click();
+    await page.getByTestId('focused-listening-continue').click();
     await page.locator('[data-testid^="niv-choice-"][data-correct="true"]').click();
     await recordAndSave(page); // say_three attempt
     await expect(page.getByTestId('rating-legend')).toBeVisible(); // wait for save to land
@@ -330,18 +330,18 @@ test.describe('SLP-AI critical flows', () => {
     await expect(page.getByTestId('focus-note')).toHaveValue('להתמקד ב-שׁ בתחילת מילה');
   });
 
-  test('15. Niv auditory bombardment shows words and advances to the choice', async ({ page }) => {
+  test('15. Niv focused listening shows words and advances to the choice', async ({ page }) => {
     await freshHome(page);
     await page.getByTestId('select-niv').click();
     await page.getByTestId('niv-sound-s').click();
     await page.getByTestId('niv-greeting-start').click();
 
     // Passive listening step: the listen button and at least one word are shown.
-    await expect(page.getByTestId('bombard-play')).toBeVisible();
-    await expect(page.locator('[data-testid^="bombard-word-"]').first()).toBeVisible();
+    await expect(page.getByTestId('focused-listening-play')).toBeVisible();
+    await expect(page.locator('[data-testid^="focused-listening-word-"]').first()).toBeVisible();
 
     // Continuing reaches the listen-and-choose step.
-    await page.getByTestId('bombard-continue').click();
+    await page.getByTestId('focused-listening-continue').click();
     await expect(
       page.locator('[data-testid^="niv-choice-"][data-correct="true"]'),
     ).toBeVisible();
@@ -380,5 +380,37 @@ test.describe('SLP-AI critical flows', () => {
     await page.goto('/');
     await page.getByTestId('select-lavi').click();
     await expect(page.getByTestId('lavi-sound-sh')).toHaveAttribute('data-focus', 'true');
+  });
+
+  test('18. Intervention layer: default unset, and contrast activates only on explicit clinician opt-in', async ({ page }) => {
+    await freshHome(page);
+    await openParent(page);
+    await page.getByTestId('nav-clinician').click();
+
+    // The new intervention cards are present, and nothing is pre-selected.
+    await expect(page.getByTestId('clinical-target-card')).toBeVisible();
+    await expect(page.getByTestId('contrast-library')).toBeVisible();
+    await expect(page.getByTestId('target-mode')).toHaveValue('unset');
+
+    // Clinician enables + approves a contrast item, then selects minimal pairs.
+    await page.getByTestId('contrast-enable-cp_s_sh_sir_shir').check();
+    await page.getByTestId('contrast-approve-cp_s_sh_sir_shir').check();
+    await page.getByTestId('target-mode').selectOption('minimal_pairs');
+    await page.getByTestId('target-save').click();
+
+    // Both choices persisted to IndexedDB.
+    await expect
+      .poll(async () => {
+        const rows = await readStore<{ interventionMode: string; sound: string }>(page, 'clinicalTargets');
+        return rows.find((r) => r.sound === 's')?.interventionMode;
+      })
+      .toBe('minimal_pairs');
+    await expect
+      .poll(async () => {
+        const rows = await readStore<{ id: string; enabled: boolean; clinicianApproved: boolean }>(page, 'contrastItems');
+        const it = rows.find((r) => r.id === 'cp_s_sh_sir_shir');
+        return Boolean(it?.enabled && it?.clinicianApproved);
+      })
+      .toBe(true);
   });
 });

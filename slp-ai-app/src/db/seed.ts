@@ -2,6 +2,7 @@ import { db } from './db';
 import {
   SEED_VERSION,
   seedChildren,
+  seedContrastItems,
   seedRewards,
   seedSentences,
   seedSounds,
@@ -58,6 +59,7 @@ export async function ensureSeeded(): Promise<void> {
       db.sentences,
       db.rewards,
       db.clinicianConfigs,
+      db.contrastItems,
       db.settings,
     ],
     async () => {
@@ -67,6 +69,8 @@ export async function ensureSeeded(): Promise<void> {
         await db.words.bulkPut(seedWords);
         await db.sentences.bulkPut(seedSentences);
         await db.rewards.bulkPut(seedRewards);
+        // Provisional contrast library — seeded disabled; never auto-activated.
+        await db.contrastItems.bulkPut(seedContrastItems);
 
         const configs: ClinicianSoundConfig[] = [];
         for (const child of seedChildren) {
@@ -121,6 +125,14 @@ export async function ensureSeeded(): Promise<void> {
           }
         }
         if (upserts.length) await db.clinicianConfigs.bulkPut(upserts);
+
+        // v3: add the provisional contrast library (add-only — never overwrite a
+        // clinician's enable/approve edits on items they already have).
+        const existingContrastIds = new Set(
+          (await db.contrastItems.toArray()).map((c) => c.id),
+        );
+        const newContrast = seedContrastItems.filter((c) => !existingContrastIds.has(c.id));
+        if (newContrast.length) await db.contrastItems.bulkPut(newContrast);
 
         await db.settings.update('singleton', { seededVersion: SEED_VERSION });
       }

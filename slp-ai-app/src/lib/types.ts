@@ -102,6 +102,100 @@ export interface ClinicianSoundConfig {
   updatedAt: string;
 }
 
+// ---- Clinician-selectable intervention layer (P3) ----
+// The app NEVER picks a therapy method on its own. Every target defaults to
+// 'unset' and runs neutral practice until a clinician explicitly configures it.
+
+export type InterventionMode =
+  | 'unset'
+  | 'motor_articulation'
+  | 'speech_perception'
+  | 'minimal_pairs'
+  | 'cycles'
+  | 'integrated'
+  | 'custom';
+
+export type PracticeLevel =
+  | 'unset'
+  | 'listening'
+  | 'isolated_sound'
+  | 'syllable'
+  | 'word'
+  | 'phrase'
+  | 'sentence'
+  | 'conversation';
+
+export type SuspectedErrorType =
+  | 'unset'
+  | 'distortion'
+  | 'substitution'
+  | 'omission'
+  | 'phoneme_collapse'
+  | 'inconsistent'
+  | 'mixed';
+
+export type Stimulability =
+  | 'not_checked'
+  | 'independent'
+  | 'after_model'
+  | 'not_currently_stimulable';
+
+export type PerceptionStatus =
+  | 'not_checked'
+  | 'discriminates'
+  | 'inconsistent'
+  | 'does_not_discriminate';
+
+// One clinician-defined plan per child × target sound. All clinical judgments
+// are entered by the clinician — never inferred by the app.
+export interface ClinicalTargetProfile {
+  childId: ChildId;
+  sound: TargetSound;
+  interventionMode: InterventionMode;
+  suspectedErrorType: SuspectedErrorType;
+  childProduction?: string;
+  intendedTarget?: string;
+  stimulability: Stimulability;
+  perceptionStatus: PerceptionStatus;
+  targetWordPositions: WordPosition[];
+  currentPracticeLevel: PracticeLevel;
+  // Share of practice items concentrated on the focus position (0..1).
+  weeklyFocusRatio: number;
+  cueText: string;
+  notes: string;
+  clinicianApproved: boolean;
+  updatedAt: string;
+}
+
+// How honestly a contrast item represents a phonemic contrast. Near-minimal
+// and nonword items must NEVER be presented as true minimal pairs.
+export type ContrastKind =
+  | 'true_minimal_pair'
+  | 'near_minimal_pair'
+  | 'listening_contrast'
+  | 'nonword_contrast';
+
+export interface ContrastItem {
+  id: string;
+  targetSound: TargetSound;
+  contrastSound: TargetSound;
+  targetWord: string;
+  contrastWord: string;
+  targetWithNikud?: string;
+  contrastWithNikud?: string;
+  kind: ContrastKind;
+  // True only for genuine meaning-changing minimal pairs.
+  meaningChanging: boolean;
+  language: 'he';
+  ageBands: AgeBand[];
+  hasImages: boolean;
+  // 'not_clinically_reviewed' maps to clinicallyReviewed:false.
+  clinicallyReviewed: boolean;
+  clinicianApproved: boolean;
+  // Gated: stays false until a clinician selects minimal_pairs/integrated.
+  enabled: boolean;
+}
+
 export interface RewardDef {
   id: string;
   childId: ChildId;
@@ -116,11 +210,12 @@ export interface RewardDef {
 export type MissionStepKind =
   | 'briefing'
   | 'warmup'
-  | 'bombardment'
+  | 'focused_listening'
   | 'word'
   | 'sentence'
   | 'listen_choose'
   | 'say_three'
+  | 'contrast'
   | 'completion';
 
 export interface MissionStep {
@@ -131,7 +226,12 @@ export interface MissionStep {
   sentenceId?: string;
   // For Niv's listen_choose: ids of distractor words.
   choiceWordIds?: string[];
-  // For 'bombardment' (passive auditory listening): the words the child hears.
+  // For 'contrast' (minimal-pairs / integrated only): the clinician-approved
+  // contrast item to present. Never set unless a clinician enabled the item.
+  contrastItemId?: string;
+  // For 'focused_listening' (passive listening): the words the child hears.
+  // NOTE: a neutral default. Only a clinician choosing a Cycles intervention
+  // reframes this step clinically as "auditory bombardment".
   wordIds?: string[];
   title?: string;
 }

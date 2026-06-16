@@ -5,7 +5,7 @@ import { computeClinicalReport } from '@/lib/clinical-report';
 import { buildExportZip, downloadBlob } from '@/lib/export';
 import { Button, Spinner } from '@/components/ui';
 import { SoundBadge } from '@/components/SoundBadge';
-import type { AttemptRating, ChildId } from '@/lib/types';
+import type { AttemptRating, ChildId, InterventionMode, PracticeLevel } from '@/lib/types';
 
 const RATING_LABEL: Record<AttemptRating, string> = {
   independent: 'עצמאי',
@@ -14,6 +14,26 @@ const RATING_LABEL: Record<AttemptRating, string> = {
   participated: 'השתתף',
   imitated: 'חיקה',
   skipped: 'דילגנו',
+};
+
+const MODE_LABEL: Record<InterventionMode, string> = {
+  unset: 'לא נבחר',
+  motor_articulation: 'מוטורי',
+  speech_perception: 'תפיסה',
+  minimal_pairs: 'זוגות מינימליים',
+  cycles: 'Cycles',
+  integrated: 'משולב',
+  custom: 'מותאם',
+};
+const LEVEL_LABEL: Record<PracticeLevel, string> = {
+  unset: '—',
+  listening: 'האזנה',
+  isolated_sound: 'צליל בודד',
+  syllable: 'הברה',
+  word: 'מילה',
+  phrase: 'צירוף',
+  sentence: 'משפט',
+  conversation: 'שיחה',
 };
 
 export default function ClinicianReport() {
@@ -59,11 +79,14 @@ export default function ClinicianReport() {
         </p>
       </header>
 
-      {/* headline numbers */}
+      {/* headline numbers — observations only, never an accuracy score */}
       <div className="grid grid-cols-3 gap-3">
         <Stat label="סה״כ הפקות" value={data.totalProductions} testid="report-total" />
         <Stat label="סשנים שהושלמו" value={data.sessionsCompleted} />
         <Stat label="פריטי תמונת פתיחה" value={data.baselineCount} />
+        <Stat label="הקלטות" value={data.recordingsCount} />
+        <Stat label="דקות תרגול (סה״כ)" value={data.totalPracticeMinutes} />
+        <Stat label="ממוצע סשן (דק׳)" value={data.avgSessionMinutes} />
       </div>
       {data.lastPracticeDate && (
         <p className="text-sm text-slate-500">
@@ -73,13 +96,19 @@ export default function ClinicianReport() {
 
       {/* per-sound breakdown */}
       <section className="flex flex-col gap-3">
-        <h2 className="font-black">לפי צליל ומיקום בהברה</h2>
+        <h2 className="font-black">לפי צליל ומיקום במילה</h2>
         {data.bySound.map((s) => (
           <div key={s.sound} className="rounded-3xl bg-white p-4 shadow-sm" data-testid={`report-sound-${s.sound}`}>
-            <div className="mb-2 flex items-center gap-2">
+            <div className="mb-2 flex flex-wrap items-center gap-2">
               <SoundBadge sound={s.sound} size="sm" />
               <span className="text-lg font-black">{s.total} הפקות</span>
               {s.baseline > 0 && <span className="text-xs text-slate-400">({s.baseline} בסיס)</span>}
+              {s.interventionMode && s.interventionMode !== 'unset' && (
+                <span className="rounded-full bg-teal-100 px-2 py-0.5 text-xs font-bold text-teal-800">
+                  {MODE_LABEL[s.interventionMode]}
+                  {s.practiceLevel && s.practiceLevel !== 'unset' ? ` · ${LEVEL_LABEL[s.practiceLevel]}` : ''}
+                </span>
+              )}
             </div>
             {s.total > 0 ? (
               <div className="flex flex-wrap gap-2 text-sm">
