@@ -37,6 +37,9 @@ test.describe('SLP-AI critical flows', () => {
     await page.getByTestId('niv-sound-s').click();
     await page.getByTestId('niv-greeting-start').click();
 
+    // Auditory bombardment (passive listening) precedes producing.
+    await page.getByTestId('bombard-continue').click();
+
     // Choose the correct word (its testid is the target word id from the title).
     const choice = page.locator('[data-testid^="niv-choice-"][data-correct="true"]');
     await choice.click();
@@ -283,6 +286,7 @@ test.describe('SLP-AI critical flows', () => {
     await page.getByTestId('select-niv').click();
     await page.getByTestId('niv-sound-s').click();
     await page.getByTestId('niv-greeting-start').click();
+    await page.getByTestId('bombard-continue').click();
     await page.locator('[data-testid^="niv-choice-"][data-correct="true"]').click();
     await recordAndSave(page); // say_three attempt
     await expect(page.getByTestId('rating-legend')).toBeVisible(); // wait for save to land
@@ -324,5 +328,57 @@ test.describe('SLP-AI critical flows', () => {
     await openParent(page);
     await page.getByTestId('nav-clinician').click();
     await expect(page.getByTestId('focus-note')).toHaveValue('להתמקד ב-שׁ בתחילת מילה');
+  });
+
+  test('15. Niv auditory bombardment shows words and advances to the choice', async ({ page }) => {
+    await freshHome(page);
+    await page.getByTestId('select-niv').click();
+    await page.getByTestId('niv-sound-s').click();
+    await page.getByTestId('niv-greeting-start').click();
+
+    // Passive listening step: the listen button and at least one word are shown.
+    await expect(page.getByTestId('bombard-play')).toBeVisible();
+    await expect(page.locator('[data-testid^="bombard-word-"]').first()).toBeVisible();
+
+    // Continuing reaches the listen-and-choose step.
+    await page.getByTestId('bombard-continue').click();
+    await expect(
+      page.locator('[data-testid^="niv-choice-"][data-correct="true"]'),
+    ).toBeVisible();
+  });
+
+  test('16. Lavi can listen back to himself next to the model before rating', async ({ page }) => {
+    await freshHome(page);
+    await page.getByTestId('select-lavi').click();
+    await page.getByTestId('lavi-sound-s').click();
+    await page.getByTestId('briefing-start').click();
+
+    await recordAndSave(page); // warm-up attempt
+    // Self-monitoring compare panel appears with a play-your-recording button.
+    await expect(page.getByTestId('self-compare')).toBeVisible();
+    await expect(page.getByTestId('self-compare-play')).toBeVisible();
+    // Rating still works afterwards.
+    await page.getByTestId('rating-independent').click();
+    await page.getByTestId('continue-step').click();
+  });
+
+  test('17. Clinician weekly focus highlights the sound on the child screen', async ({ page }) => {
+    await freshHome(page);
+    await openParent(page);
+    await page.getByTestId('nav-clinician').click();
+    await page.getByTestId('focus-sound').selectOption('sh');
+    await page.getByTestId('focus-save').click();
+    // Wait for the focus to actually commit to IndexedDB before navigating away.
+    await expect
+      .poll(async () => {
+        const rows = await readStore<{ weeklyFocus?: { lavi?: { sound?: string } } }>(page, 'settings');
+        return rows[0]?.weeklyFocus?.lavi?.sound;
+      })
+      .toBe('sh');
+
+    // The highlight shows for Lavi's sound picker.
+    await page.goto('/');
+    await page.getByTestId('select-lavi').click();
+    await expect(page.getByTestId('lavi-sound-sh')).toHaveAttribute('data-focus', 'true');
   });
 });

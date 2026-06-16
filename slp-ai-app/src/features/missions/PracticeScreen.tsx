@@ -240,6 +240,8 @@ function StepView(props: StepViewProps) {
       return childId === 'lavi' ? <LaviBriefing {...props} /> : <NivGreeting {...props} />;
     case 'warmup':
       return <WarmupStep {...props} />;
+    case 'bombardment':
+      return <BombardmentStep {...props} />;
     case 'word':
       return <WordStep {...props} />;
     case 'sentence':
@@ -331,17 +333,17 @@ function RecordRateBlock({
   ratingTheme: 'arena' | 'garden';
   ratingOptions: { value: AttemptRating; label: string }[];
 }) {
-  const [attemptId, setAttemptId] = useState<string | null>(null);
+  const [attempt, setAttempt] = useState<RecordingAttempt | null>(null);
   const [rating, setRating] = useState<AttemptRating | undefined>(undefined);
 
   const handleSave = async (result: RecordingResult) => {
-    const attempt = await onRecord(result, promptType, refs);
-    setAttemptId(attempt.id);
+    const saved = await onRecord(result, promptType, refs);
+    setAttempt(saved);
   };
 
   const handleRating = async (r: AttemptRating) => {
     setRating(r);
-    if (attemptId) await repo.setAttemptRating(attemptId, r);
+    if (attempt) await repo.setAttemptRating(attempt.id, r);
   };
 
   return (
@@ -353,7 +355,7 @@ function RecordRateBlock({
         sentenceId={refs.sentenceId}
         theme={ratingTheme}
       />
-      {!attemptId ? (
+      {!attempt ? (
         <>
           <AudioRecorder promptType={promptType} onSave={handleSave} theme={ratingTheme} />
           <button
@@ -366,6 +368,11 @@ function RecordRateBlock({
         </>
       ) : (
         <div className="flex flex-col items-center gap-3">
+          {/* Self-monitoring: school-age children listen back to themselves next
+              to the model before judging — a core articulation-carryover skill. */}
+          {ratingTheme === 'arena' && (
+            <SelfCompare attempt={attempt} sound={sound} promptType={promptType} refs={refs} />
+          )}
           <p className="font-bold">{ratingTheme === 'arena' ? 'בחר איך זה הרגיש לך' : 'איך היה?'}</p>
           <RatingPicker
             options={ratingOptions}
@@ -379,6 +386,62 @@ function RecordRateBlock({
           </Button>
         </div>
       )}
+    </div>
+  );
+}
+
+// Plays back the child's own just-recorded attempt, beside the model, so they
+// can compare and self-evaluate before rating. Loads the attempt's own bytes.
+function SelfCompare({
+  attempt,
+  sound,
+  promptType,
+  refs,
+}: {
+  attempt: RecordingAttempt;
+  sound: GeneratedMission['sound'];
+  promptType: PromptType;
+  refs: { wordId?: string; sentenceId?: string };
+}) {
+  const [url, setUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    let objectUrl: string | null = null;
+    (async () => {
+      const rec = await repo.getAudioBlob(attempt.recordingBlobId);
+      if (!active || !rec) return;
+      objectUrl = URL.createObjectURL(rec.blob);
+      setUrl(objectUrl);
+    })();
+    return () => {
+      active = false;
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
+  }, [attempt.recordingBlobId]);
+
+  return (
+    <div className="flex w-full flex-col items-center gap-2 rounded-3xl bg-arena-surface p-4" data-testid="self-compare">
+      <p className="text-sm font-bold opacity-80">תקשיב לשתיהן ותשווה 👂</p>
+      <div className="flex flex-wrap items-center justify-center gap-3">
+        <ModelPlayback
+          sound={sound}
+          promptType={promptType}
+          wordId={refs.wordId}
+          sentenceId={refs.sentenceId}
+          theme="arena"
+        />
+        <Button
+          variant="secondary"
+          disabled={!url}
+          data-testid="self-compare-play"
+          onClick={() => {
+            if (url) void new Audio(url).play();
+          }}
+        >
+          🎧 ההקלטה שלך
+        </Button>
+      </div>
     </div>
   );
 }
@@ -457,6 +520,83 @@ function SentenceStep({ step, sentences, mission, onRecord, onAdvance }: StepVie
 }
 
 // ---- Niv steps ----
+
+// Auditory bombardment: the child simply LISTENS to the target sound in several
+// real words before being asked to produce it. No recording, no rating — this
+// is passive input. Plays clinician-recorded model audio when it exists; the
+// word cards always show so a parent can voice them if no model is recorded.
+function BombardmentStep({ step, words, mission, onAdvance }: StepViewProps) {
+  const ids = step.wordIds ?? [];
+  const items = ids.map((id) => words[id]).filter(Boolean) as PracticeWord[];
+  const [playing, setPlaying] = useState(false);
+  const [heard, setHeard] = useState(false);
+
+  useEffect(() => {
+    if (items.length === 0) onAdvance();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const playSequence = async () => {
+    if (playing) return;
+    setPlaying(true);
+    const urls: string[] = [];
+    try {
+      for (const w of items) {
+        const model = await repo.findModelAudio(mission.sound, 'word', w.id);
+        if (!model) continue;
+        const rec = await repo.getAudioBlob(model.blobId);
+        if (rec) urls.push(URL.createObjectURL(rec.blob));
+      }
+      for (const url of urls) {
+        await new Promise<void>((resolve) => {
+          const audio = new Audio(url);
+          audio.onended = () => resolve();
+          audio.onerror = () => resolve();
+          void audio.play().catch(() => resolve());
+        });
+        await new Promise((r) => setTimeout(r, 350));
+      }
+    } finally {
+      urls.forEach((u) => URL.revokeObjectURL(u));
+      setPlaying(false);
+      setHeard(true);
+    }
+  };
+
+  if (items.length === 0) return null;
+
+  return (
+    <section className="flex flex-1 flex-col items-center justify-center gap-5 text-center">
+      <h2 className="text-2xl font-black">בוא נקשיב לצליל {soundDisplayName(mission.sound)}</h2>
+      <p className="text-slate-700">רק מקשיבים — לא צריך להגיד עדיין.</p>
+      <div className="grid w-full grid-cols-2 gap-3">
+        {items.map((w) => (
+          <div
+            key={w.id}
+            data-testid={`bombard-word-${w.id}`}
+            className="flex flex-col items-center gap-1 rounded-3xl bg-white p-4 text-slate-900 shadow-sm"
+          >
+            <span className="text-5xl" aria-hidden="true">
+              {wordEmoji(w)}
+            </span>
+            <span className="text-xl font-black">{w.text}</span>
+          </div>
+        ))}
+      </div>
+      <button
+        onClick={playSequence}
+        disabled={playing}
+        data-testid="bombard-play"
+        className="rounded-full bg-garden-accent px-10 py-6 text-2xl font-black text-white shadow-xl disabled:opacity-60"
+      >
+        {playing ? '🔊 מקשיבים…' : '🔊 שמע'}
+      </button>
+      <Button variant="garden" onClick={onAdvance} data-testid="bombard-continue">
+        {heard ? '▶️ קדימה' : 'אפשר להמשיך'}
+      </Button>
+    </section>
+  );
+}
 
 function ListenChooseStep({ step, words, mission, onAdvance }: StepViewProps) {
   const target = step.wordId ? words[step.wordId] : undefined;

@@ -20,12 +20,19 @@ const TILE_BG: Record<TargetSound, string> = {
 export default function NivToday() {
   const navigate = useNavigate();
   const [busy, setBusy] = useState(false);
-  const { data, loading } = useAsync(() => repo.getEnabledSounds('niv'), []);
+  const { data, loading } = useAsync(
+    async () => ({
+      enabled: await repo.getEnabledSounds('niv'),
+      focus: await repo.getWeeklyFocus('niv'),
+    }),
+    [],
+  );
 
   if (loading || !data) return <Spinner />;
   // Keep a stable, friendly order regardless of how configs come back.
   const order: TargetSound[] = ['s', 'sh', 'ts', 'ch'];
-  const sounds = order.filter((s) => data.includes(s));
+  const sounds = order.filter((s) => data.enabled.includes(s));
+  const focusSound = data.focus?.sound;
 
   const start = async (sound: TargetSound) => {
     setBusy(true);
@@ -50,15 +57,24 @@ export default function NivToday() {
         <div className="grid w-full grid-cols-2 gap-4">
           {sounds.map((sound) => {
             const meta = getMissionMeta('niv', sound);
+            const isFocus = focusSound === sound;
             return (
               <button
                 key={sound}
                 onClick={() => start(sound)}
                 disabled={busy}
                 data-testid={`niv-sound-${sound}`}
+                data-focus={isFocus || undefined}
                 aria-label={meta.animalName}
-                className={`flex flex-col items-center justify-center gap-2 rounded-[2rem] ${TILE_BG[sound]} p-6 shadow-md transition active:scale-95 disabled:opacity-50`}
+                className={`relative flex flex-col items-center justify-center gap-2 rounded-[2rem] ${TILE_BG[sound]} p-6 shadow-md transition active:scale-95 disabled:opacity-50 ${
+                  isFocus ? 'ring-4 ring-amber-400' : ''
+                }`}
               >
+                {isFocus && (
+                  <span className="absolute -top-2 -right-2 text-3xl" aria-hidden="true">
+                    ⭐
+                  </span>
+                )}
                 <span className="text-7xl leading-none" aria-hidden="true">
                   {meta.animal}
                 </span>

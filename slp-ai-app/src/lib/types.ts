@@ -116,6 +116,7 @@ export interface RewardDef {
 export type MissionStepKind =
   | 'briefing'
   | 'warmup'
+  | 'bombardment'
   | 'word'
   | 'sentence'
   | 'listen_choose'
@@ -130,6 +131,8 @@ export interface MissionStep {
   sentenceId?: string;
   // For Niv's listen_choose: ids of distractor words.
   choiceWordIds?: string[];
+  // For 'bombardment' (passive auditory listening): the words the child hears.
+  wordIds?: string[];
   title?: string;
 }
 

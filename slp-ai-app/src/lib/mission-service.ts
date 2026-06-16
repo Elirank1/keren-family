@@ -10,13 +10,19 @@ export async function buildAndSaveMission(
   sound: TargetSound,
   seed?: string,
 ): Promise<GeneratedMission> {
-  const [child, words, sentences, config] = await Promise.all([
+  const [child, words, sentences, config, weeklyFocus] = await Promise.all([
     repo.getChild(childId),
     repo.getWords(),
     repo.getSentencesBySound(sound),
     repo.getClinicianConfig(childId, sound),
+    repo.getWeeklyFocus(childId),
   ]);
   if (!child) throw new Error(`Unknown child ${childId}`);
+
+  // The clinician's weekly focus position biases word selection — but only when
+  // it applies to the sound being practiced now.
+  const focusPosition =
+    weeklyFocus?.sound === sound ? weeklyFocus.position : undefined;
 
   const laviMeta = childId === 'lavi' ? getMissionMeta('lavi', sound) : undefined;
   const nivMeta = childId === 'niv' ? getMissionMeta('niv', sound) : undefined;
@@ -43,6 +49,7 @@ export async function buildAndSaveMission(
     wordsWithModelAudio,
     bossSentenceIds,
     rewardId,
+    focusPosition,
   });
 
   await repo.saveMission(mission);
