@@ -224,9 +224,19 @@ export interface PracticeSession {
   participantChildIds?: ChildId[];
 }
 
+// What the treating clinician set as this week's home-practice focus per child.
+export interface WeeklyFocus {
+  sound?: TargetSound;
+  position?: WordPosition;
+  note: string;
+  updatedAt: string;
+}
+
 export interface AppSettings {
   id: 'singleton';
   parentPin: string;
   seededVersion: number;
   reducedMotionOverride?: boolean;
+  // Clinician's weekly focus per child (set in the clinician area).
+  weeklyFocus?: Partial<Record<ChildId, WeeklyFocus>>;
 }

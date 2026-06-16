@@ -16,6 +16,7 @@ import type {
   PromptType,
   RecordingAttempt,
   TargetSound,
+  WeeklyFocus,
 } from '@/lib/types';
 
 // ---------- Reads ----------
@@ -65,6 +66,15 @@ export const repo = {
   },
   async updateSettings(patch: Partial<AppSettings>): Promise<void> {
     await db.settings.update('singleton', patch);
+  },
+  async getWeeklyFocus(childId: ChildId): Promise<WeeklyFocus | undefined> {
+    const settings = await db.settings.get('singleton');
+    return settings?.weeklyFocus?.[childId];
+  },
+  async setWeeklyFocus(childId: ChildId, focus: WeeklyFocus): Promise<void> {
+    const settings = await db.settings.get('singleton');
+    const weeklyFocus = { ...(settings?.weeklyFocus ?? {}), [childId]: focus };
+    await db.settings.update('singleton', { weeklyFocus });
   },
 
   // ---------- Words editing ----------

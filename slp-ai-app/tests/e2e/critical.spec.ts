@@ -297,4 +297,32 @@ test.describe('SLP-AI critical flows', () => {
     // After delete the niv list is empty (only one recording existed).
     await expect(page.getByTestId('recordings-empty')).toBeVisible();
   });
+
+  test('14. Clinician area: set weekly focus, edit a sound config, view the report', async ({ page }) => {
+    await freshHome(page);
+    await openParent(page);
+    await page.getByTestId('nav-clinician').click();
+
+    // Weekly focus persists.
+    await expect(page.getByTestId('weekly-focus')).toBeVisible();
+    await page.getByTestId('focus-sound').selectOption('sh');
+    await page.getByTestId('focus-note').fill('להתמקד ב-שׁ בתחילת מילה');
+    await page.getByTestId('focus-save').click();
+
+    // Per-sound clinical config (full hierarchy incl. syllable) is editable.
+    await page.getByTestId('clinician-sound-sh').click();
+    await page.getByTestId('clinician-stage').selectOption('syllable');
+    await page.getByTestId('clinician-save').click();
+
+    // Report opens and reflects per-child data.
+    await page.getByTestId('clinician-report-link').click();
+    await expect(page.getByTestId('report-total')).toBeVisible();
+    await expect(page.getByTestId('report-sound-sh')).toBeVisible();
+
+    // Weekly focus survived a reload (persisted to IndexedDB).
+    await page.goto('/');
+    await openParent(page);
+    await page.getByTestId('nav-clinician').click();
+    await expect(page.getByTestId('focus-note')).toHaveValue('להתמקד ב-שׁ בתחילת מילה');
+  });
 });

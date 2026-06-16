@@ -17,7 +17,8 @@ import TonightBaseline from '@/features/parent/tonight/TonightBaseline';
 import Diagnostics from '@/features/parent/Diagnostics';
 import RecordingsReview from '@/features/parent/RecordingsReview';
 import ContentEditor from '@/features/parent/ContentEditor';
-import ClinicianPlaceholder from '@/features/parent/ClinicianPlaceholder';
+import ClinicianArea from '@/features/parent/clinician/ClinicianArea';
+import ClinicianReport from '@/features/parent/clinician/ClinicianReport';
 import ExportScreen from '@/features/parent/ExportScreen';
 import { ParentGate } from '@/features/parent/ParentGate';
 
@@ -46,7 +47,8 @@ export const router = createHashRouter([
           { path: '/parent/baseline/:childId', element: <BaselineScreen /> },
           { path: '/parent/model-audio', element: <ModelAudioManager /> },
           { path: '/parent/content', element: <ContentEditor /> },
-          { path: '/parent/clinician', element: <ClinicianPlaceholder /> },
+          { path: '/parent/clinician', element: <ClinicianArea /> },
+          { path: '/parent/clinician/report/:childId', element: <ClinicianReport /> },
           { path: '/parent/export', element: <ExportScreen /> },
         ],
       },
